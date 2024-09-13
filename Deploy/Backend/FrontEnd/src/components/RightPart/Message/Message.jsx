@@ -25,7 +25,7 @@ function Message({ message }) {
           {/* {message.message} */}
           {message.newMessage ? message.newMessage.message : message.message}
         </div>
-        <div className="chat-footer">{formattedTime}</div>
+        <div className="chat-footer text-gray-400">{formattedTime}</div>
       </div>
     </div>
   );

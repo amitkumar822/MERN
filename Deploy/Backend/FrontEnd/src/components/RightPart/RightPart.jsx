@@ -4,7 +4,8 @@ import Messages from "./Message/Messages";
 import TypeSend from "./TypeSend/TypeSend";
 import useConversation from "../zustand/useConversation.js";
 import { useAuth } from "../../context/AuthProvider.jsx";
-import {CiMenuFries } from "react-icons/ci"
+import { CiMenuFries } from "react-icons/ci";
+import bgImg from "../../Photos/bgImg.png";
 
 function RightPart() {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -13,7 +14,12 @@ function RightPart() {
   }, [setSelectedConversation]);
 
   return (
-    <div className="w-full bg-slate-900 text-gray-300">
+    <div
+      className="w-full bg-slate-900 text-gray-300"
+      style={{
+        backgroundImage: `url(${bgImg})`,
+      }}
+    >
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
