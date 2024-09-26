@@ -4,9 +4,8 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
-import { mens_kurta } from "../../../data/mens_kurta";
 
-function HomeSectionCarosel() {
+function HomeSectionCarosel({data, sectionName}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null); // Create a reference for the carousel
 
@@ -24,7 +23,7 @@ function HomeSectionCarosel() {
   };
 
   const slideNext = () => {
-    if (activeIndex < mens_kurta.length - 1) {
+    if (activeIndex < data.length - 1) {
       setActiveIndex(activeIndex + 1);
       carouselRef.current.slideNext(); // Move the carousel
     }
@@ -32,10 +31,12 @@ function HomeSectionCarosel() {
 
   const syncActiveIndex = ({ item }) => setActiveIndex(item);
 
-  const items = mens_kurta.map((item) => <HomeSectionCard products={item} />);
+  const items = data.map((item) => <HomeSectionCard products={item} />);
 
   return (
-    <div className=" relative px-4 lg:px-8">
+    <div className=" border"> 
+    {/*👆relative px-4 lg:px-8 */}
+    <h2 className="text-2xl font-extrabold text-gray-800">{sectionName}</h2>
       <div className="relative p-5">
         <AliceCarousel
           items={items}
