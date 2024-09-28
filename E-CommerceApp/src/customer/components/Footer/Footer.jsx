@@ -1,7 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
-function EcommerceFooter() {
+function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-10">
       <div className="container mx-auto px-4 lg:px-8">
@@ -79,4 +79,4 @@ function EcommerceFooter() {
   );
 }
 
-export default EcommerceFooter;
+export default Footer;

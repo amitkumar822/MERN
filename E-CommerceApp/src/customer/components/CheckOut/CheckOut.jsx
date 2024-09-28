@@ -33,7 +33,7 @@ export default function CheckOut() {
   };
 
   return (
-    <div className="px-10 lg:px-10">
+    <div className="px-10 lg:px-10 mt-10">
       <Box sx={{ width: "100%" }}>
         <Stepper activeStep={step}>
           {steps.map((label, index) => {
