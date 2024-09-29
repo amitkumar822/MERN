@@ -36,7 +36,7 @@ const findUserById = async (userId) => {
     const user = await User.findById(userId).populate("address");
 
     if (!user) {
-      throw new Error("User(findUserById) is not found with id: ", userId);
+      throw new Error("User is not found with id: ", userId);
     }
     return user;
   } catch (error) {
@@ -49,7 +49,7 @@ const getUserByEmail = async (email) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error("User(findUserByEmail) is not found with email: ", email);
+      throw new Error("User is not found with email: ", email);
     }
     return user;
   } catch (error) {
@@ -64,10 +64,7 @@ const getUserProfileByToken = async (token) => {
     const user = await findUserById(userId);
 
     if (!user) {
-      throw new Error(
-        "User(getUserProfileByToken) is not found with token: ",
-        token
-      );
+      throw new Error("User is not found with token: ", token);
     }
     return user;
   } catch (error) {
