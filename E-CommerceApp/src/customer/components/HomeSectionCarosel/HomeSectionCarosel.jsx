@@ -34,7 +34,7 @@ function HomeSectionCarosel({data, sectionName}) {
   const items = data.map((item) => <HomeSectionCard products={item} />);
 
   return (
-    <div className=" border"> 
+    <div className="-mt-16"> 
     {/*👆relative px-4 lg:px-8 */}
     <h2 className="text-2xl font-extrabold text-gray-800">{sectionName}</h2>
       <div className="relative p-5">
