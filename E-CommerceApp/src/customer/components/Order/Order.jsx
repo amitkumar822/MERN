@@ -25,7 +25,7 @@ const Order = () => {
                   <input
                     defaultValue={option.value}
                     type="checkbox"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:text-indigo-500"
+                    className="h-4 w-4 cursor-pointer border-gray-300 text-indigo-600 focus:text-indigo-500"
                   />
                   <label
                     className="ml-3 text-sm text-gray-600"
