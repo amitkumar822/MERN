@@ -6,7 +6,7 @@ const authenticate = async (req, res, next) => {
   try {
     const token = req.header.quthorization?.split(" ")[1];
     if (!token) {
-      return req.status(404).send({ error: "token not found" });
+      return res.status(404).send({ error: "token not found" });
     }
 
     const userId = jwtProvider.getUserIdFromToken(token);
