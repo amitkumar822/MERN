@@ -1,5 +1,6 @@
 const Cart = require("../models/cart.model");
 const CartItem = require("../models/cartItem.model");
+const Product = require("../models/product.model");
 
 const createCart = async (user) => {
   try {
@@ -40,6 +41,7 @@ const findUserCart = async (userId) => {
 };
 
 const addCartItem = async (userId, req) => {
+  console.log(userId);
   try {
     const cart = await Cart.findOne({ user: userId });
     const product = await Product.findById(req.productId);
@@ -61,7 +63,7 @@ const addCartItem = async (userId, req) => {
         discountedPrice: product.discountedPrice,
       });
 
-      const createdCartItem = await CartItem.save();
+      const createdCartItem = await cartItem.save();
       cart.cartItems.push(createdCartItem);
       await cart.save();
 
