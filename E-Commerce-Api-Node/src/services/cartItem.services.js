@@ -34,14 +34,14 @@ const removeCartItem = async (userId, cartItemId) => {
   const user = await userService.findUserById(userId);
 
   if (user._id.toString() === cartItem.userId.toString()) {
-    await CartItem.findByIdAndDelete(cartItem);
+    return await CartItem.findByIdAndDelete(cartItem);
   } else {
     throw new Error("you can't remove another user's cart item");
   }
 };
 
 const findCartItemById = async (cartItemId) => {
-  const cartItem = await findCartItemById(cartItemId);
+  const cartItem = await CartItem.findById(cartItemId);
 
   if (cartItem) {
     return cartItem;
