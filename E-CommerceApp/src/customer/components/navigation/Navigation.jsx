@@ -24,7 +24,7 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import { useLocation, useNavigate } from "react-router";
 import AuthModal from "../../Auth/AuthModal";
-import { getUser } from "../../../store/Auth/Action";
+import { getUser, logout } from "../../../store/Auth/Action";
 import { useDispatch, useSelector } from "react-redux";
 // import { Popover, Tab } from "@headlessui/react";
 
@@ -209,7 +209,12 @@ export default function Navigation() {
     if (location.pathname === "/login" || location.pathname === "/register") {
       navigate(-1);
     }
-  });
+  }, [auth.user]);
+
+  const handleLogout = () => {
+    dispatch(logout())
+    handleCloseUserMenu();
+  }
 
   return (
     <div className="bg-white">
@@ -561,7 +566,7 @@ export default function Navigation() {
                         <MenuItem onClick={() => navigate("/account/order")}>
                           My Orders
                         </MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (
