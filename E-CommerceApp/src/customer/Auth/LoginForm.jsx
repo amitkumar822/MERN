@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { login } from "../../store/Auth/Action";
+import { login } from "../../State/Auth/Action";
 
 const LoginForm = () => {
   const navigate = useNavigate();

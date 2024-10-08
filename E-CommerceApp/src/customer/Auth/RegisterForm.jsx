@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, register } from "../../store/Auth/Action";
+import { getUser, register } from "../../State/Auth/Action";
 // import { Store } from "../../store/Store";
 
 const RegisterForm = () => {

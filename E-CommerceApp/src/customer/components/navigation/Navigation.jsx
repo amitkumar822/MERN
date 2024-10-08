@@ -24,7 +24,7 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import { useLocation, useNavigate } from "react-router";
 import AuthModal from "../../Auth/AuthModal";
-import { getUser, logout } from "../../../store/Auth/Action";
+import { getUser, logout } from "../../../State/Auth/Action";
 import { useDispatch, useSelector } from "react-redux";
 // import { Popover, Tab } from "@headlessui/react";
 
