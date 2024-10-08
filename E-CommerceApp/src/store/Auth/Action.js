@@ -64,7 +64,6 @@ const getUserFailure = (error) => ({ type: GET_USER_FAILURE, payload: error });
 
 export const getUser = (jwt) => async (dispatch) => {
   dispatch(getUserRequest());
-  console.log("JwtGet ", jwt);
 
   try {
     const response = await axios.get(`${API_BASE_URL}/users/profile`, {
@@ -73,7 +72,6 @@ export const getUser = (jwt) => async (dispatch) => {
       },
     });
     const user = response.data;
-    // console.log("getUser: " + JSON.stringify(user, null, 2));
 
     dispatch(getUserSuccess(user));
   } catch (error) {
@@ -83,4 +81,5 @@ export const getUser = (jwt) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT, payload: null });
+  localStorage.clear();
 };
