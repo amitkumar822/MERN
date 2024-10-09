@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -30,8 +30,10 @@ import {
   Radio,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Checkbox from "@mui/material/Checkbox";
+import { useDispatch } from "react-redux";
+import { findProducts } from "../../../State/Product/Action";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -46,6 +48,19 @@ export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const param = useParams();
+  const dispatch = useDispatch();
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParamms = new URLSearchParams(decodedQueryString);
+
+  const colorValue = searchParamms.get("color");
+  const sizeValue = searchParamms.get("size");
+  const priceValue = searchParamms.get("price");
+  const disccount = searchParamms.get("disccount");
+  const sortValue = searchParamms.get("sort");
+  const pageNumber = searchParamms.get("page") || 1;
+  const stock = searchParamms.get("stock");
 
   const handleFilterCheckboxButton = (value, sectionId) => {
     // Create a new URLSearchParams object from the current URL's query string
@@ -81,12 +96,40 @@ export default function Product() {
   const handleRadioFilterChange = (e, sectionId) => {
     // Create a new URLSearchParams object from the current URL's query string
     const searchParams = new URLSearchParams(location.search);
-    
-    searchParams.set(sectionId,e.target.value)
+
+    searchParams.set(sectionId, e.target.value);
 
     const query = searchParams.toString();
     navigate({ search: `?${query}` });
-  }
+  };
+
+  useEffect(() => {
+    const [minPrice, maxPrice] =
+      priceValue === null ? [0, 0] : priceValue.split("-").map(Number);
+
+    const data = {
+      category: param.lavelThree,
+      colors: colorValue || [],
+      sizes: sizeValue || [],
+      minPrice,
+      maxPrice,
+      minDiscount: disccount || 0,
+      sort: sortValue || "price_low",
+      pageNumber: pageNumber - 1,
+      pageSize: 10,
+      stock: stock,
+    };
+    dispatch(findProducts(data));
+  }, [
+    param.lavelThree,
+    colorValue,
+    sizeValue,
+    priceValue,
+    disccount,
+    sortValue,
+    pageNumber,
+    stock,
+  ]);
 
   return (
     <div className="bg-white">
@@ -364,7 +407,9 @@ export default function Product() {
                             {section.options.map((option, optionIdx) => (
                               <div key={optionIdx}>
                                 <FormControlLabel
-                                onChange={(e) => handleRadioFilterChange(e, section.id)}
+                                  onChange={(e) =>
+                                    handleRadioFilterChange(e, section.id)
+                                  }
                                   value={option.value}
                                   control={<Radio />}
                                   label={option.label}
