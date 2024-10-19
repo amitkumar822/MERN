@@ -18,8 +18,8 @@ const createOrder = async (user, shippAddress) => {
     await user.save();
   }
 
-  const cart = await cartService.findUserCart(user.id);
-  console.log("OrderService: \n",cart);
+  const cart = await cartService.findUserCart(user._id);
+
   const orderItems = [];
 
   for (const item of cart.cartItems) {
