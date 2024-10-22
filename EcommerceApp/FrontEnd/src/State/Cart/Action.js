@@ -1,3 +1,4 @@
+import { api } from "../../config/apiConfig";
 import {
   ADD_ITEM_TO_CART_FAILURE,
   ADD_ITEM_TO_CART_REQUEST,
@@ -12,6 +13,7 @@ import {
   UPDATE_CART_ITEM_REQUEST,
   UPDATE_CART_ITEM_SUCCESS,
 } from "./ActionType";
+
 
 export const get = () => async (dispatch) => {
   dispatch({ type: GET_CART_REQUEST });

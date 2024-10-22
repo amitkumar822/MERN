@@ -191,7 +191,8 @@ export default function Navigation() {
   };
 
   const handleCategoryClick = (category, section, item, close) => {
-    navigate(`/${category.id}/${section.id}/${item.id}`);
+    console.log("Navigation handleCateClik : ", item.name); // here something else item.id to replace by item.name
+    navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
   };
 

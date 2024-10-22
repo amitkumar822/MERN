@@ -6,4 +6,13 @@ export default defineConfig({
   optimizeDeps: {
     include: ["redux-thunk"], // Pre-bundle redux-thunk
   },
+  server: {
+    proxy: {
+      '/api' : {
+        target: "http://localhost:5454/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 });

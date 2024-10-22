@@ -61,6 +61,8 @@ export default function Product() {
   const sortValue = searchParamms.get("sort");
   const pageNumber = searchParamms.get("page") || 1;
   const stock = searchParamms.get("stock");
+  
+  // console.log("searchPar: ",JSON.stringify(decodedQueryString, null, 2));
 
   const handleFilterCheckboxButton = (value, sectionId) => {
     // Create a new URLSearchParams object from the current URL's query string
