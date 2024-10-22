@@ -62,7 +62,11 @@ export const registerUser = async (req, res) => {
       const token = await createTokenAndSaveCookie(newUser._id, res);
       res
         .status(201)
-        .json({ message: "User registered successfully", newUser, token: token });
+        .json({
+          message: "User registered successfully",
+          newUser,
+          token: token,
+        });
     }
   } catch (error) {
     console.log("User register Error: ", error);
@@ -122,6 +126,27 @@ export const logoutUser = async (req, res) => {
     res.status(201).json({ message: "User logged out successfully" });
   } catch (error) {
     console.log("logout error: " + error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getMyProfile = async (req, res) => {
+  try {
+    const user = await req.user;
+    res.status(201).json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getAdmin = async (req, res) => {
+  try {
+    const admin = await User.find({ role: "admin" });
+    if(!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+    res.status(201).json({ admin });
+  } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
 };

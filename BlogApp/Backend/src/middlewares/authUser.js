@@ -27,14 +27,18 @@ export const isAuthenticated = async (req, res, next) => {
 
 // autherization the user
 export const isAdmin = (...roles) => {
-    try {
-        return (req, res, next) => {
-            if(!roles.includes(req.user.role)) {
-                return res.status(401).json({ error: `User with given role ${req.user.role} does not exist`});
-            }
-            next();
-        }
-    } catch (error) {
-        return res.status(401).json({ error: "Invalid role" });
-    }
-}
+  try {
+    return (req, res, next) => {
+      if (!roles.includes(req.user.role)) {
+        return res
+          .status(401)
+          .json({
+            error: `User with given role ${req.user.role} does not exist`,
+          });
+      }
+      next();
+    };
+  } catch (error) {
+    return res.status(401).json({ error: "Invalid role" });
+  }
+};

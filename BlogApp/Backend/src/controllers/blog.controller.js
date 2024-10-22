@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Blog } from "../models/blog.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -78,14 +79,73 @@ export const deleteBlog = async (req, res) => {
 export const getAllBlogs = async (req, res) => {
   try {
     const allBlogs = await Blog.find();
-    if(allBlogs.length === 0) {
-      return res.status(404).json({message: "Blog not created"})
+    if (allBlogs.length === 0) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-    res.status(200).json({ message: "All blogs fetched successfully", blogs: allBlogs });
+    res
+      .status(200)
+      .json({ message: "All blogs fetched successfully", allBlogs });
   } catch (error) {
     console.log("Get all blogs Error: ", error);
     return res.status(500).json({
       message: "Internal server error",
     });
   }
-}
+};
+
+export const getSingleBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid blog id" });
+    }
+    const blog = await Blog.findById(id);
+
+    if (blog.length === 0) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    res.status(201).json({ message: "Get single blog successfully", blog });
+  } catch (error) {
+    console.log("Get single blog Error: ", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getMyBlog = async (req, res) => {
+  try {
+    const createdBy = req.user._id;
+    const blog = await Blog.find({ createdBy });
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    res.status(201).json({ message: "get my blog successfully", blog });
+  } catch (error) {
+    console.log("Get my blog Error: ", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const updateBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid blog id" });
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.status(201).json({ message: "Blog update successfully", updatedBlog });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
