@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
         const fetchBlogs = async () => {
             try {
                 const { data } = await axios.get('/api/blogs/get-all-blogs')
-                setBlogs(data)
+                setBlogs(data.blogs)
             } catch (error) {
                 console.log("AuthBlogs error: " + error.message);
             }
