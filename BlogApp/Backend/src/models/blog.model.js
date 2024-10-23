@@ -5,16 +5,16 @@ const blogSchema = new Schema({
         type: String,
         required: true
     },
-    // blogImage: {
-    //     public_id: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     url: {
-    //         type: String,
-    //         required: true
-    //     }
-    // },
+    blogImage: {
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
+    },
     category: {
         type: String,
         required: true,
@@ -28,10 +28,22 @@ const blogSchema = new Schema({
         type: String,
         // required: true,
     },
+    // adminPhoto: {
+    //     type: String,
+    //     // required: true,
+    // },
+    
     adminPhoto: {
-        type: String,
-        // required: true,
+        public_id: {
+            type: String,
+            // required: true
+        },
+        url: {
+            type: String,
+            // required: true
+        }
     },
+    
     createdBy: {
         type: Schema.ObjectId,
         ref: "User",

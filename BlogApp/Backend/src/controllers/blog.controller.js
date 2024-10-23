@@ -5,19 +5,19 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const createBlog = async (req, res) => {
   try {
-    // if (!req.files || Object.keys(req.files).length === 0) {
-    //   return res.status(400).json({ message: "Blog image must be required" });
-    // }
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ message: "Blog image must be required" });
+    }
 
-    // const { blogImage } = req.files;
+    const { blogImage } = req.files;
 
-    // const allowedFormates = ["image/jpeg", "image/png", "image/webp"];
+    const allowedFormates = ["image/jpeg", "image/png", "image/webp"];
 
-    // if (!allowedFormates.includes(blogImage.mimetype)) {
-    //   return res.status(400).json({
-    //     message: "Invalid photo format, Only jpeg, png and webp are allowed",
-    //   });
-    // }
+    if (!allowedFormates.includes(blogImage.mimetype)) {
+      return res.status(400).json({
+        message: "Invalid photo format, Only jpeg, png and webp are allowed",
+      });
+    }
 
     const { title, category, about } = req.body;
 
@@ -28,11 +28,14 @@ export const createBlog = async (req, res) => {
     }
 
     const adminName = req?.user?.name;
-    const adminPhoto = req?.user?.photo;
+    const adminPhoto = {
+      public_id: req.user.photo.public_id,
+      url: req.user.photo.url
+    };
     const createdBy = req?.user?._id;
 
     // upload photo on cloudinary server
-    // const cloudinaryResponse = await uploadOnCloudinary(blogImage.tempFilePath);
+    const cloudinaryResponse = await uploadOnCloudinary(blogImage.tempFilePath);
 
     const blogDate = {
       title,
@@ -41,10 +44,10 @@ export const createBlog = async (req, res) => {
       adminName,
       adminPhoto,
       createdBy,
-      //   blogImage: {
-      //     public_id: cloudinaryResponse?.public_id,
-      //     url: cloudinaryResponse?.url,
-      //   },
+      blogImage: {
+        public_id: cloudinaryResponse?.public_id,
+        url: cloudinaryResponse?.url,
+      },
     };
     const blog = await Blog.create(blogDate);
 
@@ -78,13 +81,11 @@ export const deleteBlog = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const blog = await Blog.find();
-    if (blog.length === 0) {
+    const blogs = await Blog.find();
+    if (blogs.length === 0) {
       return res.status(404).json({ message: "Blog not found" });
     }
-    res
-      .status(200)
-      .json({ message: "All blogs fetched successfully", blog });
+    res.status(200).json({ message: "All blogs fetched successfully", blogs });
   } catch (error) {
     console.log("Get all blogs Error: ", error);
     return res.status(500).json({
@@ -138,7 +139,9 @@ export const updateBlog = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid blog id" });
     }
-    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedBlog) {
       return res.status(404).json({ message: "Blog not found" });
     }
