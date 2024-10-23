@@ -78,13 +78,13 @@ export const deleteBlog = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const allBlogs = await Blog.find();
-    if (allBlogs.length === 0) {
+    const blog = await Blog.find();
+    if (blog.length === 0) {
       return res.status(404).json({ message: "Blog not found" });
     }
     res
       .status(200)
-      .json({ message: "All blogs fetched successfully", allBlogs });
+      .json({ message: "All blogs fetched successfully", blog });
   } catch (error) {
     console.log("Get all blogs Error: ", error);
     return res.status(500).json({
