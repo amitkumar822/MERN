@@ -19,7 +19,7 @@ const Navbar = () => {
 
           {/* Desktop */}
           <div className="hidden md:flex">
-            <ul className="flex space-x-6 uppercase font-semibold">
+            <ul className="flex space-x-6 uppercase">
               <li>
                 <Link to="/" className="hover:text-blue-600">
                   Home
