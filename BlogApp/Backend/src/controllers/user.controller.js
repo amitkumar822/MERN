@@ -60,13 +60,11 @@ export const registerUser = async (req, res) => {
     if (newUser) {
       // token generate and save in cookie
       const token = await createTokenAndSaveCookie(newUser._id, res);
-      res
-        .status(201)
-        .json({
-          message: "User registered successfully",
-          newUser,
-          token: token,
-        });
+      res.status(201).json({
+        message: "User registered successfully",
+        newUser,
+        token: token,
+      });
     }
   } catch (error) {
     console.log("User register Error: ", error);
@@ -82,6 +80,12 @@ export const loginUser = async (req, res) => {
 
     if ([email, password].some((field) => field?.trim() === "")) {
       return res.status(400).json({ message: "All fields must be required" });
+    }
+
+    const emailValidation = await User.findOne({ email });
+
+    if (!emailValidation) {
+      return res.status(404).json({ message: "Email not found" });
     }
 
     const user = await User.findOne({ email }).select("+password");
@@ -142,7 +146,7 @@ export const getMyProfile = async (req, res) => {
 export const getAdmin = async (req, res) => {
   try {
     const admin = await User.find({ role: "admin" });
-    if(!admin) {
+    if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
     res.status(201).json({ admin });
