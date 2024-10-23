@@ -16,7 +16,7 @@ export const AuthProvider = ({children}) => {
             }
         }
         fetchBlogs();
-    }, [])
+    }, [setBlogs])
     
   return (
     <AuthContext.Provider value={{blogs}}>
