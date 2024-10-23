@@ -5,19 +5,19 @@ import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
   try {
-    // if (!req.files || Object.keys(req.files).length === 0) {
-    //   return res.status(400).json({ message: "User photo must be required" });
-    // }
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ message: "User photo must be required" });
+    }
 
-    // const { photo } = req.files;
+    const { photo } = req.files;
 
-    // const allowedFormates = ["image/jpeg", "image/png", "image/webp"];
+    const allowedFormates = ["image/jpeg", "image/png", "image/webp"];
 
-    // if (!allowedFormates.includes(photo.mimetype)) {
-    //   return res.status(400).json({
-    //     message: "Invalid photo format, Only jpeg, png and webp are allowed",
-    //   });
-    // }
+    if (!allowedFormates.includes(photo.mimetype)) {
+      return res.status(400).json({
+        message: "Invalid photo format, Only jpeg, png and webp are allowed",
+      });
+    }
 
     const { email, password, name, phone, education, role } = req.body;
 
@@ -38,7 +38,7 @@ export const registerUser = async (req, res) => {
     }
 
     // upload photo on cloudinary server
-    // const cloudinaryResponse = await uploadOnCloudinary(photo.tempFilePath);
+    const cloudinaryResponse = await uploadOnCloudinary(photo.tempFilePath);
 
     // hash password
     const isPasswordHash = await bcrypt.hash(password, 10);
@@ -50,10 +50,10 @@ export const registerUser = async (req, res) => {
       phone,
       education,
       role,
-      // photo: {
-      //   public_id: cloudinaryResponse?.public_id,
-      //   url: cloudinaryResponse?.url,
-      // },
+      photo: {
+        public_id: cloudinaryResponse?.public_id,
+        url: cloudinaryResponse?.url,
+      },
     });
     await newUser.save();
 

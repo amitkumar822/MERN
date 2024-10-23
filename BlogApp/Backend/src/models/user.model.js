@@ -17,16 +17,16 @@ const userSchema = new Schema({
         required: true,
         // unique: true,
     },
-    // photo: {
-    //     public_id: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     url: {
-    //         type: String,
-    //         required: true
-    //     }
-    // },
+    photo: {
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
+    },
     education: {
         type: String,
         required: true,
