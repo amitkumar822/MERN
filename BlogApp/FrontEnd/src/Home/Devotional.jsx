@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthProvider";
 const Devotional = () => {
   const { blogs } = useAuth();
   const devotionalBlogs = blogs?.filter(
-    (blog) => blog?.category === "Education"
+    (blog) => blog?.category === "Devotion"
   );
   return (
     <div>
