@@ -1,22 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useCreators } from "../contexts/CreatorsProvider";
 
 const Creator = () => {
-  const [admin, setAdmin] = useState();
-
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      try {
-        const { data } = await axios.get("/api/users/get-admin");
-        console.log("Response: ", data.admin);
-        setAdmin(data.admin);
-      } catch (error) {
-        console.log("Error fetching admin: ", error);
-      }
-    };
-    fetchAdmin();
-  }, []);
+  const { creators: admin } = useCreators();
 
   return (
     <div className="container mx-auto p-4">
@@ -25,9 +13,7 @@ const Creator = () => {
         {admin && admin.length > 0 ? (
           admin.slice(0, 6).map((element, index) => {
             return (
-              <div
-                key={index}
-              >
+              <div key={index}>
                 <Link to={`/`}>
                   <div className="flex flex-col items-center -ml-14">
                     <img
