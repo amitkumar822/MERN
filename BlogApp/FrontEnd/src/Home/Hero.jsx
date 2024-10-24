@@ -15,11 +15,11 @@ const Hero = () => {
               key={element._id}
               className="bg-white rounded-lg hover:shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
-              <div className="group relative">
+              <div className="relative">
                 <img
                   src={element?.blogImage?.url}
-                  className="w-full h-56 object-cover"
-                  alt=""
+                  className="w-full h-56 object-cover rounded-t-lg"
+                  alt="blog"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-75 group-hover:opacity-100 transition-transform duration-300"></div>
                 <h1 className="absolute bottom-4 left-4 text-white bg-[rgba(0,0,0,0.3)] px-2 -ml-4 rounded-r-md font-bold text-xl group-hover:text-yellow-400 transition-colors duration-300">
