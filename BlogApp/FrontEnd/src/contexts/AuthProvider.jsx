@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
             // Authorization: `Bearer ${parsedToken.token}`
           },
         });
-        console.log("fProfile: ", data);
+        // console.log("fProfile: ", data);
         setProfile(data.user);
         setIsAuthenticated(true);
         // }
