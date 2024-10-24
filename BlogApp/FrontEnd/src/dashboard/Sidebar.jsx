@@ -33,8 +33,6 @@ const Sidebar = ({ component, setComponent }) => {
     }
   };
 
-  console.log("isAuthenticated: ", isAuthenticated);
-
   if (!isAuthenticated) {
     return <Navigate to={"/"} />;
   }
@@ -67,7 +65,7 @@ const Sidebar = ({ component, setComponent }) => {
           />
           <p className="text-lg font-semibold">{profile?.name}</p>
         </div>
-        <ul className="space-y-6">
+        <ul className="space-y-6 mx-4">
           <button
             onClick={() => handleComponents("My Blog")}
             className="w-full px-4 py-2 bg-green-500 rounded-lg hover:bg-green-700 transition duration-300"
