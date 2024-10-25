@@ -30,7 +30,7 @@ export const createBlog = async (req, res) => {
     const adminName = req?.user?.name;
     const adminPhoto = {
       public_id: req.user.photo.public_id,
-      url: req.user.photo.url
+      url: req.user.photo.url,
     };
     const createdBy = req?.user?._id;
 
@@ -60,19 +60,50 @@ export const createBlog = async (req, res) => {
   }
 };
 
+// export const deleteBlog = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const blogDeleted = await Blog.findByIdAndDelete(id);
+
+//     if (blogDeleted) {
+//       return res.status(200).json({ message: "Blog deleted successfully" });
+//     } else {
+//       return res.status(404).json({ message: "Blog not found" });
+//     }
+//   } catch (error) {
+//     console.log("Delete blog Error: ", error);
+//     return res.status(500).json({
+//       message: "Internal server error",
+//     });
+//   }
+// };
+
+import { v2 as cloudinary } from "cloudinary";
+
 export const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const blogDeleted = await Blog.findByIdAndDelete(id);
-
-    if (blogDeleted) {
-      return res.status(200).json({ message: "Blog deleted successfully" });
-    } else {
+    // Find the blog to get the Cloudinary public_id for deletion
+    const blog = await Blog.findById(id);
+    if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
+
+    // Delete the image from Cloudinary using public_id
+    if (blog.blogImage && blog.blogImage.public_id) {
+      await cloudinary.uploader.destroy(blog.blogImage.public_id);
+    }
+
+    // Delete the blog document from MongoDB
+    await Blog.findByIdAndDelete(id);
+
+    res
+      .status(200)
+      .json({ message: "Blog and associated image deleted successfully" });
   } catch (error) {
-    console.log("Delete blog Error: ", error);
+    console.error("Delete blog error: ", error);
     return res.status(500).json({
       message: "Internal server error",
     });
@@ -133,20 +164,69 @@ export const getMyBlog = async (req, res) => {
   }
 };
 
+// export const updateBlog = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({ message: "Invalid blog id" });
+//     }
+//     const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
+//       new: true,
+//     });
+//     if (!updatedBlog) {
+//       return res.status(404).json({ message: "Blog not found" });
+//     }
+//     res.status(201).json({ message: "Blog update successfully", updatedBlog });
+//   } catch (error) {
+//     return res.status(500).json({
+//       message: "Internal server error",
+//     });
+//   }
+// };
+
 export const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid blog id" });
     }
-    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
+
+    // Initialize blog update data with request body
+    const blogData = { ...req.body };
+
+    // Check if a new blogImage is uploaded
+    if (req.files && req.files.blogImage) {
+      const { blogImage } = req.files;
+      const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
+      if (!allowedFormats.includes(blogImage.mimetype)) {
+        return res.status(400).json({
+          message: "Invalid photo format, Only jpeg, png and webp are allowed",
+        });
+      }
+
+      // Upload new image to Cloudinary
+      const cloudinaryResponse = await uploadOnCloudinary(
+        blogImage.tempFilePath
+      );
+
+      // Add new image data to blogData
+      blogData.blogImage = {
+        public_id: cloudinaryResponse.public_id,
+        url: cloudinaryResponse.url,
+      };
+    }
+
+    const updatedBlog = await Blog.findByIdAndUpdate(id, blogData, {
       new: true,
     });
+
     if (!updatedBlog) {
       return res.status(404).json({ message: "Blog not found" });
     }
-    res.status(201).json({ message: "Blog update successfully", updatedBlog });
+
+    res.status(201).json({ message: "Blog updated successfully", updatedBlog });
   } catch (error) {
+    console.error("Error updating blog:", error);
     return res.status(500).json({
       message: "Internal server error",
     });
