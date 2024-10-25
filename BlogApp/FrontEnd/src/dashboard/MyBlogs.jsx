@@ -46,7 +46,7 @@ const MyBlogs = () => {
                   </h4>
                   <div className="flex justify-between mt-4">
                     <Link
-                      to="/"
+                      to={`/blog/update/${element?._id}`}
                       className="text-blue-500 bg-white rounded-md shadow-lg px-3 py-1 border border-gray-400 hover:underline"
                     >
                       UPDATE
