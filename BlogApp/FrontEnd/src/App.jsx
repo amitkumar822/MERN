@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { useAuth } from "./contexts/AuthProvider";
 import Creators from "./pages/Creators";
+import UpdateBlog from "./dashboard/UpdateBlog";
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/blog/update/:id" element={<UpdateBlog />} />
           </Routes>
           {!hideNavbarFooter && <Footer />}
         </div>
