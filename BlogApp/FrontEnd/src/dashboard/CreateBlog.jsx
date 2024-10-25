@@ -35,6 +35,7 @@ const CreateBlog = () => {
 
     try {
       const response = await axios.post("/api/blogs/create", formData, {
+        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
