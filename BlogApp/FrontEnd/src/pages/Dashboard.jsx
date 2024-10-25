@@ -13,16 +13,20 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Sidebar component={component} setComponent={setComponent} />
-      {component === "My Profile" ? (
-        <MyProfile />
-      ) : component === "Create Blog" ? (
-        <CreateBlog />
-      ) : component === "Update Blog" ? (
-        <UpdateBlog />
-      ) : (
-        <MyBlogs />
-      )}
+      <div className="grid grid-cols-[14rem_auto]">
+       <div> <Sidebar component={component} setComponent={setComponent} /></div>
+        <div>
+          {component === "My Profile" ? (
+            <MyProfile />
+          ) : component === "Create Blog" ? (
+            <CreateBlog />
+          ) : component === "Update Blog" ? (
+            <UpdateBlog />
+          ) : (
+            <MyBlogs />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
