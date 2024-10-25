@@ -13,8 +13,11 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-[14rem_auto]">
-       <div> <Sidebar component={component} setComponent={setComponent} /></div>
+      <div className="sm:grid sm:grid-cols-[14rem_auto]">
+        <div>
+          {" "}
+          <Sidebar component={component} setComponent={setComponent} />
+        </div>
         <div>
           {component === "My Profile" ? (
             <MyProfile />
