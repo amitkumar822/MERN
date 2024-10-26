@@ -194,7 +194,7 @@ export const deleteUser = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "User12 and associated image successfully deleted" });
+      .json({ message: "User and associated image successfully deleted" });
   } catch (error) {
     console.error("Delete user error:", error);
     return res.status(500).json({
