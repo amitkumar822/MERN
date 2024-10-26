@@ -54,15 +54,15 @@ const Register = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Response: ", response);
+      console.log("Response: ", data.newUser);
 
       toast.success("Register Success");
       setIsAuthenticated(true);
-      setUserInfo(data.user);
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUserInfo(data.newUser);
+      localStorage.setItem("userInfo", JSON.stringify(data.newUser));
       localStorage.setItem("isAuthenticated", true);
 
-      // navigateTo("/");
+      navigateTo("/");
 
       setName("");
       setEmail("");

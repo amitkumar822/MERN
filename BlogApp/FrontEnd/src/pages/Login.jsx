@@ -32,9 +32,9 @@ const Login = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.success("Login success");
       navigateTo("/");
       // console.log("response: ", data?.user);
-      toast.success("Login success");
 
       setEmail("");
       setPassword("");
