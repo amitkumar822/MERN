@@ -25,14 +25,14 @@ const Sidebar = ({ component, setComponent }) => {
   return (
     <>
       <div
-        className="sm:hidden fixed top-4 left-4 z-50"
+        className={`sm:hidden fixed top-4 left-4 z-50 ${show ? "hidden" : ""}`}
         onClick={() => setShow(!show)}
       >
         <CgMenuGridO className="text-2xl cursor-pointer" />
       </div>
 
       <div
-        className={`w-64 h-full shadow-lg fixed top-0 left-0 bg-gray-50 transition-transform duration-300 transform sm:translate-x-0 ${
+        className={`w-64 h-full shadow-lg fixed top-0 left-0 pt-5 bg-gray-50 transition-transform duration-300 transform sm:translate-x-0 z-10 ${
           show ? "translate-x-0" : "-translate-x-full"
         }`}
       >
