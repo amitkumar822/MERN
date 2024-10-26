@@ -74,71 +74,13 @@ const MyProfile = () => {
                 onClick={handleDeleteProfile}
                 className="bg-red-600 hover:bg-red-700 duration-300 text-white font-semibold px-4 py-2 rounded-lg"
               >
-                Yes
+                Yes, Delete
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
-      {/* <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full shadow-black">
-          <div className="relative">
-            <img
-              src={profile?.photo?.url}
-              alt="avatar"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute inset-x-0 bottom-0 transform translate-y-1/2">
-              <img
-                src={profile?.photo?.url}
-                alt="avatar"
-                className="w-24 h-24 rounded-full mx-auto border-4 border-gray-700"
-              />
-            </div>
-          </div>
-          <div className="px-6 py-8 mt-4">
-            <h2 className="text-center text-gray-800 text-2xl font-semibold">
-              {profile?.name}
-            </h2>
-            <p className="text-center text-gray-600 mt-2">{profile?.email}</p>
-            <p className="text-center text-gray-600 mt-2">{profile?.phone}</p>
-            <div className="flex justify-center items-center mt-2">
-              <button
-                onClick={() =>
-                  setDeleteToggleButtonShow(!deleteToggleButtonShow)
-                }
-                className="text-center bg-red-500 hover:bg-red-700 duration-300 shadow-md font-semibold shadow-black px-2 py-1 rounded-lg text-white uppercase"
-              >
-                Delete Profile
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        {deleteToggleButtonShow && (
-          <div className="absolute md:text-4xl sm:text-2xl text-sm top-[5%] sm:right-[2rem] right-[2rem] bg-[rgba(131,119,205,0.6)] rounded-lg text-white shadow-md shadow-black">
-            <h1 className="font-semibold text-black px-10 py-5">
-              Are you sure to delete profile?
-            </h1>
-            <div className="flex justify-around mb-4">
-              <button
-                onClick={() => setDeleteToggleButtonShow(false)}
-                className="font-semibold bg-green-600 hover:bg-green-700 duration-300 px-2 py-1 rounded-lg shadow-md shadow-black"
-              >
-                Cancle
-              </button>
-              <button
-                onClick={handleDeleteProfile}
-                className="font-semibold bg-red-600 hover:bg-red-700 duration-300 px-2 py-1 rounded-lg shadow-md shadow-black"
-              >
-                Yes
-              </button>
-            </div>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };
