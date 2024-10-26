@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthProvider";
+import { useNavigate } from "react-router";
 
 const MyProfile = () => {
+  const navigateTo = useNavigate();
   const { profile } = useAuth();
-  // console.log("profile: ", profile);
+  const [deleteToggleButtonShow, setDeleteToggleButtonShow] = useState(false);
+
+  const handleDeleteProfile = async () => {
+    try {
+      await axios.delete(`/api/users/user-delete/${profile._id}`);
+      toast.success("User deleted successfully");
+      localStorage.clear();
+      navigateTo("/login");
+    } catch (error) {
+      toast.error(error.response.data.message || "Internal server error");
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full shadow-black">
           <div className="relative">
             <img
               src={profile?.photo?.url}
@@ -22,16 +38,47 @@ const MyProfile = () => {
               />
             </div>
           </div>
-          <div className="px-6 py-8 mt-2">
+          <div className="px-6 py-8 mt-4">
             <h2 className="text-center text-gray-800 text-2xl font-semibold">
               {profile?.name}
             </h2>
             <p className="text-center text-gray-600 mt-2">{profile?.email}</p>
             <p className="text-center text-gray-600 mt-2">{profile?.phone}</p>
-            <p className="text-center text-gray-600 mt-2">{profile?.role}</p>
+            {/* <p className="text-center text-gray-600 mt-2">{profile?.role}</p> */}
+            <div className="flex justify-center items-center mt-2">
+              <button
+                onClick={() =>
+                  setDeleteToggleButtonShow(!deleteToggleButtonShow)
+                }
+                className="text-center bg-red-500 hover:bg-red-700 duration-300 shadow-md font-semibold shadow-black px-2 py-1 rounded-lg text-white uppercase"
+              >
+                Delete Profile
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {deleteToggleButtonShow && (
+        <div className="absolute top-[2%] left-[37rem] bg-[rgba(131,119,205,0.6)] rounded-lg text-white shadow-md shadow-black">
+          <h1 className="md:text-4xl text-2xl font-semibold text-black px-10 py-5">
+            Are you sure to delete profile?
+          </h1>
+          <div className="flex justify-around mb-4">
+            <button
+              onClick={() => setDeleteToggleButtonShow(false)}
+              className="font-semibold bg-green-600 hover:bg-green-700 duration-300 px-2 py-1 rounded-lg shadow-md shadow-black"
+            >
+              Cancle
+            </button>
+            <button
+              onClick={handleDeleteProfile}
+              className="font-semibold bg-red-600 hover:bg-red-700 duration-300 px-2 py-1 rounded-lg shadow-md shadow-black"
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

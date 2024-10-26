@@ -7,13 +7,14 @@ import { useAuth } from "../contexts/AuthProvider";
 const Login = () => {
   const navigateTo = useNavigate();
 
-  const { profile, userInfo, setIsAuthenticated, setUserInfo } = useAuth();
+  const { setIsAuthenticated, setUserInfo, fetchProfile } = useAuth();
+  // console.log("profileLogin", profile)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if ([email, password, role].some((field) => field.trim() === "")) {
@@ -33,6 +34,8 @@ const Login = () => {
         },
       });
       toast.success("Login success");
+      // Fetch profile before navigating
+      await fetchProfile();
       navigateTo("/");
       // console.log("response: ", data?.user);
 
@@ -43,7 +46,7 @@ const Login = () => {
       setIsAuthenticated(true);
       setUserInfo(data.user);
       localStorage.setItem("userInfo", JSON.stringify(data.user));
-      localStorage.setItem("isAuthenticated", true);
+      // localStorage.setItem("isAuthenticated", true);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message || "Internal Server Error");
@@ -54,7 +57,7 @@ const Login = () => {
     <>
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
-          <form onSubmit={handleRegister}>
+          <form onSubmit={handleLogin}>
             <div className="font-semibold text-xl items-center text-center">
               Ami<span className="text-blue-500">Blog</span>
             </div>

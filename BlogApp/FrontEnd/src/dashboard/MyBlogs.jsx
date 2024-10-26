@@ -4,22 +4,25 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const MyBlogs = () => {
+  // const [myBlogs, setMyBlogs] = useState(
+  //   JSON.parse(localStorage.getItem("myBlogs"))
+  // );
   const [myBlogs, setMyBlogs] = useState();
 
   useEffect(() => {
     const fetchMyBlogs = async () => {
       try {
         const { data } = await axios.get("/api/blogs/get-my-blog");
-        // console.log("MyBlogs: ", data.blog);
+        // localStorage.setItem("myBlogs", JSON.stringify(data.blogs));
         setMyBlogs(data.blog);
-        toast.success("My Blogs fetched successfully");
+        // toast.success("My Blogs fetched successfully");
       } catch (error) {
         console.error(error.message);
       }
     };
     fetchMyBlogs();
   }, []);
-  
+
   return (
     <div>
       <div className="container mx-auto my-12 p-4">
@@ -59,7 +62,9 @@ const MyBlogs = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">You have not posted any blog to see!</p>
+            <p className="text-center text-gray-500">
+              You have not posted any blog to see!
+            </p>
           )}
         </div>
       </div>
