@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { Blog } from "../models/blog.model.js";
-import { User } from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
@@ -79,7 +78,6 @@ export const createBlog = async (req, res) => {
 //     });
 //   }
 // };
-
 
 export const deleteBlog = async (req, res) => {
   try {
