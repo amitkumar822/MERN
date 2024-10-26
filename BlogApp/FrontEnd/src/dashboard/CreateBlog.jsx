@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const CreateBlog = () => {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");
@@ -21,6 +23,7 @@ const CreateBlog = () => {
 
   const handleCreaterBlogs = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if ([title, category, about].some((field) => field.trim() === "")) {
       toast.info("All fields must be required");
@@ -40,6 +43,7 @@ const CreateBlog = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      setLoading(false);
       toast.success("Blog Create Success");
       // console.log("response: ", response.data);
       setTitle("");
@@ -48,7 +52,8 @@ const CreateBlog = () => {
       setBlogImagePreview("");
       setBlogImage("");
     } catch (error) {
-      toast.error(error.message);
+      setLoading(false);
+      toast.error(error.response.data.message || "Internal Server Error");
     }
   };
 
@@ -91,7 +96,7 @@ const CreateBlog = () => {
                   <img
                     src={blogImagePreview ? `${blogImagePreview}` : "Photo"}
                     alt="photo"
-                     className="max-w-56 max-h-56 overflow-hidden"
+                    className="max-w-56 max-h-56 overflow-hidden"
                   />
                 </div>
                 <input
@@ -116,7 +121,7 @@ const CreateBlog = () => {
               type="submit"
               className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
             >
-              Post Blog
+              {loading ? <ClipLoader color="#fff" size={20} /> : "Post Blog"}
             </button>
           </form>
         </div>

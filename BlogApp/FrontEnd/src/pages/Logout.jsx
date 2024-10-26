@@ -18,7 +18,7 @@ const Logout = () => {
       nagivateTo("/login");
       toast.success("User logged out");
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
       toast.error(error.response.data.message || "Logout failed");
     }
   };

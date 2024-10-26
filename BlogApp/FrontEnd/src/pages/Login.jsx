@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthProvider";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Login = () => {
   const navigateTo = useNavigate();
-
   const { setIsAuthenticated, setUserInfo, fetchProfile } = useAuth();
-  // console.log("profileLogin", profile)
-
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +22,7 @@ const Login = () => {
       return;
     }
 
+    setLoading(true); // Start loading spinner
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
@@ -34,11 +35,9 @@ const Login = () => {
         },
       });
       toast.success("Login success");
-      // Fetch profile before navigating
       await fetchProfile();
       navigateTo("/");
-      // console.log("response: ", data?.user);
-
+      
       setEmail("");
       setPassword("");
       setRole("");
@@ -46,10 +45,11 @@ const Login = () => {
       setIsAuthenticated(true);
       setUserInfo(data.user);
       localStorage.setItem("userInfo", JSON.stringify(data.user));
-      // localStorage.setItem("isAuthenticated", true);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message || "Internal Server Error");
+    } finally {
+      setLoading(false); // Stop loading spinner
     }
   };
 
@@ -65,7 +65,7 @@ const Login = () => {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md overflow-hidden"
             >
               <option value="">Select Role</option>
               <option value="user">User</option>
@@ -100,9 +100,10 @@ const Login = () => {
             </p>
             <button
               type="submit"
-              className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
+              className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white flex items-center justify-center"
+              disabled={loading} // Disable button when loading
             >
-              Login
+              {loading ? <ClipLoader color="#fff" size={20} /> : "Login"}
             </button>
           </form>
         </div>

@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthProvider";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Register = () => {
   const navigateTo = useNavigate();
   const { setIsAuthenticated, setUserInfo } = useAuth();
 
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -29,6 +31,7 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (
       [email, name, phone, password, role, education].some(
@@ -54,8 +57,8 @@ const Register = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Response: ", data.newUser);
-
+      // console.log("Response: ", data.newUser);
+      setLoading(false);
       toast.success("Register Success");
       setIsAuthenticated(true);
       setUserInfo(data.newUser);
@@ -72,6 +75,7 @@ const Register = () => {
       setEducation("");
       setPhoto("");
     } catch (error) {
+      setLoading(false);
       console.log(error);
       toast.error(error.response.data.message || "User registration failed");
     }
@@ -167,7 +171,7 @@ const Register = () => {
               type="submit"
               className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
             >
-              Register
+              {loading ? <ClipLoader color="#fff" size={20} /> : "Register"}
             </button>
           </form>
         </div>
