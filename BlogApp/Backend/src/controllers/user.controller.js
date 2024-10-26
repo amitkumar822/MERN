@@ -157,22 +157,48 @@ export const getAdmin = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const user = await User.findById(id);
-  if (!user) {
-    res.status(404).json({ message: `User not found whith this id ${id}` });
+    // Find the user to retrieve the Cloudinary `public_id`
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: `User not found with this id ${id}` });
+    }
+
+    // Attempt to delete the image from Cloudinary if `public_id` exists
+    if (user.photo && user.photo.public_id) {
+      const result = await cloudinary.uploader.destroy(user.photo.public_id);
+
+      // Check if the image was successfully deleted from Cloudinary
+      if (result.result !== "ok") {
+        console.error("Cloudinary deletion error:", result);
+        return res.status(500).json({
+          message: "Failed to delete image from Cloudinary",
+        });
+      }
+    } else {
+      console.warn("No valid public_id found for user's photo.");
+      return res.status(500).json({
+        message: "No valid public_id found for user's photo.",
+      });
+    }
+
+    // Delete the user from MongoDB
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return res.status(400).json({ message: "Failed to delete user" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "User12 and associated image successfully deleted" });
+  } catch (error) {
+    console.error("Delete user error:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
-
-  // Delete the image from Cloudinary using public_id
-  if (user.photo && user.photo.public_id) {
-    await cloudinary.uploader.destroy(user.photo.public_id);
-  }
-
-  const deletedUser = await User.findByIdAndDelete(id);
-  if (!deletedUser) {
-    res.status(400).json({ message: "Faild to delete user" });
-  }
-
-  res.status(201).json({ message: "User successfull deleted", deleteUser });
 };

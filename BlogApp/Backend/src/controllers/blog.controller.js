@@ -60,25 +60,6 @@ export const createBlog = async (req, res) => {
   }
 };
 
-// export const deleteBlog = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const blogDeleted = await Blog.findByIdAndDelete(id);
-
-//     if (blogDeleted) {
-//       return res.status(200).json({ message: "Blog deleted successfully" });
-//     } else {
-//       return res.status(404).json({ message: "Blog not found" });
-//     }
-//   } catch (error) {
-//     console.log("Delete blog Error: ", error);
-//     return res.status(500).json({
-//       message: "Internal server error",
-//     });
-//   }
-// };
-
 export const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,19 +70,37 @@ export const deleteBlog = async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Delete the image from Cloudinary using public_id
+    // Check and delete the image from Cloudinary
     if (blog.blogImage && blog.blogImage.public_id) {
-      await cloudinary.uploader.destroy(blog.blogImage.public_id);
+      const result = await cloudinary.uploader.destroy(
+        blog.blogImage.public_id
+      );
+
+      // Check if the deletion from Cloudinary was successful
+      if (result.result !== "ok") {
+        console.error("Cloudinary deletion error:", result);
+        return res.status(500).json({
+          message: "Failed to delete image from Cloudinary",
+        });
+      }
+    } else {
+      console.warn("No valid public_id found for user's photo.");
+      return res.status(500).json({
+        message: "No valid public_id found for blog image.",
+      });
     }
 
     // Delete the blog document from MongoDB
-    await Blog.findByIdAndDelete(id);
+    const deletedBlog = await Blog.findByIdAndDelete(id);
+    if (!deletedBlog) {
+      return res.status(400).json({ message: "Faild to delete user" });
+    }
 
-    res
-      .status(200)
-      .json({ message: "Blog and associated image deleted successfully" });
+    return res.status(200).json({
+      message: "Blog and associated image deleted successfully",
+    });
   } catch (error) {
-    console.error("Delete blog error: ", error);
+    console.error("Delete blog error:", error);
     return res.status(500).json({
       message: "Internal server error",
     });
@@ -161,26 +160,6 @@ export const getMyBlog = async (req, res) => {
     });
   }
 };
-
-// export const updateBlog = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     if (!mongoose.Types.ObjectId.isValid(id)) {
-//       return res.status(400).json({ message: "Invalid blog id" });
-//     }
-//     const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
-//       new: true,
-//     });
-//     if (!updatedBlog) {
-//       return res.status(404).json({ message: "Blog not found" });
-//     }
-//     res.status(201).json({ message: "Blog update successfully", updatedBlog });
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: "Internal server error",
-//     });
-//   }
-// };
 
 export const updateBlog = async (req, res) => {
   try {
