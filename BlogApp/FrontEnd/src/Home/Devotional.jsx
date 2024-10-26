@@ -20,7 +20,7 @@ const Devotional = () => {
             devotionalBlogs.map((blog, index) => {
               return (
                 <Link
-                  to={`/blog/${blog?.id}`}
+                  to={`/blog/${blog?._id}`}
                   key={index}
                   className="relative rounded-lg overflow-hidden shadow-md transform hover:scale-105 transition-transform duration-300"
                 >
@@ -38,7 +38,9 @@ const Devotional = () => {
               );
             })
           ) : (
-            <div></div>
+            <div className="flex h-screen items-center justify-center">
+              Loading...
+            </div>
           )}
         </div>
       </div>

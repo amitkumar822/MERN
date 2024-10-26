@@ -13,7 +13,7 @@ export const CreatorsProvider = ({ children }) => {
         // console.log(data);
         setCreators(data.admin);
       } catch (error) {
-        console.log("Error CreatorsProvider", error);
+        console.log("Error CreatorsProvider", error.message);
       }
     };
     fetchCreators();

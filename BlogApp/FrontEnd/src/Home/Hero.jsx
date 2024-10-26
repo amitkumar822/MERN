@@ -11,7 +11,7 @@ const Hero = () => {
         blogs.slice(0, 4).map((element) => {
           return (
             <Link
-              to={`/`}
+              to={`/blog/${element?._id}`}
               key={element._id}
               className="bg-white rounded-lg hover:shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
@@ -27,11 +27,15 @@ const Hero = () => {
                 </h1>
               </div>
               <div className="flex p-6 items-center">
-                <img src={element?.adminPhoto.url}
-                className="w-12 h-12 object-cover rounded-full border-2 border-yellow-400"
-                alt="" />
+                <img
+                  src={element?.adminPhoto.url}
+                  className="w-12 h-12 object-cover rounded-full border-2 border-yellow-400"
+                  alt=""
+                />
                 <div className="ml-4">
-                  <p className="text-lg font-semibold text-gray-800">{element.adminName}</p>
+                  <p className="text-lg font-semibold text-gray-800">
+                    {element.adminName}
+                  </p>
                   <p className="text-xs text-gray-400">New</p>
                 </div>
               </div>
@@ -39,7 +43,9 @@ const Hero = () => {
           );
         })
       ) : (
-        <div></div>
+        <div className="">
+          Loading...
+        </div>
       )}
     </div>
   );

@@ -38,7 +38,7 @@ const Trending = () => {
                 key={index}
                 className="m-2 px-4 py-4 rounded-lg border border-gray-400 overflow-hidden"
               >
-                <Link to={`/`}>
+                <Link to={`/blog/${element?._id}`}>
                   <div className=" relative">
                     <div className="bg-orange-500 w-54 h-48 rounded-t-lg overflow-hidden">
                       <img
@@ -75,7 +75,9 @@ const Trending = () => {
             );
           })
         ) : (
-          <div></div>
+          <div className="flex h-screen items-center justify-center">
+            Loading...
+          </div>
         )}
       </Carousel>
     </div>

@@ -41,7 +41,7 @@ const UpdateBlog = () => {
       } catch (error) {
         console.log(
           "Single Blog Fetch Error on Update Blog section: \n",
-          error
+          error.message
         );
       }
     };

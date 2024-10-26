@@ -7,7 +7,7 @@ import UpdateBlog from "../dashboard/UpdateBlog";
 import MyBlogs from "../dashboard/MyBlogs";
 
 const Dashboard = () => {
-  const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
+  // const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
 
   const [component, setComponent] = useState("My Blog");
 

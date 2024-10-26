@@ -13,6 +13,7 @@ const Contact = () => {
     watch,
     formState: { errors },
   } = useForm();
+  
   const onSubmit = async (data) => {
     const userInfo = {
       access_key: "7600ad08-b0ad-4a8e-8852-8561d6531565",
@@ -24,8 +25,8 @@ const Contact = () => {
       await axios.post("https://api.web3forms.com/submit", userInfo);
       toast.success("Send message on admin");
     } catch (error) {
-      console.error(error);
-      toast.error(error);
+      console.error(error.message);
+      toast.error(error.message);
     }
   };
 

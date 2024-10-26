@@ -3,9 +3,10 @@ import { useAuth } from "../contexts/AuthProvider";
 import { Link } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
+import Logout from "../pages/Logout";
 
 const Navbar = () => {
-  const { blog } = useAuth();
+  const {profile, isAuthenticated } = useAuth();
 
   const [show, setShow] = useState();
 
@@ -53,19 +54,27 @@ const Navbar = () => {
           </div>
 
           <div className="space-x-2 hidden md:flex">
+            {profile?.role === "admin" ? (
             <Link
               to="/dashboard"
               className="bg-blue-600 hover:bg-blue-800 text-white font-semibold duration-300 px-4 py-2 rounded"
             >
               DASHBOARD
             </Link>
+            ) : null}
 
-            <Link
-              to="/login"
-              className="bg-red-600 hover:bg-red-800 text-white font-semibold duration-300 px-4 py-2 rounded"
-            >
-              LOGIN
-            </Link>
+            {!isAuthenticated ? (
+              <Link
+                to="/login"
+                className="bg-red-600 hover:bg-red-800 text-white font-semibold duration-300 px-4 py-2 rounded"
+              >
+                LOGIN
+              </Link>
+            ) : (
+              <div className="bg-red-600 hover:bg-red-800 cursor-pointer text-white font-semibold duration-300 px-4 py-2 rounded">
+                <Logout />
+              </div>
+            )}
           </div>
         </div>
 
@@ -74,27 +83,67 @@ const Navbar = () => {
           <div className="bg-white">
             <ul className="flex flex-col h-screen text-xl font-bold items-center justify-center md:hidden space-y-6 uppercase">
               <li className="w-full flex items-center justify-center">
-                <Link to="/" onClick={() => setShow(!show)} smooth="true" duration={500} offset={-70} activeClass="active" className="hover:text-blue-600">
+                <Link
+                  to="/"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
                   Home
                 </Link>
               </li>
               <li className="w-full flex items-center justify-center">
-                <Link to="/blogs" onClick={() => setShow(!show)} smooth="true" duration={500} offset={-70} activeClass="active" className="hover:text-blue-600">
+                <Link
+                  to="/blogs"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
                   Blogs
                 </Link>
               </li>
               <li className="w-full flex items-center justify-center">
-                <Link to="/creators" onClick={() => setShow(!show)} smooth="true" duration={500} offset={-70} activeClass="active" className="hover:text-blue-600">
+                <Link
+                  to="/creators"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
                   Creators
                 </Link>
               </li>
               <li className="w-full flex items-center justify-center">
-                <Link to="/about" onClick={() => setShow(!show)} smooth="true" duration={500} offset={-70} activeClass="active" className="hover:text-blue-600">
+                <Link
+                  to="/about"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
                   About
                 </Link>
               </li>
               <li className="w-full flex items-center justify-center">
-                <Link to="/contact" onClick={() => setShow(!show)} smooth="true" duration={500} offset={-70} activeClass="active" className="hover:text-blue-600">
+                <Link
+                  to="/contact"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
                   Contact
                 </Link>
               </li>

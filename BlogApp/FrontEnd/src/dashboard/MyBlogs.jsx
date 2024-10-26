@@ -10,11 +10,11 @@ const MyBlogs = () => {
     const fetchMyBlogs = async () => {
       try {
         const { data } = await axios.get("/api/blogs/get-my-blog");
-        console.log("MyBlogs: ", data.blog);
+        // console.log("MyBlogs: ", data.blog);
         setMyBlogs(data.blog);
         toast.success("My Blogs fetched successfully");
       } catch (error) {
-        console.error(error);
+        console.error(error.message);
       }
     };
     fetchMyBlogs();

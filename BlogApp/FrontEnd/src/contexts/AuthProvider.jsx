@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [blogs, setBlogs] = useState();
   const [profile, setProfile] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -26,10 +27,11 @@ export const AuthProvider = ({ children }) => {
         });
         // console.log("fProfile: ", data);
         setProfile(data.user);
+        localStorage.setItem("profile", JSON.stringify(data.user));
         setIsAuthenticated(true);
         // }
       } catch (error) {
-        console.log("AuthBlogs error: " + error.message);
+        console.log("AuthBlogs error: ", error.message);
       }
     };
 
@@ -38,15 +40,39 @@ export const AuthProvider = ({ children }) => {
         const { data } = await axios.get("/api/blogs/get-all-blogs");
         setBlogs(data.blogs);
       } catch (error) {
-        console.log("AuthBlogs error: " + error.message);
+        console.log("AuthBlogs error: ", error.message);
       }
     };
     fetchProfile();
     fetchBlogs();
+  }, [isAuthenticated]);
+
+  // get information by localstorage
+  useEffect(() => {
+    const savedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (savedUserInfo) {
+      setUserInfo(savedUserInfo);
+      setIsAuthenticated(true);
+    }
+
+    const savedUerProfile = JSON.parse(localStorage.getItem("profile"));
+    if (savedUserInfo) {
+      setProfile(savedUerProfile);
+      setIsAuthenticated(true);
+    }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ blogs, profile, isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{
+        blogs,
+        profile,
+        isAuthenticated,
+        setIsAuthenticated,
+        userInfo,
+        setUserInfo,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

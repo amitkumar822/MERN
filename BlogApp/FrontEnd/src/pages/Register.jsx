@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../contexts/AuthProvider";
 
 const Register = () => {
+  const navigateTo = useNavigate();
+  const { setIsAuthenticated, setUserInfo } = useAuth();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -31,7 +35,7 @@ const Register = () => {
         (field) => field.trim() === ""
       )
     ) {
-      toast.info("All fields must be required");
+      toast.error("All fields must be required");
       return;
     }
 
@@ -45,13 +49,20 @@ const Register = () => {
     formData.append("photo", photo);
 
     try {
-      const response = await axios.post("/api/users/register", formData, {
+      const { data } = await axios.post("/api/users/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log("Response: ", response);
+
       toast.success("Register Success");
-      console.log("response: ", response.data);
+      setIsAuthenticated(true);
+      setUserInfo(data.user);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("isAuthenticated", true);
+
+      // navigateTo("/");
 
       setName("");
       setEmail("");
@@ -61,7 +72,8 @@ const Register = () => {
       setEducation("");
       setPhoto("");
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error);
+      toast.error(error.response.data.message || "User registration failed");
     }
   };
 

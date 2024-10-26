@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../contexts/AuthProvider";
 
 const Login = () => {
+  const navigateTo = useNavigate();
+
+  const { profile, userInfo, setIsAuthenticated, setUserInfo } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -12,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     if ([email, password, role].some((field) => field.trim() === "")) {
-      toast.info("All fields are required");
+      toast.error("All fields are required");
       return;
     }
 
@@ -22,19 +27,26 @@ const Login = () => {
     formData.append("role", role);
 
     try {
-      const response = await axios.post("/api/users/login", formData, {
+      const { data } = await axios.post("/api/users/login", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      // console.log("response: ", response.data);
+      navigateTo("/");
+      // console.log("response: ", data?.user);
       toast.success("Login success");
-      
+
       setEmail("");
       setPassword("");
       setRole("");
+
+      setIsAuthenticated(true);
+      setUserInfo(data.user);
+      localStorage.setItem("userInfo", JSON.stringify(data.user));
+      localStorage.setItem("isAuthenticated", true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error);
+      toast.error(error.response.data.message || "Internal Server Error");
     }
   };
 

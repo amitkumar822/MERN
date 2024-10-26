@@ -41,14 +41,14 @@ const CreateBlog = () => {
         },
       });
       toast.success("Blog Create Success");
-      console.log("response: ", response.data);
+      // console.log("response: ", response.data);
       setTitle("");
       setCategory("");
       setAbout("");
       setBlogImagePreview("");
       setBlogImage("");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.message);
     }
   };
 

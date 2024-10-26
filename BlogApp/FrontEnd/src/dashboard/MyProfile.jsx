@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthProvider";
 
 const MyProfile = () => {
   const { profile } = useAuth();
-  console.log("profile: ", profile);
+  // console.log("profile: ", profile);
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen bg-gray-100">

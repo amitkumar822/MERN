@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { CgMenuGridO } from "react-icons/cg";
 import { BsBoxArrowLeft } from "react-icons/bs";
+import Logout from "../pages/Logout";
 
 const Sidebar = ({ component, setComponent }) => {
   const navigateTo = useNavigate();
-  const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
+  const { profile, isAuthenticated } = useAuth();
   const [show, setShow] = useState(false);
 
   const handleComponents = (value) => {
@@ -17,20 +16,6 @@ const Sidebar = ({ component, setComponent }) => {
 
   const handleHome = () => {
     navigateTo("/");
-  };
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("/api/users/logout", {
-        withCredentials: true, 
-      });
-      setIsAuthenticated(false);
-      toast.success("User logged out");
-    } catch (error) {
-      console.error(error);
-      toast.error(error.message || "Logout failed");
-    }
   };
 
   if (!isAuthenticated) {
@@ -90,11 +75,8 @@ const Sidebar = ({ component, setComponent }) => {
           >
             HOME
           </button>
-          <button
-            onClick={handleLogout}
-            className="w-full px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-700 transition duration-300"
-          >
-            LOGOUT
+          <button className="w-full px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-700 transition duration-300">
+            <Logout />
           </button>
         </ul>
       </div>

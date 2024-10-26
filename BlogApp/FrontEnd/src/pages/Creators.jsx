@@ -4,10 +4,11 @@ import { useCreators } from "../contexts/CreatorsProvider";
 
 const Creators = () => {
   const { creators } = useCreators();
+
   return (
     <div>
       <div className="flex flex-wrap justify-center items-center my-20 bg-gray-100">
-        {creators.map((creator) => {
+        {creators?.map((creator) => {
           return (
             <div
               key={creator._id}
