@@ -1,6 +1,7 @@
 import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
@@ -153,4 +154,25 @@ export const getAdmin = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+  if (!user) {
+    res.status(404).json({ message: `User not found whith this id ${id}` });
+  }
+
+  // Delete the image from Cloudinary using public_id
+  if (user.photo && user.photo.public_id) {
+    await cloudinary.uploader.destroy(user.photo.public_id);
+  }
+
+  const deletedUser = await User.findByIdAndDelete(id);
+  if (!deletedUser) {
+    res.status(400).json({ message: "Faild to delete user" });
+  }
+
+  res.status(201).json({ message: "User successfull deleted", deleteUser });
 };
