@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const UpdateBlog = () => {
   const navigateTo = useNavigate();
   const { id } = useParams();
 
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");
@@ -50,6 +52,7 @@ const UpdateBlog = () => {
 
   const handleUpdateBlog = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if ([title, category, about].some((field) => field.trim() === "")) {
       toast.info("All fields must be required");
@@ -74,9 +77,11 @@ const UpdateBlog = () => {
         },
       });
       toast.success("Blog Update Success");
+      setLoading(false);
       navigateTo("/");
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 
@@ -150,7 +155,7 @@ const UpdateBlog = () => {
               type="submit"
               className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
             >
-              Update
+              {loading ? <ClipLoader color="#fff" size={20} /> : "Update"}
             </button>
           </form>
         </div>

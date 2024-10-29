@@ -1,6 +1,6 @@
-import React from 'react'
-import { useAuth } from '../contexts/AuthProvider';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useAuth } from "../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Blogs = () => {
   const { blogs } = useAuth();
@@ -10,8 +10,7 @@ const Blogs = () => {
 
   return (
     <div>
-      <h1>Blogs componet</h1>
-      {/* <div className="container mx-auto my-12 p-4">
+      <div className="container mx-auto my-12 p-4">
         <h1 className="text-2xl font-bold mb-6">All Blogs goes here!!!</h1>
         <p className="text-center mb-8">
           The concept of gods varies widely across different cultures, religions
@@ -43,9 +42,9 @@ const Blogs = () => {
             <div></div>
           )}
         </div>
-      </div> */}
+      </div>
     </div>
   );
-}
+};
 
-export default Blogs
+export default Blogs;

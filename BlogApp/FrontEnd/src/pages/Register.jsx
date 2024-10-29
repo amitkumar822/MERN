@@ -147,6 +147,8 @@ const Register = () => {
               <option value="MBA">MBA</option>
               <option value="BCA">BCA</option>
               <option value="BBA">BBA</option>
+              <option value="ECE">ECE</option>
+              <option value="CSE">CSE</option>
             </select>
             <div className="flex items-center mb-4">
               <div className="photo w-20 h-20 mr-4">

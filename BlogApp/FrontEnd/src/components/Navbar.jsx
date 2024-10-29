@@ -97,6 +97,19 @@ const Navbar = () => {
               </li>
               <li className="w-full flex items-center justify-center">
                 <Link
+                  to="/dashboard"
+                  onClick={() => setShow(!show)}
+                  smooth="true"
+                  duration={500}
+                  offset={-70}
+                  activeClass="active"
+                  className="hover:text-blue-600"
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li className="w-full flex items-center justify-center">
+                <Link
                   to="/blogs"
                   onClick={() => setShow(!show)}
                   smooth="true"

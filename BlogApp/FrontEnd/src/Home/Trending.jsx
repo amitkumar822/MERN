@@ -75,7 +75,7 @@ const Trending = () => {
             );
           })
         ) : (
-          <div className="flex h-screen items-center justify-center">
+          <div className="flex h-[5rem] items-center justify-center">
             Loading...
           </div>
         )}
