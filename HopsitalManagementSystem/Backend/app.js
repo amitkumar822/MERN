@@ -25,4 +25,10 @@ app.use(
   })
 );
 
+// import routes
+import messageRouter from "./routes/message.routes.js";
+
+// routes
+app.use("/api/v1/message", messageRouter);
+
 export default app;
