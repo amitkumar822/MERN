@@ -29,10 +29,12 @@ app.use(
 // import routes
 import messageRouter from "./routes/message.routes.js";
 import userRouter from "./routes/user.routes.js";
+import appointmentRouter from "./routes/appointment.routes.js";
 
 // routes
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/appointment", appointmentRouter);
 
 // Error handling middleware
 app.use(ApiError);
