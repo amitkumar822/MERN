@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import { ApiError } from "./utils/ApiError.js";
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -27,8 +28,12 @@ app.use(
 
 // import routes
 import messageRouter from "./routes/message.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 // routes
 app.use("/api/v1/message", messageRouter);
+app.use("/api/v1/user", userRouter);
 
+// Error handling middleware
+app.use(ApiError);
 export default app;
