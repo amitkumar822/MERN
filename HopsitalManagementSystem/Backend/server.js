@@ -1,9 +1,8 @@
+// import dotenv from 'dotenv';
+// dotenv.config({ path: './config/config.env' }); 
+
 import app from "./app.js";
 import { connectDB } from "./db/index.js";
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the express server!");
-});
 
 const PORT = process.env.PORT || 4001;
 

@@ -1,12 +1,12 @@
 import express from "express";
-import { config } from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { ApiError } from "./utils/ApiError.js";
+import dotenv from "dotenv";
+dotenv.config({ path: "./config/config.env" });
 
 const app = express();
-config({ path: "./config/config.env" });
 
 // middleware
 app.use(express.json());

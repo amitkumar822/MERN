@@ -112,14 +112,6 @@ export const addNewAdmin = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const getAllDoctors = asyncHandler(async (req, res, next) => {
-  const doctors = await User.find({ role: "Doctor" });
-  res.status(200).json({
-    success: true,
-    doctors,
-  });
-});
-
 export const getUserDetails = asyncHandler(async (req, res, next) => {
   const user = req.user;
   res.status(200).json({
@@ -206,11 +198,11 @@ export const addNewDoctor = asyncHandler(async (req, res, next) => {
   }
   // upload docAvatar on cloudinary
   const cloudinaryResponse = await uploadOnCloudinary(docAvatar.tempFilePath);
-  console.log(cloudinaryResponse)
+  console.log("FilePath cont: ",cloudinaryResponse)
 
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     return next(
-      new ApiErrorHandler("Faield TO Upload DocAvatar Try Again!", 400)
+      new ApiErrorHandler("Faield To Upload DocAvatar, Try Again!", 400)
     );
   }
 
@@ -236,3 +228,13 @@ export const addNewDoctor = asyncHandler(async (req, res, next) => {
     doctor,
   });
 });
+
+export const getAllDoctors = asyncHandler(async (req, res, next) => {
+  const doctors = await User.find({ role: "Doctor" });
+  res.status(200).json({
+    success: true,
+    doctors,
+  });
+});
+
+export const deleteDoctor = asyncHandler(async (req, res, next) => {});
