@@ -19,3 +19,8 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
   await newMessage.save();
   res.status(201).json({ message: "Message sent successfully" });
 });
+
+export const getAllMessages = asyncHandler(async (req, res, next) => {
+  const messages = await Message.find();
+  res.status(200).json({ success: true, messages });
+});
