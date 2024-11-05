@@ -3,6 +3,7 @@ import ApiErrorHandler from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { generateToken } from "../utils/JwtToken.js";
+import { v2 as cloudinary } from "cloudinary"; // user for delete avater
 
 export const patientRegister = asyncHandler(async (req, res, next) => {
   // docAvatar, doctorDepartment
@@ -95,7 +96,7 @@ export const addNewAdmin = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const admin = await User.create({
+  await User.create({
     firstName,
     lastName,
     email,
@@ -198,7 +199,7 @@ export const addNewDoctor = asyncHandler(async (req, res, next) => {
   }
   // upload docAvatar on cloudinary
   const cloudinaryResponse = await uploadOnCloudinary(docAvatar.tempFilePath);
-  console.log("FilePath cont: ",cloudinaryResponse)
+  console.log("FilePath cont: ", cloudinaryResponse);
 
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     return next(
@@ -237,4 +238,40 @@ export const getAllDoctors = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const deleteDoctor = asyncHandler(async (req, res, next) => {});
+export const deleteDoctor = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return next(new ApiErrorHandler("Doctor ID is required", 400));
+  }
+
+  const user = await User.findById(id);
+  if (!user) {
+    return next(new ApiErrorHandler("Doctor not found", 404));
+  }
+
+  if (user.docAvatar && user.docAvatar.public_id) {
+    const response = await cloudinary.uploader.destroy(
+      user.docAvatar.public_id
+    );
+
+    if (response.result !== "ok") {
+      return next(new ApiErrorHandler("Failed to delete doctor avatar", 500));
+    }
+  } else {
+    return next(
+      new ApiErrorHandler("No valid public_id found for docAvatar.", 500)
+    );
+  }
+
+  // delete the doctore from mongodb
+  const deletedDoctor = await User.findByIdAndDelete(id);
+  if (!deletedDoctor) {
+    return res.status(400).json({ message: "Failed to delete doctor" });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor deleted successfully",
+  });
+});
