@@ -34,6 +34,13 @@ export const loginUser = async (req, res) => {
         .json({ message: "User Not Found With This Email" });
     }
 
+    const isPasswordMatch = await user.comparePassword(password);
+    if (!isPasswordMatch) {
+        return res
+        .status(400)
+        .json({ message: "Password Wrong!" });
+    };
+
     return res.status(201).json({ message: "User Login Successfully", user });
   } catch (error) {
     return res
