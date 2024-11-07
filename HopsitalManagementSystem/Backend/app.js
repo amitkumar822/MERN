@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { ApiError } from "./utils/ApiError.js";
 import dotenv from "dotenv";
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: ".env" });
 
 const app = express();
 
