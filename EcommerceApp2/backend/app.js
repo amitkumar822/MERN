@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
+import errorHandler from "./src/middlewares/errorHandler.js";
 
 const app = express();
 const upload = multer();
@@ -19,13 +20,14 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use(express.static("public"));
 
-
 // import router
-import userRouter from "./src/routes/user.routes.js"
+import userRouter from "./src/routes/user.routes.js";
 
 // difine router
 app.use("/api/v1/user", userRouter);
 
-// export app
+// error middleware
+app.use(errorHandler);
 
+// export app
 export { app };
