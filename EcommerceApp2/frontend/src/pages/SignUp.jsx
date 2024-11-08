@@ -4,6 +4,8 @@ import { FaEyeSlash } from "react-icons/fa";
 import loginLogo from "../assest2/signin.gif";
 import { Link } from "react-router-dom";
 import ImageToBase64 from "../helpers/ImageToBase64";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,9 +40,17 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+
+    try {
+      const response = await axios.post("/api/v1/user/register", data);
+      console.log("Response: " + JSON.stringify(response, null, 2));
+      toast.success("Signup successful. You can now login.");
+    } catch (error) {
+      toast.error(error.response?.data.message || "Internal Server Error");
+      console.log(error);
+    }
   };
 
   return (
