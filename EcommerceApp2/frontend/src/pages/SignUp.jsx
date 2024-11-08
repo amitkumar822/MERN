@@ -43,7 +43,10 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Data: ", data)
+    if(data.password != data.confirmPassword) {
+      return toast.error("Passwords does not meatch!");
+    }
+    
     try {
       const response = await axios.post("/api/user/register", data);
       console.log("Response: " + JSON.stringify(response, null, 2));
