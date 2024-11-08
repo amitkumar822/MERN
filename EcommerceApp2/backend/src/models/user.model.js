@@ -27,6 +27,11 @@ const userSchema = new Schema(
     },
     token: {
       type: String
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: ["ADMIN", "GENERAL"],
     }
   },
   { timestamps: true }
