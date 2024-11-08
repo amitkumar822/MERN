@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import loginLogo from "../assest2/signin.gif";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,9 +23,17 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+
+    try {
+      const response = await axios.post("/api/user/login", data);
+      toast.success("Login Successfully");
+      // Navigate("/")
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Internal Server Error");
+      console.error(error);
+    }
   };
 
   return (
@@ -34,7 +44,7 @@ const Login = () => {
             <img src={loginLogo} alt="login" />
           </div>
 
-          <form onSubmit={handleSubmit}  className="pt-5 flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="pt-5 flex flex-col gap-5">
             <div className="grid">
               <label htmlFor="email">Email: </label>
               <div className="bg-slate-100 p-2">
