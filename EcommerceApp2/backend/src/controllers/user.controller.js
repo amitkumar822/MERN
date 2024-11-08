@@ -1,8 +1,10 @@
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
+import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
 
+// Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -19,10 +21,17 @@ export const registerUser = asyncHandler(async (req, res) => {
   const savedUser = await newUser.save(); // password remove in response
   savedUser.password = "";
 
+  // generate token and save
+  const token = await createTokenAndSaveCookie(savedUser._id, res);
+
   return res
     .status(201)
     .json(
-      new ApiResponse(200, { user: savedUser }, "User Created Successfully")
+      new ApiResponse(
+        200,
+        { user: savedUser, token },
+        "User Created Successfully"
+      )
     );
 });
 
@@ -46,7 +55,10 @@ export const loginUser = asyncHandler(async (req, res) => {
   // password remove in response
   user.password = "";
 
+  // generate token and save
+  const token = await createTokenAndSaveCookie(user._id, res);
+
   return res
     .status(201)
-    .json(new ApiResponse(200, { user }, "User Login Successfully"));
+    .json(new ApiResponse(200, { user, token }, "User Login Successfully"));
 });

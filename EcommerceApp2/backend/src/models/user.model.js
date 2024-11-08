@@ -25,6 +25,9 @@ const userSchema = new Schema(
       public_id: String,
       url: String,
     },
+    token: {
+      type: String
+    }
   },
   { timestamps: true }
 );
