@@ -43,10 +43,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Data: ", data)
     try {
-      const response = await axios.post("/api/v1/user/register", data);
+      const response = await axios.post("/api/user/register", data);
       console.log("Response: " + JSON.stringify(response, null, 2));
       toast.success("Signup successful. You can now login.");
+      
     } catch (error) {
       toast.error(error.response?.data.message || "Internal Server Error");
       console.log(error);
@@ -73,7 +75,6 @@ const SignUp = () => {
                 <input
                   type="file"
                   className="hidden"
-                  required
                   onChange={handleUploadPic}
                 />
               </label>

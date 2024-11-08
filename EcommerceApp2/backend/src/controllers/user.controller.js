@@ -16,7 +16,8 @@ export const registerUser = asyncHandler(async (req, res) => {
   }
 
   const newUser = new User({ name, email, password });
-  const savedUser = await newUser.save();
+  const savedUser = await newUser.save(); // password remove in response
+  savedUser.password = "";
 
   return res
     .status(201)
@@ -32,7 +33,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All Fields Must Be Required!");
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
   if (!user) {
     throw new ApiError(404, "User Not Found With This Email!");
   }
@@ -41,6 +42,9 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (!isPasswordMatch) {
     throw new ApiError(400, "Password Wrong!");
   }
+
+  // password remove in response
+  user.password = "";
 
   return res
     .status(201)

@@ -18,6 +18,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false,
       minLength: [4, "Password Must Contain At Least 4 Characters!"],
     },
     avatar: {

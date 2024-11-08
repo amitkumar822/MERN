@@ -14,7 +14,7 @@ function App() {
       </main>
       <Footer />
 
-      <ToastContainer position={"top-center"} />
+      <ToastContainer position={"top-center"} theme="colored" />
     </div>
   );
 }
