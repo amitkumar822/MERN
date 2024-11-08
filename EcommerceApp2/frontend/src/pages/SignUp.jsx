@@ -43,15 +43,14 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(data.password != data.confirmPassword) {
+    if (data.password != data.confirmPassword) {
       return toast.error("Passwords does not meatch!");
     }
-    
+
     try {
       const response = await axios.post("/api/user/register", data);
       console.log("Response: " + JSON.stringify(response, null, 2));
       toast.success("Signup successful. You can now login.");
-      
     } catch (error) {
       toast.error(error.response?.data.message || "Internal Server Error");
       console.log(error);
