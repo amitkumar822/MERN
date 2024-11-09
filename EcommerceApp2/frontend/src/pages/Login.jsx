@@ -52,6 +52,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   name="email"
+                  autoComplete="email"
                   value={data.email}
                   onChange={handleOnChange}
                   placeholder="Enter Your Email!"
@@ -67,6 +68,7 @@ const Login = () => {
                   id="passoword"
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  autoComplete="password"
                   value={data.password}
                   onChange={handleOnChange}
                   placeholder="Enter Your Password!"
