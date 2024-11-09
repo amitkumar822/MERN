@@ -25,7 +25,7 @@ const UserContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userDetails, setUserDetails, fetchUserDetails }}
+      value={{ userDetails, fetchUserDetails }}
     >
       {children}
     </UserContext.Provider>
