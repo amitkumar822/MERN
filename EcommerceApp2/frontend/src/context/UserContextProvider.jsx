@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import UserContext from "./userContext";
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from "../store/userSlice";
 
 const UserContextProvider = ({ children }) => {
-  const [userDetails, setUserDetails] = useState({});
+  const dispatch = useDispatch()
 
   const fetchUserDetails = async () => {
     try {
       const { data } = await axios.get("/api/user/get-user-details", {
         credentials: "include",
       });
-      setUserDetails(data);
+
+      dispatch(setUserDetails(data?.user));
+      console.log(data?.user);
     } catch (error) {
       console.log(
         "Error Featching User Details ",
@@ -24,9 +28,7 @@ const UserContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider
-      value={{ userDetails, fetchUserDetails }}
-    >
+    <UserContext.Provider value={{ fetchUserDetails }}>
       {children}
     </UserContext.Provider>
   );
