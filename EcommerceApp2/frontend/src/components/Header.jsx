@@ -3,12 +3,13 @@ import Logo from "./Logo";
 import { LuSearch } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import LogOut from "../pages/LogOut";
 
 const Header = () => {
-  const user = useSelector((state) => state?.user);
-  console.log("UserDetails: ", user);
+  const user = useSelector((state) => state?.user?.user);
+
   return (
     <header className="w-full fixed h-16 shadow-md bg-white">
       <div className="h-full container mx-auto flex items-center px-4 justify-between">
@@ -28,8 +29,31 @@ const Header = () => {
         </div>
 
         <div className="flex gap-7 items-center justify-center">
-          <div className="text-3xl cursor-pointer">
-            <FaRegCircleUser />
+          <div className="relative group flex justify-center">
+            <div className="text-3xl cursor-pointer">
+              {user?.avatar ? (
+                <img
+                  src={user.avatar.url}
+                  alt={user?.name}
+                  className="w-10 h-10 rounded-full border text-[8px]"
+                />
+              ) : (
+                <FaRegCircleUser />
+              )}
+            </div>
+
+            <div className="absolute whitespace-nowrap bottom-0 top-7 h-fit pt-2 hidden  group-hover:block">
+              <div className="bg-white h-fit shadow-lg rounded p-2 ">
+                <nav>
+                  <Link
+                    to="/admin-panel"
+                    className="p-2 hover:bg-slate-100 hover:text-[#4d4747] duration-200"
+                  >
+                    Admin Panel
+                  </Link>
+                </nav>
+              </div>
+            </div>
           </div>
           <div className="text-2xl relative">
             <span>
@@ -40,13 +64,14 @@ const Header = () => {
             </div>
           </div>
 
-          <div>
-            <Link
-              to="/login"
-              className="px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700"
-            >
-              Login
-            </Link>
+          <div className="px-3 py-1 rounded-full uppercase cursor-pointer text-white bg-red-600 hover:bg-red-700">
+            {user?.name ? (
+              <button>
+                <LogOut />
+              </button>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
     name: "",
-    profilePic: "",
+    avatar: "",
   });
 
   const handleOnChange = (e) => {
@@ -35,7 +35,7 @@ const SignUp = () => {
     setData((prevData) => {
       return {
         ...prevData,
-        profilePic: imagePic,
+        avatar: imagePic,
       };
     });
   };
@@ -63,16 +63,16 @@ const SignUp = () => {
         <div className="bg-white p-5 w-full max-w-md mx-auto">
           <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
             <div>
-              <img src={data.profilePic || loginLogo} alt="login" />
+              <img src={data.avatar || loginLogo} alt="login" />
             </div>
             <form>
               <label>
                 <div
                   className={`text-xs bg-opacity-${
-                    data.profilePic ? 40 : 80
+                    data.avatar ? 40 : 80
                   } bg-slate-200 pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full`}
                 >
-                  {data.profilePic ? "Change Photo" : "Upload Photo"}
+                  {data.avatar ? "Change Photo" : "Upload Photo"}
                 </div>
                 <input
                   type="file"
