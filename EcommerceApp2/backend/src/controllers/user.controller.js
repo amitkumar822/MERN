@@ -17,7 +17,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "User All Ready Register With This Email!");
   }
 
-  const newUser = new User({ name, email, password });
+  const newUser = new User({ name, email, password, role: "GENERAL" });
   const savedUser = await newUser.save(); // password remove in response
   savedUser.password = "";
 
@@ -61,4 +61,18 @@ export const loginUser = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(new ApiResponse(200, { user, token }, "User Login Successfully"));
+});
+
+export const logOut = asyncHandler(async (req, res) => {
+  await res.clearCookie("jwt");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "User Logged Out Successfully"));
+});
+
+export const getUserDetails = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  const user = await User.findById(userId);
+  if (!user) throw new ApiError(404, "User Not Found!");
+  res.status(200).json({ success: true, user });
 });

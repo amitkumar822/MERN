@@ -18,6 +18,14 @@ export const isAuthenticated = asyncHandler(async (req, res, next) => {
     throw new ApiError(404, "User Not Found");
   }
 
-  req.user = user;
+  const userDetails = {
+    userId: user._id,
+    email: user.email,
+    role: user.role,
+    // name: user.name,
+    // avatar: user.avatar,
+  }
+
+  req.user = userDetails;
   next();
 });
