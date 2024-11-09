@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import loginLogo from "../assest2/signin.gif";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import UserContext from "../context/userContext";
 
 const Login = () => {
+  const { fetchUserDetails } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -29,7 +33,8 @@ const Login = () => {
     try {
       const response = await axios.post("/api/user/login", data);
       toast.success("Login Successfully");
-      // Navigate("/")
+      fetchUserDetails();
+      navigate("/");
     } catch (error) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
       console.error(error);
