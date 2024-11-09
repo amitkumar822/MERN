@@ -1,14 +1,11 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import multer from "multer";
 import errorHandler from "./src/middlewares/errorHandler.js";
 
 const app = express();
-const upload = multer();
 
 // middleware
-app.use(upload.none());
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
