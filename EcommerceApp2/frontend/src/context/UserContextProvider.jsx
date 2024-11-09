@@ -14,7 +14,6 @@ const UserContextProvider = ({ children }) => {
       });
 
       dispatch(setUserDetails(data?.user));
-      console.log(data?.user);
     } catch (error) {
       console.log(
         "Error Featching User Details ",
