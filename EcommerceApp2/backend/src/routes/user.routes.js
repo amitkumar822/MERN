@@ -4,6 +4,8 @@ import {
   loginUser,
   getUserDetails,
   logOut,
+  getAllUsers,
+  updateUser,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
 import { upload } from "../middlewares/multer.js";
@@ -24,5 +26,7 @@ router.post(
 router.post("/login", loginUser);
 router.post("/logout", isAuthenticated, logOut);
 router.get("/get-user-details", isAuthenticated, getUserDetails);
+router.get("/get-all-users", isAuthenticated, getAllUsers);
+router.post("/update-user-details/:id", isAuthenticated, updateUser);
 
 export default router;

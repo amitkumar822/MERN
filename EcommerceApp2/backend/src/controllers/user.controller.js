@@ -4,6 +4,7 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
+import mongoose from "mongoose";
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -106,5 +107,31 @@ export const getUserDetails = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const user = await User.findById(userId);
   if (!user) throw new ApiError(404, "User Not Found!");
-  res.status(200).json({ success: true, user });
+  res.status(200).json(new ApiResponse(200, user, "User Details"));
+});
+
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  if (!users) throw new ApiError(404, "No Users Found!");
+  res.status(200).json(new ApiResponse(200, users, "Get All Users"));
+});
+
+export const updateUser = asyncHandler(async (req, res) => {
+  // if (req.user.role !== "ADMIN")
+  //   throw new ApiError(400, "User Not Authorize Only ADMIN Updated!");
+
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new ApiError(404, "Invalid User ID!");
+
+  const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (updatedUser === null) throw new ApiError(404, "User Not Found!");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, "User Updated Successfully"));
 });
