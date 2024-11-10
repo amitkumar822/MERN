@@ -5,7 +5,7 @@ import ProductCategory from "../helpers/ProductCategory";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
-    product: "",
+    productName: "",
     description: "",
     price: "",
     sellingPrice: "",
@@ -129,11 +129,11 @@ const UploadProduct = () => {
               </label>
               <input
                 type="text"
-                id="product"
+                id="productName"
                 placeholder="Enter product name"
-                name="product"
+                name="productName"
                 className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
-                value={data.product}
+                value={data.productName}
                 onChange={handleInputChange}
                 required
               />

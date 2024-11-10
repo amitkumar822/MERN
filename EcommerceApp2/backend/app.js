@@ -19,9 +19,11 @@ app.use(express.static("public"));
 
 // import router
 import userRouter from "./src/routes/user.routes.js";
+import productRouter from "./src/routes/product.routes.js";
 
 // difine router
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/product", productRouter);
 
 // error middleware
 app.use(errorHandler);
