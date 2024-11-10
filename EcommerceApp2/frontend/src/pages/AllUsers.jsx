@@ -30,7 +30,7 @@ const AllUsers = () => {
   // Update User Details Modal Open
   useEffect(() => {
     if (selectedUser) {
-      const modal = document.getElementById("my_modal_3");
+      const modal = document.getElementById("my_modal_2");
       if (modal) {
         modal.showModal();
       }

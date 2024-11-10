@@ -32,7 +32,7 @@ const UpdateUserDetails = ({
       fetchAllUsers();
       toast.success("Updated user details successfully!");
       // Close the modal after success
-      document.getElementById("my_modal_3").close();
+      document.getElementById("my_modal_2").close();
     } catch (error) {
       console.log(error);
       toast.error(
@@ -43,7 +43,7 @@ const UpdateUserDetails = ({
 
   return (
     <div className="text-black">
-      <dialog id="my_modal_3" className="modal">
+      <dialog id="my_modal_2" className="modal">
         <div className="modal-box">
           <form method="dialog">
             <button
