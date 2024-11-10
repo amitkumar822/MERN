@@ -1,6 +1,5 @@
 import React from "react";
-import AllProducts from "./AllProducts";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
