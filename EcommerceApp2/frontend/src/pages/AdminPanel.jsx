@@ -44,11 +44,11 @@ const AdminPanel = () => {
             >
               All product
             </Link>
-            <button
-              className="w-full px-4 py-2 my-1 bg-red-500 rounded-lg hover:bg-red-700 transition duration-300"
-            >
-              <LogOut />
-            </button>
+            {user?.name && (
+              <button className="w-full px-4 py-2 my-1 bg-red-500 rounded-lg hover:bg-red-700 transition duration-300">
+                <LogOut />
+              </button>
+            )}
           </nav>
         </div>
       </aside>
