@@ -155,5 +155,5 @@ export const deleteUser = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json(new ApiResponse(200, deletedUser, "User Deleted Successfully"));
+    .json(new ApiResponse(200, "", "User Deleted Successfully"));
 });

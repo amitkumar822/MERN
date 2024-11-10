@@ -4,10 +4,12 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import UpdateUserDetails from "../components/UpdateUserDetails";
+import DeleteUser from "../components/DeleteUser";
 
 const AllUsers = () => {
   const [allUser, setAllUser] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // Store the selected user's details
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const fetchAllUsers = async () => {
     try {
@@ -25,18 +27,25 @@ const AllUsers = () => {
     fetchAllUsers();
   }, []);
 
-  const handleEditClick = (user) => {
-    setSelectedUser(user); // Set the selected user's details
-  };
-
+  // Update User Details Modal Open
   useEffect(() => {
     if (selectedUser) {
       const modal = document.getElementById("my_modal_3");
       if (modal) {
-        modal.showModal(); // Open the modal if it exists
+        modal.showModal();
       }
     }
-  }, [selectedUser]); // Run this effect when selectedUser is updated
+  }, [selectedUser]);
+
+  // Delete User Details Modal Open
+  useEffect(() => {
+    if (userId) {
+      const modal = document.getElementById("my_modal_1");
+      if (modal) {
+        modal.showModal();
+      }
+    }
+  }, [userId]);
 
   return (
     <div className="w-full max-h-[calc(100vh-120px)] overflow-y-auto md:flex hidden pt-1">
@@ -85,14 +94,17 @@ const AllUsers = () => {
                 </td>
                 <td className="py-4 px-4 text-center flex items-center gap-2">
                   <div
-                    className="bg-green-500 p-2 rounded-full text-white hover:bg-green-700 transition-colors duration-200"
-                    onClick={() => handleEditClick(details)} // Pass clicked user details
+                    className="bg-green-500 p-2 rounded-full cursor-pointer text-white hover:bg-green-700 transition-colors duration-200"
+                    onClick={() => setSelectedUser(details)}
                   >
                     <MdModeEdit />
                   </div>
-                  <button className="bg-red-500 p-2 rounded-full text-white hover:bg-red-700 transition-colors duration-200">
+                  <div
+                    onClick={() => setUserId(details._id)}
+                    className="bg-red-500 p-2 rounded-full cursor-pointer text-white hover:bg-red-700 transition-colors duration-200"
+                  >
                     <MdDelete />
-                  </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -103,13 +115,13 @@ const AllUsers = () => {
       {/* Conditionally render UpdateUserDetails and pass selected user details */}
       {selectedUser && (
         <UpdateUserDetails
-          name={selectedUser.name}
-          email={selectedUser.email}
-          role={selectedUser.role}
-          userId={selectedUser._id}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
           fetchAllUsers={fetchAllUsers}
         />
       )}
+
+      {userId && <DeleteUser userId={userId} setUserId={setUserId} fetchAllUsers={fetchAllUsers} />}
     </div>
   );
 };

@@ -3,11 +3,15 @@ import { ROLE } from "../common/Role";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const UpdateUserDetails = ({ name, email, role, userId, fetchAllUsers }) => {
+const UpdateUserDetails = ({
+  selectedUser,
+  setSelectedUser,
+  fetchAllUsers,
+}) => {
   const [data, setData] = useState({
-    name: name || "",
-    email: email || "",
-    role: role || "",
+    name: selectedUser?.name || "",
+    email: selectedUser?.email || "",
+    role: selectedUser?.role || "",
   });
 
   const handleInputChange = (e) => {
@@ -19,7 +23,7 @@ const UpdateUserDetails = ({ name, email, role, userId, fetchAllUsers }) => {
 
     try {
       const rep = await axios.post(
-        `/api/user/update-user-details/${userId}`,
+        `/api/user/update-user-details/${selectedUser?._id}`,
         data,
         {
           credentials: "include",
@@ -32,7 +36,7 @@ const UpdateUserDetails = ({ name, email, role, userId, fetchAllUsers }) => {
     } catch (error) {
       console.log(error);
       toast.error(
-        error.response.data.message || "Failed to update, Please try again!"
+        error?.response?.data?.message || "Failed to update, Please try again!"
       );
     }
   };
@@ -42,11 +46,14 @@ const UpdateUserDetails = ({ name, email, role, userId, fetchAllUsers }) => {
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              onClick={() => setSelectedUser("")}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg underline">Update User Details!</h3>
+          <h3 className="font-bold text-lg underline text-center">Update User Details!</h3>
 
           <form onSubmit={handleUpdate} className="pt-2">
             <div className="flex flex-col items-start">
