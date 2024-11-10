@@ -9,7 +9,8 @@ import LogOut from "../pages/LogOut";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
-
+  console.log(user);
+  
   return (
     <header className="w-full fixed h-16 shadow-md bg-white">
       <div className="h-full container mx-auto flex items-center px-4 justify-between">

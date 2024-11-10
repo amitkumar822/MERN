@@ -6,8 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserContext from "../context/userContext";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const user = useSelector((state) => state?.user?.user);
+  console.log(user);
   const { fetchUserDetails } = useContext(UserContext);
   const navigate = useNavigate();
 
