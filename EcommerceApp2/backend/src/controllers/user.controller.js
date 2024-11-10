@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -117,9 +118,6 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 export const updateUser = asyncHandler(async (req, res) => {
-  // if (req.user.role !== "ADMIN")
-  //   throw new ApiError(400, "User Not Authorize Only ADMIN Updated!");
-
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     throw new ApiError(404, "Invalid User ID!");
@@ -134,4 +132,28 @@ export const updateUser = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, updatedUser, "User Updated Successfully"));
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new ApiError(404, "Invalid User ID!");
+
+  const user = await User.findById(id);
+  if (!user) throw new ApiError(404, "User Not Found!");
+
+  if (user?.avatar && user?.avatar?.public_id) {
+    const result = await cloudinary.uploader.destroy(user.avatar.public_id);
+    if (result.result !== "ok")
+      throw new ApiError(500, "Failed to delete user avatar!");
+  } else {
+    throw new ApiError(400, "No valid public_id found for user's avatar!");
+  }
+
+  const deletedUser = await User.findByIdAndDelete(id);
+  if (deletedUser === null) throw new ApiError(404, "User Not Found!");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, deletedUser, "User Deleted Successfully"));
 });

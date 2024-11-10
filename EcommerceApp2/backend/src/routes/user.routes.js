@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import {
   registerUser,
   loginUser,
@@ -6,9 +6,11 @@ import {
   logOut,
   getAllUsers,
   updateUser,
+  deleteUser,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
 import { upload } from "../middlewares/multer.js";
+import { isAdminAuth } from "../middlewares/adminAuth.js";
 
 const router = Router();
 
@@ -25,8 +27,11 @@ router.post(
 );
 router.post("/login", loginUser);
 router.post("/logout", isAuthenticated, logOut);
+
+// Admin Panel routes
 router.get("/get-user-details", isAuthenticated, getUserDetails);
 router.get("/get-all-users", isAuthenticated, getAllUsers);
-router.post("/update-user-details/:id", isAuthenticated, updateUser);
+router.post("/update-user-details/:id", isAdminAuth, isAuthenticated, updateUser);
+router.delete("/delete-user/:id", isAdminAuth, isAuthenticated, deleteUser);
 
 export default router;
