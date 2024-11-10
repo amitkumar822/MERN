@@ -13,6 +13,7 @@ import AdminPanel from "../pages/AdminPanel";
 import NotFound404 from "../components/NotFound404";
 import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
+import ChangeUserRole from "../components/UpdateUserDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
