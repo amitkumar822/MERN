@@ -4,10 +4,8 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import UpdateUserDetails from "../components/UpdateUserDetails";
-import UserContext from "../context/userContext";
 
 const AllUsers = () => {
-  const { setFunctionCall } = useContext(UserContext);
   const [allUser, setAllUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null); // Store the selected user's details
 
@@ -23,7 +21,6 @@ const AllUsers = () => {
     }
   };
 
-  // setFunctionCall(fetchAllUsers);
   useEffect(() => {
     fetchAllUsers();
   }, []);
@@ -110,7 +107,7 @@ const AllUsers = () => {
           email={selectedUser.email}
           role={selectedUser.role}
           userId={selectedUser._id}
-          fetchAllUsers={fetchAllUsers} 
+          fetchAllUsers={fetchAllUsers}
         />
       )}
     </div>
