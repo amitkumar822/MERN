@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { uploadProduct } from "../controllers/product.controller.js";
+import {
+  deleteProduct,
+  uploadProduct,
+} from "../controllers/product.controller.js";
 import { upload } from "../middlewares/multer.js";
 
 const router = Router();
@@ -15,5 +18,5 @@ router.route("/upload").post(
   ]),
   uploadProduct
 );
-
+router.route("/delete/:id").delete(deleteProduct);
 export default router;

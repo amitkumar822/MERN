@@ -77,3 +77,24 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(201, product, "Product Created Successfully"));
 });
+
+export const deleteProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(404, "Invalid Product ID!");
+  }
+
+  const product = await Product.findById(id);
+  if (!product) throw new ApiError(404, "Product Not Found!");
+
+  // Delete each image from Cloudinary using its public_id
+  for (const image of product.productImage) {
+    if (image.public_id) {
+      await deleteFromCloudinary(image.public_id);
+    }
+  }
+
+  // Remove the product from the database
+  await Product.findByIdAndDelete(id);
+  res.status(200).json(new ApiResponse(200, null, "Product Deleted Successfully"));
+});
