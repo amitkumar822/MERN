@@ -1,15 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ROLE } from "../common/Role";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-const UpdateUserDetails = ({ name, email, role }) => {
+const UpdateUserDetails = ({ name, email, role, userId, fetchAllUsers }) => {
   const [data, setData] = useState({
     name: name || "",
     email: email || "",
-    role: role || ""
+    role: role || "",
   });
 
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    try {
+      const rep = await axios.post(
+        `/api/user/update-user-details/${userId}`,
+        data,
+        {
+          credentials: "include",
+        }
+      );
+      fetchAllUsers();
+      toast.success("Updated user details successfully!");
+      // Close the modal after success
+      document.getElementById("my_modal_3").close();
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error.response.data.message || "Failed to update, Please try again!"
+      );
+    }
   };
 
   return (
@@ -22,7 +47,8 @@ const UpdateUserDetails = ({ name, email, role }) => {
             </button>
           </form>
           <h3 className="font-bold text-lg underline">Update User Details!</h3>
-          <form className="pt-2">
+
+          <form onSubmit={handleUpdate} className="pt-2">
             <div className="flex flex-col items-start">
               <label htmlFor="name">Name: </label>
               <div className="bg-slate-100 p-2">
@@ -71,6 +97,11 @@ const UpdateUserDetails = ({ name, email, role }) => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="w-full flex justify-center items-center">
+              <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-full shadow shadow-gray-600 duration-200">
+                Update
+              </button>
             </div>
           </form>
         </div>

@@ -1,13 +1,15 @@
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { MdModeEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { MdModeEdit, MdDelete } from "react-icons/md";
 import UpdateUserDetails from "../components/UpdateUserDetails";
+import UserContext from "../context/userContext";
 
 const AllUsers = () => {
+  const { setFunctionCall } = useContext(UserContext);
   const [allUser, setAllUser] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null); // Store the selected user's details
 
   const fetchAllUsers = async () => {
     try {
@@ -21,9 +23,23 @@ const AllUsers = () => {
     }
   };
 
+  // setFunctionCall(fetchAllUsers);
   useEffect(() => {
     fetchAllUsers();
   }, []);
+
+  const handleEditClick = (user) => {
+    setSelectedUser(user); // Set the selected user's details
+  };
+
+  useEffect(() => {
+    if (selectedUser) {
+      const modal = document.getElementById("my_modal_3");
+      if (modal) {
+        modal.showModal(); // Open the modal if it exists
+      }
+    }
+  }, [selectedUser]); // Run this effect when selectedUser is updated
 
   return (
     <div className="w-full max-h-[calc(100vh-120px)] overflow-y-auto md:flex hidden pt-1">
@@ -71,27 +87,13 @@ const AllUsers = () => {
                   {moment(details?.createdAt).format("LL")}
                 </td>
                 <td className="py-4 px-4 text-center flex items-center gap-2">
-                  <button
+                  <div
                     className="bg-green-500 p-2 rounded-full text-white hover:bg-green-700 transition-colors duration-200"
-                    onClick={() =>
-                      document.getElementById("my_modal_3").showModal()
-                    }
+                    onClick={() => handleEditClick(details)} // Pass clicked user details
                   >
-                    <UpdateUserDetails
-                      name={details?.name}
-                      email={details?.email}
-                      role={details?.role}
-                    />
                     <MdModeEdit />
-                  </button>
-
-                  <button
-                    className="bg-red-500 p-2 rounded-full text-white hover:bg-red-700 transition-colors duration-200"
-                    // onClick={() => {
-                    //   setUpdateUserDetails(details);
-                    //   setOpenUpdateRole(true);
-                    // }}
-                  >
+                  </div>
+                  <button className="bg-red-500 p-2 rounded-full text-white hover:bg-red-700 transition-colors duration-200">
                     <MdDelete />
                   </button>
                 </td>
@@ -100,6 +102,17 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Conditionally render UpdateUserDetails and pass selected user details */}
+      {selectedUser && (
+        <UpdateUserDetails
+          name={selectedUser.name}
+          email={selectedUser.email}
+          role={selectedUser.role}
+          userId={selectedUser._id}
+          fetchAllUsers={fetchAllUsers} 
+        />
+      )}
     </div>
   );
 };
