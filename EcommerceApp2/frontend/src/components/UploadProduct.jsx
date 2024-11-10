@@ -5,13 +5,14 @@ import ProductCategory from "../helpers/ProductCategory";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
-    productName: "",
-    brandName: "",
-    category: "",
-    productImage: [], // URLs for display
+    product: "",
     description: "",
     price: "",
     sellingPrice: "",
+    brand: "",
+    category: "",
+    productImage: [], // URLs for display
+    quantity: "",
   });
 
   const [imageFiles, setImageFiles] = useState([]); // Actual files for upload
@@ -121,36 +122,36 @@ const UploadProduct = () => {
 
               {/* Product Name */}
               <label
-                htmlFor="productName"
+                htmlFor="product"
                 className="text-gray-700 font-semibold"
               >
                 Product Name
               </label>
               <input
                 type="text"
-                id="productName"
+                id="product"
                 placeholder="Enter product name"
-                name="productName"
+                name="product"
                 className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
-                value={data.productName}
+                value={data.product}
                 onChange={handleInputChange}
                 required
               />
 
               {/* Brand Name */}
               <label
-                htmlFor="brandName"
+                htmlFor="brand"
                 className="text-gray-700 font-semibold"
               >
                 Brand Name
               </label>
               <input
                 type="text"
-                id="brandName"
+                id="brand"
                 placeholder="Enter brand name"
-                name="brandName"
+                name="brand"
                 className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
-                value={data.brandName}
+                value={data.brand}
                 onChange={handleInputChange}
                 required
               />
@@ -227,12 +228,29 @@ const UploadProduct = () => {
                 required
               />
 
-              {/* Description */}
+              <label
+                htmlFor="quantity"
+                className="text-gray-700 font-semibold"
+              >
+                Rotal No Of Quantity
+              </label>
+              <input
+                type="number"
+                id="quantity"
+                placeholder="Enter total quantity"
+                name="quantity"
+                className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                value={data.quantity}
+                onChange={handleInputChange}
+                required
+              />
+
+              {/* description */}
               <label
                 htmlFor="description"
                 className="text-gray-700 font-semibold"
               >
-                Description
+                description
               </label>
               <textarea
                 className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300 resize-none"
