@@ -7,14 +7,14 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "./DisplayImage";
 
-const AdminEditProduct = ({ product, setEachProduct }) => {
+const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   useEffect(() => {
     document.getElementById("edit_product_modal").showModal();
   }, [product?.productName]);
 
   let [loading, setLoading] = useState(false);
   const [data, setData] = useState({
-    productName: product?.productName || "l",
+    productName: product?.productName || "",
     description: product?.description || "",
     price: product?.price || "",
     sellingPrice: product?.sellingPrice || "",
@@ -24,6 +24,8 @@ const AdminEditProduct = ({ product, setEachProduct }) => {
     productImage: product?.productImage || [],
     quantity: product?.quantity || "",
   });
+
+  console.log(data);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -76,7 +78,6 @@ const AdminEditProduct = ({ product, setEachProduct }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Click");
     setLoading(true);
 
     // Create a new FormData object
@@ -90,22 +91,23 @@ const AdminEditProduct = ({ product, setEachProduct }) => {
     formData.append("quantity", parseInt(data.quantity));
 
     // Append each image file to the FormData
-    data.productImage.forEach((file) => {
-      formData.append("productImage", file);
-    });
+    // data.productImage.forEach((file) => {
+    //   formData.append("productImage", file);
+    // });
 
-    // try {
-    //   const { data } = await axios.post("/api/product/upload", formData);
-    //   console.log("Data", data);
-    //   setLoading(false);
-    //   toast.success("Product Uploaded Successfully!");
-    // } catch (error) {
-    //   console.log(error);
-    //   setLoading(false);
-    //   toast.error(
-    //     error?.response?.data?.message || "Faild To Upload Product, Try Again!"
-    //   );
-    // }
+    try {
+      await axios.post(`/api/product/update/${product?._id}`, formData);
+      await fetchAllProduct();
+      document.getElementById("edit_product_modal").close();
+      setLoading(false);
+      toast.success("Product Uploaded Successfully!");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error(
+        error?.response?.data?.message || "Faild To Upload Product, Try Again!"
+      );
+    }
   };
 
   // Big Screen Display Single Image
@@ -121,10 +123,10 @@ const AdminEditProduct = ({ product, setEachProduct }) => {
             <div className="relative pb-3 border-b">
               <button
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-gray-600 hover:bg-gray-200"
-                onClick={() =>(
+                onClick={() => (
                   document.getElementById("edit_product_modal").close(),
-                  setEachProduct({}))
-                }
+                  setEachProduct({})
+                )}
               >
                 ✕
               </button>

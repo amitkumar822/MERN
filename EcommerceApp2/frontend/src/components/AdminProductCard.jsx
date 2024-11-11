@@ -80,6 +80,7 @@ const AdminProductCard = ({ product, fetchAllProduct }) => {
         <AdminEditProduct
           product={eachProduct}
           setEachProduct={setEachProduct}
+          fetchAllProduct={fetchAllProduct}
         />
       )}
 
