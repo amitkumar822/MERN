@@ -10,7 +10,6 @@ const AllProducts = () => {
     try {
       const { data } = await axios.get("/api/product/get-products");
       setProductList(data.data);
-      console.log(data.data);
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
