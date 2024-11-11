@@ -5,6 +5,7 @@ import ProductCategory from "../helpers/ProductCategory";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import DisplayImage from "./DisplayImage";
 
 const UploadProduct = () => {
   let [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ const UploadProduct = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -72,7 +74,7 @@ const UploadProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Click")
+    alert("Click");
     setLoading(true);
 
     // Create a new FormData object
@@ -93,16 +95,20 @@ const UploadProduct = () => {
     try {
       const { data } = await axios.post("/api/product/upload", formData);
       console.log("Data", data);
-      setLoading(false)
+      setLoading(false);
       toast.success("Product Uploaded Successfully!");
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
       toast.error(
         error?.response?.data?.message || "Faild To Upload Product, Try Again!"
       );
     }
   };
+
+  // Big Screen Display Single Image
+  const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
+  const [fullScreenImage, setFullScreenImage] = useState("");
 
   return (
     <div>
@@ -216,13 +222,18 @@ const UploadProduct = () => {
                 {data.productPreviewImage.map((image, index) => (
                   <div key={index} className="relative">
                     <img
+                      onClick={() => {
+                        setOpenFullScreenImage(true);
+                        setFullScreenImage(image);
+                        document.getElementById("my_modal_4").showModal();
+                      }}
                       src={image}
                       alt={`Uploaded ${index}`}
-                      className="w-20 h-20 object-cover rounded-full border border-black"
+                      className="w-20 h-20 object-cover rounded-full border border-black cursor-pointer"
                     />
                     <span
                       onClick={() => handleRemoveImage(index)}
-                      className="absolute bottom-1 right-4 text-red-500 bg-white rounded-full hover:bg-gray-100"
+                      className="absolute bottom-1 right-4 cursor-pointer text-red-500 bg-white rounded-full hover:bg-red-600 hover:text-white duration-200"
                     >
                       <MdDelete />
                     </span>
@@ -256,6 +267,7 @@ const UploadProduct = () => {
                 id="sellingPrice"
                 placeholder="Enter selling price"
                 name="sellingPrice"
+                min={1}
                 className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
                 value={data.sellingPrice}
                 onChange={handleInputChange}
@@ -294,13 +306,19 @@ const UploadProduct = () => {
 
               {/* Submit Button */}
               <button className="mt-4 px-5 py-3 mb-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
-                {loading ? (<ClipLoader loading={loading}/>) : "Upload Product"}
-                
+                {loading ? <ClipLoader loading={loading} /> : "Upload Product"}
               </button>
             </form>
           </div>
         </div>
       </dialog>
+      {/***display image full screen */}
+      {openFullScreenImage && (
+        <DisplayImage
+          onClose={() => setOpenFullScreenImage(false)}
+          imgUrl={fullScreenImage}
+        />
+      )}
     </div>
   );
 };
