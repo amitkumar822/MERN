@@ -17,7 +17,6 @@ const SignUp = () => {
     name: "",
     avatar: "",
   });
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => {
