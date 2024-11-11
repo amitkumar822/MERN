@@ -112,13 +112,13 @@ const UploadProduct = () => {
 
   return (
     <div>
-      <dialog id="my_modal_3" className="modal">
+      <dialog id="my_uploadProduct_modal" className="modal">
         <div className="modal-box max-h-[calc(100vh-120px)] overflow-hidden bg-white shadow-lg rounded-lg">
           {/* Header section */}
           <div className="relative pb-3 border-b">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-gray-600 hover:bg-gray-200"
-              onClick={() => document.getElementById("my_modal_3").close()}
+              onClick={() => document.getElementById("my_uploadProduct_modal").close()}
             >
               ✕
             </button>

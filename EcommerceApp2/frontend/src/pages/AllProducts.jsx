@@ -26,7 +26,7 @@ const AllProducts = () => {
         <h2 className="font-bold text-lg">All Product</h2>
         <button
           className="btn border-2 bg-green-600 hover:bg-green-700 duration-200 text-white transition-all py-1 px-3 rounded-full"
-          onClick={() => document.getElementById("my_modal_3").showModal()}
+          onClick={() => document.getElementById("my_uploadProduct_modal").showModal()}
         >
           Upload Product
         </button>
