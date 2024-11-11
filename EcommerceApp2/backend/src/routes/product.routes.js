@@ -1,7 +1,9 @@
 import { Router } from "express";
 import {
+  deletePhotoOnCloudinary,
   deleteProduct,
   getAllProducts,
+  updateProduct,
   uploadProduct,
 } from "../controllers/product.controller.js";
 import { upload } from "../middlewares/multer.js";
@@ -13,13 +15,24 @@ router.route("/upload").post(
   upload.fields([
     {
       name: "productImage",
-      maxCount: 10,
-      limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max limit
+      maxCount: 5,
+      limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max limit
     },
   ]),
   uploadProduct
 );
 router.route("/delete/:id").delete(deleteProduct);
 router.route("/get-products").get(getAllProducts);
+router.route("/update/:id").post(
+  upload.fields([
+    {
+      name: "productImage",
+      maxCount: 5,
+      limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max limit
+    },
+  ]),
+  updateProduct
+);
+router.route("/delete-photo/:publicId").delete(deletePhotoOnCloudinary);
 
 export default router;

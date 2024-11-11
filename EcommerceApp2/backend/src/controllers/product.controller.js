@@ -107,3 +107,27 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     throw new ApiError(404, "No Any Product In Database!");
   res.status(200).json(new ApiResponse(200, products, "Products"));
 });
+
+export const updateProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(404, "Invalid Product ID!");
+  }
+  const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!updatedProduct) throw new ApiError(404, "Faild To Upload Products!");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedProduct, "Product Updated Successfully"));
+});
+
+export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
+  const { publicId } = req.params;
+  await deleteFromCloudinary(publicId);
+  res
+    .status(200)
+    .json(new ApiResponse(200, result, "Product deleted successfully"));
+});
