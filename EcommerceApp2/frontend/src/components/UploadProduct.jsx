@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ProductCategory from "../helpers/ProductCategory";
+import { toast } from "react-toastify";
+import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const UploadProduct = () => {
+  let [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     productName: "",
     description: "",
@@ -11,11 +15,11 @@ const UploadProduct = () => {
     sellingPrice: "",
     brand: "",
     category: "",
-    productImage: [], // URLs for display
+    productPreviewImage: [], // URLs for display
+    productImage: [],
     quantity: "",
   });
 
-  const [imageFiles, setImageFiles] = useState([]); // Actual files for upload
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const handleInputChange = (e) => {
@@ -34,35 +38,71 @@ const UploadProduct = () => {
     setDropdownOpen(false);
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
+    // const img = e.target.files[0];
+    // console.log(img);
     const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      toast.warning("You can only upload a maximum of 5 images.");
+      return;
+    }
 
     // Create URLs for display and add files to imageFiles state for upload
     const imagesArray = files.map((file) => URL.createObjectURL(file));
+    const imagesArray2 = files.map((file) => file);
+
+    console.log(imagesArray);
+    console.log(imagesArray2);
     setData((prevData) => ({
       ...prevData,
-      productImage: [...prevData.productImage, ...imagesArray],
+      productPreviewImage: [...prevData.productPreviewImage, ...imagesArray],
+      productImage: [...prevData.productImage, ...imagesArray2],
     }));
-    setImageFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
   const handleRemoveImage = (index) => {
     setData((prevData) => ({
       ...prevData,
+      productPreviewImage: prevData.productPreviewImage.filter(
+        (_, i) => i !== index
+      ),
       productImage: prevData.productImage.filter((_, i) => i !== index),
     }));
-    setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic, including API call with imageFiles
-    console.log("Data: ", data);
-    console.log("Image Files: ", imageFiles);
-  };
+    alert("Click")
+    setLoading(true);
 
-  //   console.log("ImgFIles: ", JSON.stringify(imageFiles, null, 2));
-  //   console.log("ImageURL: ", JSON.stringify(data.productImage, null, 2));
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append("productName", data.productName);
+    formData.append("description", data.description);
+    formData.append("price", parseFloat(data.price));
+    formData.append("sellingPrice", parseFloat(data.sellingPrice));
+    formData.append("brand", data.brand);
+    formData.append("category", data.category);
+    formData.append("quantity", parseInt(data.quantity));
+
+    // Append each image file to the FormData
+    data.productImage.forEach((file) => {
+      formData.append("productImage", file);
+    });
+
+    try {
+      const { data } = await axios.post("/api/product/upload", formData);
+      console.log("Data", data);
+      setLoading(false)
+      toast.success("Product Uploaded Successfully!");
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+      toast.error(
+        error?.response?.data?.message || "Faild To Upload Product, Try Again!"
+      );
+    }
+  };
 
   return (
     <div>
@@ -121,10 +161,7 @@ const UploadProduct = () => {
               </div>
 
               {/* Product Name */}
-              <label
-                htmlFor="product"
-                className="text-gray-700 font-semibold"
-              >
+              <label htmlFor="product" className="text-gray-700 font-semibold">
                 Product Name
               </label>
               <input
@@ -139,10 +176,7 @@ const UploadProduct = () => {
               />
 
               {/* Brand Name */}
-              <label
-                htmlFor="brand"
-                className="text-gray-700 font-semibold"
-              >
+              <label htmlFor="brand" className="text-gray-700 font-semibold">
                 Brand Name
               </label>
               <input
@@ -158,7 +192,7 @@ const UploadProduct = () => {
 
               {/* Product Image Upload */}
               <label
-                htmlFor="productImage"
+                htmlFor="productPreviewImage"
                 className="text-gray-700 font-semibold"
               >
                 Product Image
@@ -179,19 +213,19 @@ const UploadProduct = () => {
 
               {/* Display Thumbnails of Uploaded Images */}
               <div className="flex flex-wrap gap-2 mt-2">
-                {data.productImage.map((image, index) => (
+                {data.productPreviewImage.map((image, index) => (
                   <div key={index} className="relative">
                     <img
                       src={image}
                       alt={`Uploaded ${index}`}
-                      className="w-20 h-20 object-cover rounded-full"
+                      className="w-20 h-20 object-cover rounded-full border border-black"
                     />
-                    <button
+                    <span
                       onClick={() => handleRemoveImage(index)}
                       className="absolute bottom-1 right-4 text-red-500 bg-white rounded-full hover:bg-gray-100"
                     >
                       <MdDelete />
-                    </button>
+                    </span>
                   </div>
                 ))}
               </div>
@@ -228,10 +262,7 @@ const UploadProduct = () => {
                 required
               />
 
-              <label
-                htmlFor="quantity"
-                className="text-gray-700 font-semibold"
-              >
+              <label htmlFor="quantity" className="text-gray-700 font-semibold">
                 Rotal No Of Quantity
               </label>
               <input
@@ -262,8 +293,9 @@ const UploadProduct = () => {
               ></textarea>
 
               {/* Submit Button */}
-              <button className="mt-4 px-5 py-3 mb-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
-                Upload Product
+              <button className="mt-4 px-5 py-3 mb-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+                {loading ? (<ClipLoader loading={loading}/>) : "Upload Product"}
+                
               </button>
             </form>
           </div>
