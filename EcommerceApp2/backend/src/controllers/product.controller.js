@@ -99,3 +99,11 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, null, "Product Deleted Successfully"));
 });
+
+export const getAllProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find();
+
+  if (products.length === 0)
+    throw new ApiError(404, "No Any Product In Database!");
+  res.status(200).json(new ApiResponse(200, products, "Products"));
+});
