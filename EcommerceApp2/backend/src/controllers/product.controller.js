@@ -4,12 +4,9 @@ import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
-import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
 
 export const uploadProduct = asyncHandler(async (req, res) => {
-  console.log("ReqBody: ", req.files);
-
   // Check if files are provided
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).json({ message: "Product photos must be provided" });
@@ -53,6 +50,8 @@ export const uploadProduct = asyncHandler(async (req, res) => {
   const uploadedImages = [];
   for (const image of productImages) {
     const cloudinaryResponse = await uploadOnCloudinary(image.path);
+    if (cloudinaryResponse === null)
+      throw new ApiError(400, "Faild To Upload Product Images");
     uploadedImages.push({
       public_id: cloudinaryResponse?.public_id,
       url: cloudinaryResponse?.secure_url,
@@ -96,5 +95,7 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 
   // Remove the product from the database
   await Product.findByIdAndDelete(id);
-  res.status(200).json(new ApiResponse(200, null, "Product Deleted Successfully"));
+  res
+    .status(200)
+    .json(new ApiResponse(200, null, "Product Deleted Successfully"));
 });
