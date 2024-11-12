@@ -19,7 +19,7 @@ const AdminProductCard = ({ product, fetchAllProduct }) => {
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden w-64 m-4 transition-transform hover:scale-105">
       <div>
         <div className="relative">
-          <figure className="flex bg-gray-200 justify-center items-center w-full">
+          <figure className="flex bg-white justify-center items-center w-full">
             <img
               src={product?.productImage[0]?.url}
               alt={product?.productName || "Product"}
