@@ -33,6 +33,8 @@ router.route("/update/:id").post(
   ]),
   updateProduct
 );
-router.route("/delete-photo/:publicId").delete(deletePhotoOnCloudinary);
+router
+  .route("/delete-product-img/:productId/image/:publicId")
+  .delete(deletePhotoOnCloudinary);
 
 export default router;
