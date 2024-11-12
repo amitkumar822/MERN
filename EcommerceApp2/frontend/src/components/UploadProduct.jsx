@@ -70,7 +70,6 @@ const UploadProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Click");
     setLoading(true);
 
     // Create a new FormData object

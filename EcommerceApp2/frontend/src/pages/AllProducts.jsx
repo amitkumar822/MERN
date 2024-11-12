@@ -11,8 +11,8 @@ const AllProducts = () => {
       const { data } = await axios.get("/api/product/get-products");
       setProductList(data.data);
     } catch (error) {
-      console.error(error);
-      toast.error(error?.response?.data?.message);
+      // console.error(error);
+      // toast.error(error?.response?.data?.message);
     }
   };
   useEffect(() => {
@@ -39,7 +39,7 @@ const AllProducts = () => {
       </div>
 
       {/* Admin Product Cart */}
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap skeleton h-screen">
         {productList &&
           productList.map((product, index) => (
             <AdminProductCard

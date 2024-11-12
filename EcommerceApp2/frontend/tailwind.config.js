@@ -1,16 +1,30 @@
-import daisyui from 'daisyui';
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
   plugins: [
     daisyui,
+    function ({ addUtilities, addBase }) {
+      const newUtilities = {
+        ".no-scrollbar": {
+          "scrollbar-width": "none", // Firefox
+          "-ms-overflow-style": "none", // IE and Edge
+        },
+      };
+
+      const baseStyles = {
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none", // Chrome, Safari, and Opera
+        },
+      };
+
+      addUtilities(newUtilities);
+      addBase(baseStyles);
+    },
   ],
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
@@ -22,4 +36,4 @@ export default {
     logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
-}
+};

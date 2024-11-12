@@ -5,7 +5,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "../App";
-import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
 import SignUp from "../pages/SignUp";
@@ -13,6 +12,8 @@ import AdminPanel from "../pages/AdminPanel";
 import NotFound404 from "../components/NotFound404";
 import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
+import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
+import Home from "../pages/Home/Home";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,9 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/product-category/:categoryName" element={<CategoryProduct />} />
+
+      {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>
         <Route path="all-users" element={<AllUsers />} />
         <Route path="all-products" element={<AllProducts />} />
