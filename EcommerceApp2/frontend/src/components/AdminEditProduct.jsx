@@ -20,12 +20,8 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     sellingPrice: product?.sellingPrice || "",
     brand: product?.brand || "",
     category: product?.category || "",
-    productPreviewImage: product?.productPreviewImage || [], // URLs for display
-    productImage: product?.productImage || [],
     quantity: product?.quantity || "",
   });
-
-  console.log(data);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -46,6 +42,11 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     setDropdownOpen(false);
   };
 
+  const [newProductImage, setProductImage] = useState({
+    newImgPreview: [],
+    newImg: [],
+  });
+
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 5) {
@@ -53,26 +54,62 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
       return;
     }
 
-    // Create URLs for display and add files to imageFiles state for upload
-    const imagesArray = files.map((file) => URL.createObjectURL(file));
     const imagesArray2 = files.map((file) => file);
 
-    console.log(imagesArray);
-    console.log(imagesArray2);
-    setData((prevData) => ({
+    // Create URLs for display and add files to imageFiles state for uploa
+    const imageObjects = files.map((file) => {
+      return {
+        public_id: "", // public_id is empty for newly uploaded files
+        url: URL.createObjectURL(file), // Use the blob URL for preview
+      };
+    });
+
+    setProductImage((prevData) => ({
       ...prevData,
-      productPreviewImage: [...prevData.productPreviewImage, ...imagesArray],
-      productImage: [...prevData.productImage, ...imagesArray2],
+      newImgPreview: [...prevData.newImgPreview, ...imageObjects],
+      newImg: [...prevData.newImg, ...imagesArray2],
     }));
   };
 
-  const handleRemoveImage = (index) => {
-    setData((prevData) => ({
+  // Set imageUrlList and newProductImage when productImage is loaded
+  useEffect(() => {
+    if (product?.productImage) {
+      const arrayOfProductImages = product.productImage.map((imageDetails) => ({
+        public_id: imageDetails.public_id,
+        url: imageDetails.url,
+      }));
+
+      // Set newProductImage with backend image URLs for preview
+      setProductImage((prevData) => ({
+        ...prevData,
+        newImgPreview: arrayOfProductImages, // Set only the preview list here
+      }));
+    }
+  }, [product?.productImage]);
+
+  const handleRemoveImage = async ({ index, public_id, productId }) => {
+    if (public_id && productId) {
+      try {
+        await axios.delete(
+          `/api/product/delete-product-img/${productId}/image/${public_id}`
+        );
+        toast.success("Successfully deleted product Image");
+      } catch (error) {
+        console.error(
+          `Failed to delete image with public_id ${public_id}: \n`,
+          error?.response?.data?.message
+        );
+        toast.error("Failed to delete image from Cloudinary.");
+        return;
+      }
+    }
+
+    setProductImage((prevData) => ({
       ...prevData,
-      productPreviewImage: prevData.productPreviewImage.filter(
-        (_, i) => i !== index
-      ),
-      productImage: prevData.productImage.filter((_, i) => i !== index),
+      // Remove the image from newImgPreview based on the index
+      newImgPreview: prevData.newImgPreview.filter((_, i) => i !== index),
+      // Remove the file from newImg based on the index
+      newImg: prevData.newImg.filter((_, i) => i !== index),
     }));
   };
 
@@ -91,9 +128,9 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     formData.append("quantity", parseInt(data.quantity));
 
     // Append each image file to the FormData
-    // data.productImage.forEach((file) => {
-    //   formData.append("productImage", file);
-    // });
+    newProductImage.newImg.forEach((file) => {
+      formData.append("productImage", file);
+    });
 
     try {
       await axios.post(`/api/product/update/${product?._id}`, formData);
@@ -131,7 +168,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                 ✕
               </button>
               <h3 className="font-bold text-lg text-blue-600">
-                Edit Product Modal
+                Edit Product And Update
               </h3>
             </div>
 
@@ -225,8 +262,9 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                     <input
                       type="file"
                       id="uploadImageInput"
-                      multiple
-                      className="hidden"
+                      name="uploadImage"
+                      // multiple
+                      // className="hidden"
                       onChange={handleImageUpload}
                     />
                   </div>
@@ -234,7 +272,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
 
                 {/* Display Thumbnails of Uploaded Images */}
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {data.productPreviewImage.map((image, index) => (
+                  {newProductImage.newImgPreview?.map((image, index) => (
                     <div key={index} className="relative">
                       <img
                         onClick={() => {
@@ -242,12 +280,18 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                           setFullScreenImage(image);
                           document.getElementById("my_modal_4").showModal();
                         }}
-                        src={image}
+                        src={image?.url}
                         alt={`Uploaded ${index}`}
                         className="w-20 h-20 object-cover rounded-full border border-black cursor-pointer"
                       />
                       <span
-                        onClick={() => handleRemoveImage(index)}
+                        onClick={() =>
+                          handleRemoveImage({
+                            index,
+                            public_id: image?.public_id,
+                            productId: product?._id,
+                          })
+                        }
                         className="absolute bottom-1 right-4 cursor-pointer text-red-500 bg-white rounded-full hover:bg-red-600 hover:text-white duration-200"
                       >
                         <MdDelete />
@@ -338,7 +382,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
         {openFullScreenImage && (
           <DisplayImage
             onClose={() => setOpenFullScreenImage(false)}
-            imgUrl={fullScreenImage}
+            imgUrl={fullScreenImage.url}
           />
         )}
       </div>
