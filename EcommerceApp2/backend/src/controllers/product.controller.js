@@ -113,11 +113,48 @@ export const updateProduct = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new ApiError(404, "Invalid Product ID!");
   }
-  const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
+
+  // Allowed MIME types for images
+  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+
+  // Check if new product images are provided
+  let newImages = [];
+  if (req.files && req.files.productImage) {
+    for (let file of req.files.productImage) {
+      // Check the mimetype for valid image formats
+      if (!allowedFormats.includes(file.mimetype)) {
+        throw new ApiError(
+          400,
+          `Invalid file format for ${file.originalname}. Only JPEG, PNG, and WEBP are allowed.`
+        );
+      }
+
+      // Upload the file if the type is valid
+      const uploadResult = await uploadOnCloudinary(file.path);
+      if (uploadResult) {
+        newImages.push({
+          public_id: uploadResult.public_id,
+          url: uploadResult.secure_url,
+        });
+      }
+    }
+  }
+
+  // Find the product and update it
+  const updatedProduct = await Product.findById(id);
+  if (!updatedProduct) throw new ApiError(404, "Failed to Find Product!");
+
+  // Append new images without removing old ones
+  if (newImages.length > 0) {
+    updatedProduct.productImage.push(...newImages);
+  }
+
+  // Update other product fields if provided in req.body
+  Object.keys(req.body).forEach((key) => {
+    updatedProduct[key] = req.body[key];
   });
-  if (!updatedProduct) throw new ApiError(404, "Faild To Upload Products!");
+
+  await updatedProduct.save();
 
   res
     .status(200)
