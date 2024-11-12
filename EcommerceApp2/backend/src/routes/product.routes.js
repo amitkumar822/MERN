@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  deleteOnlyCloudinaryImage,
   deletePhotoOnCloudinary,
   deleteProduct,
   getAllProducts,
@@ -39,4 +40,7 @@ router
   .delete(deletePhotoOnCloudinary);
 router.route("/get-category-product").get(getCategoryByProducts)
 
+
+// only delete products image on cloudinary for testing purposes
+router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage)
 export default router;

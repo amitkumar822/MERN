@@ -198,7 +198,7 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
 export const getCategoryByProducts = asyncHandler(async (req, res) => {
   const categoryProducts = await Product.distinct("category");
 
-  if(categoryProducts.length === 0) {
+  if (categoryProducts.length === 0) {
     throw new ApiError(404, "No products found in the database!");
   }
 
@@ -209,4 +209,21 @@ export const getCategoryByProducts = asyncHandler(async (req, res) => {
     if (product) productByCategory.push(product);
   }
   res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
+});
+
+// Testing purposes only
+export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
+  const { publicId } = req.params;
+  console.log(publicId)
+  if (!publicId) {
+    throw new ApiError(400, "Missing required parameters");
+  }
+  // 1. Delete image from Cloudinary
+  const response = await deleteFromCloudinary(publicId);
+  if (response !== true)
+    throw new ApiError(400, "Failed to delete image from Cloudinary");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, null, "Image deleted successfully"));
 });
