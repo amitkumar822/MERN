@@ -75,7 +75,7 @@ const UploadProduct = () => {
     // Create a new FormData object
     const formData = new FormData();
     formData.append("productName", data.productName);
-    formData.append("description", data.description);
+    formData.append("description", data.description.trim());
     formData.append("price", parseFloat(data.price));
     formData.append("sellingPrice", parseFloat(data.sellingPrice));
     formData.append("brand", data.brand);
@@ -89,9 +89,9 @@ const UploadProduct = () => {
 
     try {
       const { data } = await axios.post("/api/product/upload", formData);
-      console.log("Data", data);
       setLoading(false);
       toast.success("Product Uploaded Successfully!");
+      document.getElementById("my_uploadProduct_modal").close()
     } catch (error) {
       console.log(error);
       setLoading(false);

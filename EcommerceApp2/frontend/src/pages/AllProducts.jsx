@@ -39,15 +39,15 @@ const AllProducts = () => {
       </div>
 
       {/* Admin Product Cart */}
-      <div className="flex flex-wrap skeleton h-screen">
-        {productList &&
+      <div className="flex flex-wrap">
+        {productList ? (
           productList.map((product, index) => (
             <AdminProductCard
               key={index}
               product={product}
               fetchAllProduct={fetchAllProduct}
             />
-          ))}
+          ))) : <div className="w-full h-[calc(100vh-187px)] skeleton"></div>}
       </div>
     </div>
   );

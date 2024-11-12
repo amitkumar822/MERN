@@ -122,7 +122,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     // Create a new FormData object
     const formData = new FormData();
     formData.append("productName", data.productName);
-    formData.append("description", data.description);
+    formData.append("description", data.description.trim());
     formData.append("price", parseFloat(data.price));
     formData.append("sellingPrice", parseFloat(data.sellingPrice));
     formData.append("brand", data.brand);
@@ -137,8 +137,8 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     try {
       await axios.post(`/api/product/update/${product?._id}`, formData);
       fetchAllProduct();
-      document.getElementById("edit_product_modal").close();
       setLoading(false);
+      document.getElementById("edit_product_modal").close();
       toast.success("Product Uploaded Successfully!");
     } catch (error) {
       console.log(error);
