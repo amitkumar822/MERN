@@ -57,7 +57,7 @@ const AdminProductCard = ({ product, fetchAllProduct }) => {
             <img
               src={delayedHover && secondaryImage ? secondaryImage : primaryImage}
               alt={product?.productName || "Product"}
-              className={`w-full h-full object-cover rounded-t-md transition-transform duration-500 ease-in-out ${
+              className={`w-full h-full object-cover cursor-pointer rounded-t-md transition-transform duration-500 ease-in-out ${
                 isImageHovered ? "scale-105" : ""
               }`}
               style={{

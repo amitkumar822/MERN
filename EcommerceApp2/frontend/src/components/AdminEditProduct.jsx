@@ -94,6 +94,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
         await axios.delete(
           `/api/product/delete-product-img/${productId}/image/${public_id}`
         );
+        fetchAllProduct();
         toast.success("Successfully deleted product Image");
       } catch (error) {
         console.error(
@@ -135,7 +136,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
 
     try {
       await axios.post(`/api/product/update/${product?._id}`, formData);
-      await fetchAllProduct();
+      fetchAllProduct();
       document.getElementById("edit_product_modal").close();
       setLoading(false);
       toast.success("Product Uploaded Successfully!");
