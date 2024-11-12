@@ -125,9 +125,35 @@ export const updateProduct = asyncHandler(async (req, res) => {
 });
 
 export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
-  const { publicId } = req.params;
-  await deleteFromCloudinary(publicId);
+  const { publicId, productId } = req.params;
+
+  if (!publicId && !productId) {
+    throw new ApiError(400, "Missing required parameters");
+  }
+
+  // 1. Delete image from Cloudinary
+  const response = await deleteFromCloudinary(publicId);
+  if (response !== true)
+    throw new ApiError(400, "Failed to delete image from Cloudinary");
+
+  // 2. Update the MongoDB document to remove the image with matching public_id
+  const product = await Product.findByIdAndUpdate(
+    productId,
+    { $pull: { productImage: { public_id: publicId } } }, // Remove image with matching public_id
+    { new: true }
+  );
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
   res
     .status(200)
-    .json(new ApiResponse(200, result, "Product deleted successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        product,
+        "Image deleted and product updated successfully"
+      )
+    );
 });
