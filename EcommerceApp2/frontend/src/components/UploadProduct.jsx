@@ -41,8 +41,6 @@ const UploadProduct = () => {
   };
 
   const handleImageUpload = async (e) => {
-    // const img = e.target.files[0];
-    // console.log(img);
     const files = Array.from(e.target.files);
     if (files.length > 5) {
       toast.warning("You can only upload a maximum of 5 images.");
@@ -53,8 +51,6 @@ const UploadProduct = () => {
     const imagesArray = files.map((file) => URL.createObjectURL(file));
     const imagesArray2 = files.map((file) => file);
 
-    console.log(imagesArray);
-    console.log(imagesArray2);
     setData((prevData) => ({
       ...prevData,
       productPreviewImage: [...prevData.productPreviewImage, ...imagesArray],
@@ -118,7 +114,9 @@ const UploadProduct = () => {
           <div className="relative pb-3 border-b">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-gray-600 hover:bg-gray-200"
-              onClick={() => document.getElementById("my_uploadProduct_modal").close()}
+              onClick={() =>
+                document.getElementById("my_uploadProduct_modal").close()
+              }
             >
               ✕
             </button>
