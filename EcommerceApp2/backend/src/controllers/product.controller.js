@@ -194,3 +194,19 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
       )
     );
 });
+
+export const getCategoryByProducts = asyncHandler(async (req, res) => {
+  const categoryProducts = await Product.distinct("category");
+
+  if(categoryProducts.length === 0) {
+    throw new ApiError(404, "No products found in the database!");
+  }
+
+  // array to store one product from each category
+  const productByCategory = [];
+  for (const category of categoryProducts) {
+    const product = await Product.findOne({ category });
+    if (product) productByCategory.push(product);
+  }
+  res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
+});

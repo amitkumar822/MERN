@@ -3,6 +3,7 @@ import {
   deletePhotoOnCloudinary,
   deleteProduct,
   getAllProducts,
+  getCategoryByProducts,
   updateProduct,
   uploadProduct,
 } from "../controllers/product.controller.js";
@@ -36,5 +37,6 @@ router.route("/update/:id").post(
 router
   .route("/delete-product-img/:productId/image/:publicId")
   .delete(deletePhotoOnCloudinary);
+router.route("/get-category-product").get(getCategoryByProducts)
 
 export default router;
