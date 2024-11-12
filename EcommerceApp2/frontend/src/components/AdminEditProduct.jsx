@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ProductCategory from "../helpers/ProductCategory";
@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "./DisplayImage";
 
 const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
+  const fileInputRef = useRef(null);
   useEffect(() => {
     document.getElementById("edit_product_modal").showModal();
   }, [product?.productName]);
@@ -247,28 +248,33 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                 />
 
                 {/* Product Image Upload */}
-                <label
-                  htmlFor="productPreviewImage"
-                  className="text-gray-700 font-semibold"
-                >
-                  Product Image
-                </label>
-                <label htmlFor="uploadImageInput" className="relative">
-                  <div className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100">
+                <div>
+                  <label
+                    htmlFor="uploadImageInput"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Product Image
+                  </label>
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
+                  >
                     <FaCloudUploadAlt className="text-4xl text-gray-500" />
                     <p className="text-sm text-gray-500">
                       Upload Product Images
                     </p>
-                    <input
-                      type="file"
-                      id="uploadImageInput"
-                      name="uploadImage"
-                      // multiple
-                      // className="hidden"
-                      onChange={handleImageUpload}
-                    />
                   </div>
-                </label>
+
+                  {/* Hidden File Input */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    id="uploadImageInput"
+                    multiple
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                </div>
 
                 {/* Display Thumbnails of Uploaded Images */}
                 <div className="flex flex-wrap gap-2 mt-2">
