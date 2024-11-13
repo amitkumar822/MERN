@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getAllProducts,
   getCategoryByProducts,
+  getCategoryNameWiseProducts,
   updateProduct,
   uploadProduct,
 } from "../controllers/product.controller.js";
@@ -45,6 +46,7 @@ router
   .route("/delete-product-img/:productId/image/:publicId")
   .delete(deletePhotoOnCloudinary);
 router.route("/get-category-product").get(getCategoryByProducts);
+router.route("/get-category-namewise-product").post(getCategoryNameWiseProducts);
 
 // only delete products image on cloudinary for testing purposes
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);

@@ -196,6 +196,7 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
     );
 });
 
+// Website top category list controller, so products get by category
 export const getCategoryByProducts = asyncHandler(async (req, res) => {
   const categoryProducts = await Product.distinct("category");
 
@@ -210,6 +211,23 @@ export const getCategoryByProducts = asyncHandler(async (req, res) => {
     if (product) productByCategory.push(product);
   }
   res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
+});
+
+export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
+  const { category } = req?.body || req?.query;
+  console.log(category);
+  
+  if (!category) {
+    throw new ApiError(400, "Missing required parameters");
+  }
+  const product = await Product.find({ category });
+  if (!product) {
+    throw new ApiError(
+      404,
+      "No products found in the database for this category!"
+    );
+  }
+  res.status(200).json(new ApiResponse(200, product, "Products"));
 });
 
 // Testing purposes only
