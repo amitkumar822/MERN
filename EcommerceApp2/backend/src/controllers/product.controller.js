@@ -215,6 +215,7 @@ export const getCategoryByProducts = asyncHandler(async (req, res) => {
 
 export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
   const { category } = req?.body || req?.query;
+  
   console.log(category);
   
   if (!category) {

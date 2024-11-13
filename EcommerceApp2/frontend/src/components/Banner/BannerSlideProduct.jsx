@@ -9,7 +9,6 @@ const BannerSlideProduct = () => {
   const fetchAllBanner = async () => {
     try {
       const { data } = await axios.get("/api/banner-slider/get-banner");
-      console.log("Fetched Banners:", data?.data);
       setImages(data?.data);
     } catch (error) {
       console.error("Error fetching banners:", error);
@@ -22,7 +21,7 @@ const BannerSlideProduct = () => {
 
   // Map images to carousel items
   const carouselItems = images.map((items, index) => (
-    <div key={index} className="h-[250px] overflow-hidden">
+    <div key={index} className="h-[300px] overflow-hidden">
       <img
         src={items?.bannerImg?.url}
         alt={`Banner ${index + 1}`}
@@ -40,7 +39,7 @@ const BannerSlideProduct = () => {
           disableButtonsControls
           autoPlay
           autoPlayInterval={1500}
-          infinite
+          infinite          
           responsive={{
             0: { items: 1 }, // 1 item on small screens
             768: { items: 1 }, // 1 item on tablets

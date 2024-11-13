@@ -10,7 +10,7 @@ function App() {
     <div>
       <>
         <Header />
-        <main className="min-h-[calc(100vh-57px)] pt-16">
+        <main className="min-h-[calc(100vh-57px)] pt-16 px-4">
           <Outlet />
         </main>
         <Footer />
