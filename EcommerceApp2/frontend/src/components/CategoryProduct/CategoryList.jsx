@@ -10,10 +10,8 @@ const CategoryList = () => {
 
   const fetchCategoryProduct = async () => {
     setLoading(true);
-    const {data} = await axios.get("/api/product/get-category-product");
-   
-    console.log(data?.data);
-    
+    const { data } = await axios.get("/api/product/get-category-product");
+
     setLoading(false);
     setCategoryProduct(data?.data);
   };

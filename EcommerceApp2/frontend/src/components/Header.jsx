@@ -11,7 +11,7 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
 
   return (
-    <header className="w-full fixed h-16 shadow-md bg-white">
+    <header className="w-full fixed h-16 shadow-md bg-white z-50">
       <div className="h-full container mx-auto flex items-center px-4 justify-between">
         <Link to="/">
           <Logo w={90} h={50} />
