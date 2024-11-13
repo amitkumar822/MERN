@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model.js";
 
 const bannerSliderSchema = new Schema(
   {
@@ -7,12 +6,10 @@ const bannerSliderSchema = new Schema(
       type: String,
       required: true,
     },
-    bannerImg: [
-      {
-        public_id: String,
-        url: String,
-      },
-    ],
+    bannerImg: {
+      public_id: String,
+      url: String,
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -1,20 +1,28 @@
 import { Router } from "express";
-import { bannerUpload, getAllBanners } from "../controllers/bannerSlider.controller.js";
+import {
+  bannerUpload,
+  deleteBanner,
+  getAllBanners,
+  getBannerById,
+} from "../controllers/bannerSlider.controller.js";
 import { upload } from "../middlewares/multer.js";
+import { isAuthenticated } from "../middlewares/userAuth.js";
+import { isAdminAuth } from "../middlewares/adminAuth.js";
 
+// Define routes here
 const router = Router();
 
 router.post(
   "/upload",
-  upload.fields([
-    {
-      name: "bannerImg",
-      maxCount: 5,
-      limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max limit for each banner image
-    },
-  ]),
+  isAuthenticated, // Only authenticated users can upload banners
+  isAdminAuth, // Only admin users can upload banners
+  upload.single("bannerImg"),
   bannerUpload
 );
-router.get("/get-banner", getAllBanners)
+router.get("/get-banner", getAllBanners);
+router.delete("/delete/:bannerId", deleteBanner);
+
+//TODO: Testing owner (populate functionality)
+router.get("/get-banner-by-id/:bannerId", getBannerById);
 
 export default router;

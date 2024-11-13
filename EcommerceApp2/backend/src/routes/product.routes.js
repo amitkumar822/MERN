@@ -9,11 +9,15 @@ import {
   uploadProduct,
 } from "../controllers/product.controller.js";
 import { upload } from "../middlewares/multer.js";
+import { isAuthenticated } from "../middlewares/userAuth.js";
+import { isAdminAuth } from "../middlewares/adminAuth.js";
 
 const router = Router();
 
 // Define routes here
 router.route("/upload").post(
+  isAuthenticated,
+  isAdminAuth,
   upload.fields([
     {
       name: "productImage",
@@ -23,9 +27,11 @@ router.route("/upload").post(
   ]),
   uploadProduct
 );
-router.route("/delete/:id").delete(deleteProduct);
+router.route("/delete/:id").delete(isAuthenticated, isAdminAuth, deleteProduct);
 router.route("/get-products").get(getAllProducts);
 router.route("/update/:id").post(
+  isAuthenticated,
+  isAdminAuth,
   upload.fields([
     {
       name: "productImage",
@@ -38,9 +44,8 @@ router.route("/update/:id").post(
 router
   .route("/delete-product-img/:productId/image/:publicId")
   .delete(deletePhotoOnCloudinary);
-router.route("/get-category-product").get(getCategoryByProducts)
-
+router.route("/get-category-product").get(getCategoryByProducts);
 
 // only delete products image on cloudinary for testing purposes
-router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage)
+router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);
 export default router;

@@ -67,6 +67,7 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     brand,
     category,
     quantity,
+    owner: req.user.userId,
     productImage: uploadedImages, // Save array of uploaded images
   });
 
@@ -214,7 +215,6 @@ export const getCategoryByProducts = asyncHandler(async (req, res) => {
 // Testing purposes only
 export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
   const { publicId } = req.params;
-  console.log(publicId)
   if (!publicId) {
     throw new ApiError(400, "Missing required parameters");
   }
