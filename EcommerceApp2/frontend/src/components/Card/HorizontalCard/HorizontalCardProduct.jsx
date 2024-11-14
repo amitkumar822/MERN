@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import displayINRCurrency from "../../helpers/displayINRCurrency";
+import displayINRCurrency from "../../../helpers/displayINRCurrency";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -46,7 +46,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
       <div
-        className="flex items-center gap-4 md:gap-6 overflow-scroll no-scrollbar"
+        className="flex items-center gap-4 md:gap-6 overflow-scroll no-scrollbar px-2"
         style={{ scrollBehavior: "smooth" }}
         ref={scrollElement}
       >
@@ -82,16 +82,18 @@ const HorizontalCardProduct = ({ category, heading }) => {
               </div>
             ))
           : data.map((product, index) => (
-              <Link className="relative w-full rounded-lg shadow flex">
-                <div className="relative flex w-64 max-w-64 flex-col overflow-hidden rounded-lg transition-all duration-200 items-center justify-center bg-white">
-                  <div className="rounded-lg shadow-md mb-2 shadow-gray-500 flex justify-center items-center flex-col">
+              <Link >
+                <div className="relative flex overflow-hidden rounded-lg transition-all duration-200 w-[21.5rem] h-[11.5rem]">
+
+                  <div className="rounded-lg shadow-md shadow-gray-600 flex justify-center items-center overflow-hidden border m-1 bg-gray-200">
+
                     <div
-                      className="relative mx-1 mt-2 min-w-[208px] min-h-[208px] max-w-[208px] max-h-[208px] flex items-center justify-center overflow-hidden rounded-xl"
+                      className="relative max-w-[180px] max-h-[180px] rounded-l-lg overflow-hidden"
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
                       <img
-                        className="object-cover w-full bg-blue-100 h-full transition-transform duration-300 ease-in-out transform"
+                        className="object-cover bg-blue-100 min-w-3 transition-transform duration-300 ease-in-out transform"
                         src={
                           isHovered
                             ? product?.productImage[0]?.url
@@ -99,9 +101,21 @@ const HorizontalCardProduct = ({ category, heading }) => {
                         }
                         alt="product image"
                       />
-                      <span className="absolute top-0 left-0 m-2 rounded-full bg-green-600 px-2 text-center text-xs font-medium text-white">
-                        39% OFF
+                      {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-green-600 px-2 text-center text-xs font-medium text-white">
+                      {product?.discountPercentage}% OFF
+                      </span> */}
+                      <span
+                        className={`absolute top-0 left-0 m-2 rounded-full px-2 text-center text-xs font-medium text-white ${
+                          product.discountPercentage >= 50
+                            ? "bg-green-600"
+                            : product.discountPercentage >= 20
+                            ? "bg-yellow-600"
+                            : "bg-red-600"
+                        }`}
+                      >
+                        {product?.discountPercentage}% OFF
                       </span>
+
                       {/* Hover icons */}
                       <div
                         className={`absolute inset-0 flex items-center justify-center gap-4 transition-opacity duration-300 ${
@@ -110,18 +124,18 @@ const HorizontalCardProduct = ({ category, heading }) => {
                             : "opacity-0"
                         }`}
                       >
-                        <FaHeart className="text-white text-2xl" />
-                        <FaEye className="text-white text-2xl" />
+                        <FaHeart className="text-white hover:text-red-500 text-2xl" />
+                        <FaEye className="text-white hover:text-green-500 text-2xl" />
                       </div>
                     </div>
 
-                    <div className="mt-4 px-3 pb-3">
-                      <h5 className="text-xs md:text-[16px] font-semibold tracking-tight text-slate-900 line-clamp-2 w-52">
+                    <div className="px-2 pb-2">
+                      <h5 className="text-xs md:text-[15px] font-semibold tracking-tight text-slate-900 line-clamp-2 capitalize">
                         {product?.productName}
                       </h5>
                       <div className="mt-2 mb-5 flex items-center justify-between">
                         <p>
-                          <span className="text-lg md:text-xl font-semibold text-slate-900">
+                          <span className="text-xs md:text-[16px] font-semibold text-slate-900">
                             {displayINRCurrency(product?.price)}
                           </span>
                           <span className="text-[12px] text-red-500 md:text-sm line-through ml-2">
@@ -129,14 +143,15 @@ const HorizontalCardProduct = ({ category, heading }) => {
                           </span>
                         </p>
                       </div>
+                      
                       <div>
                         <a
                           href="#"
-                          className="w-52 flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
+                          className="w-36 flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="mr-2 h-5 w-5"
+                            className="mr-2 h-4 w-4"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
