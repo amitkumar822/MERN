@@ -7,6 +7,7 @@ import displayINRCurrency from "../../../helpers/displayINRCurrency";
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hoveredIndex, setHoveredIndex] = useState(null); // Track hover state by card index
   const loadingList = new Array(13).fill(null);
   const scrollElement = useRef();
 
@@ -38,8 +39,6 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const scrollLeft = () => {
     scrollElement.current.scrollLeft -= 300;
   };
-
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="container mx-auto px-4 -mt-4 mb-6 relative">
@@ -82,28 +81,23 @@ const HorizontalCardProduct = ({ category, heading }) => {
               </div>
             ))
           : data.map((product, index) => (
-              <Link >
+              <Link key={index}>
                 <div className="relative flex overflow-hidden rounded-lg transition-all duration-200 w-[21.5rem] h-[11.5rem]">
-
                   <div className="rounded-lg shadow-md shadow-gray-600 flex justify-center items-center overflow-hidden border m-1 bg-gray-200">
-
                     <div
                       className="relative max-w-[180px] max-h-[180px] rounded-l-lg overflow-hidden"
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <img
                         className="object-cover bg-blue-100 min-w-3 transition-transform duration-300 ease-in-out transform"
                         src={
-                          isHovered
+                          hoveredIndex === index
                             ? product?.productImage[0]?.url
                             : product?.productImage[1]?.url
                         }
                         alt="product image"
                       />
-                      {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-green-600 px-2 text-center text-xs font-medium text-white">
-                      {product?.discountPercentage}% OFF
-                      </span> */}
                       <span
                         className={`absolute top-0 left-0 m-2 rounded-full px-2 text-center text-xs font-medium text-white ${
                           product.discountPercentage >= 50
@@ -119,7 +113,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       {/* Hover icons */}
                       <div
                         className={`absolute inset-0 flex items-center justify-center gap-4 transition-opacity duration-300 ${
-                          isHovered
+                          hoveredIndex === index
                             ? "opacity-100 bg-[rgba(0,0,0,0.2)]"
                             : "opacity-0"
                         }`}
