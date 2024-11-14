@@ -37,7 +37,7 @@
       },
       discountPercentage: {
         type: Number,
-        // required: true,
+        required: true,
       },
       owner: {
         type: Schema.Types.ObjectId,
