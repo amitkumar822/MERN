@@ -35,6 +35,10 @@
         type: Number,
         required: true,
       },
+      discountPercentage: {
+        type: Number,
+        // required: true,
+      },
       owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
