@@ -58,6 +58,16 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     });
   }
 
+  // Calculate discounted price percentage
+  const calculateDiscountedPercentage = () => {
+    const discountedPrice = price - sellingPrice;
+    const discountedPercentage = (discountedPrice / price) * 100;
+    return discountedPercentage.toFixed(2);
+  };
+
+  // Calculate discounted price percentage
+  const discountPercentage = (((price - sellingPrice) / price) * 100).toFixed(2);
+
   // Create the product with all uploaded images
   const product = await Product.create({
     productName,
@@ -67,6 +77,7 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     brand,
     category,
     quantity,
+    discountPercentage,
     owner: req.user.userId,
     productImage: uploadedImages, // Save array of uploaded images
   });
@@ -154,6 +165,13 @@ export const updateProduct = asyncHandler(async (req, res) => {
   Object.keys(req.body).forEach((key) => {
     updatedProduct[key] = req.body[key];
   });
+
+  const calculateDiscountPercentage = () => {
+    const discountAmount = updatedProduct.price - updatedProduct.sellingPrice;
+    const discountPercentage = (discountAmount / updatedProduct.price) * 100;
+    return discountPercentage.toFixed(2);
+  };
+  updatedProduct.discountPercentage = calculateDiscountPercentage();
 
   await updatedProduct.save();
 
