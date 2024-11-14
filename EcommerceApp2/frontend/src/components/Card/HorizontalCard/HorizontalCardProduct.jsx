@@ -7,7 +7,7 @@ import displayINRCurrency from "../../../helpers/displayINRCurrency";
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [hoveredIndex, setHoveredIndex] = useState(null); // Track hover state by card index
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const loadingList = new Array(13).fill(null);
   const scrollElement = useRef();
 

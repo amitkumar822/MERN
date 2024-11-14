@@ -14,8 +14,14 @@ const Home = () => {
       <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"}/>
 
       
-      {/* <VerticalCard category={"mouse"} heading={"Top's Airpodes"} />
-      <VerticalCard category={"watches"} heading={"Popular's Watches"}/> */}
+      <VerticalCard category={"mobiles"} heading={"Mobiles"}/>
+      <VerticalCard category={"mouse"} heading={"Mouse"}/>
+      <VerticalCard category={"televisions"} heading={"Televisions"}/>
+      <VerticalCard category={"camera"} heading={"Camera & Photography"}/>
+      <VerticalCard category={"earphones"} heading={"Wired Earphones"}/>
+      <VerticalCard category={"speakers"} heading={"Bluetooth Speakers"}/>
+      <VerticalCard category={"refrigerator"} heading={"Refrigerator"}/>
+      <VerticalCard category={"trimmers"} heading={"Trimmers"}/>
 
       
       {/* Add your other components or pages here */}
