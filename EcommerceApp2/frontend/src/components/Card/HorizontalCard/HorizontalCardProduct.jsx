@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
+import UserContext from "../../../context/userContext";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -38,6 +39,13 @@ const HorizontalCardProduct = ({ category, heading }) => {
   };
   const scrollLeft = () => {
     scrollElement.current.scrollLeft -= 300;
+  };
+
+  const { fetchCountAddToCart } = useContext(UserContext);
+
+  const handleAddToCart = async (event, id) => {
+    await AddToCart(event, id);
+    fetchCountAddToCart();
   };
 
   return (
@@ -140,7 +148,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
                       <div>
                         <button
-                          onClick={(event) => AddToCart(event, product?._id)}
+                          onClick={(event) => handleAddToCart(event, product?._id)}
                           className="w-36 flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
                         >
                           <svg

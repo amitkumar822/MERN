@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
+import UserContext from "../../../context/userContext";
 
 const VerticalCard = ({ category, heading }) => {
   const [isHovered, setIsHovered] = useState(null);
@@ -38,6 +39,13 @@ const VerticalCard = ({ category, heading }) => {
   };
   const scrollLeft = () => {
     scrollElement.current.scrollLeft -= 300;
+  };
+
+  const { fetchCountAddToCart } = useContext(UserContext);
+
+  const handleAddToCart = async (event, id) => {
+    await AddToCart(event, id);
+    fetchCountAddToCart();
   };
 
   return (
@@ -166,7 +174,7 @@ const VerticalCard = ({ category, heading }) => {
 
                       <div className="w-full flex justify-center items-center">
                         <button
-                          onClick={(event) => AddToCart(event, product?._id)}
+                          onClick={(event) => handleAddToCart(event, product?._id)}
                           className="flex items-center justify-center rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200"
                         >
                           <svg
