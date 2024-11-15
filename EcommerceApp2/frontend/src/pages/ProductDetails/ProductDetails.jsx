@@ -7,6 +7,8 @@ import VerticalCard from "../../components/Card/VerticalCard/VerticalCard";
 import AddTpCard from "../../helpers/AddToCart";
 import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
+import HorizontalCardProduct from "../../components/Card/HorizontalCard/HorizontalCardProduct";
+import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
 
 const ProductDetails = () => {
   const productId = useParams();
@@ -141,7 +143,9 @@ const ProductDetails = () => {
                       <img
                         src={imgURL?.url}
                         className="w-full h-full object-scale-down mix-blend-multiply cursor-pointer"
-                        onMouseEnter={() => handleMouseEnterProduct(imgURL?.url)}
+                        onMouseEnter={() =>
+                          handleMouseEnterProduct(imgURL?.url)
+                        }
                         onClick={() => handleMouseEnterProduct(imgURL?.url)}
                       />
                     </div>
@@ -226,12 +230,12 @@ const ProductDetails = () => {
         )}
       </div>
 
-      {/* {data.category && (
+      {data.category && (
         <CategroyWiseProductDisplay
           category={data?.category}
           heading={"Recommended Product"}
         />
-      )} */}
+      )}
     </div>
   );
 };
