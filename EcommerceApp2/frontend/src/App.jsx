@@ -4,8 +4,27 @@ import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function App() {
+  const fetchCountAddToCart = async () => {
+    try {
+      const { data } = await axios.get("/api/user/getaddtocart", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(data);
+      
+    } catch (error) {
+      console.log(error?.response?.data?.messsage || error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCountAddToCart();
+  }, []);
+
   return (
     <div>
       <>

@@ -160,15 +160,16 @@ export const deleteUser = asyncHandler(async (req, res) => {
 // TODO: Add To Cart Controller
 export const addToCart = asyncHandler(async (req, res) => {
   const { productId } = req?.body;
-  const userId = req?.userId;
+  const userId = req.user.userId;
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new ApiError(400, "Invalid ProductId");
   }
 
-  const isProductAvailable = await AddToCart.findOne(productId);
-  if (!isProductAvailable) {
-    throw new ApiError(404, "This Product Already Add to Your Cart");
+  const isProductAvailable = await AddToCart.findOne({ productId, userId });
+  console.log("isProductAvailable: ", isProductAvailable);
+  if (isProductAvailable) {
+    throw new ApiError(400, "This product is already in your cart.");
   }
 
   const cart = await AddToCart.create({
@@ -177,7 +178,33 @@ export const addToCart = asyncHandler(async (req, res) => {
     quantity: 1,
   });
 
+  console.log("Cart: ", cart);
+
   res
     .status(201)
     .json(new ApiResponse(201, cart, "Product Added To Cart Successfully"));
+});
+
+export const countAddToCart = asyncHandler(async (req, res) => {
+  const userId = req.user.userId;
+  console.log("userId: ", userId);
+  
+  const count = await AddToCart.countDocuments({ userId });
+  console.log("Count: ", count);
+
+  res
+   .status(200)
+   .json(new ApiResponse(200, count, "Total Products In Cart"));
+  
+});
+
+export const getAddToCart = asyncHandler(async (req, res) => {
+  const getAllCart = AddToCart.find();
+
+  if (!getAllCart) {
+    throw new ApiError(404, "No Products In Cart");
+  }
+  res
+    .status(200)
+    .json(new ApiResponse(200, getAllCart, "All Products In Cart"));
 });

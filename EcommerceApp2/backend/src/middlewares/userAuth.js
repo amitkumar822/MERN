@@ -7,7 +7,7 @@ export const isAuthenticated = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.jwt;
 
   if (!token) {
-    throw new ApiError(401, "User Not Authenticated");
+    throw new ApiError(401, "Please login...");
   }
 
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);

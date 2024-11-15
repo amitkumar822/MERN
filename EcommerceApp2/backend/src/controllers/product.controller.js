@@ -251,7 +251,6 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
 
 export const getProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req?.params;
-  console.log("ID: " + productId);
   
   if (!mongoose.Types.ObjectId.isValid(productId))
     throw new ApiError(400, "Invalid Product Id");

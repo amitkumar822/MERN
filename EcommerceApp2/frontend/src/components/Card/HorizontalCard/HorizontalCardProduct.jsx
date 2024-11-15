@@ -5,7 +5,6 @@ import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
 
-
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +20,6 @@ const HorizontalCardProduct = ({ category, heading }) => {
         { category },
         { "content-type": "application/json" }
       );
-      console.log(data?.data);
 
       setData(data?.data);
       setLoading(false);
@@ -139,7 +137,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                           </span>
                         </p>
                       </div>
-                      
+
                       <div>
                         <button
                           onClick={(event) => AddToCart(event, product?._id)}

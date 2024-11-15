@@ -20,7 +20,6 @@ const VerticalCard = ({ category, heading }) => {
         { category },
         { "content-type": "application/json" }
       );
-      console.log(data?.data);
 
       setData(data?.data);
       setLoading(false);
