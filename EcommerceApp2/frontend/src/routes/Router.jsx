@@ -14,6 +14,7 @@ import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
 import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
 import Home from "../pages/Home/Home";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/product-category/:categoryName" element={<CategoryProduct />} />
+      <Route path="/product/:id" element={<ProductDetails />} />
 
       {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>

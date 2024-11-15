@@ -3,6 +3,8 @@ import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
+import AddToCart from "../../../helpers/AddToCart";
+
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -139,8 +141,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       </div>
                       
                       <div>
-                        <a
-                          href="#"
+                        <button
+                          onClick={(event) => AddToCart(event, product?._id)}
                           className="w-36 flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
                         >
                           <svg
@@ -158,7 +160,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                             />
                           </svg>
                           Add to cart
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>

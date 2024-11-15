@@ -66,7 +66,9 @@ export const uploadProduct = asyncHandler(async (req, res) => {
   };
 
   // Calculate discounted price percentage
-  const discountPercentage = (((price - sellingPrice) / price) * 100).toFixed(2);
+  const discountPercentage = (((price - sellingPrice) / price) * 100).toFixed(
+    2
+  );
 
   // Create the product with all uploaded images
   const product = await Product.create({
@@ -245,6 +247,21 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
     );
   }
   res.status(200).json(new ApiResponse(200, product, "Products"));
+});
+
+export const getProductDetails = asyncHandler(async (req, res) => {
+  const { productId } = req?.params;
+  console.log("ID: " + productId);
+  
+  if (!mongoose.Types.ObjectId.isValid(productId))
+    throw new ApiError(400, "Invalid Product Id");
+
+  const product = await Product.findById(productId);
+  if (!product) throw new ApiError(404, "Product Not Found!");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, product, "Product Details Get Successfully"));
 });
 
 // Testing purposes only

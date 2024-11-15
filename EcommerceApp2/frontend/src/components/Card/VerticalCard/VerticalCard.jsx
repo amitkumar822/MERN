@@ -3,6 +3,7 @@ import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
+import AddToCart from "../../../helpers/AddToCart";
 
 const VerticalCard = ({ category, heading }) => {
   const [isHovered, setIsHovered] = useState(null);
@@ -81,7 +82,10 @@ const VerticalCard = ({ category, heading }) => {
               </div>
             ))
           : data.map((product, index) => (
-              <Link>
+              <Link
+                to={"product/" + product?._id}
+                key={product?.productName + index}
+              >
                 <div className="relative flex w-[320px] h-[420px] max-w-[320px] flex-col overflow-hidden rounded-lg shadow-xl transition-all duration-300 items-center justify-center p-1">
                   <div className="rounded-lg shadow-md pt-1 shadow-gray-500 flex justify-center items-center flex-col w-full overflow-hidden">
                     <div
@@ -160,8 +164,8 @@ const VerticalCard = ({ category, heading }) => {
                           {displayINRCurrency(product.sellingPrice)}
                         </span>
                       </div>
-                      <a
-                        href="#"
+                      <button
+                        onClick={(event) => AddToCart(event, product?.id)}
                         className="flex items-center justify-center rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200"
                       >
                         <svg
@@ -179,7 +183,7 @@ const VerticalCard = ({ category, heading }) => {
                           />
                         </svg>
                         Add to cart
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
