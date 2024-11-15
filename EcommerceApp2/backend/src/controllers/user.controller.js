@@ -167,7 +167,7 @@ export const addToCart = asyncHandler(async (req, res) => {
   }
 
   const isProductAvailable = await AddToCart.findOne({ productId, userId });
-  console.log("isProductAvailable: ", isProductAvailable);
+  
   if (isProductAvailable) {
     throw new ApiError(400, "This product is already in your cart.");
   }
@@ -178,8 +178,6 @@ export const addToCart = asyncHandler(async (req, res) => {
     quantity: 1,
   });
 
-  console.log("Cart: ", cart);
-
   res
     .status(201)
     .json(new ApiResponse(201, cart, "Product Added To Cart Successfully"));
@@ -187,10 +185,8 @@ export const addToCart = asyncHandler(async (req, res) => {
 
 export const countAddToCart = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
-  console.log("userId: ", userId);
   
   const count = await AddToCart.countDocuments({ userId });
-  console.log("Count: ", count);
 
   res
    .status(200)

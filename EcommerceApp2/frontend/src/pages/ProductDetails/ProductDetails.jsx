@@ -127,7 +127,7 @@ const ProductDetails = () => {
                   return (
                     <div
                       className="h-20 w-20 bg-slate-200 rounded animate-pulse"
-                      key={"loadingImage" + index}
+                      key={index}
                     ></div>
                   );
                 })}
@@ -138,7 +138,7 @@ const ProductDetails = () => {
                   return (
                     <div
                       className="h-20 w-20 bg-slate-200 rounded p-1"
-                      key={imgURL}
+                      key={index}
                     >
                       <img
                         src={imgURL?.url}

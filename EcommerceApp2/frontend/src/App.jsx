@@ -5,26 +5,17 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import UserContext from "./context/userContext";
 
 function App() {
-  const fetchCountAddToCart = async () => {
-    try {
-      const { data } = await axios.get("/api/user/getaddtocart", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(data);
-      
-    } catch (error) {
-      console.log(error?.response?.data?.messsage || error);
-    }
-  };
+  const { cartProductCount, fetchCountAddToCart } = useContext(UserContext);
+  console.log('====================================');
+  console.log(cartProductCount);
+  console.log('====================================');
 
   useEffect(() => {
     fetchCountAddToCart();
   }, []);
-
   return (
     <div>
       <>
