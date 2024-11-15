@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "./Logo";
 import { LuSearch } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -6,9 +6,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LogOut from "../pages/LogOut";
+import UserContext from "../context/userContext";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
+  const { cartProductCount } = useContext(UserContext);
 
   return (
     <header className="w-full fixed h-16 shadow-md bg-white z-50">
@@ -55,13 +57,16 @@ const Header = () => {
               </div>
             </div>
           </div>
+          {/* Add To Cart Total count */}
           <div className="text-2xl relative">
             <span>
               <FaShoppingCart />
             </span>
-            <div className="absolute -top-2 -right-2 bg-red-600 w-5 h-5 text-sm flex justify-center items-center rounded-full text-white">
-              0
-            </div>
+            {user?.name && (
+              <div className="absolute -top-2 -right-2 bg-red-600 w-4 h-4 text-xs flex justify-center items-center rounded-full text-white">
+                {cartProductCount}
+              </div>
+            )}
           </div>
 
           <div className="px-3 py-1 rounded-full uppercase cursor-pointer text-white bg-red-600 hover:bg-red-700">

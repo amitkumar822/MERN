@@ -1,21 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import UserContext from "./context/userContext";
 
 function App() {
-  const { cartProductCount, fetchCountAddToCart } = useContext(UserContext);
-  console.log('====================================');
-  console.log(cartProductCount);
-  console.log('====================================');
-
-  useEffect(() => {
-    fetchCountAddToCart();
-  }, []);
+  
   return (
     <div>
       <>
