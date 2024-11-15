@@ -6,6 +6,7 @@ import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
+import { AddToCart } from "../models/addToCart.modal.js";
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -153,7 +154,30 @@ export const deleteUser = asyncHandler(async (req, res) => {
   const deletedUser = await User.findByIdAndDelete(id);
   if (deletedUser === null) throw new ApiError(404, "User Not Found!");
 
+  res.status(200).json(new ApiResponse(200, "", "User Deleted Successfully"));
+});
+
+// TODO: Add To Cart Controller
+export const addToCart = asyncHandler(async (req, res) => {
+  const { productId } = req?.body;
+  const userId = req?.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    throw new ApiError(400, "Invalid ProductId");
+  }
+
+  const isProductAvailable = await AddToCart.findOne(productId);
+  if (!isProductAvailable) {
+    throw new ApiError(404, "This Product Already Add to Your Cart");
+  }
+
+  const cart = await AddToCart.create({
+    productId,
+    userId,
+    quantity: 1,
+  });
+
   res
-    .status(200)
-    .json(new ApiResponse(200, "", "User Deleted Successfully"));
+    .status(201)
+    .json(new ApiResponse(201, cart, "Product Added To Cart Successfully"));
 });

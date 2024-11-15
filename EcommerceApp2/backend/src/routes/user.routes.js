@@ -7,6 +7,7 @@ import {
   getAllUsers,
   updateUser,
   deleteUser,
+  addToCart,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
 import { upload } from "../middlewares/multer.js";
@@ -33,5 +34,8 @@ router.get("/get-user-details", isAuthenticated, getUserDetails);
 router.get("/get-all-users", isAuthenticated, getAllUsers);
 router.post("/update-user-details/:id", isAdminAuth, isAuthenticated, updateUser);
 router.delete("/delete-user/:id", isAdminAuth, isAuthenticated, deleteUser);
+
+// Add To Cart
+router.post("/addtocart", isAuthenticated, addToCart);
 
 export default router;
