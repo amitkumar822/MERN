@@ -10,6 +10,8 @@ import {
   addToCart,
   countAddToCart,
   addToCartViewProduct,
+  updateAddToCartProduct,
+  deleteAddToCartProduct,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
 import { upload } from "../middlewares/multer.js";
@@ -41,6 +43,8 @@ router.delete("/delete-user/:id", isAdminAuth, isAuthenticated, deleteUser);
 router.post("/addtocart", isAuthenticated, addToCart);
 router.get("/getaddtocart", isAuthenticated, countAddToCart);
 router.get("/view-addtocart", isAuthenticated, addToCartViewProduct);
+router.post("/update-addtocart", isAuthenticated, updateAddToCartProduct);
+router.post("/delete-addtocart", isAuthenticated, deleteAddToCartProduct);
 
 
 export default router;

@@ -194,11 +194,43 @@ export const countAddToCart = asyncHandler(async (req, res) => {
 export const addToCartViewProduct = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
-  const product = await AddToCart.find({ userId }).populate("productId")
+  const product = await AddToCart.find({ userId }).populate("productId");
 
   if (!product) {
     throw new ApiError(404, "Product Not Found!");
   }
 
   res.status(200).json(new ApiResponse(200, product, "Product Details"));
+});
+
+export const updateAddToCartProduct = asyncHandler(async (req, res) => {
+  const userId = req.user.userId;
+  const addToCartProductId = req.body?._id;
+
+  const qty = req.body?.quantity;
+
+  const updateProduct = await AddToCart.updateOne(
+    { _id: addToCartProductId, userId },
+    {
+      ...(qty && { quantity: qty }),
+    }
+  );
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updateProduct, "Product Update Success"));
+});
+
+export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
+  const userId = req.user.userId;
+  const addToCartProductId = req.params.id;
+
+  const deleteProduct = await AddToCart.deleteOne({
+    _id: addToCartProductId,
+    userId,
+  });
+
+  if (!deleteProduct) throw new ApiError(400, "Product Delete Faild...");
+
+  res.status(200).json(new ApiResponse(200, [], "Product Delete Successfully"));
 });
