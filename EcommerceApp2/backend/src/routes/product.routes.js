@@ -3,6 +3,7 @@ import {
   deleteOnlyCloudinaryImage,
   deletePhotoOnCloudinary,
   deleteProduct,
+  filterProduct,
   getAllProducts,
   getCategoryByProducts,
   getCategoryNameWiseProducts,
@@ -52,7 +53,10 @@ router.route("/get-category-namewise-product").post(getCategoryNameWiseProducts)
 router.route("/getproduct-details/:productId").get(getProductDetails);
 
 router.route("/search").get(searchProduct);
+router.route("/filter").post(filterProduct);
 
 // only delete products image on cloudinary for testing purposes
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);
+
+
 export default router;

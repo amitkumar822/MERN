@@ -13,9 +13,10 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const { cartProductCount } = useContext(UserContext);
 
-  const searchInput = useLocation();
-
-  const [search, setSearch] = useState(searchInput?.search?.split("=")[1]);
+  const searchInput = useLocation(); // get URL search input (object format)
+  const URLSearch = new URLSearchParams(searchInput?.search); // get search actual input
+  const searchQuery = URLSearch.getAll("q") // get search value after queary ("q")
+  const [search, setSearch] = useState(searchQuery);
 
   const handleSearch = (e) => {
     const { value } = e.target;

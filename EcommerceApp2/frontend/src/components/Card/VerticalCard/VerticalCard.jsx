@@ -7,6 +7,8 @@ import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
 
 const VerticalCard = ({ category, heading }) => {
+  console.log("VerticalCard: category: ", JSON.stringify(category));
+  
   const [isHovered, setIsHovered] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,10 @@ const VerticalCard = ({ category, heading }) => {
       setData(data?.data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error(
+        "VerticalCardError: ",
+        error?.response?.data?.message || error
+      );
       setLoading(false);
     }
   };
@@ -174,7 +179,9 @@ const VerticalCard = ({ category, heading }) => {
 
                       <div className="w-full flex justify-center items-center">
                         <button
-                          onClick={(event) => handleAddToCart(event, product?._id)}
+                          onClick={(event) =>
+                            handleAddToCart(event, product?._id)
+                          }
                           className="flex items-center justify-center rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200"
                         >
                           <svg

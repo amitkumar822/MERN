@@ -2,15 +2,14 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
-// import CategroyWiseProductDisplay from "../components/CategoryWiseProductDisplay";
-import VerticalCard from "../../components/Card/VerticalCard/VerticalCard";
-import AddTpCard from "../../helpers/AddToCart";
 import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
-import HorizontalCardProduct from "../../components/Card/HorizontalCard/HorizontalCardProduct";
 import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
+import AddToCart from "../../helpers/AddToCart";
+import UserContext from "../../context/userContext";
 
 const ProductDetails = () => {
+  const { fetchCountAddToCart } = useContext(UserContext);
   const productId = useParams();
   const [data, setData] = useState({
     productName: "",
@@ -81,13 +80,13 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = async (e, id) => {
-    // await addToCart(e, id);
-    // fetchUserAddToCart();
+    await AddToCart(e, id);
+    fetchCountAddToCart();
   };
 
   const handleBuyProduct = async (e, id) => {
-    // await addToCart(e, id);
-    // navigate("/cart");
+    await AddToCart(e, id);
+    navigate("/view-cart");
   };
 
   return (

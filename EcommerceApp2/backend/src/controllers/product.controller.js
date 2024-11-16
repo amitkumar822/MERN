@@ -278,6 +278,35 @@ export const searchProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, product, "Products Search Successfully"));
 });
 
+export const filterProduct = asyncHandler(async (req, res) => {
+  const categoryList = req?.body?.category || [];
+
+  // console.log("Filter Product: " + categoryList);
+  
+
+  // if (categoryList.length === undefined || category.length === 0) {    
+  //   throw new ApiError(400, "Missing Required Parameters");
+  // }
+
+  const product = await Product.find({
+    category :  {
+        "$in" : categoryList
+    }
+});
+  console.log("product: " + product)
+
+  if (!product) {
+    throw new ApiError(
+      404,
+      "No products found in the database for these categories!"
+    );
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, product, "Products Filter Successfully"));
+});
+
 // Testing purposes only
 export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
   const { publicId } = req.params;
