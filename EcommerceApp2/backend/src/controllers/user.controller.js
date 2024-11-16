@@ -203,27 +203,35 @@ export const addToCartViewProduct = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, product, "Product Details"));
 });
 
-export const updateAddToCartProduct = asyncHandler(async (req, res) => {
-  const userId = req.user.userId;
-  const addToCartProductId = req.body?._id;
+export const updateIncreaseDescreaseAddToCartProduct = asyncHandler(
+  async (req, res) => {
+    const userId = req.user.userId;
+    const addToCartProductId = req.body?._id;
 
-  const qty = req.body?.quantity;
+    if (!addToCartProductId)
+      throw new ApiError(400, "Product Id Must Be Required");
 
-  const updateProduct = await AddToCart.updateOne(
-    { _id: addToCartProductId, userId },
-    {
-      ...(qty && { quantity: qty }),
-    }
-  );
+    const qty = req.body?.quantity;
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, updateProduct, "Product Update Success"));
-});
+    const updateProduct = await AddToCart.updateOne(
+      { _id: addToCartProductId, userId },
+      {
+        ...(qty && { quantity: qty }),
+      }
+    );
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, updateProduct, "Product Update Success"));
+  }
+);
 
 export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
-  const addToCartProductId = req.params.id;
+  const addToCartProductId = req.body?._id;
+
+  if (!addToCartProductId)
+    throw new ApiError(400, "Product Id Must Be Required");
 
   const deleteProduct = await AddToCart.deleteOne({
     _id: addToCartProductId,
