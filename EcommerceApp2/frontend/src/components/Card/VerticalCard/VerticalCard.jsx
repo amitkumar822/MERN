@@ -7,8 +7,6 @@ import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
 
 const VerticalCard = ({ category, heading }) => {
-  console.log("VerticalCard: category: ", JSON.stringify(category));
-  
   const [isHovered, setIsHovered] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
