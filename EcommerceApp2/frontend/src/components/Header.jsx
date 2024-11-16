@@ -3,8 +3,8 @@ import Logo from "./Logo";
 import { LuSearch } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LogOut from "../pages/LogOut";
 import UserContext from "../context/userContext";
 
@@ -63,7 +63,7 @@ const Header = () => {
               <FaShoppingCart />
             </span>
             {user?.name && (
-              <div className="absolute -top-2 -right-2 bg-red-600 w-4 h-4 text-xs flex justify-center items-center rounded-full text-white">
+              <div className="absolute -top-2 -right-2 bg-red-600 w-5 h-5 text-xs flex justify-center items-center rounded-full text-white">
                 {cartProductCount}
               </div>
             )}
