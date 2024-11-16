@@ -8,14 +8,28 @@ import { useSelector } from "react-redux";
 import LogOut from "../pages/LogOut";
 import UserContext from "../context/userContext";
 
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 const Header = () => {
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: -3,
+      top: 13,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
+
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
   const { cartProductCount } = useContext(UserContext);
 
   const searchInput = useLocation(); // get URL search input (object format)
   const URLSearch = new URLSearchParams(searchInput?.search); // get search actual input
-  const searchQuery = URLSearch.getAll("q") // get search value after queary ("q")
+  const searchQuery = URLSearch.getAll("q"); // get search value after queary ("q")
   const [search, setSearch] = useState(searchQuery);
 
   const handleSearch = (e) => {
@@ -75,8 +89,9 @@ const Header = () => {
               </div>
             </div>
           </div>
+
           {/* Add To Cart Total count */}
-          <Link to="/view-cart" className="text-2xl relative">
+          {/* <Link to="/view-cart" className="text-2xl relative">
             <span>
               <FaShoppingCart />
             </span>
@@ -85,6 +100,14 @@ const Header = () => {
                 {cartProductCount}
               </div>
             )}
+          </Link> */}
+
+          <Link to="/view-cart">
+            <IconButton aria-label="cart">
+              <StyledBadge badgeContent={cartProductCount} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
           </Link>
 
           <div className="px-3 py-1 rounded-full uppercase cursor-pointer text-white bg-red-600 hover:bg-red-700">
