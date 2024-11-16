@@ -251,7 +251,7 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
 
 export const getProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req?.params;
-  
+
   if (!mongoose.Types.ObjectId.isValid(productId))
     throw new ApiError(400, "Invalid Product Id");
 
@@ -261,6 +261,21 @@ export const getProductDetails = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, product, "Product Details Get Successfully"));
+});
+
+export const searchProduct = asyncHandler(async (req, res) => {
+  const query = req?.query?.q;
+
+  const regex = new RegExp(query, "i", "g");
+
+  const product = await Product.find({
+    $or: [{ productName: regex }, { category: regex }],
+  });
+
+  // if (!product) throw new ApiError(404, "No products found matching your search query!");
+  res
+    .status(200)
+    .json(new ApiResponse(200, product, "Products Search Successfully"));
 });
 
 // Testing purposes only
