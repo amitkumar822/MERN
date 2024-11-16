@@ -3,14 +3,25 @@ import Logo from "./Logo";
 import { LuSearch } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogOut from "../pages/LogOut";
 import UserContext from "../context/userContext";
 
 const Header = () => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
   const { cartProductCount } = useContext(UserContext);
+
+  const handleSearch = (e) => {
+    const { value } = e.target;
+
+    if(value) {
+      navigate(`/search?q=${value}`);
+    } else {
+      navigate("/search");
+    }
+  }
 
   return (
     <header className="w-full fixed h-16 shadow-md bg-white z-50">
@@ -24,6 +35,7 @@ const Header = () => {
             type="text"
             placeholder="search product here..."
             className="w-full outline-none"
+            onChange={handleSearch}
           />
           <div className="text-lg min-w-[50px] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white cursor-pointer">
             <LuSearch />
