@@ -9,6 +9,7 @@ const UserContextProvider = ({ children }) => {
 
   const [cartProductCount, setCartProductCount] = useState(0);
 
+  // TODO: Fetch User Details
   const fetchUserDetails = async () => {
     try {
       const { data } = await axios.get("/api/user/get-user-details", {
@@ -37,9 +38,28 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  // TODO: View to Add to Cart
+  const fetchAddToCartView = async () => {
+    try {
+      const { data } = await axios.get("/api/user/view-addtocart", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("ViewCart: ",data?.data);
+      
+      // setCartProductCount(data?.data);
+    } catch (error) {
+      console.log(error?.response?.data?.messsage || error);
+    }
+  };
+
+
+
   useEffect(() => {
     fetchUserDetails();
     fetchCountAddToCart();
+    fetchAddToCartView();
   }, []);
 
   return (

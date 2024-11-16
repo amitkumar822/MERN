@@ -167,7 +167,7 @@ export const addToCart = asyncHandler(async (req, res) => {
   }
 
   const isProductAvailable = await AddToCart.findOne({ productId, userId });
-  
+
   if (isProductAvailable) {
     throw new ApiError(400, "This product is already in your cart.");
   }
@@ -185,22 +185,20 @@ export const addToCart = asyncHandler(async (req, res) => {
 
 export const countAddToCart = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
-  
+
   const count = await AddToCart.countDocuments({ userId });
 
-  res
-   .status(200)
-   .json(new ApiResponse(200, count, "Total Products In Cart"));
-  
+  res.status(200).json(new ApiResponse(200, count, "Total Products In Cart"));
 });
 
-export const getAddToCart = asyncHandler(async (req, res) => {
-  const getAllCart = AddToCart.find();
+export const addToCartViewProduct = asyncHandler(async (req, res) => {
+  const userId = req.user.userId;
 
-  if (!getAllCart) {
-    throw new ApiError(404, "No Products In Cart");
+  const product = await AddToCart.find({ userId }).populate("productId")
+
+  if (!product) {
+    throw new ApiError(404, "Product Not Found!");
   }
-  res
-    .status(200)
-    .json(new ApiResponse(200, getAllCart, "All Products In Cart"));
+
+  res.status(200).json(new ApiResponse(200, product, "Product Details"));
 });

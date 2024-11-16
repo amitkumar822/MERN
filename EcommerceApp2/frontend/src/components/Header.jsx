@@ -58,7 +58,7 @@ const Header = () => {
             </div>
           </div>
           {/* Add To Cart Total count */}
-          <div className="text-2xl relative">
+          <Link to="/view-cart" className="text-2xl relative">
             <span>
               <FaShoppingCart />
             </span>
@@ -67,7 +67,7 @@ const Header = () => {
                 {cartProductCount}
               </div>
             )}
-          </div>
+          </Link>
 
           <div className="px-3 py-1 rounded-full uppercase cursor-pointer text-white bg-red-600 hover:bg-red-700">
             {user?.name ? (
