@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
@@ -26,35 +26,34 @@ const userSchema = new Schema(
       url: String,
     },
     token: {
-      type: String
+      type: String,
     },
     role: {
       type: String,
       required: true,
       enum: ["ADMIN", "GENERAL"],
-    }
+    },
   },
   { timestamps: true }
 );
 
 // password is hashing
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) next();
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
 // compaire hashing password
 userSchema.methods.comparePassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-}
+  return bcrypt.compare(password, this.password);
+};
 
-// generate jwt token 
-userSchema.methods.generateJwtToken = function() {
-    return jwt.sign({id: this._id}, process.env.JWT_SECRET_KEY,
-        {
-            expiresIn: process.env.JWT_EXPIRES
-        }
-    )
-}
+// generate jwt token
+userSchema.methods.generateJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
+};
 
 export const User = mongoose.model("User", userSchema);

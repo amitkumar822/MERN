@@ -7,6 +7,8 @@ import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
 import { AddToCart } from "../models/addToCart.modal.js";
+import bcrypt from "bcrypt";
+import { Captcha } from "../models/captcha.modals.js";
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -241,4 +243,43 @@ export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
   if (!deleteProduct) throw new ApiError(400, "Product Delete Faild...");
 
   res.status(200).json(new ApiResponse(200, [], "Product Delete Successfully"));
+});
+
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email, password, captcha } = req.body;
+
+  // finde captcha code in captcha database
+  const captchaGet = await Captcha.find();
+
+  if (!captchaGet[0].code) throw new ApiError(400, "Captcha not found");
+
+  // get captcha code
+  const newCaptcha = captchaGet[0]?.code;
+
+  if (newCaptcha.toString().trim() !== captcha.toString().trim()) {
+    throw new ApiError(400, "Invalid Captcha");
+  }
+
+  if (!email) throw new ApiError(400, "Email Must Be Required");
+
+  const user = await User.findOne({ email });
+  if (!user) throw new ApiError(404, "User No Found With This Email");
+
+  // Hash the new password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Update the user's password
+  const updatedUser = await User.findOneAndUpdate(
+    { email },
+    { password: hashedPassword },
+    { new: true } // Return the updated document
+  );
+
+  await Captcha.findByIdAndDelete({
+    _id: captchaGet[0]?._id,
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, "Password Succesfully Changes"));
 });

@@ -12,6 +12,7 @@ import {
   addToCartViewProduct,
   deleteAddToCartProduct,
   updateIncreaseDescreaseAddToCartProduct,
+  forgotPassword,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
 import { upload } from "../middlewares/multer.js";
@@ -45,6 +46,8 @@ router.get("/getaddtocart", isAuthenticated, countAddToCart);
 router.get("/view-addtocart", isAuthenticated, addToCartViewProduct);
 router.post("/update-addtocart", isAuthenticated, updateIncreaseDescreaseAddToCartProduct);
 router.post("/delete-addtocart", isAuthenticated, deleteAddToCartProduct);
+
+router.post("/forgotPassword", forgotPassword);
 
 
 export default router;

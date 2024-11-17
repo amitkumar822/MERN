@@ -27,6 +27,11 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/banner-slider", bannerSliderRouter);
 
+// difine captch router
+
+import captchaRouter from "./src/routes/captcha.routes.js";
+app.use("/api/v1/captcha", captchaRouter);
+
 // error middleware
 app.use(errorHandler);
 
