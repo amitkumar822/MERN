@@ -247,6 +247,8 @@ export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
 
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email, password, captcha } = req.body;
+  console.log("Forgot Password: ", email, password, captcha);
+  
 
   // finde captcha code in captcha database
   const captchaGet = await Captcha.find();

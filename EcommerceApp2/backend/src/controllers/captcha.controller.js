@@ -1,6 +1,8 @@
+import { ApiError } from "../../utils/ApiError.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { sendEmail } from "../../utils/sendEmail.js";
 import { Captcha } from "../models/captcha.modals.js";
+import { User } from "../models/user.model.js";
 
 // Helper function to generate a random 4-character CAPTCHA code
 const generateCaptchaCode = () => {
@@ -15,7 +17,13 @@ const generateCaptchaCode = () => {
 
 // Controller to generate a CAPTCHA code
 export const generateCaptcha = async (req, res) => {
-  const email = req?.user?.email;
+  const { email } = req?.body;
+
+  if (!email) throw new ApiError(400, "Email Must Be Required");
+
+  const VerifyUser = await User.findOne({ email });
+
+  if(!VerifyUser) throw new ApiError(400, "This Email Not Found");
 
   // Generate the CAPTCHA code
   const captchaCode = generateCaptchaCode();
