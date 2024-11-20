@@ -28,9 +28,12 @@ app.use("/api/v1/product", productRouter);
 app.use("/api/v1/banner-slider", bannerSliderRouter);
 
 // difine captch router
-
 import captchaRouter from "./src/routes/captcha.routes.js";
 app.use("/api/v1/captcha", captchaRouter);
+
+// difine sale router
+import saleRouter from "./src/routes/sale.routes.js";
+app.use("/api/v1/sale", saleRouter);
 
 // error middleware
 app.use(errorHandler);

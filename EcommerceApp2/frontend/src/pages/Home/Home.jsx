@@ -1,15 +1,16 @@
 import React from "react";
 import CategoryList from "../../components/CategoryProduct/CategoryList";
-import BannerSlideProduct from "../../components/Banner/BannerSlideProduct";
 import VerticalCard from "../../components/Card/VerticalCard/VerticalCard";
 import HorizontalCardProduct from "../../components/Card/HorizontalCard/HorizontalCardProduct";
 import Carousel from "../../components/Banner/Carousel";
+import TimeCountDown from "../../components/Main/TimeCountDown";
 
 const Home = () => {
   return (
     <div>
       <CategoryList />
-      {/* <BannerSlideProduct /> */}
+
+      {/* Carousel or Banner Component */}
       <Carousel />
 
       <HorizontalCardProduct
@@ -17,6 +18,9 @@ const Home = () => {
         heading={"Popular's Watches"}
       />
       <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"} />
+
+      {/* Time Count Down */}
+      <TimeCountDown />
 
       <VerticalCard category={"mobiles"} heading={"Mobiles"} />
       <VerticalCard category={"mouse"} heading={"Mouse"} />

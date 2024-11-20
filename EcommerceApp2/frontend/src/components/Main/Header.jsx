@@ -5,7 +5,7 @@ import UserContext from "../../context/userContext";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
-import logo1 from "../../../public/logo.png"
+import logo1 from "../../../public/logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,7 +33,11 @@ const Header = () => {
         <div className="flex-1">
           <Link to="/">
             {/* <Logo w={80} h={50} /> */}
-            <img src={logo1} alt="" className="w-h-36 h-36 scale-105 mix-blend-multiply" />
+            <img
+              src={logo1}
+              alt=""
+              className="w-h-36 h-36 scale-105 mix-blend-multiply"
+            />
           </Link>
         </div>
         <div className="flex-none gap-2">
@@ -103,11 +107,10 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                {user?.name ? (
-                    <LogOut />
-                ) : (
-                  <Link to="/login">Login</Link>
-                )}
+                <Link to="/admin-panel">Admin Panel</Link>
+              </li>
+              <li>
+                {user?.name ? <LogOut /> : <Link to="/login">Login</Link>}
               </li>
             </ul>
           </div>

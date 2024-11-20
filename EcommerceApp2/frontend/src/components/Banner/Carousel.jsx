@@ -36,8 +36,6 @@ const Carousel = () => {
     document.getElementById("carousel").scrollIntoView({ behavior: "smooth" });
   };
 
-  console.log("IMG: ", images);
-
   return (
     <div id="carousel" className="w-full relative">
       {/* Carousel */}
@@ -62,13 +60,13 @@ const Carousel = () => {
 
       {/* Navigation */}
       <div className="flex w-full justify-center absolute bottom-0">
-        <div className="flex gap-2 p-2 rounded-lg">
+        <div className="flex gap-2 p-2 pb-4 rounded-lg">
           {[...Array(slideCount)].map((_, index) => (
             <button
               key={index}
               onClick={() => handleButtonClick(index)}
               className={`w-4 h-2 rounded-full bg-gray-200 ${
-                currentIndex === index ? "btn-active bg-blue-300" : ""
+                currentIndex === index ? "btn-active bg-gray-400 w-3" : ""
               }`}
               aria-label={`Slide ${index + 1}`} // For accessibility
             />
