@@ -28,7 +28,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className="w-full mx-auto">
       <div className="navbar px-4 fixed z-50 bg-base-100 border border-b-2 max-h-12">
         <div className="flex-1">
           <Link to="/">

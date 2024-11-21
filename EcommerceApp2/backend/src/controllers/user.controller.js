@@ -245,20 +245,22 @@ export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, [], "Product Delete Successfully"));
 });
 
+// TODO: Forgot Password
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email, password, captcha } = req.body;
   console.log("Forgot Password: ", email, password, captcha);
-  
 
   // finde captcha code in captcha database
-  const captchaGet = await Captcha.find();
-
-  if (!captchaGet[0].code) throw new ApiError(400, "Captcha not found");
+  const captchaGet = await Captcha.findOne({ email }).sort({
+    createdAt: -1,
+  }); // Sort by `createdAt` in descending order
 
   // get captcha code
-  const newCaptcha = captchaGet[0]?.code;
+  const newCaptcha = captchaGet.code;
 
-  if (newCaptcha.toString().trim() !== captcha.toString().trim()) {
+  if (!newCaptcha) throw new ApiError(400, "OTP code expired");
+
+  if (newCaptcha !== captcha) {
     throw new ApiError(400, "Invalid Captcha");
   }
 
@@ -277,8 +279,10 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     { new: true } // Return the updated document
   );
 
+  console.log(captchaGet);
+
   await Captcha.findByIdAndDelete({
-    _id: captchaGet[0]?._id,
+    _id: captchaGet?._id,
   });
 
   res

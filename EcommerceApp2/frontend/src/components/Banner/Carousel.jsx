@@ -37,40 +37,42 @@ const Carousel = () => {
   };
 
   return (
-    <div id="carousel" className="w-full mx-auto relative">
-      {/* Carousel */}
-      <div className="carousel w-full overflow-hidden">
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((items, index) => {
-            return (
-              <div className="carousel-item w-full flex-shrink-0" key={index}>
-                <img
-                  src={items?.bannerImg?.url}
-                  className="w-full"
-                  alt={"Banner " + index}
-                />
-              </div>
-            );
-          })}
+    <div id="carousel" className="container w-full mx-auto relative">
+      <div>
+        {/* Carousel */}
+        <div className="carousel w-full overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {images.map((items, index) => {
+              return (
+                <div className="carousel-item w-full flex-shrink-0" key={index}>
+                  <img
+                    src={items?.bannerImg?.url}
+                    className="w-full"
+                    alt={"Banner " + index}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <div className="flex w-full justify-center absolute bottom-0">
-        <div className="flex gap-2 p-2 pb-4 rounded-lg">
-          {[...Array(slideCount)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleButtonClick(index)}
-              className={`w-4 h-2 rounded-full bg-gray-200 ${
-                currentIndex === index ? "btn-active bg-gray-400 w-3" : ""
-              }`}
-              aria-label={`Slide ${index + 1}`} // For accessibility
-            />
-          ))}
+        {/* Navigation */}
+        <div className="flex w-full justify-center absolute bottom-0">
+          <div className="flex gap-2 p-2 pb-4 rounded-lg">
+            {[...Array(slideCount)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleButtonClick(index)}
+                className={`w-4 h-2 rounded-full bg-gray-200 ${
+                  currentIndex === index ? "btn-active bg-gray-400 w-3" : ""
+                }`}
+                aria-label={`Slide ${index + 1}`} // For accessibility
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

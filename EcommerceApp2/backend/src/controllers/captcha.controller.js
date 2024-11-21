@@ -23,16 +23,16 @@ export const generateCaptcha = async (req, res) => {
 
   const VerifyUser = await User.findOne({ email });
 
-  if(!VerifyUser) throw new ApiError(400, "This Email Not Found");
+  if (!VerifyUser) throw new ApiError(400, "This Email Not Found");
 
   // Generate the CAPTCHA code
   const captchaCode = generateCaptchaCode();
 
   // Set expiration time (5 minutes from now)
-  const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
   // Save the CAPTCHA code to the database
-  const captcha = await Captcha.create({ code: captchaCode, expiresAt });
+  const captcha = await Captcha.create({ email, code: captchaCode, expiresAt });
 
   // Send the CAPTCHA code to the user's email address
   await sendEmail({
@@ -63,7 +63,12 @@ export const generateCaptcha = async (req, res) => {
 };
 
 export const getCaptcha = asyncHandler(async (req, res) => {
-  const captcha = await Captcha.find();
+  const { email } = req.body;
+  console.log("Email: " + email);
+
+  if (!email) throw new ApiError(400, "Email Must Be Required");
+  const captcha = await Captcha.findOne({ email }).sort({ createdAt: -1 }); // Sort by `createdAt` in descending order
+
   if (!captcha) {
     return res.status(404).json({ message: "No CAPTCHA found" });
   }

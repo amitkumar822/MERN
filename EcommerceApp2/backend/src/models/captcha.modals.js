@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const captchaSchema = new Schema(
   {
+    email: {
+      type: String,
+      required: true,
+    },
     code: {
       type: String,
       required: true,
