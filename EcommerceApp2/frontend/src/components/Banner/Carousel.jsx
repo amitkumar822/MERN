@@ -37,7 +37,7 @@ const Carousel = () => {
   };
 
   return (
-    <div id="carousel" className="w-full relative">
+    <div id="carousel" className="w-full mx-auto relative">
       {/* Carousel */}
       <div className="carousel w-full overflow-hidden">
         <div
