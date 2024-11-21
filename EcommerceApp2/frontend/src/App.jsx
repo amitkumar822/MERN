@@ -9,7 +9,7 @@ import Header2 from "./components/Header2";
 function App() {
   
   return (
-    <div>
+    <div  className="container">
       <>
       {/* <Header2 /> */}
         <Header />

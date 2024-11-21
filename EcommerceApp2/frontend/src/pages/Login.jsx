@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import UserContext from "../context/userContext";
 import { useSelector } from "react-redux";
 
-const Login2 = () => {
+const Login = () => {
   const user = useSelector((state) => state?.user?.user);
   const { fetchUserDetails } = useContext(UserContext);
   const navigate = useNavigate();
@@ -193,4 +193,4 @@ const Login2 = () => {
   );
 };
 
-export default Login2;
+export default Login;

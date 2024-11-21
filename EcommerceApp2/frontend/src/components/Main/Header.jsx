@@ -28,7 +28,7 @@ const Header = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div>
       <div className="navbar px-4 fixed z-50 bg-base-100 border border-b-2 max-h-12">
         <div className="flex-1">
           <Link to="/">
