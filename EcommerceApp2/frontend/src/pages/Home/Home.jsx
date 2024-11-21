@@ -14,16 +14,16 @@ const Home = () => {
       {/* Carousel or Banner Component */}
       <Carousel />
 
-      {/* <HorizontalCardProduct
+      <HorizontalCardProduct
         category={"watches"}
         heading={"Popular's Watches"}
       />
-      <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"} /> */}
+      <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"} />
 
       {/* Time Count Down */}
-      {/* <TimeCountDown /> */}
+      <TimeCountDown />
 
-      {/* <VerticalCard category={"mobiles"} heading={"Mobiles"} /> */}
+      <VerticalCard category={"mobiles"} heading={"Mobiles"} />
       {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
       <VerticalCard category={"televisions"} heading={"Televisions"} />
       <VerticalCard category={"camera"} heading={"Camera & Photography"} />
@@ -34,7 +34,6 @@ const Home = () => {
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
-        {/* <Cart /> */}
     </div>
   );
 };

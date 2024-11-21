@@ -13,10 +13,10 @@ import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
 import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
 import Home from "../pages/Home/Home";
-import ProductDetails from "../pages/ProductDetails/ProductDetails";
-import ViewCart from "../pages/Cart/ViewCart";
 import SearchProduct from "../pages/SearchProductPage/SearchProduct";
 import ForgotPassword from "../pages/ForgotPassword";
+import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
+import OrderViewCart from "../pages/Cart/OrderViewCart";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,8 +26,8 @@ const router = createBrowserRouter(
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/product-category" element={<CategoryProduct />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
-      <Route path="/view-cart" element={<ViewCart />} />
+      <Route path="/product/:id" element={<ProductDetailsPage />} />
+      <Route path="/view-cart" element={<OrderViewCart />} />
       <Route path="/search" element={<SearchProduct />} />
 
       {/* Admin Panel Routes */}
