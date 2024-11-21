@@ -53,7 +53,7 @@ const Header = () => {
           </div>
 
           {/* Cart Box */}
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+          <Link to="/view-cart" tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const Header = () => {
                 {cartProductCount}
               </span>
             </div>
-          </div>
+          </Link>
 
           {/*** Profile and Login Section */}
           <div className="dropdown dropdown-end">
