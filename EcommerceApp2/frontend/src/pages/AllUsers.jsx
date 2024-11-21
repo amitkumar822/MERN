@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import moment from "moment";
-import { MdModeEdit, MdDelete } from "react-icons/md";
 import UpdateUserDetails from "../components/UpdateUserDetails";
 import DeleteUser from "../components/DeleteUser";
+import { IconButton } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllUsers = () => {
   const [allUser, setAllUser] = useState([]);
@@ -93,17 +95,33 @@ const AllUsers = () => {
                   {moment(details?.createdAt).format("LL")}
                 </td>
                 <td className="py-4 px-4 text-center flex items-center gap-2">
-                  <div
-                    className="bg-green-500 p-2 rounded-full cursor-pointer text-white hover:bg-green-700 transition-colors duration-200"
-                    onClick={() => setSelectedUser(details)}
-                  >
-                    <MdModeEdit />
+                  <div onClick={() => setSelectedUser(details)}>
+                    <IconButton>
+                      <ModeEditIcon
+                        sx={{
+                          bgcolor: "green",
+                          color: "white",
+                          width: "30px",
+                          height: "30px",
+                          padding: "5px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </IconButton>
                   </div>
-                  <div
-                    onClick={() => setUserId(details._id)}
-                    className="bg-red-500 p-2 rounded-full cursor-pointer text-white hover:bg-red-700 transition-colors duration-200"
-                  >
-                    <MdDelete />
+                  <div onClick={() => setUserId(details._id)}>
+                    <IconButton>
+                      <DeleteIcon
+                        sx={{
+                          bgcolor: "red",
+                          color: "white",
+                          width: "30px",
+                          height: "30px",
+                          padding: "4px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </IconButton>
                   </div>
                 </td>
               </tr>
@@ -121,7 +139,13 @@ const AllUsers = () => {
         />
       )}
 
-      {userId && <DeleteUser userId={userId} setUserId={setUserId} fetchAllUsers={fetchAllUsers} />}
+      {userId && (
+        <DeleteUser
+          userId={userId}
+          setUserId={setUserId}
+          fetchAllUsers={fetchAllUsers}
+        />
+      )}
     </div>
   );
 };

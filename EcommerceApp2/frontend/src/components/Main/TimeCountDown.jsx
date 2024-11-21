@@ -60,31 +60,38 @@ const TimeCountDown = () => {
       <div className="relative container bg-red-400 bg-cover bg-center h-[200px] md:h-[450px] overflow-hidden rounded-lg flex items-center justify-center text-white">
         <div>
           <img
-          className="h-[200px] md:h-[450px] w-[100vw]"
+            className="h-[200px] md:h-[450px] w-[100vw]"
             src="https://img.freepik.com/free-vector/up-fifty-percent-off-big-sale-summer-banner-fresh-cocktail-red-flower-yellow-travel_1262-13339.jpg?t=st=1732093926~exp=1732097526~hmac=9f637451cf69339178bfb8ca0fc3cc1c025f64b3bdfdbda4363e1b6d2df60b62&w=1380"
             alt=""
           />
         </div>
         {/* Countdown Timer */}
-        <div className="absolute md:block hidden text-center bg-white bg-opacity-80 p-6 rounded-lg text-black shadow-lg">
-          <h2 className="text-4xl font-bold text-red-600">Festival Sale</h2>
-          <div className="grid grid-flow-col gap-5 text-center mt-4">
-            <div className="flex flex-col items-center">
-              <span className="countdown text-5xl font-mono">{days}</span>
-              <span className="text-sm font-semibold">Days</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="countdown text-5xl font-mono">{hours}</span>
-              <span className="text-sm font-semibold">Hours</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="countdown text-5xl font-mono">{minutes}</span>
-              <span className="text-sm font-semibold">Minutes</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="countdown text-5xl font-mono">{seconds}</span>
-              <span className="text-sm font-semibold">Seconds</span>
-            </div>
+        <div className="absolute grid grid-flow-col gap-5 text-center auto-cols-max">
+          <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+            <span className="countdown font-mono text-5xl">
+              <span style={{ "--value": `${days}` }}></span>
+            </span>
+            <div className="border-t-2 border-dotted">days</div>
+            
+          </div>
+          <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+            <span className="countdown font-mono text-5xl">
+              <span style={{ "--value": `${hours}` }}></span>
+            </span>
+            <div className="border-t-2 border-dotted">hours</div>
+          </div>
+          <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+            <span className="countdown font-mono text-5xl">
+              <span style={{ "--value": `${minutes}` }}></span>
+            </span>
+            <div className="border-t-2 border-dotted">min</div>
+            
+          </div>
+          <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+            <span className="countdown font-mono text-5xl">
+              <span style={{ "--value": `${seconds}` }}></span>
+            </span>
+            <div className="border-t-2 border-dotted">sec</div>
           </div>
         </div>
 

@@ -32,7 +32,7 @@ const router = createBrowserRouter(
 
       {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>
-        <Route path="all-users" element={<AllUsers />} />
+        <Route path="" element={<AllUsers />} />
         <Route path="all-products" element={<AllProducts />} />
       </Route>
       <Route path="/*" element={<NotFound404 />} />

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import LogOut from "./LogOut";
 import { ROLE } from "../common/Role";
-import Login from "./Login";
+import Login from "./Login1";
 
 const AdminPanel = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -35,7 +35,7 @@ const AdminPanel = () => {
             <div>
               <nav className="grid p-4 text-center text-[18px] text-white">
                 <Link
-                  to={"all-users"}
+                  to={""}
                   className="w-full px-4 py-2 my-1 bg-green-500 rounded-lg hover:bg-green-700 transition duration-300"
                 >
                   All Users
