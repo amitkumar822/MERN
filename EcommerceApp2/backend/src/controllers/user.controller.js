@@ -279,8 +279,6 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     { new: true } // Return the updated document
   );
 
-  console.log(captchaGet);
-
   await Captcha.findByIdAndDelete({
     _id: captchaGet?._id,
   });

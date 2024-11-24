@@ -17,6 +17,7 @@ import SearchProduct from "../pages/SearchProductPage/SearchProduct";
 import ForgotPassword from "../pages/ForgotPassword";
 import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
 import OrderViewCart from "../pages/Cart/OrderViewCart";
+import Profile from "../components/Profile/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/view-cart" element={<OrderViewCart />} />
       <Route path="/search" element={<SearchProduct />} />
+      <Route path="/profile" element={<Profile />} />
 
       {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>

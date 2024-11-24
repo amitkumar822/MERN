@@ -9,6 +9,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    mobile: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    dob: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
