@@ -1,4 +1,4 @@
-import { forwardRef, cloneElement, useState } from "react";
+import { forwardRef, cloneElement, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -9,6 +9,8 @@ import { useSpring, animated } from "@react-spring/web";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Select from "react-select";
+import { Country, State, City } from "country-state-city";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -63,17 +65,84 @@ const style = {
 };
 
 export default function EditProfile({ user }) {
+  console.log(user)
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    address: "",
+    dob: "",
+    pincode: "",
+  });
+
+  useEffect(() => {
+    setData({
+      name: user?.name || "",
+      email: user?.email || "",
+      mobile: user?.mobile || "",
+      address: user?.address || "",
+      dob: user?.dob || "",
+      pincode: user?.pincode || "",
+    });
+  }, [user]);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [data, setData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    mobile: "",
-    address: "",
-    dob: "",
-  });
+  //! =======👇 Country, State And City Functionality Start 👇==================
+  const [country, setCountry] = useState({ isoCode: "", name: "" });
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState({ isoCode: "", name: "" });
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState({ name: "" });
+
+  // Transform options for React Select
+  const countryOptions = Country.getAllCountries().map((country) => ({
+    value: country.isoCode,
+    label: country.name,
+  }));
+
+  const stateOptions = states.map((state) => ({
+    value: state.isoCode,
+    label: state.name,
+  }));
+
+  const cityOptions = cities.map((city) => ({
+    value: city.name,
+    label: city.name,
+  }));
+
+  const handleCountryChange = (selectedOption) => {
+    const selectedCountry = Country.getAllCountries().find(
+      (country) => country.isoCode === selectedOption.value
+    );
+    setCountry({
+      isoCode: selectedCountry.isoCode,
+      name: selectedCountry.name,
+    });
+    setStates(State.getStatesOfCountry(selectedCountry.isoCode));
+    setSelectedState({ isoCode: "", name: "" });
+    setCities([]);
+    setSelectedCity({ name: "" });
+  };
+
+  const handleStateChange = (selectedOption) => {
+    const selectedState = states.find(
+      (state) => state.isoCode === selectedOption.value
+    );
+    setSelectedState({
+      isoCode: selectedState.isoCode,
+      name: selectedState.name,
+    });
+    setCities(City.getCitiesOfState(country.isoCode, selectedState.isoCode));
+    setSelectedCity({ name: "" });
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity({ name: selectedOption.value });
+  };
+  //! =======�� Country, State And City Functionality End ��==================
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -81,13 +150,23 @@ export default function EditProfile({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data: ", data);
-    console.log("ID: ", user?._id);
+
+    const newData = {
+      name: data.name,
+      email: data.email,
+      mobile: data.mobile,
+      address: data.address,
+      dob: data.dob,
+      pincode: data.pincode,
+      country: country?.name || user?.country,
+      state: selectedState?.name || user?.state,
+      city: selectedCity?.name || user?.name
+    }
 
     try {
       const response = await axios.post(
         `/api/user/update-user-details/${user?._id}`,
-        data,
+        newData,
         {
           credentials: "include",
           headers: {
@@ -97,13 +176,11 @@ export default function EditProfile({ user }) {
       );
 
       toast.success("Profile updated successfully");
-      // handleClose();
+      handleClose();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
     }
   };
-
-  console.log(user);
 
   return (
     <div>
@@ -236,9 +313,10 @@ export default function EditProfile({ user }) {
                       <h2 className="text-center mt-1 font-semibold">
                         Upload Profile and Cover Image
                       </h2>
+                      {/* Name */}
                       <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
                         <div className="w-full  mb-4 mt-6">
-                          <label for="name" className="mb-2">
+                          <label htmlFor="name" className="mb-2">
                             Name
                           </label>
                           <input
@@ -255,7 +333,7 @@ export default function EditProfile({ user }) {
 
                       <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
                         <div className="w-full">
-                          <label for="email" className="">
+                          <label htmlFor="email" className="">
                             Email
                           </label>
                           <input
@@ -269,7 +347,7 @@ export default function EditProfile({ user }) {
                           />
                         </div>
                         <div className="w-full ">
-                          <label for="mobile" className=" ">
+                          <label htmlFor="mobile" className=" ">
                             Mobile
                           </label>
                           <input
@@ -284,6 +362,7 @@ export default function EditProfile({ user }) {
                         </div>
                       </div>
 
+                      {/* Sex and DOB  */}
                       <div className="flex lg:flex-row mt-2 md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
                         <div className="w-full">
                           <label htmlFor="sex">Sex</label>
@@ -314,8 +393,75 @@ export default function EditProfile({ user }) {
                         </div>
                       </div>
 
+                      {/* Country and State */}
+                      <div className="flex lg:flex-row mt-2 md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                        <div className="w-full">
+                          <label htmlFor="country">Country</label>
+                          <Select
+                            id="country"
+                            name="country"
+                            className="cursor-pointer"
+                            options={countryOptions}
+                            value={countryOptions.find(
+                              (option) => option.value === country.isoCode
+                            )}
+                            onChange={handleCountryChange}
+                            placeholder="Select Country"
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <label htmlFor="state">State</label>
+                          <Select
+                            id="state"
+                            name="state"
+                            className="cursor-pointer"
+                            options={stateOptions}
+                            value={stateOptions.find(
+                              (option) => option.value === selectedState.isoCode
+                            )}
+                            onChange={handleStateChange}
+                            placeholder="Select State"
+                            isDisabled={!states.length}
+                          />
+                        </div>
+                      </div>
+
+                      {/* City and Pin Code */}
+                      <div className="flex lg:flex-row mt-2 md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                        <div className="w-full">
+                          <label htmlFor="city">City</label>
+                          <Select
+                            id="city"
+                            name="city"
+                            className="cursor-pointer"
+                            options={cityOptions}
+                            value={cityOptions.find(
+                              (option) => option.value === selectedCity.name
+                            )}
+                            onChange={handleCityChange}
+                            placeholder="Select City"
+                            isDisabled={!cities.length}
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <label htmlFor="pincode">Pin Code</label>
+                          <input
+                            id="pincode"
+                            type="text"
+                            name="pincode"
+                            value={data.pincode}
+                            onChange={handleChange}
+                            // disabled={!cities.length}
+                            placeholder="Pin code..."
+                            className=" p-2 w-full border-2 rounded-lg"
+                          />
+                        </div>
+                      </div>
+
                       <div className="w-full mt-2">
-                        <label for="address" className="mb-2">
+                        <label htmlFor="address" className="mb-2">
                           Address
                         </label>
                         <textarea

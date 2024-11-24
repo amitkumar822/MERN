@@ -20,16 +20,54 @@ const Profile = () => {
               className="border-4 border-solid border-white rounded-full object-cover"
             />
           </div>
+
+          {/* Name, Email, State or User Details */}
           <div className="flex items-center justify-center flex-col sm:flex-row max-sm:gap-5 sm:justify-between mb-5">
             <div className="block">
-              <h3 className="font-manrope font-bold text-4xl text-gray-900 mb-1 max-sm:text-center">
+              {/* User Name */}
+              <h3 className="font-manrope font-bold text-4xl text-gray-800 mb-3">
                 {user?.name}
               </h3>
-              <p className="font-normal text-base leading-7 text-gray-500  max-sm:text-center">
-                Email:- {user?.email}
-                <br className="hidden sm:block" />
-                New York, United States
-              </p>
+
+              {/* User Details */}
+              <div className="text-gray-600 space-y-2">
+                {/* Email */}
+                <p className="flex items-center gap-2">
+                  <span className="material-icons text-blue-500">email</span>
+                  <span className="font-medium">
+                    {user?.email || "No Email Provided"}
+                  </span>
+                </p>
+
+                {/* Mobile */}
+                {user?.mobile && (
+                  <p className="flex items-center gap-2">
+                    <span className="material-icons text-green-500">phone</span>
+                    <span className="font-medium">{user?.mobile}</span>
+                  </p>
+                )}
+
+                {/* Address */}
+                <p className="flex items-center gap-2">
+                  <span className="material-icons text-yellow-500">
+                    location_on
+                  </span>
+                  <span className="font-medium">
+                    {user?.city}, {user?.state}
+                  </span>
+                </p>
+
+                {/* Country */}
+                <p className="flex items-center gap-2">
+                  <span className="material-icons text-red-500">public</span>
+                  <span className="font-medium">{user?.country}</span>
+                </p>
+
+                {/* Full Address */}
+                {user?.address && (
+                  <p className="mt-4 text-gray-500 italic">"{user?.address}"</p>
+                )}
+              </div>
             </div>
             <div>
               <div className="flex flex-col items-center justify-center gap-4">
@@ -55,7 +93,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="flex max-sm:flex-wrap max-sm:justify-center items-center gap-4">
+          {/* <div className="flex max-sm:flex-wrap max-sm:justify-center items-center gap-4">
             <a
               href="javascript:;"
               className="rounded-full py-3 px-6 bg-stone-100 text-gray-700 font-semibold text-sm leading-6 transition-all duration-500 hover:bg-stone-200 hover:text-gray-900"
@@ -74,7 +112,7 @@ const Profile = () => {
             >
               Project Manager
             </a>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
