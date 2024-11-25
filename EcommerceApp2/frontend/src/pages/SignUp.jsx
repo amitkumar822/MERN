@@ -83,7 +83,8 @@ const SignUp = () => {
                 <h3 className="text-4xl font-bold text-white">
                   {/* Join our shoppers & <br className="hidden xl:block" />
       elevate your shopping experience */}
-                  Experience seamless shopping with AmiShop. Be a part of our
+                  Experience seamless shopping with <span className="font-semibold text-pink-500">Ami</span>
+                  <span className="font-semibold text-green-400">Shop</span>. Be a part of our
                   growing community and enjoy exclusive deals and benefits.
                 </h3>
                 <ul className="grid grid-cols-1 mt-10 sm:grid-cols-2 gap-x-8 gap-y-4">

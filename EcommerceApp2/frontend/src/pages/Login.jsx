@@ -170,7 +170,8 @@ const Login = () => {
 
               <div className="w-full max-w-md mx-auto xl:max-w-xl">
                 <h3 className="text-2xl font-bold text-center text-black">
-                  Welcome to AmiShop
+                  Welcome to <span className="font-semibold text-pink-600">Ami</span>
+                  <span className="font-semibold text-green-600">Shop</span>
                 </h3>
                 <p className="leading-relaxed text-center text-gray-500 mt-2.5">
                   Explore a world of premium products and exclusive deals. Log

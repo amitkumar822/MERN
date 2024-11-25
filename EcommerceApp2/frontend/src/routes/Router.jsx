@@ -18,6 +18,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
 import OrderViewCart from "../pages/Cart/OrderViewCart";
 import Profile from "../components/Profile/Profile";
+import PaymentForm from "../pages/Cart/PaymentForm";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/product-category" element={<CategoryProduct />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/view-cart" element={<OrderViewCart />} />
+      <Route path="/payment-form" element={<PaymentForm />} />
       <Route path="/search" element={<SearchProduct />} />
       <Route path="/profile" element={<Profile />} />
 

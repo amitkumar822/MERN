@@ -264,13 +264,13 @@ const OrderViewCart = () => {
                 </li>
               </ul>
 
-              <button
-                type="button"
-                className="mt-6 text-sm px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md"
-              >
-                Make Payment
-              </button>
-
+              <div className="w-full mt-6">
+                <Link to={"/payment-form"}>
+                  <div className="flex justify-center items-center text-sm md:text-xl px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md">
+                    Make Payment
+                  </div>
+                </Link>
+              </div>
               <div className="mt-6 space-y-6">
                 <div>
                   <h4 className="text-sm font-bold text-gray-800 mb-3">

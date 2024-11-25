@@ -172,10 +172,10 @@ const Cart = ({ category, heading }) => {
                       <div className="mt-4 w-full">
                         <div className="mt-2 mb-5">
                           <span className="text-lg md:text-xl font-semibold text-slate-900">
-                            {displayINRCurrency(product?.price)}
+                            {displayINRCurrency(product.sellingPrice)}
                           </span>{" "}
                           <span className="text-xs text-red-500 line-through">
-                            {displayINRCurrency(product.sellingPrice)}
+                            {displayINRCurrency(product?.price)}
                           </span>
                         </div>
 

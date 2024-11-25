@@ -168,10 +168,10 @@ const VerticalCard = ({ category, heading }) => {
 
                       <div className="mt-2 mb-5 flex items-center justify-center gap-3">
                         <span className="text-lg font-semibold text-slate-900">
-                          {displayINRCurrency(product?.price)}
+                          {displayINRCurrency(product.sellingPrice)}
                         </span>
                         <span className="text-xs text-red-500 line-through">
-                          {displayINRCurrency(product.sellingPrice)}
+                          {displayINRCurrency(product?.price)}
                         </span>
                       </div>
 

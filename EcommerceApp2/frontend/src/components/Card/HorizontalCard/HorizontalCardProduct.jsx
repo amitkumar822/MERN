@@ -138,10 +138,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       <div className="mt-2 mb-5 flex items-center justify-between">
                         <p>
                           <span className="text-xs md:text-[16px] font-semibold text-slate-900">
-                            {displayINRCurrency(product?.price)}
+                            {displayINRCurrency(product.sellingPrice)}
                           </span>
                           <span className="text-[12px] text-red-500 md:text-sm line-through ml-2">
-                            {displayINRCurrency(product.sellingPrice)}
+                            {displayINRCurrency(product?.price)}
                           </span>
                         </p>
                       </div>

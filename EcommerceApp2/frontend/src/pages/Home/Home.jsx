@@ -5,6 +5,7 @@ import HorizontalCardProduct from "../../components/Card/HorizontalCard/Horizont
 import Carousel from "../../components/Banner/Carousel";
 import TimeCountDown from "../../components/Main/TimeCountDown";
 import Cart from "../Cart/Cart";
+import Review from "../../components/Review/ReviewPage";
 
 const Home = () => {
   return (
@@ -34,6 +35,7 @@ const Home = () => {
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
+      <Review />
     </div>
   );
 };

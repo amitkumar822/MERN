@@ -160,7 +160,7 @@ const ProductDetailsPage = () => {
               <p className="bg-red-200 text-red-600 px-2 rounded-full inline-block w-fit capitalize">
                 {data?.brand}
               </p>
-              <h2 className="text-2xl font-extrabold text-gray-800">
+              <h2 className="text-2xl capitalize font-extrabold text-gray-800">
                 {data?.productName}
               </h2>
 
@@ -321,7 +321,8 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Product Review */}
-          <div className="mt-16 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
+          
+          {/* <div className="mt-16 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
             <h3 className="text-xl font-bold text-gray-800">Reviews(10)</h3>
             <div className="grid md:grid-cols-2 gap-12 mt-4">
               <div className="space-y-3">
@@ -476,7 +477,7 @@ const ProductDetailsPage = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {data.category && (
             <CategroyWiseProductDisplay

@@ -97,7 +97,7 @@ export default function EditProfile({ user }) {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({ name: "" });
 
-  // Transform options for React Select
+  //* Transform options for React Select
   const countryOptions = Country.getAllCountries().map((country) => ({
     value: country.isoCode,
     label: country.name,
