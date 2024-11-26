@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
-import Logo from "../Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../../context/userContext";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
-import logo1 from "../../../public/logo.png";
+import logo1 from "../../data/logo.png"
 
 const Header = () => {
   const navigate = useNavigate();
