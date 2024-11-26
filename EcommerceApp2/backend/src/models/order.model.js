@@ -23,6 +23,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timeseries: true }
 );

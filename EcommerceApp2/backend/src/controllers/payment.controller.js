@@ -1,9 +1,13 @@
+import { ApiError } from "../../utils/ApiError.js";
+import { ApiResponse } from "../../utils/ApiResponse.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 import crypto from "crypto";
 import Order from "../models/order.model.js";
 import { razorpayInstance } from "../../utils/razorpay.js";
 
 export const createOrder = async (req, res) => {
   const { productName, amount } = req.body;
+  const userId = req?.user?.userId;
 
   try {
     if (!productName || !amount) {
@@ -21,11 +25,11 @@ export const createOrder = async (req, res) => {
       order_id: order.id,
       productName,
       amount,
+      user: userId,
     });
 
     res.status(200).json(order);
   } catch (error) {
-    console.error("Error creating order:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
@@ -33,6 +37,7 @@ export const createOrder = async (req, res) => {
 export const verifyPayment = async (req, res) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
     req.body;
+  const userId = req?.user?.userId;
 
   try {
     const bodyData = razorpay_order_id + "|" + razorpay_payment_id;
@@ -52,6 +57,7 @@ export const verifyPayment = async (req, res) => {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
+            user: userId,
           },
         }
       );
@@ -59,10 +65,22 @@ export const verifyPayment = async (req, res) => {
         `http://localhost:5173/success?payment_id=${razorpay_payment_id}`
       );
     } else {
+      const order = await Order.findOne({ order_id: razorpay_order_id });
+      await Order.findByIdAndDelete(order._id);
       res.redirect("http://localhost:5173/failed");
     }
   } catch (error) {
+    const order = await Order.findOne({ order_id: razorpay_order_id });
+    await Order.findByIdAndDelete(order._id);
     console.error("Error during payment verification:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
+
+export const getRazorpayKey = asyncHandler(async (req, res) => {
+  const RazorPayKey = process.env.razorpay_key_id;
+  console.log("KEy: " + RazorPayKey);
+  return res
+    .status(200)
+    .json(new ApiResponse(200, RazorPayKey, "Success Get Razor Pay Key"));
+});

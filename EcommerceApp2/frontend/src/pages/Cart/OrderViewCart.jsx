@@ -110,6 +110,10 @@ const OrderViewCart = () => {
   const handlePayment = async ({ productName, amount }) => {
     toast.info("Please wait...");
     try {
+      const respomse = await axios.get("/api/payment/razorpay-key");
+      const rezorPayKey = respomse?.data?.data;
+
+
       const { data } = await axios.post(
         "/api/payment/checkout",
         { productName, amount },
@@ -119,14 +123,13 @@ const OrderViewCart = () => {
           },
         }
       );
-      console.log(data);
 
       const options = {
-        key: "rzp_test_e6zVRFhnIAZ4q9", // Enter the Key ID generated from the Dashboard
+        key: rezorPayKey, // Enter the Key ID generated from the Dashboard
         amount: data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         // currency: data?.currency,
-        name: "Acme Corp",
+        name: "AmiShop",
         description: "Test Transaction",
         image: "https://example.com/your_logo", //! LOGO
         order_id: data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
@@ -145,8 +148,9 @@ const OrderViewCart = () => {
         },
       };
 
-      const rzp1 = new Razorpay(options);
-      rzp1.open();
+      const rzp = new Razorpay(options);
+      rzp.open();
+
       toast.success("Successfully your transaction");
     } catch (error) {
       console.error(error);
@@ -162,13 +166,13 @@ const OrderViewCart = () => {
             Your shopping bag
           </h2> */}
 
-<ul className="steps">
-  <li className="step step-primary">Register</li>
-  <li className="step step-primary">Choose plan</li>
-  <li className="step step-primary">Purchase</li>
-  <li className="step step-primary">Receive Product</li>
-  <li className="step ">Receive Product</li>
-</ul>
+          <ul className="steps">
+            <li className="step step-primary">Register</li>
+            <li className="step step-primary">Choose plan</li>
+            <li className="step step-primary">Purchase</li>
+            <li className="step step-primary">Receive Product</li>
+            <li className="step ">Receive Product</li>
+          </ul>
 
           <div className="grid lg:grid-cols-3 gap-6 relative mt-8">
             <div className="lg:col-span-2 space-y-6">
