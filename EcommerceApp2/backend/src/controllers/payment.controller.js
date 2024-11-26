@@ -4,35 +4,32 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import crypto from "crypto";
 import Order from "../models/order.model.js";
 import { razorpayInstance } from "../../utils/razorpay.js";
+import { AddToCart } from "../models/addToCart.modal.js";
 
-export const createOrder = async (req, res) => {
+export const createOrder = asyncHandler(async (req, res) => {
   const { productName, amount } = req.body;
   const userId = req?.user?.userId;
 
-  try {
-    if (!productName || !amount) {
-      return res
-        .status(400)
-        .json({ msg: "Product name and amount are required" });
-    }
-
-    const order = await razorpayInstance.orders.create({
-      amount: Number(amount * 100),
-      currency: "INR",
-    });
-
-    await Order.create({
-      order_id: order.id,
-      productName,
-      amount,
-      user: userId,
-    });
-
-    res.status(200).json(order);
-  } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error });
+  if (!productName || !amount) {
+    throw new ApiError(400, "Product name and amount are required");
   }
-};
+
+  const order = await razorpayInstance.orders.create({
+    amount: Number(amount * 100),
+    currency: "INR",
+  });
+
+  await Order.create({
+    order_id: order.id,
+    productName,
+    amount,
+    user: userId,
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, order, "Order Created On RazorPay"));
+});
 
 export const verifyPayment = async (req, res) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
@@ -61,6 +58,9 @@ export const verifyPayment = async (req, res) => {
           },
         }
       );
+
+      await AddToCart.deleteMany({ userId });
+
       res.redirect(
         `http://localhost:5173/success?payment_id=${razorpay_payment_id}`
       );

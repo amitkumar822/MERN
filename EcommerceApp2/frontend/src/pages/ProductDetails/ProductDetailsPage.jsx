@@ -142,7 +142,7 @@ const ProductDetailsPage = () => {
               {/* Product multiple images */}
               <div className="mt-6 flex flex-wrap justify-center gap-6 mx-auto">
                 {data?.productImage?.map((imgURL, index) => (
-                  <div className="w-24 h-20 flex items-center justify-center rounded-lg p-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] cursor-pointer">
+                  <div key={index} className="w-24 h-20 flex items-center justify-center rounded-lg p-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] cursor-pointer">
                     <img
                       src={imgURL?.url}
                       alt="Product2"

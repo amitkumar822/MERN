@@ -109,6 +109,7 @@ const OrderViewCart = () => {
   //!=====👇 Payment Integrate 👇==============
   const handlePayment = async ({ productName, amount }) => {
     toast.info("Please wait...");
+
     try {
       const respomse = await axios.get("/api/payment/razorpay-key");
       const rezorPayKey = respomse?.data?.data;
@@ -124,15 +125,18 @@ const OrderViewCart = () => {
         }
       );
 
+      console.log("AMount: ", data?.data);
+      
+
       const options = {
         key: rezorPayKey, // Enter the Key ID generated from the Dashboard
-        amount: data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         // currency: data?.currency,
         name: "AmiShop",
         description: "Test Transaction",
         image: "https://example.com/your_logo", //! LOGO
-        order_id: data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "/api/payment/payment-verification",
         prefill: {
           name: "",

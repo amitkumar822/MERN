@@ -216,7 +216,7 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
     );
 });
 
-// Website top category list controller, so products get by category
+//! Website top category list controller, so products get by category
 export const getCategoryByProducts = asyncHandler(async (req, res) => {
   const categoryProducts = await Product.distinct("category");
 
