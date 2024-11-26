@@ -65,7 +65,6 @@ const style = {
 };
 
 export default function EditProfile({ user }) {
-  console.log(user)
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -160,8 +159,8 @@ export default function EditProfile({ user }) {
       pincode: data.pincode,
       country: country?.name || user?.country,
       state: selectedState?.name || user?.state,
-      city: selectedCity?.name || user?.name
-    }
+      city: selectedCity?.name || user?.name,
+    };
 
     try {
       const response = await axios.post(

@@ -35,7 +35,7 @@ const Home = () => {
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
-      <Review />
+      {/* <Review /> */}
     </div>
   );
 };

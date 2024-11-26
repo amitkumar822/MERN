@@ -7,11 +7,30 @@ import { razorpayInstance } from "../../utils/razorpay.js";
 import { AddToCart } from "../models/addToCart.modal.js";
 
 export const createOrder = asyncHandler(async (req, res) => {
-  const { productName, amount } = req.body;
-  const userId = req?.user?.userId;
+  const {
+    amount,
+    mobile,
+    country,
+    state,
+    city,
+    pincode,
+    address,
+    email,
+    name,
+  } = req.body;
 
-  if (!productName || !amount) {
-    throw new ApiError(400, "Product name and amount are required");
+  if (
+    !amount ||
+    !mobile ||
+    !country ||
+    !state ||
+    !city ||
+    !pincode ||
+    !address ||
+    !email ||
+    !name
+  ) {
+    throw new ApiError(400, "All fields are required");
   }
 
   const order = await razorpayInstance.orders.create({
@@ -21,9 +40,15 @@ export const createOrder = asyncHandler(async (req, res) => {
 
   await Order.create({
     order_id: order.id,
-    productName,
     amount,
-    user: userId,
+    mobile,
+    country,
+    state,
+    city,
+    pincode,
+    address,
+    email,
+    name,
   });
 
   res
@@ -54,7 +79,7 @@ export const verifyPayment = async (req, res) => {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
-            user: userId,
+            userId,
           },
         }
       );
@@ -72,14 +97,13 @@ export const verifyPayment = async (req, res) => {
   } catch (error) {
     const order = await Order.findOne({ order_id: razorpay_order_id });
     await Order.findByIdAndDelete(order._id);
-    console.error("Error during payment verification:", error);
+
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
 
 export const getRazorpayKey = asyncHandler(async (req, res) => {
   const RazorPayKey = process.env.razorpay_key_id;
-  console.log("KEy: " + RazorPayKey);
   return res
     .status(200)
     .json(new ApiResponse(200, RazorPayKey, "Success Get Razor Pay Key"));

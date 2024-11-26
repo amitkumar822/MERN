@@ -23,6 +23,30 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    mobile: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    pincode: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
