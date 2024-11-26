@@ -104,61 +104,6 @@ const OrderViewCart = () => {
     0
   );
 
-  //!=====👇 Payment Integrate 👇==============
-  const handlePayment = async () => {
-    toast.info("Please wait...");
-    alert("Please wait...");
-
-    const amount = totalPrice;
-
-    try {
-      const respomse = await axios.get("/api/payment/razorpay-key");
-      const rezorPayKey = respomse?.data?.data;
-
-      const { data } = await axios.post(
-        "/api/payment/checkout",
-        { amount },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const options = {
-        key: rezorPayKey, // Enter the Key ID generated from the Dashboard
-        amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: "INR",
-        // currency: data?.currency,
-        name: "AmiShop",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo", //! LOGO
-        order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "/api/payment/payment-verification",
-        prefill: {
-          name: "",
-          // name: "Amit Kumar",
-          email: "",
-          contact: "",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-
-      const rzp = new Razorpay(options);
-      rzp.open();
-
-      toast.success("Successfully your transaction");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to checkout. Please try again.");
-    }
-  };
-
   return (
     <div>
       <div className="font-[sans-serif] bg-white h-full">
@@ -411,7 +356,7 @@ const OrderViewCart = () => {
       </div>
 
       {/* Shippding Modal */}
-      <ShippingAddress handlePayment={handlePayment} totalPrice={totalPrice} />
+      <ShippingAddress totalPrice={totalPrice} />
     </div>
   );
 };

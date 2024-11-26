@@ -21,14 +21,12 @@ app.use(express.static("public"));
 import userRouter from "./src/routes/user.routes.js";
 import productRouter from "./src/routes/product.routes.js";
 import bannerSliderRouter from "./src/routes/bannerSlider.controller.routes.js";
-import paymentRoutes from "./src/routes/payment.routes.js";
 import orderRoutes from "./src/routes/order.routes.js";
 
 // difine router
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/banner-slider", bannerSliderRouter);
-app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/order", orderRoutes);
 
 // difine captch router
