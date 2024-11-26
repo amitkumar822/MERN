@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import UserContext from "../../context/userContext";
 import axios from "axios";
@@ -25,10 +24,6 @@ const OrderViewCart = () => {
       console.log(error);
     }
   };
-
-  console.log("====================================");
-  console.log(data);
-  console.log("====================================");
 
   const handleLoading = async () => {
     await fetchData();
@@ -105,13 +100,58 @@ const OrderViewCart = () => {
     (previousValue, currentValue) => previousValue + currentValue.quantity,
     0
   );
+
   const totalPrice = data.reduce(
     (preve, curr) => preve + curr.quantity * curr?.productId?.sellingPrice,
     0
   );
 
-  const handleViewDetails = (productId) => {
-    console.log("ID: " + productId);
+  //!=====👇 Payment Integrate 👇==============
+  const handlePayment = async ({ productName, amount }) => {
+    toast.info("Please wait...");
+    try {
+      const { data } = await axios.post(
+        "/api/payment/checkout",
+        { productName, amount },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+
+      const options = {
+        key: "rzp_test_e6zVRFhnIAZ4q9", // Enter the Key ID generated from the Dashboard
+        amount: data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        // currency: data?.currency,
+        name: "Acme Corp",
+        description: "Test Transaction",
+        image: "https://example.com/your_logo", //! LOGO
+        order_id: data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: "/api/payment/payment-verification",
+        prefill: {
+          name: "",
+          // name: "Amit Kumar",
+          email: "",
+          contact: "",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+      toast.success("Successfully your transaction");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to checkout. Please try again.");
+    }
   };
 
   return (
@@ -122,12 +162,23 @@ const OrderViewCart = () => {
             Your shopping bag
           </h2> */}
 
+<ul className="steps">
+  <li className="step step-primary">Register</li>
+  <li className="step step-primary">Choose plan</li>
+  <li className="step step-primary">Purchase</li>
+  <li className="step step-primary">Receive Product</li>
+  <li className="step ">Receive Product</li>
+</ul>
+
           <div className="grid lg:grid-cols-3 gap-6 relative mt-8">
             <div className="lg:col-span-2 space-y-6">
               {/* Product image */}
               <div className="p-2 bg-white shadow-[0_3px_20px_-10px_rgba(6,81,237,0.4)] rounded-md relative">
                 {data?.map((product, index) => (
-                  <div className="grid sm:grid-cols-2 items-center gap-4">
+                  <div
+                    key={index + product?.productId?.productName}
+                    className="grid sm:grid-cols-2 items-center gap-4"
+                  >
                     <div className="bg-gradient-to-tr from-gray-300 via-gray-100 rounded-md to-gray-50 w-full h-full p-4 shrink-0 text-center">
                       <img
                         src={product?.productId?.productImage[0]?.url}
@@ -265,11 +316,23 @@ const OrderViewCart = () => {
               </ul>
 
               <div className="w-full mt-6">
-                <Link to={"/payment-form"}>
+                {/* <Link to={"/payment-form"}>
                   <div className="flex justify-center items-center text-sm md:text-xl px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md">
                     Make Payment
                   </div>
-                </Link>
+                </Link> */}
+
+                <button
+                  onClick={() =>
+                    handlePayment({
+                      productName: data[0]?.productId?.productName,
+                      amount: totalPrice,
+                    })
+                  }
+                  className="flex justify-center items-center text-sm md:text-xl px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md"
+                >
+                  Make Payment
+                </button>
               </div>
               <div className="mt-6 space-y-6">
                 <div>

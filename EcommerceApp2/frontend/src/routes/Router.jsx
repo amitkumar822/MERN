@@ -19,6 +19,8 @@ import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
 import OrderViewCart from "../pages/Cart/OrderViewCart";
 import Profile from "../components/Profile/Profile";
 import PaymentForm from "../pages/Cart/PaymentForm";
+import Success from "../pages/Cart/Success";
+import Failed from "../pages/Cart/Failed";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +35,8 @@ const router = createBrowserRouter(
       <Route path="/payment-form" element={<PaymentForm />} />
       <Route path="/search" element={<SearchProduct />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="/failed" element={<Failed />} />
 
       {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>
