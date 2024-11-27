@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    productName: {
-      type: String,
-    },
+    productId: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    }],
+    quantity: [{
+      type: Number,
+    }],
     ammount: {
       type: Number,
     },
@@ -52,7 +56,7 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
     },
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 
 const Order = mongoose.model("Order", orderSchema);
