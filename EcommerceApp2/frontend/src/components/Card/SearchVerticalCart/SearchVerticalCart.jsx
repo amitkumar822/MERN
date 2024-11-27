@@ -18,7 +18,7 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
     <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center md:justify-between md:gap-4 overflow-x-scroll no-scrollbar transition-all p-3">
       {loading
         ? loadingList.map((product, index) => (
-            <div className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-gradient-to-b from-gray-50 to-gray-200 rounded-xl shadow-lg">
+            <div key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-gradient-to-b from-gray-50 to-gray-200 rounded-xl shadow-lg">
               <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse rounded-t-xl"></div>
               <div className="p-4 grid gap-3">
                 <h2 className="font-semibold text-lg text-black animate-pulse rounded-md bg-gray-300 h-6"></h2>
@@ -34,6 +34,7 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
         : data.map((product, index) => (
             <Link
               to={`/product/${product?._id}`}
+              key={index}
               className="w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] overflow-hidden bg-gradient-to-r from-white via-gray-50 to-gray-100 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105"
               onClick={scrollTop}
             >

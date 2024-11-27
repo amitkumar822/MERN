@@ -201,7 +201,7 @@ const SignUp = () => {
                 <div className="space-y-5">
                   <div>
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="text-base font-medium text-gray-900"
                     >
                       {" "}
@@ -241,7 +241,7 @@ const SignUp = () => {
 
                   <div>
                     <label
-                      for="email"
+                      htmlFor="email"
                       className="text-base font-medium text-gray-900"
                     >
                       {" "}
@@ -281,7 +281,7 @@ const SignUp = () => {
 
                   <div>
                     <label
-                      for="passoword"
+                      htmlFor="passoword"
                       className="text-base font-medium text-gray-900"
                     >
                       {" "}
@@ -327,7 +327,7 @@ const SignUp = () => {
 
                   <div>
                     <label
-                      for="confirmPassword"
+                      htmlFor="confirmPassword"
                       className="text-base font-medium text-gray-900"
                     >
                       Confirm Password{" "}

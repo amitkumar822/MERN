@@ -111,6 +111,9 @@ const Header = () => {
                 <Link to="/admin-panel">Admin Panel</Link>
               </li>
               <li>
+                <Link to="/order">Order</Link>
+              </li>
+              <li>
                 {user?.name ? <LogOut /> : <Link to="/login">Login</Link>}
               </li>
             </ul>

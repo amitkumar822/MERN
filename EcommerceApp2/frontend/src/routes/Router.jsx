@@ -20,6 +20,7 @@ import OrderViewCart from "../pages/Cart/OrderViewCart";
 import Profile from "../components/Profile/Profile";
 import Success from "../pages/Cart/Success";
 import Failed from "../pages/Cart/Failed";
+import Order from "../components/Order/Order";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="/profile" element={<Profile />} />
       <Route path="/success" element={<Success />} />
       <Route path="/failed" element={<Failed />} />
+      <Route path="/order" element={<Order />} />
 
       {/* Admin Panel Routes */}
       <Route path="/admin-panel" element={<AdminPanel />}>

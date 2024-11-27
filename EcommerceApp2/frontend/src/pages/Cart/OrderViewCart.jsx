@@ -10,6 +10,9 @@ const OrderViewCart = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const { fetchCountAddToCart } = useContext(UserContext);
+  // TODO: This two all products id and quantity are used placed order time in ShippingAddress component
+  const [allProductId, setAllProductId] = useState([]);
+  const [quantity, setQuantity] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -20,6 +23,8 @@ const OrderViewCart = () => {
         },
       });
       setData(data?.data);
+      setAllProductId(data?.data.map((item) => item.productId._id));
+      setQuantity(data?.data.map((item) => item.quantity));
     } catch (error) {
       console.log(error);
     }
@@ -237,6 +242,7 @@ const OrderViewCart = () => {
                 </div>
               </div>
 
+              {/* Order Place and Builling Section */}
               <div className="bg-white h-max rounded-md p-4 shadow-[0_3px_20px_-10px_rgba(6,81,237,0.4)] sticky top-0">
                 <h3 className="text-lg font-bold text-gray-800">
                   Order Summary
@@ -262,7 +268,6 @@ const OrderViewCart = () => {
                 </ul>
 
                 <div className="w-full mt-6">
-                  {/* <Link to={"/shipping-address"}> */}
                   <button
                     onClick={() =>
                       document
@@ -273,19 +278,6 @@ const OrderViewCart = () => {
                   >
                     Place Order
                   </button>
-                  {/* </Link> */}
-
-                  {/* <button
-                    onClick={() =>
-                      handlePayment({
-                        productName: data[0]?.productId?.productName,
-                        amount: totalPrice,
-                      })
-                    }
-                    className="flex justify-center items-center text-sm md:text-xl px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md"
-                  >
-                    Make Payment
-                  </button> */}
                 </div>
                 <div className="mt-6 space-y-6">
                   <div>
@@ -356,7 +348,7 @@ const OrderViewCart = () => {
       </div>
 
       {/* Shippding Modal */}
-      <ShippingAddress totalPrice={totalPrice} />
+      <ShippingAddress totalPrice={totalPrice} allProductId={allProductId} quantity={quantity} />
     </div>
   );
 };

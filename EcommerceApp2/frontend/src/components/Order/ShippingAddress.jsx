@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import SyncLoader from "react-spinners/SyncLoader";
 
-const ShippingAddress = ({ totalPrice }) => {
+const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
   const [loading, setLoading] = useState(false);
   // State management for inputs
   const [formData, setFormData] = useState({
@@ -96,12 +96,15 @@ const ShippingAddress = ({ totalPrice }) => {
       state: selectedState.name,
       city: selectedCity.name,
       amount: totalPrice,
+      productId: allProductId,
+      quantity: quantity,
     };
+
+    console.log("FormData: ", newData)
 
     try {
       const respomse = await axios.get("/api/order/razorpay-key");
       const rezorPayKey = respomse?.data?.data;
-      console.log("KEy: ", rezorPayKey);
 
       const { data } = await axios.post("/api/order/checkout", newData, {
         headers: {
@@ -109,34 +112,34 @@ const ShippingAddress = ({ totalPrice }) => {
         },
       });
 
-      document.getElementById("shippingAddress_modal").close();
+      // document.getElementById("shippingAddress_modal").close();
 
-      const options = {
-        key: rezorPayKey, // Enter the Key ID generated from the Dashboard
-        amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency: "INR",
-        // currency: data?.currency,
-        name: "AmiShop",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo", //! LOGO
-        order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "/api/order/payment-verification",
-        prefill: {
-          name: "",
-          // name: "Amit Kumar",
-          email: "",
-          contact: "",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
+      // const options = {
+      //   key: rezorPayKey, // Enter the Key ID generated from the Dashboard
+      //   amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      //   currency: "INR",
+      //   // currency: data?.currency,
+      //   name: "AmiShop",
+      //   description: "Test Transaction",
+      //   image: "https://example.com/your_logo", //! LOGO
+      //   order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      //   callback_url: "/api/order/payment-verification",
+      //   prefill: {
+      //     name: "",
+      //     // name: "Amit Kumar",
+      //     email: "",
+      //     contact: "",
+      //   },
+      //   notes: {
+      //     address: "Razorpay Corporate Office",
+      //   },
+      //   theme: {
+      //     color: "#3399cc",
+      //   },
+      // };
 
-      const rzp = new Razorpay(options);
-      rzp.open();
+      // const rzp = new Razorpay(options);
+      // rzp.open();
 
       toast.success("Successfully your transaction");
 
