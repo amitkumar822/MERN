@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
     quantity: [{
       type: Number,
     }],
-    ammount: {
+    amount: {
       type: Number,
     },
     order_id: {
