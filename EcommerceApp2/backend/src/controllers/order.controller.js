@@ -6,7 +6,9 @@ import Order from "../models/order.model.js";
 import { razorpayInstance } from "../../utils/razorpay.js";
 import { AddToCart } from "../models/addToCart.modal.js";
 
+//====== 👇Payment Controller👇 ======================
 export const createOrder = asyncHandler(async (req, res) => {
+  const userId = req?.user?.userId;
   const {
     amount,
     mobile,
@@ -17,19 +19,9 @@ export const createOrder = asyncHandler(async (req, res) => {
     address,
     email,
     name,
+    productId,
+    quantity,
   } = req.body;
-
-  console.log(
-    amount,
-    mobile,
-    country,
-    state,
-    city,
-    pincode,
-    address,
-    email,
-    name
-  );
 
   if (
     !amount ||
@@ -40,7 +32,9 @@ export const createOrder = asyncHandler(async (req, res) => {
     !pincode ||
     !address ||
     !email ||
-    !name
+    !name ||
+    productId.length === 0 ||
+    quantity.length === 0
   ) {
     throw new ApiError(400, "All fields are required");
   }
@@ -61,6 +55,9 @@ export const createOrder = asyncHandler(async (req, res) => {
     address,
     email,
     name,
+    productId,
+    quantity,
+    userId,
   });
 
   res
@@ -71,7 +68,6 @@ export const createOrder = asyncHandler(async (req, res) => {
 export const verifyPayment = async (req, res) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
     req.body;
-  const userId = req?.user?.userId;
 
   try {
     const bodyData = razorpay_order_id + "|" + razorpay_payment_id;
@@ -91,7 +87,6 @@ export const verifyPayment = async (req, res) => {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
-            userId,
           },
         }
       );
@@ -116,8 +111,18 @@ export const verifyPayment = async (req, res) => {
 
 export const getRazorpayKey = asyncHandler(async (req, res) => {
   const RazorPayKey = process.env.razorpay_key_id;
-  console.log("RazorpayKEY", RazorPayKey);
   return res
     .status(200)
     .json(new ApiResponse(200, RazorPayKey, "Success Get Razor Pay Key"));
+});
+//======👆End Payment Controller👆=============
+
+export const getAllConfirmedOrder = asyncHandler(async (req, res) => {
+  const userId = req.user.userId;
+
+  const order = await Order.find({ userId }).populate("productId");
+
+  if (!order) throw new ApiError(404, "Order not found");
+
+  res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
 });
