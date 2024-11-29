@@ -68,6 +68,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 export const verifyPayment = async (req, res) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
     req.body;
+  const userId = req?.user?.userId;
 
   try {
     const bodyData = razorpay_order_id + "|" + razorpay_payment_id;
@@ -78,6 +79,7 @@ export const verifyPayment = async (req, res) => {
       .digest("hex");
 
     const isValid = expectedSignature === razorpay_signature;
+    console.log("expected signature: ", expectedSignature);
 
     if (isValid) {
       await Order.updateOne(
@@ -93,19 +95,18 @@ export const verifyPayment = async (req, res) => {
 
       await AddToCart.deleteMany({ userId });
 
-      res.redirect(
+      return res.redirect(
         `http://localhost:5173/success?payment_id=${razorpay_payment_id}`
       );
     } else {
       const order = await Order.findOne({ order_id: razorpay_order_id });
       await Order.findByIdAndDelete(order._id);
-      res.redirect("http://localhost:5173/failed");
+      return res.redirect("http://localhost:5173/failed");
     }
   } catch (error) {
     const order = await Order.findOne({ order_id: razorpay_order_id });
     await Order.findByIdAndDelete(order._id);
-
-    res.status(500).json({ message: "Internal Server Error", error });
+    return res.status(500).json({ message: "Internal Server Error", error });
   }
 };
 
@@ -115,12 +116,66 @@ export const getRazorpayKey = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, RazorPayKey, "Success Get Razor Pay Key"));
 });
+
+// TODO: Right now we are testing
+export const cancelOrder = asyncHandler(async (req, res) => {
+  const userId = req?.user?.userId;
+  const { orderId } = req.body;
+
+  console.log("OrderId: " + orderId);
+
+  if (!orderId) {
+    throw new ApiError(400, "Order ID is required for cancellation");
+  }
+
+  // Find the order in the database
+  const order = await Order.findOne({ order_id: orderId, userId });
+
+  if (!order) {
+    throw new ApiError(404, "Order not found or does not belong to the user");
+  }
+
+  // Check if the order is already refunded or ineligible for cancellation
+  if (order.status === "refunded" || order.status === "canceled") {
+    throw new ApiError(400, "Order is already refunded or canceled");
+  }
+
+  try {
+    // Initiate a refund via Razorpay
+    const refund = await razorpayInstance.payments.refund(
+      order.razorpay_payment_id,
+      {
+        amount: order.amount * 100, // Refund amount in paisa
+      }
+    );
+
+    // Update the order status in the database
+    order.status = "refunded";
+    order.refund_id = refund.id;
+    order.refund_status = refund.status; // e.g., "processed", "failed"
+    await order.save();
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, refund, "Order successfully canceled and refunded")
+      );
+  } catch (error) {
+    throw new ApiError(
+      500,
+      error.message || "Failed to process the refund with Razorpay"
+    );
+  }
+});
+
 //======👆End Payment Controller👆=============
 
 export const getAllConfirmedOrder = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
-  const order = await Order.find({ userId }).populate("productId");
+  const order = await Order.find({ userId })
+    .populate("productId")
+    .sort({ _id: -1 });
 
   if (!order) throw new ApiError(404, "Order not found");
 

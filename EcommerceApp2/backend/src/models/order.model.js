@@ -2,13 +2,17 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    productId: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    }],
-    quantity: [{
-      type: Number,
-    }],
+    productId: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    quantity: [
+      {
+        type: Number,
+      },
+    ],
     amount: {
       type: Number,
     },
@@ -26,6 +30,10 @@ const orderSchema = new mongoose.Schema(
     razorpay_signature: {
       type: String,
       default: null,
+    },
+    status: {
+      type: String,
+      default: "created",
     },
     mobile: {
       type: String,

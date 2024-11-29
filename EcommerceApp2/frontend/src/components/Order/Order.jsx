@@ -1,185 +1,274 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import displayINRCurrency from "../../helpers/displayINRCurrency";
+import { toast } from "react-toastify";
 
 const Order = () => {
+  const [orderDetails, setOrderDetails] = useState([]);
+
+  const fetchOrderDetails = async () => {
+    try {
+      const { data } = await axios.get("/api/order/get-all-confirmed-order", {
+        headers: { "Content-Type": "application/json" },
+      });
+      setOrderDetails(data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrderDetails();
+  }, []);
+
+  // View Order Hidden and Show Order functionality
+  const [showOrders, setShowOrders] = useState(
+    Array(orderDetails.length).fill(false)
+  );
+
+  const toggleShowOrder = (index) => {
+    setShowOrders((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+  };
+
+  //! Cancle Order
+  const handleCancelOrder = async (orderId) => {
+    console.log(`Cancelling order: `, orderId);
+
+    try {
+      const { data } = await axios.post(`/api/order/cancel-order`, { orderId });
+      console.log(data);
+      fetchOrderDetails();
+      toast.success("Order cancelled successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Faild to cancled order");
+    }
+  };
+
   return (
     <>
-      <section className="py-24 relative">
+      <section className="py-2 relative bg-zinc-200">
         <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
-          <h2 className="font-manrope font-bold text-3xl sm:text-4xl leading-10 text-black mb-11">
-            Your Order Confirmed
-          </h2>
-          <h6 className="font-medium text-xl leading-8 text-black mb-3">
-            Hello, Christine
-          </h6>
-          <p className="font-normal text-lg leading-8 text-gray-500 mb-11">
-            Your order has been completed and be delivery in only two days .
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 py-6 border-y border-gray-100 mb-6">
-            <div className="box group">
-              <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
-                Delivery Date
-              </p>
-              <h6 className="font-semibold font-manrope text-2xl leading-9 text-black">
-                Dec 01, 2023
-              </h6>
-            </div>
-            <div className="box group">
-              <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
-                Order
-              </p>
-              <h6 className="font-semibold font-manrope text-2xl leading-9 text-black">
-                #1023498789
-              </h6>
-            </div>
-            <div className="box group">
-              <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
-                Payment Method
-              </p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={46}
-                height={32}
-                viewBox="0 0 46 32"
-                fill="none"
+          {/* Items Order section */}
+
+          {orderDetails &&
+            orderDetails.map((orderItems, index) => (
+              <div
+                key={orderItems._id}
+                className="border-b-2 border-black mb-4"
               >
-                <rect
-                  x="0.5"
-                  y="0.5"
-                  width={45}
-                  height={31}
-                  rx="5.5"
-                  fill="#1F72CD"
-                />
-                <rect
-                  x="0.5"
-                  y="0.5"
-                  width={45}
-                  height={31}
-                  rx="5.5"
-                  stroke="#F3F4F6"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8.1282 11.333L3.88672 20.9953H8.96437L9.59385 19.4548H11.0327L11.6622 20.9953H17.2512V19.8195L17.7493 20.9953H20.6404L21.1384 19.7947V20.9953H32.7621L34.1755 19.4948L35.4989 20.9953L41.4691 21.0078L37.2143 16.1911L41.4691 11.333H35.5915L34.2157 12.8058L32.9339 11.333H20.2888L19.203 13.8269L18.0917 11.333H13.0246V12.4688L12.461 11.333H8.1282ZM9.1107 12.7051H11.5858L14.3992 19.2571V12.7051H17.1105L19.2835 17.4029L21.2862 12.7051H23.984V19.6384H22.3424L22.329 14.2055L19.9358 19.6384H18.4674L16.0607 14.2055V19.6384H12.6837L12.0435 18.0841H8.58456L7.94566 19.6371H6.13627L9.1107 12.7051ZM32.1608 12.7051H25.4859V19.6343H32.0574L34.1755 17.3379L36.217 19.6343H38.3512L35.2493 16.1898L38.3512 12.7051H36.3096L34.2023 14.9752L32.1608 12.7051ZM10.3147 13.8782L9.17517 16.6471H11.453L10.3147 13.8782ZM27.1342 15.4063V14.1406V14.1394H31.2991L33.1165 16.1636L31.2186 18.1988H27.1342V16.817H30.7756V15.4063H27.1342Z"
-                  fill="white"
-                />
-              </svg>
-            </div>
-            <div className="box group">
-              <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
-                Address
-              </p>
-              <h6 className="font-semibold font-manrope text-2xl leading-9 text-black">
-                718 Robbyn Meadow, S...
-              </h6>
-            </div>
-          </div>
-          <div className="grid grid-cols-7 w-full pb-6 border-b border-gray-100">
-            <div className="col-span-7 min-[500px]:col-span-2 md:col-span-1">
-              <img
-                src="https://pagedone.io/asset/uploads/1701167681.png"
-                alt="Skin Care Kit image"
-                className="w-full rounded-xl object-cover"
-              />
-            </div>
-            <div className="col-span-7 min-[500px]:col-span-5 md:col-span-6 min-[500px]:pl-5 max-sm:mt-5 flex flex-col justify-center">
-              <div className="flex flex-col min-[500px]:flex-row min-[500px]:items-center justify-between">
-                <div className>
-                  <h5 className="font-manrope font-semibold text-2xl leading-9 text-black mb-6">
-                    Skin Care Kit
-                  </h5>
-                  <p className="font-normal text-xl leading-8 text-gray-500">
-                    Quantity :{" "}
-                    <span className="text-black font-semibold">1</span>
-                  </p>
+                <h2 className="font-manrope font-bold text-3xl sm:text-4xl leading-10 text-black mb-11">
+                  {/* Your Order Confirmed */}
+                </h2>
+                <h6 className="font-medium text-xl leading-8 text-black mb-3">
+                  Hello,{" "}
+                  <span className="font-semibold italic text-[blue]">
+                    {orderItems?.name}
+                  </span>
+                  <div>
+                    Order Number:
+                    <span className="ml-2 text-[#51515a]">{index + 1}</span>
+                  </div>
+                  <div>
+                    OrderId:
+                    <span className="ml-2 text-[#51515a]">
+                      {orderItems._id}{" "}
+                    </span>
+                  </div>
+                  <div>
+                    RazorPay Order Id:
+                    <span className="ml-2 text-[#51515a]">
+                      {orderItems.razorpay_order_id}{" "}
+                    </span>
+                  </div>
+                  <div>
+                    Status:
+                    <span
+                      className={`${
+                        orderItems?.status === "created"
+                          ? "bg-green-200 text-[green] border-green-400"
+                          : "hidden"
+                      } py-1 px-2  rounded-full uppercase text-sm font-semibold ml-2 border`}
+                    >
+                      {orderItems?.status}
+                    </span>
+                    <span
+                      className={`${
+                        orderItems?.status !== "created"
+                          ? "bg-red-200 text-[red] border-red-400"
+                          : "hidden"
+                      } py-1 px-2  rounded-full uppercase text-sm font-semibold ml-2 border`}
+                    >
+                      cancelled
+                    </span>
+                  </div>
+                  <div className="w-full flex justify-end">
+                    <div
+                      onClick={() => toggleShowOrder(index)}
+                      className="text-blue-600 hover:text-blue-700 duration-200 bg-white shadow-md shadow-gray-500 hover:shadow-zinc-600 px-2 py-1 rounded-full cursor-pointer"
+                    >
+                      {showOrders[index] ? "Hide Order" : "View Order"}
+                    </div>
+                  </div>
+                </h6>
+                <p className="font-normal text-lg leading-8 text-gray-500 mb-11 -mt-10">
+                  Your order has been completed and be delivery in only two
+                  days.
+                </p>
+
+                <div
+                  className={`transition-all duration-300 ease-in-out ${
+                    showOrders[index] ? "block" : "hidden"
+                  } overflow-hidden`}
+                >
+                  <h1 className="md:text-xl font-semibold uppercase">
+                    Address
+                  </h1>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 py-6 border-y border-gray-100 mb-6">
+                    <div className="box group">
+                      <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
+                        Country
+                      </p>
+                      <h6 className="font-semibold font-manrope md:text-xl leading-9 text-black">
+                        {orderItems?.country}
+                      </h6>
+                    </div>
+                    <div className="box group">
+                      <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
+                        State
+                      </p>
+                      <h6 className="font-semibold font-manrope md:text-xl leading-9 text-black">
+                        {orderItems?.state}
+                      </h6>
+                    </div>
+                    <div className="box group">
+                      <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
+                        City
+                      </p>
+                      <h6 className="font-semibold font-manrope md:text-xl leading-9 text-black">
+                        {orderItems?.city}
+                      </h6>
+                    </div>
+                    <div className="box group">
+                      <p className="font-normal text-base leading-7 text-gray-500 mb-3 transition-all duration-500 group-hover:text-gray-700">
+                        Address
+                      </p>
+                      <h6 className="font-semibold font-manrope md:text-xl text-black line-clamp-3">
+                        {orderItems?.address}
+                      </h6>
+                    </div>
+                  </div>
+
+                  {/* Porduct Items */}
+                  {orderItems?.productId.map((itemsDetails, index) => (
+                    <div key={index}>
+                      <div className="grid grid-cols-7 w-full pb-6 border-b border-gray-100">
+                        <div className="col-span-7 min-[500px]:col-span-2 md:col-span-1">
+                          <img
+                            src={itemsDetails?.productImage[0]?.url}
+                            alt={itemsDetails?.productName}
+                            className="w-full rounded-xl object-cover mix-blend-multiply"
+                          />
+                        </div>
+                        <div className="col-span-7 min-[500px]:col-span-5 md:col-span-6 min-[500px]:pl-5 max-sm:mt-5 flex flex-col justify-center">
+                          <div className="flex flex-col min-[500px]:flex-row min-[500px]:items-center justify-between">
+                            <div className>
+                              <h5 className="font-manrope font-semibold md:text-2xl text-xl leading-9 text-black mb-6">
+                                {itemsDetails?.productName}
+                              </h5>
+                              <p className="font-normal text-xl leading-8 text-gray-500">
+                                Quantity :{" "}
+                                <span className="text-black font-semibold">
+                                  {orderItems?.quantity[index]}
+                                </span>
+                              </p>
+                            </div>
+                            <h5 className="font-manrope font-semibold md:text-2xl leading-10 text-black sm:text-right mt-3">
+                              {displayINRCurrency(
+                                parseInt(itemsDetails?.sellingPrice) *
+                                  parseInt(orderItems?.quantity[index])
+                              )}
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-center sm:justify-end w-full my-6">
+                    <div className=" w-full">
+                      <div className="flex items-center justify-between mb-6">
+                        <p className="font-normal text-xl leading-8 text-gray-500">
+                          Total number of items
+                        </p>
+                        <p className="font-semibold text-xl leading-8 text-gray-600">
+                          {orderItems?.quantity?.length}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between mb-6">
+                        <p className="font-normal text-xl leading-8 text-gray-500">
+                          Shipping Charge
+                        </p>
+                        <p className="font-semibold text-xl leading-8 text-gray-600">
+                          Free
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between mb-6">
+                        <p className="font-normal text-xl leading-8 text-gray-500">
+                          Taxes
+                        </p>
+                        <p className="font-semibold text-xl leading-8 text-gray-600">
+                          Free
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between py-6 border-y border-gray-100">
+                        <p className="font-manrope font-semibold text-2xl leading-9 text-gray-900">
+                          Total
+                        </p>
+                        <p className="font-manrope font-bold text-2xl leading-9 text-indigo-600">
+                          {displayINRCurrency(orderItems?.amount)}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center sm:justify-end w-full mt-2">
+                        <button
+                          onClick={() =>
+                            handleCancelOrder(orderItems?.razorpay_order_id)
+                          }
+                          className={`${
+                            orderItems.status === "created" ? "flex" : "hidden"
+                          }  bg-red-600 hover:bg-red-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
+                        >
+                          Cancle Order
+                        </button>
+
+                        <div
+                          className={`${
+                            orderItems.status !== "created" ? "flex" : "hidden"
+                          } bg-green-600 capitalize hover:bg-green-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
+                        >
+                          Refund completed
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h5 className="font-manrope font-semibold text-3xl leading-10 text-black sm:text-right mt-3">
-                  $325.00
-                </h5>
               </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-7 w-full py-6 border-b border-gray-100">
-            <div className="col-span-7 min-[500px]:col-span-2 md:col-span-1">
-              <img
-                src="https://pagedone.io/asset/uploads/1701167697.png"
-                alt="Skin Tone Serum image"
-                className="w-full rounded-xl object-cover"
-              />
-            </div>
-            <div className="col-span-7 min-[500px]:col-span-5 md:col-span-6 min-[500px]:pl-5 max-sm:mt-5 flex flex-col justify-center">
-              <div className="flex flex-col min-[500px]:flex-row min-[500px]:items-center justify-between">
-                <div className>
-                  <h5 className="font-manrope font-semibold text-2xl leading-9 text-black mb-6">
-                    Skin Tone Serum
-                  </h5>
-                  <p className="font-normal text-xl leading-8 text-gray-500">
-                    Quantity :{" "}
-                    <span className="text-black font-semibold">1</span>
-                  </p>
-                </div>
-                <h5 className="font-manrope font-semibold text-3xl leading-10 text-black sm:text-right mt-3">
-                  $325.00
-                </h5>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center sm:justify-end w-full my-6">
-            <div className=" w-full">
-              <div className="flex items-center justify-between mb-6">
-                <p className="font-normal text-xl leading-8 text-gray-500">
-                  Subtotal
-                </p>
-                <p className="font-semibold text-xl leading-8 text-gray-900">
-                  $240.00
-                </p>
-              </div>
-              <div className="flex items-center justify-between mb-6">
-                <p className="font-normal text-xl leading-8 text-gray-500">
-                  Shipping Charge
-                </p>
-                <p className="font-semibold text-xl leading-8 text-gray-900">
-                  $60.00
-                </p>
-              </div>
-              <div className="flex items-center justify-between mb-6">
-                <p className="font-normal text-xl leading-8 text-gray-500">
-                  Taxes
-                </p>
-                <p className="font-semibold text-xl leading-8 text-gray-900">
-                  $50.00
-                </p>
-              </div>
-              <div className="flex items-center justify-between mb-6">
-                <p className="font-normal text-xl leading-8 text-gray-500">
-                  Discount
-                </p>
-                <p className="font-semibold text-xl leading-8 text-gray-900">
-                  $50.00
-                </p>
-              </div>
-              <div className="flex items-center justify-between py-6 border-y border-gray-100">
-                <p className="font-manrope font-semibold text-2xl leading-9 text-gray-900">
-                  Total
-                </p>
-                <p className="font-manrope font-bold text-2xl leading-9 text-indigo-600">
-                  $300.00
-                </p>
-              </div>
-            </div>
-          </div>
+            ))}
+
+          {/* Thanku Message Section */}
           <div className="data ">
             <p className="font-normal text-lg leading-8 text-gray-500 mb-11">
               We'll be sending a shipping confirmation email when the items
               shipped successfully.
             </p>
             <h6 className="font-manrope font-bold text-2xl leading-9 text-black mb-3">
-              Thank you for shopping with us!
+              Thank you for shopping with{" "}
+              <span className="font-semibold text-pink-600">Ami</span>
+              <span className="font-semibold text-green-600">Shop</span>!
             </h6>
-            <p className="font-medium text-xl leading-8 text-indigo-600">
-              Team Pagedone
-            </p>
           </div>
         </div>
       </section>

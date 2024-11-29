@@ -10,6 +10,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import SyncLoader from "react-spinners/SyncLoader";
+import logo from "../../data/logo.png"
 
 const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
   const [loading, setLoading] = useState(false);
@@ -112,34 +113,38 @@ const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
         },
       });
 
-      // document.getElementById("shippingAddress_modal").close();
+      // close modal
+      document.getElementById("shippingAddress_modal").close();
 
-      // const options = {
-      //   key: rezorPayKey, // Enter the Key ID generated from the Dashboard
-      //   amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      //   currency: "INR",
-      //   // currency: data?.currency,
-      //   name: "AmiShop",
-      //   description: "Test Transaction",
-      //   image: "https://example.com/your_logo", //! LOGO
-      //   order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      //   callback_url: "/api/order/payment-verification",
-      //   prefill: {
-      //     name: "",
-      //     // name: "Amit Kumar",
-      //     email: "",
-      //     contact: "",
-      //   },
-      //   notes: {
-      //     address: "Razorpay Corporate Office",
-      //   },
-      //   theme: {
-      //     color: "#3399cc",
-      //   },
-      // };
+      console.log(data?.data?.amount);
+      console.log(data?.data?.id);
 
-      // const rzp = new Razorpay(options);
-      // rzp.open();
+      const options = {
+        key: rezorPayKey, // Enter the Key ID generated from the Dashboard
+        amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        // currency: data?.currency,
+        name: "AmiShop",
+        description: "Test Transaction",
+        image: "https://example.com/your_logo", //! LOGO
+        order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: "/api/order/payment-verification",
+        prefill: {
+          name: "",
+          // name: "Amit Kumar",
+          email: "",
+          contact: "",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
 
       toast.success("Successfully your transaction");
 

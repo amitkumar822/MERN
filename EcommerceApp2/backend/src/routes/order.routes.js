@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  cancelOrder,
   createOrder,
   getAllConfirmedOrder,
   getRazorpayKey,
@@ -16,5 +17,6 @@ router.get("/razorpay-key",isAuthenticated, getRazorpayKey);
 
 //******* Order Router ****************
 router.get("/get-all-confirmed-order",isAuthenticated, getAllConfirmedOrder)
+router.post("/cancel-order",isAuthenticated, cancelOrder)
 
 export default router;

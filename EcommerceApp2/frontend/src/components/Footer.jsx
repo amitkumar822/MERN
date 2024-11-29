@@ -3,7 +3,7 @@ import logo from "../data/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="footer bg-base-200 text-base-content p-10">
+    <footer className="footer bg-base-200 text-base-content p-10 w-full">
       {/* Company Logo & Description */}
       <aside>
         <div className="max-w-32 max-h-32 overflow-hidden">
