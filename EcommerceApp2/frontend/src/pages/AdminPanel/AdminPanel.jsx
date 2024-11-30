@@ -13,7 +13,7 @@ const AdminPanel = () => {
   return (
     <>
       {user?.role === ROLE.ADMIN ? (
-        <div className="min-h-[calc(100vh-120px)] md:flex hidden">
+        <div className="min-h-[calc(100vh-70px)] md:flex hidden">
           <aside className="bg-white min-h-full  w-full pt-5  max-w-60 shadow-[8px_0_15px_rgba(0,0,0,0.2)]">
             <div className="h-32  flex justify-center items-center flex-col">
               <div className="text-5xl cursor-pointer relative flex justify-center">

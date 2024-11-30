@@ -20,7 +20,7 @@ const AllProducts = () => {
   }, []);
 
   return (
-    <div className="w-full max-h-[calc(100vh-120px)] overflow-y-auto md:flex flex-col hidden">
+    <div className="w-full max-h-[calc(100vh-80px)] overflow-y-auto md:flex flex-col hidden">
       <div className="w-full py-2 px-4 flex justify-between items-center sticky top-0 left-0 bg-white z-10">
         <h2 className="font-bold text-lg">All Product</h2>
         <button
