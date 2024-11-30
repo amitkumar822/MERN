@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
-import displayINRCurrency from "../helpers/displayINRCurrency";
-import AdminEditProduct from "./AdminEditProduct";
-import DeleteAdminProduct from "./DeleteAdminProduct";
+import displayINRCurrency from "../../helpers/displayINRCurrency";
+import AdminEditProduct from "../AdminPannel/AdminEditProduct";
+import DeleteAdminProduct from "../../../../../DeleteAdminProduct";
 
 const AdminProductCard = ({ product, fetchAllProduct }) => {
   const [eachProduct, setEachProduct] = useState({});

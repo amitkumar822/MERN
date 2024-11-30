@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import ProductCategory from "../helpers/ProductCategory";
+import ProductCategory from "../../helpers/ProductCategory";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
-import DisplayImage from "./DisplayImage";
+import DisplayImage from "../DisplayImage";
 
 const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   const fileInputRef = useRef(null);
