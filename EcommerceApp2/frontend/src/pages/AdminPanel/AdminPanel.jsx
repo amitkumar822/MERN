@@ -42,9 +42,15 @@ const AdminPanel = () => {
                 </Link>
                 <Link
                   to={"all-products"}
-                  className="w-full px-4 py-2 my-1 bg-blue-500 rounded-lg hover:bg-blue-700 transition duration-300"
+                  className="w-full px-4 py-2 my-1 bg-pink-500 rounded-lg hover:bg-pink-700 transition duration-300"
                 >
                   All product
+                </Link>
+                <Link
+                  to={"all-order"}
+                  className="w-full px-4 py-2 my-1 bg-blue-500 rounded-lg hover:bg-blue-700 transition duration-300"
+                >
+                  All Order
                 </Link>
                 {user?.name && (
                   <button className="w-full px-4 py-2 my-1 bg-red-500 rounded-lg hover:bg-red-700 transition duration-300">

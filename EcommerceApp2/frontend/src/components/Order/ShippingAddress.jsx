@@ -10,9 +10,14 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import SyncLoader from "react-spinners/SyncLoader";
-import logo from "../../data/logo.png"
+import logo from "../../data/logo.png";
 
-const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
+const ShippingAddress = ({
+  totalPrice,
+  allProductId,
+  quantity,
+  setShowModalComponent,
+}) => {
   const [loading, setLoading] = useState(false);
   // State management for inputs
   const [formData, setFormData] = useState({
@@ -101,8 +106,6 @@ const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
       quantity: quantity,
     };
 
-    console.log("FormData: ", newData)
-
     try {
       const respomse = await axios.get("/api/order/razorpay-key");
       const rezorPayKey = respomse?.data?.data;
@@ -116,9 +119,6 @@ const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
       // close modal
       document.getElementById("shippingAddress_modal").close();
 
-      console.log(data?.data?.amount);
-      console.log(data?.data?.id);
-
       const options = {
         key: rezorPayKey, // Enter the Key ID generated from the Dashboard
         amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -126,7 +126,7 @@ const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
         // currency: data?.currency,
         name: "AmiShop",
         description: "Test Transaction",
-        image: "https://example.com/your_logo", //! LOGO
+        image: {logo}, //! LOGO
         order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "/api/order/payment-verification",
         prefill: {
@@ -162,7 +162,10 @@ const ShippingAddress = ({ totalPrice, allProductId, quantity }) => {
         <div className="modal-box">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              onClick={() => setShowModalComponent(false)}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
               ✕
             </button>
           </form>

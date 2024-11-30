@@ -109,9 +109,15 @@ const OrderViewCart = () => {
     0
   );
 
+  const [showModalComponent, setShowModalComponent] = useState(false);
+  const handleToggleModal = () => {
+    setShowModalComponent(!showModalComponent);
+    document.getElementById("shippingAddress_modal").showModal();
+  };
+
   return (
     <div>
-      <div className="font-[sans-serif] bg-white h-full">
+      <div className="font-[sans-serif] bg-white">
         {data.length > 0 ? (
           <div className="max-w-7xl max-lg:max-w-3xl mx-auto p-6">
             {/* <h2 className="text-3xl font-extrabold text-gray-800">
@@ -269,11 +275,7 @@ const OrderViewCart = () => {
 
                 <div className="w-full mt-6">
                   <button
-                    onClick={() =>
-                      document
-                        .getElementById("shippingAddress_modal")
-                        .showModal()
-                    }
+                    onClick={handleToggleModal}
                     className="flex justify-center items-center text-sm md:text-xl px-6 py-3 w-full bg-blue-700 hover:bg-blue-800 tracking-wide text-white rounded-md"
                   >
                     Place Order
@@ -348,7 +350,14 @@ const OrderViewCart = () => {
       </div>
 
       {/* Shippding Modal */}
-      <ShippingAddress totalPrice={totalPrice} allProductId={allProductId} quantity={quantity} />
+      <div className={`${showModalComponent ? "block" : "hidden"}`}>
+        <ShippingAddress
+          totalPrice={totalPrice}
+          allProductId={allProductId}
+          quantity={quantity}
+          setShowModalComponent={setShowModalComponent}
+        />
+      </div>
     </div>
   );
 };

@@ -4,11 +4,13 @@ import UserContext from "../../context/userContext";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/Auth/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
-import logo1 from "../../data/logo.png"
+import logo1 from "../../data/logo.png";
+import { ROLE } from "../../common/Role";
 
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
+  console.log("user", user?.role);
   const { cartProductCount } = useContext(UserContext);
 
   const searchInput = useLocation(); // get URL search input (object format)
@@ -51,7 +53,12 @@ const Header = () => {
           </div>
 
           {/* Cart Box */}
-          <Link to="/view-cart" tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+          <Link
+            to="/view-cart"
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle"
+          >
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +106,14 @@ const Header = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link
-                to="/profile"
-                className="justify-between">
+                <Link to="/profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>
               </li>
-              <li>
+              <li
+                className={`${user?.role === ROLE.ADMIN ? "block" : "hidden"}`}
+              >
                 <Link to="/admin-panel">Admin Panel</Link>
               </li>
               <li>

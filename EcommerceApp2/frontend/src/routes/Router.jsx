@@ -21,6 +21,7 @@ import Profile from "../components/Profile/Profile";
 import Success from "../pages/Cart/Success";
 import Failed from "../pages/Cart/Failed";
 import Order from "../components/Order/Order";
+import AllOrder from "../pages/AdminPanel/AllOrder";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       <Route path="/admin-panel" element={<AdminPanel />}>
         <Route path="" element={<AllUsers />} />
         <Route path="all-products" element={<AllProducts />} />
+        <Route path="all-order" element={<AllOrder />} />
       </Route>
       <Route path="/*" element={<NotFound404 />} />
     </Route>
