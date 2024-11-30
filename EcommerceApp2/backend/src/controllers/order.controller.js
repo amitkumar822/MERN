@@ -168,12 +168,20 @@ export const cancelOrder = asyncHandler(async (req, res) => {
 
 //======👆End Payment Controller👆=============
 
-export const getAllConfirmedOrder = asyncHandler(async (req, res) => {
+export const getAllUserConfirmedOrder = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
   const order = await Order.find({ userId })
     .populate("productId")
     .sort({ _id: -1 });
+
+  if (!order) throw new ApiError(404, "Order not found");
+
+  res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
+});
+
+export const getAllAdminConfirmOrder = asyncHandler(async (req, res) => {
+  const order = await Order.find().populate("productId").sort({ _id: -1 });
 
   if (!order) throw new ApiError(404, "Order not found");
 
