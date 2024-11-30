@@ -5,8 +5,8 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "../App";
-import Login from "../pages/Login";
-import SignUp from "../pages/SignUp";
+import Login from "../pages/Auth/Login";
+import SignUp from "../pages/Auth/SignUp";
 import AdminPanel from "../pages/AdminPanel/AdminPanel";
 import NotFound404 from "../components/NotFound404";
 import AllUsers from "../pages/AdminPanel/AllUsers";
@@ -14,7 +14,7 @@ import AllProducts from "../pages/AdminPanel/AllProducts";
 import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
 import Home from "../pages/Home/Home";
 import SearchProduct from "../pages/SearchProductPage/SearchProduct";
-import ForgotPassword from "../pages/ForgotPassword";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
 import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
 import OrderViewCart from "../pages/Cart/OrderViewCart";
 import Profile from "../components/Profile/Profile";

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import loginLogo from "../assest2/signin.gif";
+import loginLogo from "../../assets/signin.gif";
 import { Link } from "react-router-dom";
-import ImageToBase64 from "../helpers/ImageToBase64";
+import ImageToBase64 from "../../helpers/ImageToBase64";
 import axios from "axios";
 import { toast } from "react-toastify";
 

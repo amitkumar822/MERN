@@ -5,7 +5,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LogOut from "../pages/LogOut";
+import LogOut from "../pages/Auth/LogOut";
 import UserContext from "../context/userContext";
 
 import Badge from "@mui/material/Badge";
