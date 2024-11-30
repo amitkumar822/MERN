@@ -7,10 +7,10 @@ import {
 import App from "../App";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import AdminPanel from "../pages/AdminPanel";
+import AdminPanel from "../pages/AdminPanel/AdminPanel";
 import NotFound404 from "../components/NotFound404";
-import AllUsers from "../pages/AllUsers";
-import AllProducts from "../pages/AllProducts";
+import AllUsers from "../pages/AdminPanel/AllUsers";
+import AllProducts from "../pages/AdminPanel/AllProducts";
 import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
 import Home from "../pages/Home/Home";
 import SearchProduct from "../pages/SearchProductPage/SearchProduct";

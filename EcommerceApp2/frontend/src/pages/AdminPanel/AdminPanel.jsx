@@ -3,9 +3,9 @@ import { Outlet } from "react-router";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
-import LogOut from "./LogOut";
-import { ROLE } from "../common/Role";
-import Login from "./Login";
+import { ROLE } from "../../common/Role";
+import Login from "../Login";
+import LogOut from "../LogOut"
 
 const AdminPanel = () => {
   const user = useSelector((state) => state?.user?.user);

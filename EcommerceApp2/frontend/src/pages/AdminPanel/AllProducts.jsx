@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import UploadProduct from "../components/UploadProduct";
+import UploadProduct from "../../components/UploadProduct";
 import { toast } from "react-toastify";
 import axios from "axios";
-import AdminProductCard from "../components/AdminProductCard";
+import AdminProductCard from "../../components/AdminProductCard";
 
 const AllProducts = () => {
   const [productList, setProductList] = useState([]);
