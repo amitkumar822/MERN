@@ -117,12 +117,9 @@ export const getRazorpayKey = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, RazorPayKey, "Success Get Razor Pay Key"));
 });
 
-// TODO: Right now we are testing
 export const cancelOrder = asyncHandler(async (req, res) => {
   const userId = req?.user?.userId;
   const { orderId } = req.body;
-
-  console.log("OrderId: " + orderId);
 
   if (!orderId) {
     throw new ApiError(400, "Order ID is required for cancellation");
@@ -161,6 +158,7 @@ export const cancelOrder = asyncHandler(async (req, res) => {
         new ApiResponse(200, refund, "Order successfully canceled and refunded")
       );
   } catch (error) {
+    console.log("Error: ", error);
     throw new ApiError(
       500,
       error.message || "Failed to process the refund with Razorpay"

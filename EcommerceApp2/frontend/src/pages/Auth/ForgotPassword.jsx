@@ -8,7 +8,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 function ForgotPassword() {
   const navigate = useNavigate();
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [otpSendMessage, setOtpSendMessage] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 

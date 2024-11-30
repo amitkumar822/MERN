@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import { toast } from "react-toastify";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const Order = () => {
   const [orderDetails, setOrderDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchOrderDetails = async () => {
     try {
@@ -36,15 +38,17 @@ const Order = () => {
 
   //! Cancle Order
   const handleCancelOrder = async (orderId) => {
-    console.log(`Cancelling order: `, orderId);
+    setLoading(true);
 
     try {
       const { data } = await axios.post(`/api/order/cancel-order`, { orderId });
-      console.log(data);
+
       fetchOrderDetails();
+      setLoading(false);
       toast.success("Order cancelled successfully");
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      setLoading(false);
       toast.error(error?.response?.data?.message || "Faild to cancled order");
     }
   };
@@ -234,14 +238,26 @@ const Order = () => {
                       </div>
                       <div className="flex items-center justify-center sm:justify-end w-full mt-2">
                         <button
-                          onClick={() =>
-                            handleCancelOrder(orderItems?.razorpay_order_id)
-                          }
                           className={`${
                             orderItems.status === "created" ? "flex" : "hidden"
-                          }  bg-red-600 hover:bg-red-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
+                          }  bg-red-600 min-w-20 min-h-9 flex justify-center items-center hover:bg-red-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
                         >
-                          Cancle Order
+                          {loading ? (
+                            <SyncLoader
+                              color="#fff"
+                              size={14}
+                              loading={loading}
+                              title="please wait..."
+                            />
+                          ) : (
+                            <sapn
+                              onClick={() =>
+                                handleCancelOrder(orderItems?.razorpay_order_id)
+                              }
+                            >
+                              Cancle Order
+                            </sapn>
+                          )}
                         </button>
 
                         <div
