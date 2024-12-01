@@ -5,6 +5,7 @@ import crypto from "crypto";
 import Order from "../models/order.model.js";
 import { razorpayInstance } from "../../utils/razorpay.js";
 import { AddToCart } from "../models/addToCart.modal.js";
+import mongoose from "mongoose";
 
 //====== 👇Payment Controller👇 ======================
 export const createOrder = asyncHandler(async (req, res) => {
@@ -133,7 +134,7 @@ export const cancelOrder = asyncHandler(async (req, res) => {
   }
 
   // Check if the order is already refunded or ineligible for cancellation
-  if (order.status === "refunded" || order.status === "canceled") {
+  if (order.status === "refunded") {
     throw new ApiError(400, "Order is already refunded or canceled");
   }
 
@@ -180,10 +181,34 @@ export const getAllUserConfirmedOrder = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
 });
 
-export const getAllAdminConfirmOrder = asyncHandler(async (req, res) => {
-  const order = await Order.find().populate("productId").sort({ _id: -1 });
+export const getAllAdminPlacedOrder = asyncHandler(async (req, res) => {
+  const order = await Order.find({ status: { $ne: "refunded" } })
+    .populate("productId")
+    .sort({ _id: -1 });
 
   if (!order) throw new ApiError(404, "Order not found");
 
   res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
+});
+
+export const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { orderId, status } = req.body;
+  console.log(orderId, status);
+
+  if (!mongoose.Types.ObjectId.isValid(orderId))
+    throw new ApiError(404, "Invalid Order ID");
+  if (!status) throw new ApiError(400, "Status is required");
+
+  const order = await Order.findByIdAndUpdate(
+    orderId,
+    { status },
+    { new: true, runValidators: true }
+  );
+
+  if (!order)
+    throw new ApiError(404, "Order not found or does not belong to the admin");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, order, "Order Status Updated Successfully"));
 });

@@ -33,7 +33,8 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "created",
+      enum: ["refunded", "pending", "confirmed", "canceled"],
+      default: "pending",
     },
     mobile: {
       type: String,

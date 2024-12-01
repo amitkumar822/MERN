@@ -2,9 +2,10 @@ import express from "express";
 import {
   cancelOrder,
   createOrder,
-  getAllAdminConfirmOrder,
+  getAllAdminPlacedOrder,
   getAllUserConfirmedOrder,
   getRazorpayKey,
+  updateOrderStatus,
   verifyPayment,
 } from "../controllers/order.controller.js";
 import { isAuthenticated } from "../middlewares/userAuth.js";
@@ -22,6 +23,7 @@ router.get("/get-all-confirmed-order",isAuthenticated, getAllUserConfirmedOrder)
 router.post("/cancel-order",isAuthenticated, cancelOrder);
 
 //***********ADMIN Router*********************
-router.get("/get-admin-all-order",isAuthenticated, isAdminAuth, getAllAdminConfirmOrder)
+router.get("/get-admin-all-order",isAuthenticated, isAdminAuth, getAllAdminPlacedOrder);
+router.post("/update-status",isAuthenticated, isAdminAuth, updateOrderStatus);
 
 export default router;

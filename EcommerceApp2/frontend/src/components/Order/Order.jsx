@@ -95,22 +95,28 @@ const Order = () => {
                     <div>
                       Status:
                       <span
-                        className={`${
-                          orderItems?.status === "created"
-                            ? "bg-green-200 text-[green] border-green-400"
+                        className={`py-1 px-2 rounded-full uppercase text-sm font-semibold ml-2 border ${
+                          orderItems?.status === "pending"
+                            ? "bg-yellow-200 text-yellow-600 border-yellow-400"
+                            : orderItems?.status === "refunded"
+                            ? "hidden"
+                            : orderItems?.status === "confirmed"
+                            ? "bg-green-200 text-green-600 border-green-400"
+                            : orderItems?.status === "canceled"
+                            ? "bg-red-200 text-red-600 border-red-400"
                             : "hidden"
-                        } py-1 px-2  rounded-full uppercase text-sm font-semibold ml-2 border`}
+                        }`}
                       >
                         {orderItems?.status}
                       </span>
                       <span
-                        className={`${
-                          orderItems?.status !== "created"
-                            ? "bg-red-200 text-[red] border-red-400"
+                        className={`py-1 px-2 rounded-full uppercase text-sm font-semibold ml-2 border ${
+                          orderItems?.status === "refunded"
+                            ? "bg-line-300 text-lime-600 border-green-300"
                             : "hidden"
-                        } py-1 px-2  rounded-full uppercase text-sm font-semibold ml-2 border`}
+                        }`}
                       >
-                        cancelled
+                        Completed
                       </span>
                     </div>
                     <div className="w-full flex justify-end">
@@ -242,7 +248,7 @@ const Order = () => {
                         <div className="flex items-center justify-center sm:justify-end w-full mt-2">
                           <button
                             className={`${
-                              orderItems.status === "created"
+                              orderItems.status !== "refunded"
                                 ? "flex"
                                 : "hidden"
                             }  bg-red-600 min-w-20 min-h-9 flex justify-center items-center hover:bg-red-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
@@ -269,7 +275,7 @@ const Order = () => {
 
                           <div
                             className={`${
-                              orderItems.status !== "created"
+                              orderItems.status === "refunded"
                                 ? "flex"
                                 : "hidden"
                             } bg-green-600 capitalize hover:bg-green-700 transition-all ease-in-out duration-300 shadow-md shadow-zinc-600 md:text-xl py-1 px-2 text-white font-semibold rounded-full`}
