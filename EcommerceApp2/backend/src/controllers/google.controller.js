@@ -1,5 +1,4 @@
 import createTokenAndSaveCookie from "../jwt/AuthToken.js";
-import { User } from "../models/user.model.js";
 
 // Google Callback
 export const googleCallback = async (req, res) => {
@@ -22,14 +21,6 @@ export const googleCallback = async (req, res) => {
       errors: [error.message],
     });
   }
-};
-
-// Logout
-export const logout = (req, res) => {
-  req.logout((err) => {
-    if (err) return res.status(500).send(err);
-    res.redirect("/");
-  });
 };
 
 // Check Current User
