@@ -38,7 +38,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      // required: true,
+      required: true,
       select: false,
       minLength: [4, "Password Must Contain At Least 4 Characters!"],
     },
@@ -51,7 +51,6 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      // required: true,
       enum: ["ADMIN", "GENERAL"],
       default: "GENERAL",
     },
@@ -59,10 +58,7 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       sparse: true,
-    },
-    profilePic: {
-      type: String,
-    },
+    }
   },
   { timestamps: true }
 );

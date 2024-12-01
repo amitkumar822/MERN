@@ -13,7 +13,6 @@ passport.use(
       callbackURL: "/api/v1/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      
       try {
         const user = await User.findOne({ googleId: profile.id });
 
@@ -22,11 +21,11 @@ passport.use(
             googleId: profile.id,
             email: profile.emails[0].value,
             name: profile.displayName,
-            // profilePic: profile.photos[0].value,
+            password: null,
             avatar: {
               public_id: null,
               url: profile.photos[0].value,
-            }
+            },
           });
         }
 
