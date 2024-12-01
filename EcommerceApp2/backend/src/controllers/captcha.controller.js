@@ -37,11 +37,11 @@ export const generateCaptcha = async (req, res) => {
   // Send the CAPTCHA code to the user's email address
   await sendEmail({
     email,
-    subject: "E-commerce App - CAPTCHA Code",
+    subject: "AmiShop - CAPTCHA Code",
     message: `Your CAPTCHA code is: ${captchaCode}`, // Plain text fallback
     html: `
     <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333; background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #ddd;">
-      <h2 style="color: #4CAF50; margin-bottom: 16px;">E-commerce App - CAPTCHA Code</h2>
+      <h2 style="color: #4CAF50; margin-bottom: 16px;">AmiShop - CAPTCHA Code</h2>
       <p>Your CAPTCHA code is:</p>
       <p style="font-size: 24px; font-weight: bold; color: #ff5722; background-color: #FFEB3B; padding: 5px 6px; display: inline-block; border-radius: 4px;">${captchaCode}</p>
       <p style="margin-top: 16px; color: #555;">This CAPTCHA code will expire in <strong>5 minutes</strong>.</p>
