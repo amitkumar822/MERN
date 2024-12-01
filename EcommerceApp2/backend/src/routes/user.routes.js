@@ -37,7 +37,7 @@ router.post("/logout", isAuthenticated, logOut);
 // Admin Panel routes
 router.get("/get-user-details", isAuthenticated, getUserDetails);
 router.get("/get-all-users", isAuthenticated, getAllUsers);
-router.post("/update-user-details/:id", isAdminAuth, isAuthenticated, updateUser);
+router.post("/update-user-details/:id", isAuthenticated, updateUser);
 router.delete("/delete-user/:id", isAdminAuth, isAuthenticated, deleteUser);
 
 // Add To Cart

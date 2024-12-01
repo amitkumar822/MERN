@@ -4,13 +4,13 @@ import UserContext from "../../context/userContext";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/Auth/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
-import logo1 from "../../data/logo.png";
+import logo from "../../data/logo.png";
 import { ROLE } from "../../common/Role";
 
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-  console.log("user", user?.role);
+
   const { cartProductCount } = useContext(UserContext);
 
   const searchInput = useLocation(); // get URL search input (object format)
@@ -34,13 +34,13 @@ const Header = () => {
         <div className="flex-1">
           <Link to="/">
             <img
-              src={logo1}
-              alt=""
-              className="w-h-36 h-36 scale-105 mix-blend-multiply"
+              src={logo}
+              alt="AmiShop"
+              className="w-14 h-14 md:ml-20"
             />
           </Link>
         </div>
-        <div className="flex-none gap-2">
+        <div className="flex-none gap-2 md:mr-14">
           {/* Search Input */}
           <div className="form-control">
             <input

@@ -9,13 +9,11 @@ const Footer = () => {
         <div className="max-w-32 max-h-32 overflow-hidden">
           <img
             src={logo}
-            alt=""
-            className="mix-blend-multiply w-60 h-40 scale-150"
+            alt="AmiShop"
+            className="w-24 h-24"
           />
         </div>
         <p>
-          AmiShop
-          <br />
           Exclusive deals, premium quality products.
         </p>
       </aside>

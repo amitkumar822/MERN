@@ -41,6 +41,17 @@ const Login = () => {
     }
   };
 
+  // google login
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      window.location.href = "/api/auth/google";
+      toast.success("Login Successfully");
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Internal Server Error");
+    }
+  };
+
   return (
     <div>
       <section className="bg-white">
@@ -126,9 +137,9 @@ const Login = () => {
                 </div>
               </form>
 
-              {/* <div className="mt-3 space-y-3">
-                <button
-                  type="button"
+              <div className="mt-3 space-y-3">
+                <span
+                  onClick={handleGoogleLogin}
                   className="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
                 >
                   <div className="absolute inset-y-0 left-0 p-4">
@@ -142,9 +153,9 @@ const Login = () => {
                     </svg>
                   </div>
                   Sign in with Google
-                </button>
+                </span>
 
-                <button
+                {/* <button
                   type="button"
                   className="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
                 >
@@ -159,8 +170,8 @@ const Login = () => {
                     </svg>
                   </div>
                   Sign in with Facebook
-                </button>
-              </div> */}
+                </button>  */}
+              </div>
             </div>
           </div>
 
@@ -170,7 +181,8 @@ const Login = () => {
 
               <div className="w-full max-w-md mx-auto xl:max-w-xl">
                 <h3 className="text-2xl font-bold text-center text-black">
-                  Welcome to <span className="font-semibold text-pink-600">Ami</span>
+                  Welcome to{" "}
+                  <span className="font-semibold text-pink-600">Ami</span>
                   <span className="font-semibold text-green-600">Shop</span>
                 </h3>
                 <p className="leading-relaxed text-center text-gray-500 mt-2.5">

@@ -69,11 +69,13 @@ const Profile = () => {
                 )}
               </div>
             </div>
+            
+            {/* Edit and Delete */}
             <div>
               <div className="flex flex-col items-center justify-center gap-4">
                 <div title="Change Your Profile">
                   <EditProfile user={user} />
-                </div>
+                </div>.
                 <div title="Delete Your Profile">
                   <DeleteIcon
                     className="cursor-pointer text-red-600 "
