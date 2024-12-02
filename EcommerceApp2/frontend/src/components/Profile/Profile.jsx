@@ -8,11 +8,11 @@ const Profile = () => {
   const navigate = useNavigate()
   const user = useSelector((state) => state?.user?.user);
 
-  if(!user?.name) {
-    useEffect(() => {
-      navigate("/login");
-    })
-  }
+  // if(!user?.name) {
+  //   useEffect(() => {
+  //     navigate("/login");
+  //   })
+  // }
 
   return (
     <div className="container mx-auto">

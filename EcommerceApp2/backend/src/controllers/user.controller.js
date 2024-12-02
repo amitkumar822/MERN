@@ -80,6 +80,14 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findOne({ email }).select("+password");
+
+  if (!user.password) {
+    throw new ApiError(
+      400,
+      "You Signup With Google Login, Try To Google Login Or Forgot Password And Set Password"
+    );
+  }
+
   if (!user) {
     throw new ApiError(404, "User Not Found With This Email!");
   }

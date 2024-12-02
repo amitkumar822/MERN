@@ -4,12 +4,15 @@ import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 export const googleCallback = async (req, res) => {
   try {
     const user = req.user; // Passport automatically attaches the user to `req`
+    
     if (!user) {
       return res.status(401).json({ success: false, message: "User not found" });
     }
 
     // Generate token and set cookie
-    await createTokenAndSaveCookie(user._id, res);
+    if(user?.name) {
+      await createTokenAndSaveCookie(user._id, res);
+    }
 
     res.redirect("http://localhost:5173");
   } catch (error) {
