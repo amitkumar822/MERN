@@ -22,6 +22,19 @@ export const writeReview = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Review should not be empty");
   }
 
+  // Check if user already write review for the product
+  const checkUserAlreadyWriteReview = await Review.find({
+    userId,
+    productId,
+  });
+
+  if (checkUserAlreadyWriteReview.length > 0) {
+    throw new ApiError(
+      400,
+      "You have already written a review for this product"
+    );
+  }
+
   const reviews = await Review.create({ userId, productId, rating, review });
 
   res
