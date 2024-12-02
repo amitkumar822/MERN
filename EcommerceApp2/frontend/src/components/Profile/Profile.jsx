@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import EditProfile from "./EditProfile";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router";
 
 const Profile = () => {
+  const navigate = useNavigate()
   const user = useSelector((state) => state?.user?.user);
+
+  if(!user?.name) {
+    useEffect(() => {
+      navigate("/login");
+    })
+  }
 
   return (
     <div className="container mx-auto">
