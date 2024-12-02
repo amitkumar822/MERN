@@ -14,6 +14,9 @@ const UserContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get("/api/user/get-user-details", {
         credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
       });
       dispatch(setUserDetails(data?.data));
     } catch (error) {
