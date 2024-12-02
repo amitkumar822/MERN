@@ -1,32 +1,46 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const WriteReview = () => {
+const WriteReview = ({ productId, fetchReview }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-  const [reviews, setReviews] = useState([]);
   const [comment, setComment] = useState("");
   const [photo, setPhoto] = useState(null);
 
-  const handleSubmit = () => {
-    if (!rating || !comment)
-      return alert("Please provide a rating and a comment!");
-    setReviews([
-      ...reviews,
-      {
-        id: reviews.length + 1,
-        name: "John Doe", // Replace with user data in real applications
-        rating,
-        comment,
-        photo,
-        timestamp: new Date(),
-        likes: 0,
-        dislikes: 0,
-      },
-    ]);
-    setRating(0);
-    setComment("");
-    setPhoto(null);
+  console.log("rating: " + rating);
+
+  const handleSubmit = async () => {
+    toast.info("Please Wait...")
+    const data = {
+      rating,
+      review: comment,
+    };
+
+    try {
+      const response = await axios.post(
+        `/api/review/write-reviews/${productId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(`Review added successfully`);
+      console.log(response.data?.data);
+      setRating(0);
+      setComment("");
+      setPhoto(null);
+
+      // Fetch updated user data to display the new review
+      fetchReview();
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to add review");
+      console.error(error);
+    }
   };
 
   return (

@@ -6,8 +6,11 @@ import WriteReview from "./WriteReview";
 import axios from "axios";
 import { useParams } from "react-router";
 import { formatDateToDDMMYYYY } from "../../helpers/FormatDateToDDMMYYYY";
+import { useSelector } from "react-redux";
 
 const ReviewPage = () => {
+  const user = useSelector((state) => state?.user?.user);
+
   const { id: productId } = useParams();
 
   const [allReviews, setAllReviews] = useState([]);
@@ -38,10 +41,29 @@ const ReviewPage = () => {
     fetchReview();
   }, []);
 
+  // ==========�� Post Likes and Dislikes ��======
+  const handleLike = async (reviewId) => {
+    try {
+      await axios.post(`/api/review/likes/${reviewId}`);
+      fetchReview();
+    } catch (error) {
+      console.log(error?.response?.data?.message || error);
+    }
+  };
+
+  const handleDisLike = async (reviewId) => {
+    try {
+      await axios.post(`/api/review/dislikes/${reviewId}`);
+      fetchReview();
+    } catch (error) {
+      console.log(error?.response?.data?.message || error);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       {/* 👇 Write Review Page Import 👇 */}
-      <WriteReview />
+      <WriteReview productId={productId} fetchReview={fetchReview} />
 
       {/* Analytics */}
       <div className="mt-8">
@@ -119,32 +141,26 @@ const ReviewPage = () => {
                 )}
                 <div className="flex gap-4 text-gray-600 mt-2">
                   <button
-                    className="flex items-center gap-1 hover:text-blue-500"
-                    onClick={() =>
-                      setReviews(
-                        reviews.map((r) =>
-                          r.id === review.id ? { ...r, likes: r.likes + 1 } : r
-                        )
-                      )
-                    }
+                    className={` ${
+                      review?.likes?.includes(user?._id)
+                        ? "text-blue-500"
+                        : "hover:text-blue-500"
+                    }  flex items-center gap-1 hover:text-blue-500`}
+                    onClick={() => handleLike(review?._id)}
                   >
                     <FaThumbsUp />
-                    {review.likes}
+                    {review?.likes?.length}
                   </button>
                   <button
-                    className="flex items-center gap-1 hover:text-red-500"
-                    onClick={() =>
-                      setReviews(
-                        reviews.map((r) =>
-                          r.id === review.id
-                            ? { ...r, dislikes: r.dislikes + 1 }
-                            : r
-                        )
-                      )
-                    }
+                    className={`flex items-center gap-1 ${
+                      review?.dislikes?.includes(user?._id)
+                        ? "text-red-500"
+                        : "hover:text-red-500"
+                    }`}
+                    onClick={() => handleDisLike(review?._id)}
                   >
                     <FaThumbsDown />
-                    {review.dislikes}
+                    {review?.dislikes?.length}
                   </button>
                 </div>
               </div>
