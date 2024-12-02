@@ -293,7 +293,6 @@ export const filterProduct = asyncHandler(async (req, res) => {
         "$in" : categoryList
     }
 });
-  console.log("product: " + product)
 
   if (!product) {
     throw new ApiError(
