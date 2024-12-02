@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import {
-    dislikesReview,
+  dislikesReview,
   getReview,
   likesReview,
   writeReview,
