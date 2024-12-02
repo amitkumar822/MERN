@@ -11,10 +11,6 @@ export const writeReview = asyncHandler(async (req, res) => {
   const userId = req?.user?.userId;
   const photo = req.file;
 
-  console.log(req.body);
-  console.log(userId, productId);
-  console.log(photo);
-
   const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
   if (photo && !allowedFormats.includes(photo.mimetype)) {
     throw new ApiError(
@@ -175,4 +171,50 @@ export const dislikesReview = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, review, "Successfully liked the review"));
+});
+
+export const UpdateOrEditReview = asyncHandler(async (req, res) => {
+  const { reviewId } = req.params;
+  const userId = req?.user?.userId;
+  const { rating, review } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(reviewId)) {
+    throw new ApiError(400, "Invalid ReviewId");
+  }
+
+  const editReview = await Review.findOneAndUpdate(
+    { _id: reviewId, userId },
+    {
+      rating,
+      review,
+    },
+    { new: true }
+  );
+
+  if (!editReview) {
+    throw new ApiError(404, "Not Found Review");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, editReview, "Successfully Update review"));
+});
+
+// TODO: This controller currently not used
+export const getTopRatedReviews = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    throw new ApiError(400, "Invalid ProductId");
+  }
+  const reviews = await Review.find({ productId })
+    .populate(
+      "userId",
+      "name avatar" // Specific user fields to include
+    )
+    .sort({ rating: -1, createdAt: -1 })
+    .limit(10);
+  if (!reviews || reviews.length === 0) {
+    throw new ApiError(404, "No reviews found for this product");
+  }
+  res.status(200).json(new ApiResponse(200, reviews, "Top Rated Reviews"));
 });
