@@ -11,7 +11,7 @@ export const bannerUpload = asyncHandler(async (req, res) => {
   if (!req.file) {
     throw new ApiError(400, "Banner photo must be provided");
   }
-  const bannerImg = req.file; // Handle multiple images
+  const bannerImg = req.file; // Handle single images
   const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
   // Validate the format of each image
   if (!allowedFormats.includes(bannerImg.mimetype)) {
