@@ -130,7 +130,7 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  console.log("Update User", id);
+  
   if (!mongoose.Types.ObjectId.isValid(id))
     throw new ApiError(404, "Invalid User ID!");
 

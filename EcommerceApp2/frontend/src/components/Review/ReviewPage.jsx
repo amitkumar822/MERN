@@ -134,7 +134,7 @@ const ReviewPage = () => {
                 {/* Photo Part */}
                 {review.photo && (
                   <img
-                    src={review.photo}
+                    src={review?.photo?.url}
                     alt="Review"
                     className="h-32 w-auto rounded-lg"
                   />

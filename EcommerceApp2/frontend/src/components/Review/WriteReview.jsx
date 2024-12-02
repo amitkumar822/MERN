@@ -2,42 +2,40 @@ import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const WriteReview = ({ productId, fetchReview }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
+  const [showPhoto, setShowPhoto] = useState(null);
   const [photo, setPhoto] = useState(null);
 
-  console.log("rating: " + rating);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    toast.info("Please Wait...")
-    const data = {
-      rating,
-      review: comment,
-    };
+    toast.info("Please Wait...");
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("photo", photo);
+    formData.append("review", comment);
+    formData.append("rating", rating);
 
     try {
-      const response = await axios.post(
-        `/api/review/write-reviews/${productId}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      await axios.post(`/api/review/write-reviews/${productId}`, formData, {
+        withCredentials: true,
+      });
+      setLoading(false);
       toast.success(`Review added successfully`);
-      console.log(response.data?.data);
+
       setRating(0);
       setComment("");
+      setShowPhoto(null);
       setPhoto(null);
 
-      // Fetch updated user data to display the new review
       fetchReview();
     } catch (error) {
+      setLoading(false);
       toast.error(error?.response?.data?.message || "Failed to add review");
       console.error(error);
     }
@@ -83,11 +81,14 @@ const WriteReview = ({ productId, fetchReview }) => {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setPhoto(URL.createObjectURL(e.target.files[0]))}
+          onChange={(e) => {
+            setShowPhoto(URL.createObjectURL(e.target.files[0])),
+              setPhoto(e.target.files[0]);
+          }}
         />
-        {photo && (
+        {showPhoto && (
           <img
-            src={photo}
+            src={showPhoto}
             alt="Preview"
             className="mt-4 h-32 rounded-md shadow"
           />
@@ -95,12 +96,18 @@ const WriteReview = ({ productId, fetchReview }) => {
       </div>
 
       {/* Submit Button */}
-      <button
-        onClick={handleSubmit}
-        className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700"
-      >
-        Submit Review
-      </button>
+      <div className="w-full flex justify-center items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700">
+        {loading ? (
+          <SyncLoader color="#fff" size={14} loading={loading} />
+        ) : (
+          <div
+            onClick={handleSubmit}
+            className="cursor-pointer w-full text-center"
+          >
+            Submit Review
+          </div>
+        )}
+      </div>
     </div>
   );
 };

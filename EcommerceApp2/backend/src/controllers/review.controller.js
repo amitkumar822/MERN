@@ -9,6 +9,19 @@ export const writeReview = asyncHandler(async (req, res) => {
   const { productId } = req.params;
   const { rating, review } = req.body;
   const userId = req?.user?.userId;
+  const photo = req.file;
+
+  console.log(req.body);
+  console.log(userId, productId);
+  console.log(photo);
+
+  const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
+  if (photo && !allowedFormats.includes(photo.mimetype)) {
+    throw new ApiError(
+      400,
+      "Invalid photo format, Only jpeg, png, and webp are allowed"
+    );
+  }
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new ApiError(400, "Invalid ProductId");
@@ -35,7 +48,22 @@ export const writeReview = asyncHandler(async (req, res) => {
     );
   }
 
-  const reviews = await Review.create({ userId, productId, rating, review });
+  // upload photo on cloudinary
+  const cloudinaryResponse = await uploadOnCloudinary(photo.path);
+  if (cloudinaryResponse === null) {
+    throw new ApiError(400, "Failed to upload photo!");
+  }
+
+  const reviews = await Review.create({
+    userId,
+    productId,
+    rating,
+    review,
+    photo: {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url,
+    },
+  });
 
   res
     .status(201)
