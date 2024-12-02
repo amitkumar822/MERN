@@ -325,7 +325,9 @@ const ProductDetailsPage = () => {
           </div>
 
           {/******👇 Reive Page 👇*********/}
-          <ReviewPage />
+          <div className="mt-4">
+            <ReviewPage />
+          </div>
 
           {/* Product Review */}
 

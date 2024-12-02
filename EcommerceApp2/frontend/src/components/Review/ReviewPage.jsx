@@ -39,7 +39,7 @@ const ReviewPage = () => {
 
   useEffect(() => {
     fetchReview();
-  }, []);
+  }, [productId]);
 
   // ==========�� Post Likes and Dislikes ��======
   const handleLike = async (reviewId) => {
@@ -60,31 +60,83 @@ const ReviewPage = () => {
     }
   };
 
+  const [showHideWriteReview, setShowHideWriteReview] = useState(false);
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="flex justify-end -mb-10">
+        <button
+          onClick={() => setShowHideWriteReview(!showHideWriteReview)}
+          className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
+        >
+          <span className="flex items-center gap-2">
+            <FaStar className="text-yellow-300" /> Rate Product
+          </span>
+        </button>
+      </div>
+
       {/* 👇 Write Review Page Import 👇 */}
-      <WriteReview productId={productId} fetchReview={fetchReview} />
+      <div className={`${showHideWriteReview ? "block" : "hidden"}`}>
+        <WriteReview productId={productId} fetchReview={fetchReview} />
+      </div>
 
       {/* Analytics */}
       <div className="mt-8">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">
+        <h3 className="text-2xl font-bold text-gray-800 mb-6">
           Rating Analytics
         </h3>
-        {ratingAnalytics.map((count, i) => (
-          <div key={i} className="flex items-center gap-4 mb-2">
-            <div className="text-yellow-500 flex items-center gap-1">
-              <FaStar />
-              <span>{i + 1}</span>
-            </div>
-            <div className="w-full bg-gray-200 h-3 rounded-full">
+        <div className="space-y-4">
+          {ratingAnalytics.map((count, i) => {
+            // Colors for each rating level
+            const colors = [
+              "text-red-500",
+              "text-orange-500",
+              "text-yellow-500",
+              "text-green-500",
+              "text-blue-500",
+            ];
+            const gradients = [
+              "from-red-400 to-red-600",
+              "from-orange-400 to-orange-600",
+              "from-yellow-400 to-yellow-600",
+              "from-green-400 to-green-600",
+              "from-blue-400 to-blue-600",
+            ];
+
+            // Calculate percentage
+            const percentage = (count / allReviews.length) * 100 || 0;
+
+            return (
               <div
-                className="bg-yellow-500 h-3 rounded-full"
-                style={{ width: `${(count / allReviews.length) * 100 || 0}%` }}
-              ></div>
-            </div>
-            <span className="text-gray-600 text-sm">{count} reviews</span>
-          </div>
-        ))}
+                key={i}
+                className="flex items-center gap-6 p-2 bg-gray-50 rounded-lg shadow-sm"
+              >
+                {/* Star Rating */}
+                <div
+                  className={`flex items-center gap-1 text-lg font-semibold ${colors[i]}`}
+                >
+                  <FaStar />
+                  <span>{i + 1}</span>
+                </div>
+                {/* Progress Bar */}
+                <div className="flex-1">
+                  <div className="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
+                    <div
+                      className={`h-4 bg-gradient-to-r ${gradients[i]}`}
+                      style={{
+                        width: `${percentage}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                {/* Review Count */}
+                <span className="text-gray-600 text-sm">
+                  {count} {count === 1 ? "review" : "reviews"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/*User Reviews */}
