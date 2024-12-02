@@ -7,6 +7,7 @@ import displayINRCurrency from "../../helpers/displayINRCurrency";
 import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
 import AddToCart from "../../helpers/AddToCart";
 import UserContext from "../../context/userContext";
+import ReviewPage from "../../components/Review/ReviewPage";
 
 const ProductDetailsPage = () => {
   const { fetchCountAddToCart } = useContext(UserContext);
@@ -319,6 +320,8 @@ const ProductDetailsPage = () => {
               </ul>
             </div>
           </div>
+
+          <ReviewPage />
 
           {/* Product Review */}
           
