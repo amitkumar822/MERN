@@ -4,7 +4,6 @@ import {
   deleteReview,
   dislikesReview,
   getReview,
-  getTopRatedReviews,
   likesReview,
   UpdateOrEditReview,
   writeReview,
@@ -25,8 +24,5 @@ router.post("/likes/:reviewId", isAuthenticated, likesReview);
 router.post("/dislikes/:reviewId", isAuthenticated, dislikesReview);
 router.put("/update/:reviewId", isAuthenticated, UpdateOrEditReview);
 router.delete("/delete/:reviewId", isAuthenticated, deleteReview);
-
-// TODO: This route current not used
-router.get("/get-top-rated-reviews/:productId", getTopRatedReviews);
 
 export default router;

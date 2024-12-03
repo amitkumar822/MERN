@@ -74,19 +74,49 @@ export const getReview = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid ProductId");
   }
 
-  // Find reviews and populate the user details
   const reviews = await Review.find({ productId })
-    .populate(
-      "userId",
-      "name avatar" // Specific user fields to include
-    )
-    .sort({ createdAt: -1 });
+    .populate("userId", "name avatar")
+    .sort({ rating: -1, createdAt: -1 });
 
   if (!reviews || reviews.length === 0) {
     throw new ApiError(404, "Reviews Not Found!");
   }
 
-  res.status(200).json(new ApiResponse(200, reviews, "Review Details"));
+  // Calculate total ratings and average
+  const ratingStats = {
+    totalRatings: 0,
+    ratingCounts: {}, // Example: { 1: 4, 2: 3, 3: 10, 4: 5, 5: 25 }
+    averageRating: 0,
+    totalUsers: reviews.length,
+  };
+
+  reviews.forEach((review) => {
+    const { rating } = review;
+
+    // Count each rating
+    ratingStats.ratingCounts[rating] =
+      (ratingStats.ratingCounts[rating] || 0) + 1;
+
+    // Sum all ratings
+    ratingStats.totalRatings += rating;
+  });
+
+  // Calculate the average rating
+  ratingStats.averageRating = (
+    ratingStats.totalRatings / ratingStats.totalUsers
+  ).toFixed(1);
+
+  // Format response
+  const response = {
+    reviews,
+    stats: {
+      averageRating: ratingStats.averageRating,
+      totalUsers: ratingStats.totalUsers,
+      ratingCounts: ratingStats.ratingCounts,
+    },
+  };
+
+  res.status(200).json(new ApiResponse(200, response, "Review Details"));
 });
 
 export const likesReview = asyncHandler(async (req, res) => {
@@ -230,23 +260,4 @@ export const deleteReview = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, null, "Review deleted successfully"));
-});
-
-// TODO: This controller currently not used
-export const getTopRatedReviews = asyncHandler(async (req, res) => {
-  const { productId } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    throw new ApiError(400, "Invalid ProductId");
-  }
-  const reviews = await Review.find({ productId })
-    .populate(
-      "userId",
-      "name avatar" // Specific user fields to include
-    )
-    .sort({ rating: -1, createdAt: -1 })
-    .limit(10);
-  if (!reviews || reviews.length === 0) {
-    throw new ApiError(404, "No reviews found for this product");
-  }
-  res.status(200).json(new ApiResponse(200, reviews, "Top Rated Reviews"));
 });
