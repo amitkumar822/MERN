@@ -1,9 +1,10 @@
+import mongoose from "mongoose";
 import { Review } from "../models/review.modal.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
-import mongoose from "mongoose";
+import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
 
 export const writeReview = asyncHandler(async (req, res) => {
   const { productId } = req.params;
@@ -173,6 +174,7 @@ export const dislikesReview = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, review, "Successfully liked the review"));
 });
 
+// TODO: Wating for update photo
 export const UpdateOrEditReview = asyncHandler(async (req, res) => {
   const { reviewId } = req.params;
   const userId = req?.user?.userId;
@@ -198,6 +200,36 @@ export const UpdateOrEditReview = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, editReview, "Successfully Update review"));
+});
+
+export const deleteReview = asyncHandler(async (req, res) => {
+  const { reviewId } = req.params;
+  const userId = req?.user?.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(reviewId)) {
+    throw new ApiError(400, "Invalid ReviewId");
+  }
+
+  const review = await Review.findOne({ _id: reviewId, userId });
+  if (!review) {
+    throw new ApiError(404, "Review Not Found!");
+  }
+
+  // Delete the photo from cloudinary before deleting the review
+  const reviewPhoto = review.photo;
+  if (reviewPhoto.public_id) {
+    const deleteReviewPhoto = await deleteFromCloudinary(
+      reviewPhoto?.public_id
+    );
+    if (!deleteReviewPhoto) {
+      throw new ApiError(500, "Failed to delete review photo from cloudinary");
+    }
+  }
+  await Review.findByIdAndDelete(reviewId);
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, null, "Review deleted successfully"));
 });
 
 // TODO: This controller currently not used

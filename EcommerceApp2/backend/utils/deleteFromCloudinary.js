@@ -7,13 +7,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-
 // Function to delete an image from Cloudinary
 export const deleteFromCloudinary = async (publicId) => {
   const response = await cloudinary.uploader.destroy(publicId);
-  console.log("response delete cloudinary utils: \n",response);
-  
-  if(response.result === 'ok') {
+
+  if (response.result === "ok") {
     return true;
   }
   return false; // Return false if the image was not found
