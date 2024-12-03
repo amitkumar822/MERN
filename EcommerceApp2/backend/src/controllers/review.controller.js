@@ -5,6 +5,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
+import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
 
 export const writeReview = asyncHandler(async (req, res) => {
   const { productId } = req.params;
@@ -12,8 +13,8 @@ export const writeReview = asyncHandler(async (req, res) => {
   const userId = req?.user?.userId;
   const photo = req.file;
 
-  const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
-  if (photo && !allowedFormats.includes(photo.mimetype)) {
+  // const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
+  if (photo && !AllowedFormatType.includes(photo.mimetype)) {
     throw new ApiError(
       400,
       "Invalid photo format, Only jpeg, png, and webp are allowed"
@@ -204,14 +205,36 @@ export const dislikesReview = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, review, "Successfully liked the review"));
 });
 
-// TODO: Wating for update photo
 export const UpdateOrEditReview = asyncHandler(async (req, res) => {
   const { reviewId } = req.params;
   const userId = req?.user?.userId;
   const { rating, review } = req.body;
+  const photo = req.file;
 
   if (!mongoose.Types.ObjectId.isValid(reviewId)) {
     throw new ApiError(400, "Invalid ReviewId");
+  }
+
+  const verifyReview = await Review.findOne({ _id: reviewId, userId });
+  if (!verifyReview) {
+    throw new ApiError(404, "Not Found Review");
+  }
+
+  if (photo && AllowedFormatType.includes(photo.mimetype)) {
+    if (verifyReview.photo?.public_id) {
+      await deleteFromCloudinary(verifyReview.photo?.public_id);
+    }
+
+    // Upload photo on cloudinary
+    const cloudinaryResponse = await uploadOnCloudinary(photo.path);
+    if (cloudinaryResponse === null) {
+      throw new ApiError(400, "Failed to upload photo!");
+    }
+    verifyReview.photo = {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url,
+    };
+    await verifyReview.save();
   }
 
   const editReview = await Review.findOneAndUpdate(
@@ -222,10 +245,6 @@ export const UpdateOrEditReview = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-
-  if (!editReview) {
-    throw new ApiError(404, "Not Found Review");
-  }
 
   res
     .status(200)

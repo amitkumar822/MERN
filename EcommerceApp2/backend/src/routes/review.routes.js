@@ -22,7 +22,12 @@ router.post(
 router.get("/get-review/:productId", getReview);
 router.post("/likes/:reviewId", isAuthenticated, likesReview);
 router.post("/dislikes/:reviewId", isAuthenticated, dislikesReview);
-router.put("/update/:reviewId", isAuthenticated, UpdateOrEditReview);
+router.put(
+  "/update/:reviewId",
+  upload.single("photo"),
+  isAuthenticated,
+  UpdateOrEditReview
+);
 router.delete("/delete/:reviewId", isAuthenticated, deleteReview);
 
 export default router;
