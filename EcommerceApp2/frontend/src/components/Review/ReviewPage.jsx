@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaStar, FaRegStar, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { AiOutlineComment } from "react-icons/ai";
 import { BiTime } from "react-icons/bi";
@@ -7,9 +7,12 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { formatDateToDDMMYYYY } from "../../helpers/FormatDateToDDMMYYYY";
 import { useSelector } from "react-redux";
+import UserContext from "../../context/userContext";
 
 const ReviewPage = () => {
   const user = useSelector((state) => state?.user?.user);
+
+  const { userReview, setUserReview } = useContext(UserContext);
 
   const { id: productId } = useParams();
 
@@ -31,7 +34,8 @@ const ReviewPage = () => {
         },
         withCredentials: true,
       });
-      setAllReviews(data?.data);
+      setAllReviews(data?.data?.reviews);
+      setUserReview(data?.data);
     } catch (error) {
       console.log("Error Fetach Review: \n", error);
     }
@@ -142,7 +146,7 @@ const ReviewPage = () => {
       {/*User Reviews */}
       <div className="mt-8">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">
-          User Reviews
+          User Reviews ({allReviews.length})
         </h3>
         {allReviews.length > 0 ? (
           allReviews.map((review) => (

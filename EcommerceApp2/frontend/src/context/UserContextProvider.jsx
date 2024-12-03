@@ -46,9 +46,18 @@ const UserContextProvider = ({ children }) => {
     fetchCountAddToCart();
   }, []);
 
+  // TODO: User Review come to Review Page
+  const [userReview, setUserReview] = useState([]);
+
   return (
     <UserContext.Provider
-      value={{ fetchUserDetails, cartProductCount, fetchCountAddToCart }}
+      value={{
+        fetchUserDetails,
+        cartProductCount,
+        fetchCountAddToCart,
+        userReview,
+        setUserReview,
+      }}
     >
       {children}
     </UserContext.Provider>
