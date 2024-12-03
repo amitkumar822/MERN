@@ -112,9 +112,9 @@ const ProductDetailsPage = () => {
 
                   {/**product zoom */}
                   {zoomImage && (
-                    <div className="hidden z-50 lg:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 -right-[510px] top-0">
+                    <div className="hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[460px] bg-slate-200 p-1 -right-[510px] top-0">
                       <div
-                        className="w-full h-full min-h-[400px] min-w-[500px] mix-blend-multiply"
+                        className="w-full h-full min-h-[460px] min-w-[500px] mix-blend-multiply"
                         style={{
                           background: `url(${activeImage})`,
                           backgroundRepeat: "no-repeat",
@@ -122,10 +122,12 @@ const ProductDetailsPage = () => {
                             zoomImageCoordinate.x * 100
                           }% ${zoomImageCoordinate.y * 100}% `,
                         }}
-                      ></div>
+                      >
+                      </div>
                     </div>
                   )}
                 </div>
+                {/* Heart rate or dil */}
                 <button type="button" className="absolute top-4 right-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +173,7 @@ const ProductDetailsPage = () => {
               </h2>
 
               <div className="flex space-x-2 mt-4">
-                <div className="z-10">
+                <div className={`${zoomImage ? "hidden" : "block"}`}>
                   <Stack spacing={1}>
                     <Rating
                       name="half-rating-read"
