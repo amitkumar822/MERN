@@ -109,7 +109,9 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 export const logOut = asyncHandler(async (req, res) => {
-  await res.clearCookie("jwt");
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  
   return res
     .status(200)
     .json(new ApiResponse(200, "User Logged Out Successfully"));
@@ -130,7 +132,7 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id))
     throw new ApiError(404, "Invalid User ID!");
 
