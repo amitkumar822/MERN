@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -35,8 +35,32 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
 
   const [loading, setLoading] = useState(false);
 
+  // fetch single review
+  const fetchSingleReview = async (req, res) => {
+    
+    try {
+      const { data } = await axios.get(
+        `/api/review/get-single-review/${myReviewId}`,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data?.data?.review);
+      setComment(data?.data?.review)
+      setRating(data?.data?.rating)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSingleReview();
+  }, [myReviewId, handleOpen,]);
+
   const handleSubmit = async () => {
-    toast.info("Please Wait...");
     setLoading(true);
     const formData = new FormData();
     formData.append("photo", photo);

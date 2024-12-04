@@ -27,7 +27,6 @@ const ProductDetailsPage = () => {
   });
 
   const [loading, setLoading] = useState(true);
-  const productImageListLoading = new Array(4).fill(null);
   const [activeImage, setActiveImage] = useState("");
 
   const [zoomImageCoordinate, setZoomImageCoordinate] = useState({
