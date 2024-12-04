@@ -26,7 +26,7 @@ export const WriteReview = ({ productId, fetchReview }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //*******************👇 Edit Review Fuctionality 👇****************************
+  //********👇 Product Review Review Fuctionality 👇************
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
