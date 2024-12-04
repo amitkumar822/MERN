@@ -3,7 +3,8 @@ import { upload } from "../middlewares/multer.js";
 import {
   deleteReview,
   dislikesReview,
-  getReview,
+  getAllReview,
+  getSingleReview,
   likesReview,
   UpdateOrEditReview,
   writeReview,
@@ -19,7 +20,7 @@ router.post(
   isAuthenticated,
   writeReview
 );
-router.get("/get-review/:productId", getReview);
+router.get("/get-review/:productId", getAllReview);
 router.post("/likes/:reviewId", isAuthenticated, likesReview);
 router.post("/dislikes/:reviewId", isAuthenticated, dislikesReview);
 router.put(
@@ -28,6 +29,7 @@ router.put(
   isAuthenticated,
   UpdateOrEditReview
 );
+router.get("/get-single-review/:reviewId", isAuthenticated, getSingleReview);
 router.delete("/delete/:reviewId", isAuthenticated, deleteReview);
 
 export default router;
