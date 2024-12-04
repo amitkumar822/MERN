@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaStar, FaRegStar, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { AiOutlineComment } from "react-icons/ai";
+import { PiDotsThreeVerticalBold } from "react-icons/pi";
+import { MdDelete } from "react-icons/md";
 import { BiTime } from "react-icons/bi";
 import WriteReview from "./WriteReview";
 import axios from "axios";
@@ -8,15 +10,17 @@ import { useParams } from "react-router";
 import { formatDateToDDMMYYYY } from "../../helpers/FormatDateToDDMMYYYY";
 import { useSelector } from "react-redux";
 import UserContext from "../../context/userContext";
+import { EditReview } from "./EditReview";
 
 const ReviewPage = () => {
   const user = useSelector((state) => state?.user?.user);
 
-  const { userReview, setUserReview } = useContext(UserContext);
+  const { setUserReview } = useContext(UserContext);
 
   const { id: productId } = useParams();
 
   const [allReviews, setAllReviews] = useState([]);
+  // const [myReviewId, setMyReviewId] = useState("");
 
   // Analytics (calculate dynamically)
   const ratingAnalytics = Array(5)
@@ -36,6 +40,14 @@ const ReviewPage = () => {
       });
       setAllReviews(data?.data?.reviews);
       setUserReview(data?.data);
+
+      // Find the review by the current user and set it
+      // const userReview = data?.data?.reviews.find(
+      //   (review) => review?.userId?._id === user?._id
+      // );
+      // if (userReview) {
+      //   setMyReviewId(userReview._id);
+      // }
     } catch (error) {
       console.log("Error Fetach Review: \n", error);
     }
@@ -66,17 +78,41 @@ const ReviewPage = () => {
 
   const [showHideWriteReview, setShowHideWriteReview] = useState(false);
 
+  const [myReviewId, setMyReviewId] = useState();
+
+  useEffect(() => {
+    if (allReviews.length > 0 && user) {
+      const userReview = allReviews.find(
+        (review) => review?.userId?._id === user?._id
+      );
+
+      if (userReview) {
+        setMyReviewId(userReview._id);
+      } else {
+        setMyReviewId("");
+      }
+    }
+  }, [allReviews]);
+
   return (
     <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
       <div className="flex justify-end -mb-10">
-        <button
-          onClick={() => setShowHideWriteReview(!showHideWriteReview)}
-          className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-        >
-          <span className="flex items-center gap-2">
-            <FaStar className="text-yellow-300" /> Rate Product
-          </span>
-        </button>
+        {myReviewId ? (
+          <div
+            className={`bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 text-white font-semibold rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl`}
+          >
+            <EditReview myReviewId={myReviewId} fetchReview={fetchReview} />
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowHideWriteReview(!showHideWriteReview)}
+            className={`bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl`}
+          >
+            <span className="flex items-center gap-2">
+              <FaStar className="text-yellow-300" /> Rate Product
+            </span>
+          </button>
+        )}
       </div>
 
       {/* 👇 Write Review Page Import 👇 */}
@@ -205,7 +241,7 @@ const ReviewPage = () => {
                     onClick={() => handleLike(review?._id)}
                   >
                     <FaThumbsUp />
-                    {review?.likes?.length}
+                    {review?.likes?.length} <br />
                   </button>
                   <button
                     className={`flex items-center gap-1 ${

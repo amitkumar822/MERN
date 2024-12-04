@@ -44,7 +44,7 @@ const WriteReview = ({ productId, fetchReview }) => {
   return (
     <div>
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-        Leave a Review
+        Write a Review
       </h2>
 
       {/* Rating */}
