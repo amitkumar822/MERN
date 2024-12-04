@@ -13,7 +13,7 @@ import ReviewPage from "../../components/Review/ReviewPage";
 
 const ProductDetailsPage = () => {
   const { userReview } = useContext(UserContext);
-  console.log("userReview: ", userReview);
+  
   const { fetchCountAddToCart } = useContext(UserContext);
   const productId = useParams();
   const [data, setData] = useState({
