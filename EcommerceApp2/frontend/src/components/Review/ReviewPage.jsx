@@ -65,8 +65,6 @@ const ReviewPage = () => {
     }
   };
 
-  const [showHideWriteReview, setShowHideWriteReview] = useState(false);
-
   const [myReviewId, setMyReviewId] = useState();
 
   useEffect(() => {
@@ -81,7 +79,7 @@ const ReviewPage = () => {
         setMyReviewId("");
       }
     }
-  }, [allReviews, productId]);
+  }, [allReviews, productId, ""]);
 
   return (
     <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">

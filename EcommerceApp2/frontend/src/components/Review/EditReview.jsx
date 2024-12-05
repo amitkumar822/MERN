@@ -26,7 +26,7 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //*******************👇 Edit Review Fuctionality 👇****************************
+  //*******👇 Edit Review Fuctionality 👇**********
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
@@ -34,10 +34,10 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
   const [photo, setPhoto] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   // fetch single review
   const fetchSingleReview = async (req, res) => {
-    
     try {
       const { data } = await axios.get(
         `/api/review/get-single-review/${myReviewId}`,
@@ -48,9 +48,9 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
           },
         }
       );
-      console.log(data?.data?.review);
-      setComment(data?.data?.review)
-      setRating(data?.data?.rating)
+
+      setComment(data?.data?.review);
+      setRating(data?.data?.rating);
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +58,7 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
 
   useEffect(() => {
     fetchSingleReview();
-  }, [myReviewId, handleOpen,]);
+  }, [myReviewId]);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -81,10 +81,27 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
       setPhoto(null);
 
       fetchReview();
+      fetchSingleReview();
     } catch (error) {
       setLoading(false);
       toast.error(error?.response?.data?.message || "Failed to add review");
       console.error(error);
+    }
+  };
+
+  // Delete Review
+  const handleDelete = async () => {
+    setDeleteLoading(true);
+    try {
+      await axios.delete(`/api/review/delete/${myReviewId}`);
+      toast.success("Delete Review Successfully");
+      setDeleteLoading(false);
+      handleClose();
+      fetchReview();
+    } catch (error) {
+      setDeleteLoading(false);
+      toast.error(error?.response?.data?.message || "Faild to delete review");
+      console.log(error?.response?.data?.message || error);
     }
   };
 
@@ -210,6 +227,22 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
               <CircularProgress size={24} color="inherit" />
             ) : (
               "Submit Review"
+            )}
+          </Button>
+
+          {/* Delete Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            disabled={deleteLoading}
+            sx={{ paddingY: 1.5, marginTop: 2 }}
+          >
+            {deleteLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Delete Review"
             )}
           </Button>
         </Box>

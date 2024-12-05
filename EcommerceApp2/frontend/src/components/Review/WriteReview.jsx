@@ -36,7 +36,6 @@ export const WriteReview = ({ productId, fetchReview }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    toast.info("Please Wait...");
     setLoading(true);
     const formData = new FormData();
     formData.append("photo", photo);
@@ -93,7 +92,7 @@ export const WriteReview = ({ productId, fetchReview }) => {
               component="h2"
               sx={{ fontWeight: "bold", color: "text.primary" }}
             >
-              Edit a Review
+              Write a Review
             </Typography>
             <IconButton
               onClick={handleClose}

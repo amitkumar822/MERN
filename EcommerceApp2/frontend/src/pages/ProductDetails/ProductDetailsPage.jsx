@@ -1,7 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
-import { FaStarHalf } from "react-icons/fa";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
@@ -176,8 +174,8 @@ const ProductDetailsPage = () => {
                   <Stack spacing={1}>
                     <Rating
                       name="half-rating-read"
-                      defaultValue={2.5}
                       precision={0.5}
+                      value={parseFloat(userReview?.stats?.averageRating)}
                       readOnly
                       sx={{
                         zIndex: 0,
@@ -188,6 +186,8 @@ const ProductDetailsPage = () => {
 
                 <h4 className="text-gray-800 text-base">
                   {userReview?.stats?.totalUsers} Reviews
+                  <br />
+                  {userReview?.stats?.averageRating}
                 </h4>
               </div>
 
