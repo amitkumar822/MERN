@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
-import AdminEditProduct from "../AdminPannel/AdminEditProduct";
+import EditProduct from "../AdminPannel/EditProduct";
 import DeleteAdminProduct from "../../../../../DeleteAdminProduct";
 
 const AdminProductCard = ({ product, fetchAllProduct }) => {
@@ -122,7 +122,7 @@ const AdminProductCard = ({ product, fetchAllProduct }) => {
 
       {/* Edit Product Modal */}
       {eachProduct?.productName && (
-        <AdminEditProduct
+        <EditProduct
           product={eachProduct}
           setEachProduct={setEachProduct}
           fetchAllProduct={fetchAllProduct}

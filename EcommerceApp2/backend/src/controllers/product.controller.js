@@ -46,8 +46,6 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     inTheBox,
   } = req.body;
 
-  console.log(req.body);
-
   if (
     !productName ||
     !description ||

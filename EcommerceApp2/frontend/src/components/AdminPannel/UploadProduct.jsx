@@ -87,13 +87,13 @@ const UploadProduct = () => {
     // Create a new FormData object
     const formData = new FormData();
     formData.append("productName", data.productName);
-    formData.append("description", data?.description);
+    formData.append("description", data?.description.trim());
     formData.append("price", parseFloat(data?.price));
     formData.append("sellingPrice", parseFloat(data?.sellingPrice));
     formData.append("brand", data?.brand);
     formData.append("category", data?.category);
     formData.append("quantity", parseInt(data?.quantity));
-    formData.append("inTheBox", data?.inTheBox);
+    formData.append("inTheBox", data?.inTheBox.trim());
     formData.append("ram", data?.ram);
     formData.append("ssd", data?.ssd);
     formData.append("processorType", data?.processorType);
@@ -432,7 +432,7 @@ const UploadProduct = () => {
                 <span
                   className={`${
                     data.category === "mobiles" ? "block" : "hidden"
-                  }`}
+                  } grid gap-4`}
                 >
                   <label
                     htmlFor="operatingSystem"
@@ -501,7 +501,6 @@ const UploadProduct = () => {
               </div>
 
               {/* in the box */}
-
               <label htmlFor="inTheBox" className="text-gray-700 font-semibold">
                 In The Box
               </label>

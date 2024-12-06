@@ -7,7 +7,7 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "../DisplayImage";
 
-const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
+const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   const fileInputRef = useRef(null);
   useEffect(() => {
     document.getElementById("edit_product_modal").showModal();
@@ -22,6 +22,18 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     brand: product?.brand || "",
     category: product?.category || "",
     quantity: product?.quantity || "",
+    inTheBox: product?.inTheBox || "",
+    ram: product?.ram || "",
+    ssd: product?.ssd || "",
+    processorType: product?.processorType || "",
+    processorSpeed: product?.processorSpeed || "",
+    displaySize: product?.displaySize || "",
+    displayType: product?.displayType || "",
+    displayResolution: product?.displayResolution || "",
+    operatingSystem: product?.operatingSystem || "",
+    primaryCamera: product?.primaryCamera || "",
+    secondaryCamera: product?.secondaryCamera || "",
+    batteryCapacity: product?.batteryCapacity || "",
   });
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -128,6 +140,18 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     formData.append("brand", data.brand);
     formData.append("category", data.category);
     formData.append("quantity", parseInt(data.quantity));
+    formData.append("inTheBox", data?.inTheBox.trim());
+    formData.append("ram", data?.ram);
+    formData.append("ssd", data?.ssd);
+    formData.append("processorType", data?.processorType);
+    formData.append("processorSpeed", data?.processorSpeed);
+    formData.append("displaySize", data?.displaySize);
+    formData.append("displayType", data?.displayType);
+    formData.append("displayResolution", data?.displayResolution);
+    formData.append("operatingSystem", data?.operatingSystem);
+    formData.append("primaryCamera", data?.primaryCamera);
+    formData.append("secondaryCamera", data?.secondaryCamera);
+    formData.append("batteryCapacity", data?.batteryCapacity);
 
     // Append each image file to the FormData
     newProductImage.newImg.forEach((file) => {
@@ -169,7 +193,7 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
               >
                 ✕
               </button>
-              <h3 className="font-bold text-lg text-blue-600">
+              <h3 className="font-bold text-lg text-blue-600 text-center">
                 Edit Product And Update
               </h3>
             </div>
@@ -357,6 +381,209 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                   required
                 />
 
+                {/* specification section mobile, laptop, and smart tv */}
+                <div
+                  className={`grid gap-4 ${
+                    data.category === "mobiles" ||
+                    data.category === "laptops" ||
+                    data.category === "televisions"
+                      ? "block"
+                      : "hidden"
+                  }`}
+                >
+                  <label htmlFor="ram" className="text-gray-700 font-semibold">
+                    RAM
+                  </label>
+                  <input
+                    type="text"
+                    id="ram"
+                    placeholder="Enter RAM size"
+                    name="ram"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.ram}
+                    onChange={handleInputChange}
+                  />
+
+                  <label htmlFor="ssd" className="text-gray-700 font-semibold">
+                    SSD
+                  </label>
+                  <input
+                    type="text"
+                    id="ssd"
+                    placeholder="Enter SSD storage size"
+                    name="ssd"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.ssd}
+                    onChange={handleInputChange}
+                  />
+
+                  <label
+                    htmlFor="processorType"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Processor Type
+                  </label>
+                  <input
+                    type="text"
+                    id="processorType"
+                    placeholder="Enter PROCESSOR TYPE"
+                    name="processorType"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.processorType}
+                    onChange={handleInputChange}
+                  />
+
+                  <label
+                    htmlFor="processorSpeed"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Processor Speed
+                  </label>
+                  <input
+                    type="text"
+                    id="processorSpeed"
+                    placeholder="Enter PROCESSOR SPEED"
+                    name="processorSpeed"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.processorSpeed}
+                    onChange={handleInputChange}
+                  />
+
+                  <label
+                    htmlFor="displaySize"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Display Size
+                  </label>
+                  <input
+                    type="text"
+                    id="displaySize"
+                    placeholder="Enter DISPLAY SIZE"
+                    name="displaySize"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.displaySize}
+                    onChange={handleInputChange}
+                  />
+
+                  <label
+                    htmlFor="displayType"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Display Type
+                  </label>
+                  <input
+                    type="text"
+                    id="displayType"
+                    placeholder="Enter DISPLAY TYPE"
+                    name="displayType"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.displayType}
+                    onChange={handleInputChange}
+                  />
+
+                  <label
+                    htmlFor="displayResolution"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Display Resolution
+                  </label>
+                  <input
+                    type="text"
+                    id="displayResolution"
+                    placeholder="Enter DISPLAY RESOLUTION"
+                    name="displayResolution"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.displayResolution}
+                    onChange={handleInputChange}
+                  />
+
+                  <span
+                    className={`${
+                      data.category === "mobiles" ? "block" : "hidden"
+                    }  grid gap-4`}
+                  >
+                    <label
+                      htmlFor="operatingSystem"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Operating System
+                    </label>
+                    <input
+                      type="text"
+                      id="operatingSystem"
+                      placeholder="Enter Operating System Android, IOS, etc"
+                      name="operatingSystem"
+                      className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                      value={data.operatingSystem}
+                      onChange={handleInputChange}
+                    />
+
+                    <label
+                      htmlFor="primaryCamera"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Primary Camera
+                    </label>
+                    <input
+                      type="text"
+                      id="primaryCamera"
+                      placeholder="Enter Primary Camera"
+                      name="primaryCamera"
+                      className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                      value={data.primaryCamera}
+                      onChange={handleInputChange}
+                    />
+
+                    <label
+                      htmlFor="secondaryCamera"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Secondary Camera
+                    </label>
+                    <input
+                      type="text"
+                      id="secondaryCamera"
+                      placeholder="Enter Secondary Camera"
+                      name="secondaryCamera"
+                      className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                      value={data.secondaryCamera}
+                      onChange={handleInputChange}
+                    />
+                  </span>
+
+                  <label
+                    htmlFor="batteryCapacity"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Battery Capacity
+                  </label>
+                  <input
+                    type="text"
+                    id="batteryCapacity"
+                    placeholder="Enter Battery Capacity"
+                    name="batteryCapacity"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.batteryCapacity}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                {/* in the box */}
+                <label
+                  htmlFor="inTheBox"
+                  className="text-gray-700 font-semibold"
+                >
+                  In The Box
+                </label>
+                <textarea
+                  className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300 resize-none"
+                  placeholder="Enter In The Box"
+                  rows={3}
+                  name="inTheBox"
+                  value={data.inTheBox}
+                  onChange={handleInputChange}
+                ></textarea>
+
                 {/* description */}
                 <label
                   htmlFor="description"
@@ -374,7 +601,10 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                 ></textarea>
 
                 {/* Submit Button */}
-                <button className="mt-4 px-5 py-3 mb-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+                <button
+                  disabled={loading}
+                  className="mt-4 px-5 py-3 mb-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+                >
                   {loading ? (
                     <ClipLoader loading={loading} />
                   ) : (
@@ -397,4 +627,4 @@ const AdminEditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   );
 };
 
-export default AdminEditProduct;
+export default EditProduct;
