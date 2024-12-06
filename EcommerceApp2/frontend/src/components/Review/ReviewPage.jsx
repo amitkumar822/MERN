@@ -102,10 +102,11 @@ const ReviewPage = () => {
 
       {/* Analytics */}
       <div className="mt-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-6">
-          Rating Analytics
+        <h3 className="text-xl md:text-2xl font-extrabold text-gray-900 mb-8 tracking-wide">
+          Customer Ratings Overview
         </h3>
-        <div className="space-y-4">
+
+        <div className="space-y-5">
           {ratingAnalytics.map((count, i) => {
             // Colors for each rating level
             const colors = [
@@ -116,11 +117,11 @@ const ReviewPage = () => {
               "text-blue-500",
             ];
             const gradients = [
-              "from-red-400 to-red-600",
-              "from-orange-400 to-orange-600",
-              "from-yellow-400 to-yellow-600",
-              "from-green-400 to-green-600",
-              "from-blue-400 to-blue-600",
+              "from-red-500 to-red-700",
+              "from-orange-500 to-orange-700",
+              "from-yellow-500 to-yellow-700",
+              "from-green-500 to-green-700",
+              "from-blue-500 to-blue-700",
             ];
 
             // Calculate percentage
@@ -129,29 +130,31 @@ const ReviewPage = () => {
             return (
               <div
                 key={i}
-                className="flex items-center gap-6 p-2 bg-gray-50 rounded-lg shadow-sm"
+                className="flex items-center gap-6 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 {/* Star Rating */}
                 <div
-                  className={`flex items-center gap-1 text-lg font-semibold ${colors[i]}`}
+                  className={`flex items-center gap-2 text-xl font-semibold ${colors[i]}`}
                 >
-                  <FaStar />
-                  <span>{i + 1}</span>
+                  <FaStar className="drop-shadow-sm" />
+                  <span className="tracking-tight">{i + 1}</span>
                 </div>
+
                 {/* Progress Bar */}
                 <div className="flex-1">
-                  <div className="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
+                  <div className="w-full bg-gray-100 h-4 rounded-full overflow-hidden">
                     <div
-                      className={`h-4 bg-gradient-to-r ${gradients[i]}`}
+                      className={`h-4 bg-gradient-to-r ${gradients[i]} transition-all duration-500 ease-in-out`}
                       style={{
                         width: `${percentage}%`,
                       }}
                     ></div>
                   </div>
                 </div>
+
                 {/* Review Count */}
-                <span className="text-gray-600 text-sm">
-                  {count} {count === 1 ? "review" : "reviews"}
+                <span className="text-gray-700 text-sm font-medium">
+                  {count} {count === 1 ? "Review" : "Reviews"}
                 </span>
               </div>
             );

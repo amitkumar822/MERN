@@ -111,7 +111,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 export const logOut = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
-  
+
   return res
     .status(200)
     .json(new ApiResponse(200, "User Logged Out Successfully"));
@@ -160,8 +160,6 @@ export const deleteUser = asyncHandler(async (req, res) => {
     const result = await cloudinary.uploader.destroy(user.avatar.public_id);
     if (result.result !== "ok")
       throw new ApiError(500, "Failed to delete user avatar!");
-  } else {
-    throw new ApiError(400, "No valid public_id found for user's avatar!");
   }
 
   const deletedUser = await User.findByIdAndDelete(id);

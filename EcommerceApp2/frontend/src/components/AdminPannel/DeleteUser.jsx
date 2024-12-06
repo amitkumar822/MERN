@@ -1,20 +1,24 @@
+import { Button, CircularProgress } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const DeleteUser = ({ userId, setUserId, fetchAllUsers }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleDeleteUser = async () => {
-    alert(userId);
+    setLoading(true);
     try {
-      const { data } = await axios.delete(`/api/user/delete-user/${userId}`);
+      await axios.delete(`/api/user/delete-user/${userId}`);
       toast.success("User deleted successfully");
-      console.log(data);
+      setLoading(false);
       setUserId("");
       fetchAllUsers(); // Fetch updated user list after deletion
       // Close the modal after success
       document.getElementById("my_modal_1").close();
     } catch (error) {
       console.error(error);
+      setLoading(false);
       toast.error(error?.response?.data?.message || "Internal Server Error");
     }
   };
@@ -34,23 +38,35 @@ const DeleteUser = ({ userId, setUserId, fetchAllUsers }) => {
 
           <div className="flex justify-center gap-4 mt-4">
             {/* Confirm Delete Button */}
-            <button
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
               onClick={handleDeleteUser}
-              className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-200 transform hover:scale-105"
+              disabled={loading}
+              sx={{ paddingY: 1.5, borderRadius: 50, width: 90 }}
             >
-              Yes, Delete
-            </button>
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Delete"
+              )}
+            </Button>
 
             {/* Cancel Button */}
-            <button
+            <Button
+            fullWidth
+            variant="contained"
+            color="success"
+            sx={{paddingY: 1.5, borderRadius: 50, width: 90}}
               onClick={() => {
                 setUserId(""); // Reset selected user ID
                 document.getElementById("my_modal_1").close(); // Close modal
               }}
-              className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-200 transform hover:scale-105"
+              
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       </dialog>

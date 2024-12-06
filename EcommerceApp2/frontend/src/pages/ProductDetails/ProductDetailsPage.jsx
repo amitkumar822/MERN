@@ -185,9 +185,7 @@ const ProductDetailsPage = () => {
                 </div>
 
                 <h4 className="text-gray-800 text-base">
-                  {userReview?.stats?.totalUsers} Reviews
-                  <br />
-                  {userReview?.stats?.averageRating}
+                  ({userReview?.stats?.totalUsers || 0}) Reviews
                 </h4>
               </div>
 
