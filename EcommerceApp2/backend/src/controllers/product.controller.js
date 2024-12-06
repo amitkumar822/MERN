@@ -32,7 +32,21 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     brand,
     category,
     quantity,
+    ram,
+    ssd,
+    processorType,
+    processorSpeed,
+    displaySize,
+    displayType,
+    displayResolution,
+    operatingSystem,
+    primaryCamera,
+    secondaryCamera,
+    batteryCapacity,
+    inTheBox,
   } = req.body;
+
+  console.log(req.body);
 
   if (
     !productName ||
@@ -82,6 +96,18 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     discountPercentage,
     owner: req.user.userId,
     productImage: uploadedImages, // Save array of uploaded images
+    ram,
+    ssd,
+    processorType,
+    processorSpeed,
+    displaySize,
+    displayType,
+    displayResolution,
+    operatingSystem,
+    primaryCamera,
+    secondaryCamera,
+    batteryCapacity,
+    inTheBox,
   });
 
   if (!product) throw new ApiError(400, "Failed To Upload Product");

@@ -11,18 +11,11 @@ import ReviewPage from "../../components/Review/ReviewPage";
 
 const ProductDetailsPage = () => {
   const { userReview } = useContext(UserContext);
-  
+
   const { fetchCountAddToCart } = useContext(UserContext);
   const productId = useParams();
-  const [data, setData] = useState({
-    productName: "",
-    brandName: "",
-    category: "",
-    productImage: [],
-    description: "",
-    price: "",
-    sellingPrice: "",
-  });
+
+  const [data, setData] = useState({});
 
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState("");
@@ -119,8 +112,7 @@ const ProductDetailsPage = () => {
                             zoomImageCoordinate.x * 100
                           }% ${zoomImageCoordinate.y * 100}% `,
                         }}
-                      >
-                      </div>
+                      ></div>
                     </div>
                   )}
                 </div>
@@ -244,58 +236,110 @@ const ProductDetailsPage = () => {
 
           {/* Product information */}
           <div className="mt-16 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
-            <h3 className="text-xl font-bold text-gray-800">
-              Product Description :
-            </h3>
-            <p>{data?.description}</p>
-            <br />
+            <div className="mt-6">
+              <h3 className="text-xl font-bold text-gray-800">
+                Product Description :
+              </h3>
 
+              {data?.description &&
+                data.description.split("\n").map((line, index) => {
+                  // Check if the line is a header or body text based on formatting
+                  const isHeader = line.endsWith(":") || line.endsWith(".");
+                  return (
+                    <p
+                      key={index}
+                      className={`${
+                        isHeader
+                          ? "text-lg font-semibold text-gray-700 mt-4"
+                          : "text-gray-800 mt-2"
+                      }`}
+                    >
+                      {line}
+                    </p>
+                  );
+                })}
+            </div>
+
+            <hr className="mt-6" />
             {/* Category by hidde information */}
             <div
               className={`${
-                data?.category === "mobiles" || data?.category === "televisions"
+                data?.category === "mobiles" ||
+                data?.category === "televisions" ||
+                data?.category === "laptops"
                   ? ""
                   : "hidden"
-              }`}
+              } mt-10`}
             >
               <h3 className="text-xl font-bold text-gray-800">
-                Product information
+              Specifications: 
               </h3>
-              <ul className="mt-4 space-y-6 text-gray-800">
-                <li className="text-sm">
-                  TYPE <span className="ml-4 float-right">LAPTOP</span>
+              <ul className="mt-4 space-y-6 text-gray-800 uppercase">
+                <li className={`${data?.category ? "block" : "hidden"}`}>
+                  TYPE{" "}
+                  <span className="ml-4 float-right">{data?.category}</span>
                 </li>
-                <li className="text-sm">
-                  RAM <span className="ml-4 float-right">16 BG</span>
+                <li className={`${data?.ram ? "block" : "hidden"}`}>
+                  RAM <span className="ml-4 float-right">{data?.ram}</span>
                 </li>
-                <li className="text-sm">
-                  SSD <span className="ml-4 float-right">1000 BG</span>
+                <li className={`${data?.ssd ? "block" : "hidden"}`}>
+                  SSD <span className="ml-4 float-right">{data?.ssd}</span>
                 </li>
-                <li className="text-sm">
+                <li className={`${data?.processorType ? "block" : "hidden"}`}>
                   PROCESSOR TYPE{" "}
-                  <span className="ml-4 float-right">INTEL CORE I7-12700H</span>
-                </li>
-                <li className="text-sm">
-                  PROCESSOR SPEED{" "}
-                  <span className="ml-4 float-right">2.3 - 4.7 GHz</span>
-                </li>
-                <li className="text-sm">
-                  DISPLAY SIZE INCH{" "}
-                  <span className="ml-4 float-right">16.0</span>
-                </li>
-                <li className="text-sm">
-                  DISPLAY SIZE SM{" "}
-                  <span className="ml-4 float-right">40.64 cm</span>
-                </li>
-                <li className="text-sm">
-                  DISPLAY TYPE{" "}
                   <span className="ml-4 float-right">
-                    OLED, TOUCHSCREEN, 120 Hz
+                    {data?.processorType}
                   </span>
                 </li>
-                <li className="text-sm">
+                <li className={`${data?.processorSpeed ? "block" : "hidden"}`}>
+                  PROCESSOR SPEED{" "}
+                  <span className="ml-4 float-right">
+                    {data?.processorSpeed}
+                  </span>
+                </li>
+                <li className={`${data?.displaySize ? "block" : "hidden"}`}>
+                  DISPLAY SIZE INCH{" "}
+                  <span className="ml-4 float-right">{data?.displaySize}</span>
+                </li>
+                <li className={`${data?.displayType ? "block" : "hidden"}`}>
+                  DISPLAY TYPE{" "}
+                  <span className="ml-4 float-right">{data?.displayType}</span>
+                </li>
+                <li
+                  className={`${data?.displayResolution ? "block" : "hidden"}`}
+                >
                   DISPLAY RESOLUTION{" "}
-                  <span className="ml-4 float-right">2880x1620</span>
+                  <span className="ml-4 float-right">
+                    {data?.displayResolution}
+                  </span>
+                </li>
+                <li className={`${data?.operatingSystem ? "block" : "hidden"}`}>
+                  OPERATING SYSTEM{" "}
+                  <span className="ml-4 float-right">
+                    {data?.operatingSystem}
+                  </span>
+                </li>
+                <li className={`${data?.batteryCapacity ? "block" : "hidden"}`}>
+                  BATTERY CAPACITY{" "}
+                  <span className="ml-4 float-right">
+                    {data?.batteryCapacity}
+                  </span>
+                </li>
+                <li className={`${data?.primaryCamera ? "block" : "hidden"}`}>
+                  PRIMARY CAMERA{" "}
+                  <span className="ml-4 float-right">
+                    {data?.primaryCamera}
+                  </span>
+                </li>
+                <li className={`${data?.secondaryCamera ? "block" : "hidden"}`}>
+                  SECONDARY CAMERA{" "}
+                  <span className="ml-4 float-right">
+                    {data?.secondaryCamera}
+                  </span>
+                </li>
+                <li className={`${data?.inTheBox ? "block" : "hidden"}`}>
+                  IN THE BOX{" "}
+                  <span className="ml-4 float-right">{data?.inTheBox}</span>
                 </li>
               </ul>
             </div>
