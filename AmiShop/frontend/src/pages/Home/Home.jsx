@@ -24,7 +24,8 @@ const Home = () => {
       {/* Time Count Down */}
       <TimeCountDown />
 
-      <VerticalCard category={"mobiles"} heading={"Mobiles"} />
+      <VerticalCard category={"laptops"} heading={"Best Laptops"} />
+      <VerticalCard category={"mouse"} heading={"Top Mouse"} />
       {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
       <VerticalCard category={"televisions"} heading={"Televisions"} />
       <VerticalCard category={"camera"} heading={"Camera & Photography"} />
@@ -35,6 +36,7 @@ const Home = () => {
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
+      <Cart category={"mouse"} heading={"Mouses"} />
       {/* <Review /> */}
     </div>
   );

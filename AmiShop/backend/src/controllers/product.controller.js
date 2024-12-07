@@ -139,10 +139,17 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find();
+  // pagination
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 3;
+  let skip = (page - 1) * limit;
+  
+  const products = await Product.find().skip(skip).limit(limit);
 
-  if (products.length === 0)
+  if (products.length === 0) {
     throw new ApiError(404, "No Any Product In Database!");
+  }
+
   res.status(200).json(new ApiResponse(200, products, "Products"));
 });
 

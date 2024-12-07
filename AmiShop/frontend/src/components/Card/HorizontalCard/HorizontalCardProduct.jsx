@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
+import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
@@ -93,12 +94,12 @@ const HorizontalCardProduct = ({ category, heading }) => {
                 <div className="relative flex overflow-hidden rounded-lg transition-all duration-200 w-[21.5rem] h-[11.5rem]">
                   <div className="rounded-lg shadow-md shadow-gray-600 flex justify-center items-center overflow-hidden border m-1 bg-gray-200">
                     <div
-                      className="relative min-w-[173px] max-w-[180px] max-h-[180px] rounded-l-lg overflow-hidden"
+                      className="relative min-w-[173px] max-h-[180px] h-full flex justify-center items-center rounded-l-lg overflow-hidden bg-blue-200"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <img
-                        className="object-cover bg-blue-100 mix-blend-multiply min-w-3 transition-transform duration-300 ease-in-out transform"
+                        className="object-cover h-full mix-blend-multiply transition-transform duration-300 ease-in-out transform"
                         src={
                           hoveredIndex === index
                             ? product?.productImage[1]?.url
@@ -131,11 +132,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       </div>
                     </div>
 
-                    <div className="px-2 pb-2">
-                      <h5 className="text-xs md:text-[15px] font-semibold tracking-tight text-slate-900 line-clamp-2 capitalize">
-                        {product?.productName}
-                      </h5>
-                      <div className="mt-2 mb-5 flex items-center justify-between">
+                    <div className="p-2 flex flex-col justify-between h-full">
+                      <div className="flex flex-col gap-2 ">
+                        <h5 className="text-xs md:text-[15px] font-semibold tracking-tight text-slate-900 line-clamp-2 capitalize">
+                          {product?.productName}
+                        </h5>
                         <p>
                           <span className="text-xs md:text-[16px] font-semibold text-slate-900">
                             {displayINRCurrency(product.sellingPrice)}
@@ -148,8 +149,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
                       <div>
                         <button
-                          onClick={(event) => handleAddToCart(event, product?._id)}
-                          className="w-36 flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
+                          onClick={(event) =>
+                            handleAddToCart(event, product?._id)
+                          }
+                          className="w-full flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
