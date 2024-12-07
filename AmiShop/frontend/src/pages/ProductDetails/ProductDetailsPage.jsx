@@ -56,7 +56,6 @@ const ProductDetailsPage = () => {
     (e) => {
       setZoomImage(true);
       const { left, top, width, height } = e.target.getBoundingClientRect();
-      console.log("coordinate", left, top, width, height);
 
       const x = (e.clientX - left) / width;
       const y = (e.clientY - top) / height;

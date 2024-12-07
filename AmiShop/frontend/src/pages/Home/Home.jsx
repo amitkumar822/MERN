@@ -6,6 +6,7 @@ import Carousel from "../../components/Banner/Carousel";
 import TimeCountDown from "../../components/Main/TimeCountDown";
 import Cart from "../Cart/Cart";
 import Review from "../../components/Review/ReviewPage";
+import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
 
 const Home = () => {
   return (
@@ -33,6 +34,8 @@ const Home = () => {
       <VerticalCard category={"speakers"} heading={"Bluetooth Speakers"} />
       <VerticalCard category={"refrigerator"} heading={"Refrigerator"} />
       <VerticalCard category={"trimmers"} heading={"Trimmers"} /> */}
+
+      <PopularProduct />
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />

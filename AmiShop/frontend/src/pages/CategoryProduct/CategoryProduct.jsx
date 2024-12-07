@@ -36,7 +36,6 @@ const CategoryProduct = () => {
         }
       );
 
-      console.log("FilterData: ", response?.data?.data);
       setData(response?.data?.data || []);
     } catch (error) {
       console.log(error);
