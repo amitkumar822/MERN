@@ -93,16 +93,16 @@ const HorizontalCardProduct = ({ category, heading }) => {
                 <div className="relative flex overflow-hidden rounded-lg transition-all duration-200 w-[21.5rem] h-[11.5rem]">
                   <div className="rounded-lg shadow-md shadow-gray-600 flex justify-center items-center overflow-hidden border m-1 bg-gray-200">
                     <div
-                      className="relative max-w-[180px] max-h-[180px] rounded-l-lg overflow-hidden"
+                      className="relative min-w-[173px] max-w-[180px] max-h-[180px] rounded-l-lg overflow-hidden"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <img
-                        className="object-cover bg-blue-100 min-w-3 transition-transform duration-300 ease-in-out transform"
+                        className="object-cover bg-blue-100 mix-blend-multiply min-w-3 transition-transform duration-300 ease-in-out transform"
                         src={
                           hoveredIndex === index
-                            ? product?.productImage[0]?.url
-                            : product?.productImage[1]?.url
+                            ? product?.productImage[1]?.url
+                            : product?.productImage[0]?.url
                         }
                         alt="product image"
                       />

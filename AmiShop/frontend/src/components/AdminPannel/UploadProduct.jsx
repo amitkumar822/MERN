@@ -7,7 +7,7 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "../DisplayImage";
 
-const UploadProduct = () => {
+const UploadProduct = ({ fetchAllProduct }) => {
   let [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     productName: "",
@@ -60,8 +60,8 @@ const UploadProduct = () => {
     }
 
     // Create URLs for display and add files to imageFiles state for upload
-    const imagesArray = files.map((file) => URL.createObjectURL(file));
-    const imagesArray2 = files.map((file) => file);
+    const imagesArray = files?.map((file) => URL.createObjectURL(file));
+    const imagesArray2 = files?.map((file) => file);
 
     setData((prevData) => ({
       ...prevData,
@@ -115,6 +115,30 @@ const UploadProduct = () => {
       await axios.post("/api/product/upload", formData);
       setLoading(false);
       toast.success("Product Uploaded Successfully!");
+      fetchAllProduct();
+      setData({
+        productName: "",
+        description: "",
+        price: "",
+        sellingPrice: "",
+        brand: "",
+        category: "",
+        productPreviewImage: [],
+        productImage: [],
+        quantity: "",
+        inTheBox: "",
+        ram: "",
+        ssd: "",
+        processorType: "",
+        processorSpeed: "",
+        displaySize: "",
+        displayType: "",
+        displayResolution: "",
+        operatingSystem: "",
+        primaryCamera: "",
+        secondaryCamera: "",
+        batteryCapacity: "",
+      });
       document.getElementById("my_uploadProduct_modal").close();
     } catch (error) {
       console.log(error);
@@ -124,8 +148,6 @@ const UploadProduct = () => {
       );
     }
   };
-
-  console.log(data);
 
   // Big Screen Display Single Image
   const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
@@ -178,7 +200,7 @@ const UploadProduct = () => {
                     style={{ maxHeight: "200px", overflowY: "auto" }}
                     className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg"
                   >
-                    {ProductCategory.map((el, index) => (
+                    {ProductCategory?.map((el, index) => (
                       <div
                         key={index}
                         className="px-4 py-2 cursor-pointer hover:bg-gray-100"
@@ -244,7 +266,7 @@ const UploadProduct = () => {
 
               {/* Display Thumbnails of Uploaded Images */}
               <div className="flex flex-wrap gap-2 mt-2">
-                {data.productPreviewImage.map((image, index) => (
+                {data?.productPreviewImage?.map((image, index) => (
                   <div key={index} className="relative">
                     <img
                       onClick={() => {

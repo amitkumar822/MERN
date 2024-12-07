@@ -11,8 +11,7 @@ const AllProducts = () => {
       const { data } = await axios.get("/api/product/get-products");
       setProductList(data.data);
     } catch (error) {
-      // console.error(error);
-      // toast.error(error?.response?.data?.message);
+      console.error(error);
     }
   };
   useEffect(() => {
@@ -35,7 +34,7 @@ const AllProducts = () => {
 
       {/* Upload All Product Components */}
       <div>
-        <UploadProduct />
+        <UploadProduct fetchAllProduct={fetchAllProduct} />
       </div>
 
       {/* Admin Product Cart */}

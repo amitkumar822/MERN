@@ -10,6 +10,7 @@ import { ROLE } from "../../common/Role";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
+  console.log("User: ", user);
 
   const { cartProductCount } = useContext(UserContext);
 
@@ -27,6 +28,8 @@ const Header = () => {
       navigate("/search");
     }
   };
+
+  console.log("User Avatar: ", user?.avatar?.url);
 
   return (
     <div className="w-full mx-auto">
@@ -84,9 +87,9 @@ const Header = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 h-10 rounded-full flex justify-center items-center">
-                {user?.avatar ? (
+                {user?.avatar?.url ? (
                   <img
-                    src={user.avatar.url}
+                    src={user?.avatar?.url}
                     alt={user?.name}
                     className="w-10 rounded-full border text-[8px]"
                   />

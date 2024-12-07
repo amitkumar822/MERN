@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import ImageToBase64 from "../../helpers/ImageToBase64";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const SignUp = () => {
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -43,6 +45,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("email", data?.email);
@@ -55,12 +58,13 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post("/api/user/register", formData);
-      console.log("Response: " + JSON.stringify(response, null, 2));
+      await axios.post("/api/user/register", formData);
+      setLoading(false);
       toast.success("Signup successful. You can now login.");
     } catch (error) {
       toast.error(error.response?.data.message || "Internal Server Error");
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -380,13 +384,21 @@ const SignUp = () => {
                   <div>
                     <button
                       type="submit"
+                      disabled={loading}
                       className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
                     >
-                      Sign up
+                      {loading ? (
+                        <SyncLoader color="#fff" size={14} loading={loading} />
+                      ) : (
+                        "Sign Up"
+                      )}
                     </button>
 
                     {/* Google Signup */}
-                    <div onClick={handleGoogleLogin} className="flex w-full cursor-pointer justify-center mt-2 items-center bg-white  border border-gray-300 rounded-lg shadow-md px-6 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <div
+                      onClick={handleGoogleLogin}
+                      className="flex w-full cursor-pointer justify-center mt-2 items-center bg-white  border border-gray-300 rounded-lg shadow-md px-6 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                    >
                       <svg
                         className="h-6 w-6 mr-2"
                         xmlns="http://www.w3.org/2000/svg"

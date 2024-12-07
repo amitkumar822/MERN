@@ -104,7 +104,7 @@ const ProductDetailsPage = () => {
                   {zoomImage && (
                     <div className="hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[460px] bg-slate-200 p-1 -right-[510px] top-0">
                       <div
-                        className="w-full h-full min-h-[460px] min-w-[500px] mix-blend-multiply"
+                        className="w-full h-full min-h-[460px] min-w-[500px] mix-blend-multiply scale-110"
                         style={{
                           background: `url(${activeImage})`,
                           backgroundRepeat: "no-repeat",

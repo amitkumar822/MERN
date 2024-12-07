@@ -11,7 +11,7 @@ const ProductCategory = [
     { id : 10, label : "Trimmers", value : "trimmers"},
     { id : 11, label : "Televisions", value : "televisions"},
     { id : 12, label : "Watches", value : "watches"},
-    { id : 13, label : "Washing Machine", value : "washing-machine"},
+    { id : 13, label : "Washing Machine", value : "washingmachine"},
     { id : 14, label : "Laptop", value : "laptops"},
 ]
 

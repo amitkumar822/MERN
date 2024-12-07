@@ -5,6 +5,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
+import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
 
 export const uploadProduct = asyncHandler(async (req, res) => {
   // Check if files are provided
@@ -13,11 +14,10 @@ export const uploadProduct = asyncHandler(async (req, res) => {
   }
 
   const productImages = req.files.productImage; // Handle multiple images
-  const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
 
   // Validate each file
   for (const image of productImages) {
-    if (!allowedFormats.includes(image.mimetype)) {
+    if (!AllowedFormatType.includes(image.mimetype)) {
       return res.status(400).json({
         message: "Invalid photo format, Only jpeg, png, and webp are allowed",
       });
@@ -152,15 +152,12 @@ export const updateProduct = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Invalid Product ID!");
   }
 
-  // Allowed MIME types for images
-  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
-
   // Check if new product images are provided
   let newImages = [];
   if (req.files && req.files.productImage) {
     for (let file of req.files.productImage) {
       // Check the mimetype for valid image formats
-      if (!allowedFormats.includes(file.mimetype)) {
+      if (!AllowedFormatType.includes(file.mimetype)) {
         throw new ApiError(
           400,
           `Invalid file format for ${file.originalname}. Only JPEG, PNG, and WEBP are allowed.`
@@ -306,17 +303,16 @@ export const filterProduct = asyncHandler(async (req, res) => {
   const categoryList = req?.body?.category || [];
 
   // console.log("Filter Product: " + categoryList);
-  
 
-  // if (categoryList.length === undefined || category.length === 0) {    
+  // if (categoryList.length === undefined || category.length === 0) {
   //   throw new ApiError(400, "Missing Required Parameters");
   // }
 
   const product = await Product.find({
-    category :  {
-        "$in" : categoryList
-    }
-});
+    category: {
+      $in: categoryList,
+    },
+  });
 
   if (!product) {
     throw new ApiError(

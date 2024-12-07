@@ -9,6 +9,7 @@ import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
 import { AddToCart } from "../models/addToCart.modal.js";
 import bcrypt from "bcrypt";
 import { Captcha } from "../models/captcha.modals.js";
+import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -18,9 +19,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   const avatar = req.files?.avatar[0];
 
-  const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
-
-  if (!allowedFormats.includes(avatar.mimetype)) {
+  if (!AllowedFormatType.includes(avatar.mimetype)) {
     throw new ApiError(
       400,
       "Invalid avatar format, Only jpeg, png and webp are allowed!"
@@ -81,6 +80,10 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email }).select("+password");
 
+  if (!user) {
+    throw new ApiError(404, "User Not Found With This Email!");
+  }
+  
   if (!user.password) {
     throw new ApiError(
       400,
@@ -88,9 +91,6 @@ export const loginUser = asyncHandler(async (req, res) => {
     );
   }
 
-  if (!user) {
-    throw new ApiError(404, "User Not Found With This Email!");
-  }
 
   const isPasswordMatch = await user.comparePassword(password);
   if (!isPasswordMatch) {
@@ -257,7 +257,6 @@ export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
 // TODO: Forgot Password
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email, password, captcha } = req.body;
-  console.log("Forgot Password: ", email, password, captcha);
 
   // finde captcha code in captcha database
   const captchaGet = await Captcha.findOne({ email }).sort({
