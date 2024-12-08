@@ -505,21 +505,25 @@ const UploadProduct = ({ fetchAllProduct }) => {
                   />
                 </span>
 
-                <label
-                  htmlFor="batteryCapacity"
-                  className="text-gray-700 font-semibold"
-                >
-                  Battery Capacity
-                </label>
-                <input
-                  type="text"
-                  id="batteryCapacity"
-                  placeholder="Enter Battery Capacity"
-                  name="batteryCapacity"
-                  className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
-                  value={data.batteryCapacity}
-                  onChange={handleInputChange}
-                />
+                <span className={`${
+                    data.category !== "televisions" ? "block" : "hidden"
+                  } grid gap-4`}>
+                  <label
+                    htmlFor="batteryCapacity"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Battery Capacity
+                  </label>
+                  <input
+                    type="text"
+                    id="batteryCapacity"
+                    placeholder="Enter Battery Capacity"
+                    name="batteryCapacity"
+                    className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
+                    value={data.batteryCapacity}
+                    onChange={handleInputChange}
+                  />
+                </span>
               </div>
 
               {/* in the box */}

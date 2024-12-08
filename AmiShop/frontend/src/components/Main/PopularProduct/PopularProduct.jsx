@@ -4,15 +4,13 @@ import { Link } from "react-router-dom";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import { Box, Chip } from "@mui/material";
 import Card from "./Card";
+import scrollTop from "../../../helpers/scrollTop";
 
 const PopularProduct = () => {
-  const [isHovered, setIsHovered] = useState(null);
   const [category, setCategory] = useState("mobiles");
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    setLoading(true);
     try {
       const { data } = await axios.post(
         "/api/product/get-category-namewise-product",
@@ -21,13 +19,11 @@ const PopularProduct = () => {
       );
 
       setData(data?.data);
-      setLoading(false);
     } catch (error) {
       console.error(
-        "VerticalCardError: ",
+        "PopularProductError: ",
         error?.response?.data?.message || error
       );
-      setLoading(false);
     }
   };
 
@@ -37,7 +33,7 @@ const PopularProduct = () => {
 
   return (
     <div className="container mx-auto my-8">
-      <h1 className="font-bold text-2xl">Top Popular Product</h1>
+      <h1 className="font-bold md:text-2xl mb-2">Top Popular Product</h1>
       <div className="container mx-auto">
         <div>
           {/* Category Buttons */}
@@ -61,11 +57,12 @@ const PopularProduct = () => {
           </Box>
         </div>
 
-        <div className="w-full h-full flex flex-wrap gap-4 mx-auto">
+        <div className="w-full md:max-h-[62rem] hover:pb-14 overflow-y-auto flex flex-wrap justify-center items-center gap-4 mx-auto">
           {data.map((product, index) => (
             <Link
               to={"product/" + product?._id}
               key={product?.productName + index}
+              onClick={scrollTop}
             >
               <Card product={product} />
             </Link>
