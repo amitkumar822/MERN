@@ -25,6 +25,10 @@ const Home = () => {
       {/* Time Count Down */}
       <TimeCountDown />
 
+      {/* Popular Product */}
+      <PopularProduct />
+
+      {/* Vertical Card */}
       <VerticalCard category={"laptops"} heading={"Best Laptops"} />
       <VerticalCard category={"mouse"} heading={"Top Mouse"} />
       {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
@@ -35,7 +39,6 @@ const Home = () => {
       <VerticalCard category={"refrigerator"} heading={"Refrigerator"} />
       <VerticalCard category={"trimmers"} heading={"Trimmers"} /> */}
 
-      <PopularProduct />
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
