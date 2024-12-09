@@ -6,6 +6,7 @@ import LogOut from "../../pages/Auth/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
 import logo from "../../data/logo.png";
 import { ROLE } from "../../common/Role";
+import scrollTop from "../../helpers/scrollTop";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,11 +26,9 @@ const Header = () => {
     if (value) {
       navigate(`/search?q=${value}`);
     } else {
-      navigate("/search");
+      navigate("/");
     }
   };
-
-  console.log("User Avatar: ", user?.avatar?.url);
 
   return (
     <div className="w-full mx-auto">
@@ -106,6 +105,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
+              onClick={scrollTop}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>

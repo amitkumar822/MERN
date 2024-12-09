@@ -29,7 +29,7 @@ const PopularProduct = () => {
 
   useEffect(() => {
     fetchData();
-  }, [category]);
+  }, [category || ""]);
 
   return (
     <div className="container mx-auto my-8">

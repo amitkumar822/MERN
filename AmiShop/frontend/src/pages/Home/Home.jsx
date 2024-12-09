@@ -7,11 +7,15 @@ import TimeCountDown from "../../components/Main/TimeCountDown";
 import Cart from "../Cart/Cart";
 import Review from "../../components/Review/ReviewPage";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
+import TopBrand from "../../components/Main/TopBrand/TopBrand";
 
 const Home = () => {
   return (
     <div>
       <CategoryList />
+      
+      {/* Top Brand */}
+      <TopBrand />
 
       {/* Carousel or Banner Component */}
       <Carousel />
@@ -25,11 +29,11 @@ const Home = () => {
       {/* Time Count Down */}
       <TimeCountDown />
 
-      {/* Popular Product */}
-      <PopularProduct />
 
       {/* Vertical Card */}
       <VerticalCard category={"laptops"} heading={"Best Laptops"} />
+
+
       <VerticalCard category={"mouse"} heading={"Top Mouse"} />
       {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
       <VerticalCard category={"televisions"} heading={"Televisions"} />
