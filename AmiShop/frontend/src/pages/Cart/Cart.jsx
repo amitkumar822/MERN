@@ -52,7 +52,7 @@ const Cart = ({ category, heading }) => {
   };
   return (
     <>
-      <div className="container px-4 -mt-4 mb-6 relative overflow-hidden">
+      <div className="xl:container px-4 -mt-4 mb-6 relative overflow-hidden">
         <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
         <div

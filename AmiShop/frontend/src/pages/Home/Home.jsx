@@ -8,17 +8,18 @@ import Cart from "../Cart/Cart";
 import Review from "../../components/Review/ReviewPage";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
 import TopBrand from "../../components/Main/TopBrand/TopBrand";
+import LeftRightBanner from "../../components/Main/LeftRightBanner/LeftRightBanner";
 
 const Home = () => {
   return (
     <div>
       <CategoryList />
-      
-      {/* Top Brand */}
-      <TopBrand />
 
       {/* Carousel or Banner Component */}
       <Carousel />
+
+      {/* Left Right Banner */}
+      <LeftRightBanner />
 
       <HorizontalCardProduct
         category={"watches"}
@@ -29,10 +30,14 @@ const Home = () => {
       {/* Time Count Down */}
       <TimeCountDown />
 
+      {/* Popular Product */}
+      <PopularProduct />
 
       {/* Vertical Card */}
       <VerticalCard category={"laptops"} heading={"Best Laptops"} />
 
+      {/* Top Brand */}
+      <TopBrand />
 
       <VerticalCard category={"mouse"} heading={"Top Mouse"} />
       {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
@@ -42,7 +47,6 @@ const Home = () => {
       <VerticalCard category={"speakers"} heading={"Bluetooth Speakers"} />
       <VerticalCard category={"refrigerator"} heading={"Refrigerator"} />
       <VerticalCard category={"trimmers"} heading={"Trimmers"} /> */}
-
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />

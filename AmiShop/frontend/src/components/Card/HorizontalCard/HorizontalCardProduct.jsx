@@ -50,7 +50,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 -mt-4 mb-6 relative">
+    <div className="xl:container mx-auto px-4 -mt-4 mb-6 relative">
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
       <div
@@ -134,6 +134,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
                     <div className="p-2 flex flex-col justify-between h-full">
                       <div className="flex flex-col gap-2 ">
+                      <div>
+                          <p className="font-bold text-gray-600 uppercase">
+                            {product?.brand}
+                          </p>
+                        </div>
                         <h5 className="text-xs md:text-[15px] font-semibold tracking-tight text-slate-900 line-clamp-2 capitalize">
                           {product?.productName}
                         </h5>
