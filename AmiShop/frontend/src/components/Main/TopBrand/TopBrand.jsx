@@ -17,7 +17,7 @@ const TopBrand = () => {
   };
 
   return (
-    <div className="xl:container mx-auto">
+    <div className="w-full mx-auto">
       <marquee
         ref={marqueeRef}
         behavior="alternate"

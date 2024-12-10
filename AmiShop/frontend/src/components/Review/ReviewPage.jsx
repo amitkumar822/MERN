@@ -82,7 +82,7 @@ const ReviewPage = () => {
   }, [allReviews, productId, ""]);
 
   return (
-    <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
       {/*******👇 Write and Edit Review 👇**********/}
       <div className="flex justify-end -mb-10">
         {myReviewId ? (

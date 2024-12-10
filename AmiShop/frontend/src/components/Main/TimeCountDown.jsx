@@ -56,8 +56,8 @@ const TimeCountDown = () => {
   };
 
   return (
-    <div className="xl:container mx-auto p-6">
-      <div className="relative xl:container bg-red-400 bg-cover bg-center h-[200px] md:h-[450px] overflow-hidden rounded-lg flex items-center justify-center text-white">
+    <div className="w-full mx-auto p-6">
+      <div className="relative w-full bg-red-400 bg-cover bg-center h-[200px] md:h-[450px] overflow-hidden rounded-lg flex items-center justify-center text-white">
         <div>
           <img
             className="h-[200px] md:h-[450px] w-[100vw]"

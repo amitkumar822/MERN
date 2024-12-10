@@ -32,9 +32,9 @@ const PopularProduct = () => {
   }, [category || ""]);
 
   return (
-    <div className="xl:container mx-auto my-8">
+    <div className=" mx-auto my-8">
       <h1 className="font-bold md:text-2xl mb-2">Top Popular Product</h1>
-      <div className="xl:container mx-auto">
+      <div className="mx-auto">
         <div>
           {/* Category Buttons */}
           <Box

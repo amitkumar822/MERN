@@ -52,7 +52,7 @@ const VerticalCard = ({ category, heading }) => {
   };
 
   return (
-    <div className="xl:container mx-auto px-4 -mt-4 mb-6 relative">
+    <div className="w-full mx-auto px-4 -mt-4 mb-6 relative">
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
       <div

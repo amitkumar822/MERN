@@ -41,7 +41,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 my-6 relative">
+    <div className="w-full mx-auto px-4 my-6 relative">
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll no-scrollbar transition-all">

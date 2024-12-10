@@ -33,7 +33,7 @@ const LeftRightBanner = () => {
   };
 
   return (
-    <div className="xl:container w-full xl:max-h-[670px] mx-auto overflow-hidden flex gap-4 p-2 bg-gradient-to-r from-violet-200 to-pink-200">
+    <div className="w-full xl:max-h-[670px] mx-auto overflow-hidden flex gap-4 p-2 bg-gradient-to-r from-violet-200 to-pink-200">
       {/* Left Side: Cards Section */}
       <div className="relative w-full overflow-hidden ">
         {/* Single Button for all cards */}

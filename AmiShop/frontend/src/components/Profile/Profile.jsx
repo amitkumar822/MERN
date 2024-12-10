@@ -15,7 +15,7 @@ const Profile = () => {
   // }
 
   return (
-    <div className="container mx-auto">
+    <div className="w-full mx-auto">
       <section className="relative pt-40 pb-24">
         {/* Cover Image Background */}
         <div className="w-full absolute top-0 left-0 z-0 h-60 bg-gradient-to-r from-rose-100 to-teal-100"></div>

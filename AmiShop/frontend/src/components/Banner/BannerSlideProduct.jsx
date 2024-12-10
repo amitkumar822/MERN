@@ -32,7 +32,7 @@ const BannerSlideProduct = () => {
   ));
 
   return (
-    <div className="container mx-auto mt-2">
+    <div className="w-full mx-auto mt-2">
       {carouselItems.length > 0 ? (
         <AliceCarousel
           items={carouselItems}

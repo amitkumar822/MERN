@@ -97,7 +97,7 @@ const CategoryProduct = () => {
   useEffect(() => {}, [sortBy]);
 
   return (
-    <div className="container mx-auto">
+    <div className="w-full mx-auto">
       {/***desktop version */}
       <div className="hidden lg:grid grid-cols-[200px,1fr]">
         {/***left side */}

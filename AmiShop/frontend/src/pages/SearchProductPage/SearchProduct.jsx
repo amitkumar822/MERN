@@ -28,7 +28,7 @@ const SearchProduct = () => {
 
   return (
     <div>
-      <div className="container mx-auto p-4">
+      <div className="w-full mx-auto p-4">
         {loading && <p className="text-lg text-center">Loading ...</p>}
 
         <p className="text-lg font-semibold my-3">
