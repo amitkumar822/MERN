@@ -70,7 +70,7 @@ const LeftRightBanner = () => {
                   {item.productName}
                 </h3>
                 <div className="flex items-center mt-2 md:space-x-2 space-x-1">
-                  <p className="lg:text-lg md:text-sm text-[12px] font-bold text-green-600">
+                  <p className="lg:text-lg md:text-sm text-[12px] font-bold text-blue-600">
                     ₹{item?.sellingPrice.toLocaleString()}
                   </p>
                   <p className="lg:text-sm md:text-xs text-[9px] line-through text-gray-400">
@@ -124,10 +124,10 @@ const LeftRightBanner = () => {
 export default LeftRightBanner;
 
 const GradientButton = styled(Button)(({ theme }) => ({
-  width: "250px",
-  height: "70px",
+  width: "200px",
+  height: "60px",
   borderRadius: "10px",
-  fontSize: "1.25rem",
+  fontSize: "1.20rem",
   fontWeight: "600",
   display: "flex",
   alignItems: "center",
@@ -148,19 +148,12 @@ const GradientButton = styled(Button)(({ theme }) => ({
   },
   // Responsive styles
   [theme.breakpoints.down("lg")]: {
-    width: "200px",
+    width: "180px",
     height: "60px",
     fontSize: "1rem",
     "& .MuiSvgIcon-root": {
       fontSize: "1.5rem",
     },
   },
-  [theme.breakpoints.down("xs")]: {
-    width: "180px",
-    height: "50px",
-    fontSize: "0.875rem",
-    "& .MuiSvgIcon-root": {
-      fontSize: "1.25rem",
-    },
-  },
+  
 }));
