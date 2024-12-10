@@ -57,8 +57,8 @@ const PopularProduct = () => {
           </Box>
         </div>
 
-        <div className="w-full md:max-h-[62rem] hover:pb-14 overflow-y-auto flex flex-wrap justify-center items-center gap-4 mx-auto">
-          {data.map((product, index) => (
+        <div className="w-full md:max-h-[62rem] overflow-y-auto flex flex-wrap justify-center items-center gap-1 py-4 mx-auto">
+          {data?.slice(0, 10).map((product, index) => (
             <Link
               to={"product/" + product?._id}
               key={product?.productName + index}
