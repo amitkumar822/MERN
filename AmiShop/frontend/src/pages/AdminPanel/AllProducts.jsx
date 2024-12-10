@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import UploadProduct from "../../components/AdminPannel/UploadProduct";
-import { toast } from "react-toastify";
 import axios from "axios";
-import AdminProductCard from "../../components/AdminPannel/AdminProductCard";
-
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import ProductCard from "../../components/AdminPannel/ProductCard";
 
 const AllProducts = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // pagination set on url
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(50);
 
   const handlePageChange = (event, value) => {
     setPage(value); // `value` is the selected page number
@@ -42,16 +38,18 @@ const AllProducts = () => {
     }
   };
 
+  // console.log(productList);
+
   // Synchronize page and limit with the URL on load
-  // useEffect(() => {
-  //   const params = new URLSearchParams(location.search);
-  //   const currentPage = parseInt(params.get("page")) || 1; // Default to 1
-  //   const currentLimit = parseInt(params.get("limit")) || 4; // Default to 4
-  //   if (currentPage !== page || currentLimit !== limit) {
-  //     setPage(currentPage);
-  //     setLimit(currentLimit);
-  //   }
-  // }, [location.search]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const currentPage = parseInt(params.get("page")) || 1; // Default to 1
+    const currentLimit = parseInt(params.get("limit")) || 4; // Default to 4
+    if (currentPage !== page || currentLimit !== limit) {
+      setPage(currentPage);
+      setLimit(currentLimit);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     fetchAllProduct();
@@ -77,28 +75,17 @@ const AllProducts = () => {
       </div>
 
       {/* Admin Product Cart */}
-      <Stack spacing={2}>
-        <div className="flex flex-wrap">
-          {productList ? (
-            productList.map((product, index) => (
-              <AdminProductCard
-                key={index}
-                product={product}
-                fetchAllProduct={fetchAllProduct}
-              />
-            ))
-          ) : (
-            <div className="w-full h-[calc(100vh-187px)] skeleton"></div>
-          )}
-        </div>
+      <ProductCard products={productList} fetchAllProduct={fetchAllProduct} />
+
+      <div className="w-full flex justify-end mt-4  sticky">
         <Pagination
           value={page}
           onChange={handlePageChange}
-          count={10}
+          count={50}
           variant="outlined"
           shape="rounded"
         />
-      </Stack>
+      </div>
     </div>
   );
 };
