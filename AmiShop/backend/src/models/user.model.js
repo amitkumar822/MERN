@@ -36,7 +36,11 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      validate: [validator.isEmail, "Please Enter A Valid Email"],
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please Enter A Valid Email",
+      ], //email validation regex 
+      // validate: [validator.isEmail, "Please Enter A Valid Email"],
     },
     password: {
       type: String,
