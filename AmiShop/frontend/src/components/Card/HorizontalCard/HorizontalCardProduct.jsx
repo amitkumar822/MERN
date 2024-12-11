@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
-import { Rating } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -58,18 +59,41 @@ const HorizontalCardProduct = ({ category, heading }) => {
         style={{ scrollBehavior: "smooth" }}
         ref={scrollElement}
       >
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block"
+        <Button
           onClick={scrollLeft}
+          variant="contained"
+          className="z-50 bg-white"
+          sx={{
+            position: "absolute",
+            top: "8rem",
+            left: "0rem",
+            transform: "translateX(-50%) rotate(-90deg)",
+            bgcolor: "white",
+          }}
+          aria-label="next"
         >
-          <FaAngleLeft />
-        </button>
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block"
+          <KeyboardArrowLeftIcon
+            sx={{ transform: "rotate(90deg)", color: "black" }}
+          />
+        </Button>
+
+        <Button
           onClick={scrollRight}
+          variant="contained"
+          className="z-50 bg-white"
+          sx={{
+            position: "absolute",
+            top: "8rem",
+            right: "0rem",
+            transform: "translateX(50%) rotate(90deg)",
+            bgcolor: "white",
+          }}
+          aria-label="next"
         >
-          <FaAngleRight />
-        </button>
+          <KeyboardArrowLeftIcon
+            sx={{ transform: "rotate(90deg)", color: "black" }}
+          />
+        </Button>
 
         {loading
           ? loadingList.map((_, index) => (
@@ -134,7 +158,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
                     <div className="p-2 flex flex-col justify-between h-full">
                       <div className="flex flex-col gap-2 ">
-                      <div>
+                        <div>
                           <p className="font-bold text-gray-600 uppercase">
                             {product?.brand}
                           </p>

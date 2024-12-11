@@ -41,24 +41,32 @@ const orderSchema = new mongoose.Schema(
     },
     country: {
       type: String,
+      trim: true,
     },
     state: {
       type: String,
+      trim: true,
     },
     city: {
       type: String,
+      trim: true,
     },
     pincode: {
       type: String,
+      trim: true,
     },
     address: {
       type: String,
+      trim: true,
     },
     email: {
       type: String,
+      trim: true,
+      lowercase: true,
     },
     name: {
       type: String,
+      trim: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

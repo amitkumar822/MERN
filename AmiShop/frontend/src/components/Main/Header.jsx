@@ -11,7 +11,6 @@ import scrollTop from "../../helpers/scrollTop";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-  console.log("User: ", user);
 
   const { cartProductCount } = useContext(UserContext);
 
@@ -35,11 +34,7 @@ const Header = () => {
       <div className="navbar px-4 fixed z-50 bg-base-100 border border-b-2 max-h-12">
         <div className="flex-1">
           <Link to="/">
-            <img
-              src={logo}
-              alt="AmiShop"
-              className="w-14 h-14 md:ml-20"
-            />
+            <img src={logo} alt="AmiShop" className="w-14 h-14 md:ml-20" />
           </Link>
         </div>
         <div className="flex-none gap-2 md:mr-14">

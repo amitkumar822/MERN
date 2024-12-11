@@ -5,10 +5,12 @@ const productSchema = new Schema(
     productName: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
       required: true,
+      trim: true,
     },
     price: {
       type: Number,
@@ -80,6 +82,7 @@ const productSchema = new Schema(
     },
     inTheBox: {
       type: String,
+      trim: true,
     },
   },
   { timestamps: true }
