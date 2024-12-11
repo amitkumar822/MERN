@@ -4,8 +4,10 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import axios from "axios";
 import OfflineShareIcon from "@mui/icons-material/OfflineShare";
 import { styled } from "@mui/system";
+import { Link } from "react-router-dom";
+import scrollTop from "../../../helpers/scrollTop";
 
-const LeftRightBanner = () => {
+const BestSellingProduct = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -39,19 +41,26 @@ const LeftRightBanner = () => {
         {/* Single Button for all cards */}
         <div className="w-full flex justify-between">
           <h1 className="md:text-2xl font-bold">Best Selling Products</h1>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<KeyboardDoubleArrowRightIcon />}
-            className="absolute top-2 right-2 z-10"
-            onClick={handleLeftButtonClick}
-          ></Button>
+          <Link
+            to={"/product-category?category=" + "mobiles"}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              className="absolute top-2 right-2 z-10"
+              onClick={handleLeftButtonClick}
+            >
+              <KeyboardDoubleArrowRightIcon />
+            </Button>
+          </Link>
         </div>
 
         {/* Cards */}
         <div className="grid xl:grid-cols-3 grid-cols-2  lg:gap-4 gap-2 mt-4">
           {data?.slice(2, 8).map((item) => (
-            <div
+            <Link
+              to={"product/" + item?._id}
+              onClick={scrollTop}
               key={item.id}
               className="p-4 border rounded-lg shadow hover:shadow-lg bg-white transition-transform transform hover:-translate-y-2 group"
             >
@@ -81,7 +90,7 @@ const LeftRightBanner = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -121,7 +130,7 @@ const LeftRightBanner = () => {
   );
 };
 
-export default LeftRightBanner;
+export default BestSellingProduct;
 
 const GradientButton = styled(Button)(({ theme }) => ({
   width: "200px",
@@ -155,5 +164,4 @@ const GradientButton = styled(Button)(({ theme }) => ({
       fontSize: "1.5rem",
     },
   },
-  
 }));

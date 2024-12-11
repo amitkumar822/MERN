@@ -5,10 +5,9 @@ import HorizontalCardProduct from "../../components/Card/HorizontalCard/Horizont
 import Carousel from "../../components/Banner/Carousel";
 import TimeCountDown from "../../components/Main/TimeCountDown";
 import Cart from "../Cart/Cart";
-import Review from "../../components/Review/ReviewPage";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
 import TopBrand from "../../components/Main/TopBrand/TopBrand";
-import LeftRightBanner from "../../components/Main/LeftRightBanner/LeftRightBanner";
+import BestSellingProduct from "../../components/Main/BestSellingProduct/BestSellingProduct";
 
 const Home = () => {
   return (
@@ -19,7 +18,7 @@ const Home = () => {
       <Carousel />
 
       {/* Left Right Banner */}
-      <LeftRightBanner />
+      <BestSellingProduct />
 
       <HorizontalCardProduct
         category={"watches"}

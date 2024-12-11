@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import { Box, Chip } from "@mui/material";
 import Card from "./Card";
 import scrollTop from "../../../helpers/scrollTop";
