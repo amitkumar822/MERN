@@ -9,6 +9,7 @@ const reviewSchema = new Schema(
     review: {
       type: String,
       required: true,
+      trim: true,
     },
     photo: {
       public_id: String,

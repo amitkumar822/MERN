@@ -8,24 +8,32 @@ const userSchema = new Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     mobile: {
       type: String,
+      minLength: [10, "Mobile number must be at least 10 digits"],
+      maxLength: [13, "Mobile number must be at most 13 digits"],
     },
     country: {
       type: String,
+      trim: true,
     },
     state: {
       type: String,
+      trim: true,
     },
     city: {
       type: String,
+      trim: true,
     },
     pincode: {
       type: String,
+      trim: true,
     },
     address: {
       type: String,
+      trim: true,
     },
     dob: {
       type: String,

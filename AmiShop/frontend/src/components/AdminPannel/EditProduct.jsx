@@ -357,7 +357,7 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                   id="sellingPrice"
                   placeholder="Enter selling price"
                   name="sellingPrice"
-                  min={1}
+                  // min={1}
                   className="p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-300"
                   value={data.sellingPrice}
                   onChange={handleInputChange}

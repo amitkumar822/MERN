@@ -10,6 +10,7 @@ const addToCartSchema = new Schema(
     quantity: {
       type: Number,
       required: true,
+      min: [1, "Quantity must be greater than 0"],
     },
     userId: {
       type: Schema.Types.ObjectId,

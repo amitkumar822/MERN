@@ -11,10 +11,12 @@ const orderSchema = new mongoose.Schema(
     quantity: [
       {
         type: Number,
+        min: [1, "Quantity must be greater than 0"],
       },
     ],
     amount: {
       type: Number,
+      min: [0, "Amount must be greater than 0"],
     },
     order_id: {
       type: String,
@@ -63,6 +65,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please Enter A Valid Email",
+      ],
     },
     name: {
       type: String,
