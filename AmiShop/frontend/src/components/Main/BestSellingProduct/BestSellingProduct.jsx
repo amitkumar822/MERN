@@ -57,11 +57,11 @@ const BestSellingProduct = () => {
 
         {/* Cards */}
         <div className="grid xl:grid-cols-3 grid-cols-2  lg:gap-4 gap-2 mt-4">
-          {data?.slice(2, 8).map((item) => (
+          {data?.slice(2, 8).map((item, index) => (
             <Link
               to={"product/" + item?._id}
               onClick={scrollTop}
-              key={item.id}
+              key={item._id + index}
               className="p-4 border rounded-lg shadow hover:shadow-lg bg-white transition-transform transform hover:-translate-y-2 group"
             >
               <div className="flex justify-center items-center">

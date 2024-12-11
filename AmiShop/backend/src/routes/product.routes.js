@@ -7,7 +7,8 @@ import {
   getAllProducts,
   getCategoryByProducts,
   getCategoryNameWiseProducts,
-  getProductDetails,
+  getProductDetailsByProductId,
+  likeProduct,
   searchProduct,
   updateProduct,
   uploadProduct,
@@ -50,13 +51,15 @@ router
   .delete(deletePhotoOnCloudinary);
 router.route("/get-category-product").get(getCategoryByProducts);
 router.route("/get-category-namewise-product").post(getCategoryNameWiseProducts);
-router.route("/getproduct-details/:productId").get(getProductDetails);
+router.route("/getproduct-details-byid/:productId").get(getProductDetailsByProductId);
 
 router.route("/search").get(searchProduct);
 router.route("/filter").post(filterProduct);
+router.route("/like/:productId").post(isAuthenticated, likeProduct);
 
 // only delete products image on cloudinary for testing purposes
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);
 
 
 export default router;
+

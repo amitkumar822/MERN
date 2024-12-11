@@ -100,6 +100,12 @@ const productSchema = new Schema(
       type: String,
       trim: true,
     },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );

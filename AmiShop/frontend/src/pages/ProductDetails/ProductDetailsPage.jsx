@@ -16,6 +16,7 @@ const ProductDetailsPage = () => {
   const productId = useParams();
 
   const [data, setData] = useState({});
+  const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState("");
@@ -32,13 +33,14 @@ const ProductDetailsPage = () => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `/api/product/getproduct-details/${productId?.id}`,
+        `/api/product/getproduct-details-byid/${productId?.id}`,
         { headers: { "Content-Type": "application/json" } }
       );
 
       setLoading(false);
-      setData(data?.data);
-      setActiveImage(data?.data?.productImage[0]?.url);
+      setData(data?.data?.product);
+      setIsLiked(data?.data?.isLiked);
+      setActiveImage(data?.data?.product?.productImage[0]?.url);
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +84,18 @@ const ProductDetailsPage = () => {
     navigate("/view-cart");
   };
 
+  const handleLikeProduct = async () => {
+    try {
+      await axios.post(`/api/product/like/${productId?.id}`, {
+        withCredentials: true,
+      });
+      // fetchProductDetails();
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="font-sans bg-white">
@@ -116,12 +130,12 @@ const ProductDetailsPage = () => {
                   )}
                 </div>
                 {/* Heart rate or dil */}
-                <button type="button" className="absolute top-4 right-4">
+                <button onClick={handleLikeProduct} className="absolute top-4 right-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"
-                    fill="#ccc"
-                    className="mr-1 hover:fill-[#333]"
+                    fill={isLiked ? "red" : "#ccc"}
+                    className={`${isLiked ? "" : " hover:fill-[#333]"} mr-1`}
                     viewBox="0 0 64 64"
                   >
                     <path

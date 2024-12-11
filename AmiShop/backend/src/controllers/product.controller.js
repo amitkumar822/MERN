@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import { Product } from "../models/product.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
@@ -143,7 +144,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 3;
   let skip = (page - 1) * limit;
-  
+
   const products = await Product.find().skip(skip).limit(limit);
 
   if (products.length === 0) {
@@ -277,7 +278,19 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, product, "Products"));
 });
 
-export const getProductDetails = asyncHandler(async (req, res) => {
+export const getProductDetailsByProductId = asyncHandler(async (req, res) => {
+  // get access token from cookies and check which user is logged in
+  let accessToken = req.cookies?.accessToken;
+  // check user product like or not so get user id
+  let userId = "";
+  if (accessToken) {
+    const decodedToken = jwt.verify(
+      accessToken,
+      process.env.JWT_ACCESS_SECRET_KEY
+    );
+    userId = decodedToken?.userId;
+  }
+
   const { productId } = req?.params;
 
   if (!mongoose.Types.ObjectId.isValid(productId))
@@ -286,9 +299,18 @@ export const getProductDetails = asyncHandler(async (req, res) => {
   const product = await Product.findById(productId);
   if (!product) throw new ApiError(404, "Product Not Found!");
 
+  // check if the user has liked the product
+  const isLiked = product.likes.some((lk) => lk.toString() === userId);
+
   res
     .status(200)
-    .json(new ApiResponse(200, product, "Product Details Get Successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { product, isLiked },
+        "Product Details Get Successfully"
+      )
+    );
 });
 
 export const searchProduct = asyncHandler(async (req, res) => {
@@ -331,6 +353,40 @@ export const filterProduct = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, product, "Products Filter Successfully"));
+});
+
+export const likeProduct = asyncHandler(async (req, res) => {
+  const { productId } = req?.params;
+  const { userId } = req?.user;
+
+  const product = await Product.findById(productId);
+  if (!product) throw new ApiError(404, "Product Not Found!");
+
+  const hasLiked = product.likes?.includes(userId);
+
+  if (hasLiked) {
+    // remove like when user already liked the product
+    await Product.findByIdAndUpdate(
+      productId,
+      { $pull: { likes: userId } },
+      { new: true }
+    );
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, null, "Like removed successfully"));
+  }
+
+  // add like when user not liked the product
+  await Product.findByIdAndUpdate(
+    productId,
+    { $push: { likes: userId } },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, product, "Product Liked Successfully"));
 });
 
 // Testing purposes only
