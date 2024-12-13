@@ -5,6 +5,8 @@ import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
+import { Button } from "@mui/material";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const VerticalCard = ({ category, heading }) => {
   const [isHovered, setIsHovered] = useState(null);
@@ -29,7 +31,6 @@ const VerticalCard = ({ category, heading }) => {
         "VerticalCardError: ",
         error?.response?.data?.message || error
       );
-      setLoading(false);
     }
   };
 
@@ -60,18 +61,43 @@ const VerticalCard = ({ category, heading }) => {
         style={{ scrollBehavior: "smooth" }}
         ref={scrollElement}
       >
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block"
+         {/* Scroll Left Button */}
+         <Button
           onClick={scrollLeft}
+          variant="contained"
+          className="z-[2] bg-white"
+          sx={{
+            position: "absolute",
+            // top: "8rem",
+            left: "1.2rem",
+            transform: "translateX(-50%) rotate(-90deg)",
+            bgcolor: "white",
+          }}
+          aria-label="next"
         >
-          <FaAngleLeft />
-        </button>
-        <button
-          className="bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block"
+          <KeyboardArrowLeftIcon
+            sx={{ transform: "rotate(90deg)", color: "black" }}
+          />
+        </Button>
+        
+        {/* Scroll Right Button */}
+        <Button
           onClick={scrollRight}
+          variant="contained"
+          className="z-[2] bg-white"
+          sx={{
+            position: "absolute",
+            // top: "8rem",
+            right: "1.2rem",
+            transform: "translateX(50%) rotate(90deg)",
+            bgcolor: "white",
+          }}
+          aria-label="next"
         >
-          <FaAngleRight />
-        </button>
+          <KeyboardArrowLeftIcon
+            sx={{ transform: "rotate(90deg)", color: "black" }}
+          />
+        </Button>
 
         {loading
           ? loadingList.map((_, index) => (

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
-import { Button, Rating } from "@mui/material";
+import { FaHeart, FaEye } from "react-icons/fa";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
@@ -28,7 +28,6 @@ const HorizontalCardProduct = ({ category, heading }) => {
       setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
   };
 
@@ -59,6 +58,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
         style={{ scrollBehavior: "smooth" }}
         ref={scrollElement}
       >
+        {/* Scroll Left Button */}
         <Button
           onClick={scrollLeft}
           variant="contained"
@@ -76,7 +76,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
             sx={{ transform: "rotate(90deg)", color: "black" }}
           />
         </Button>
-
+        
+        {/* Scroll Right Button */}
         <Button
           onClick={scrollRight}
           variant="contained"
