@@ -8,6 +8,49 @@ import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
 import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
 
+//********** Main Screen API **********
+// get products by category like "mouse, mobile, laptop...."
+export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
+  const { category } = req?.body || req?.query;
+
+  if (!category) {
+    throw new ApiError(400, "Missing required parameters");
+  }
+  const product = await Product.find({ category });
+  if (!product) {
+    throw new ApiError(
+      404,
+      "No products found in the database for this category!"
+    );
+  }
+  res.status(200).json(new ApiResponse(200, product, "Products"));
+});
+
+// Website top category list controller, so products get by category
+export const getCategoryByProducts = asyncHandler(async (_, res) => {
+  const categoryProducts = await Product.distinct("category");
+
+  if (categoryProducts.length === 0) {
+    throw new ApiError(404, "No products found in the database!");
+  }
+
+  // array to store one product from each category
+  const productByCategory = [];
+  for (const category of categoryProducts) {
+    const product = await Product.findOne({ category });
+    if (product) productByCategory.push(product);
+  }
+  res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
+});
+
+// Best Selling Product Controller
+export const bestSellingProduct = asyncHandler(async (_, res) => {
+  const product = await Product.find().sort({ sellingPrice: -1 }).limit(8);
+  res.status(200).json(new ApiResponse(200, product, "Best Selling Products"));
+});
+
+//*********** Admin Product Controller ***********
+// upload product
 export const uploadProduct = asyncHandler(async (req, res) => {
   // Check if files are provided
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -116,6 +159,7 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, product, "Product Created Successfully"));
 });
 
+// delete product
 export const deleteProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -139,6 +183,7 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "Product Deleted Successfully"));
 });
 
+// get all products
 export const getAllProducts = asyncHandler(async (req, res) => {
   // pagination
   let page = Number(req.query.page) || 1;
@@ -154,6 +199,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, products, "Products"));
 });
 
+// update product
 export const updateProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -211,6 +257,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedProduct, "Product Updated Successfully"));
 });
 
+// delete photo on cloudinary
 export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
   const { publicId, productId } = req.params;
 
@@ -245,39 +292,9 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
     );
 });
 
-//! Website top category list controller, so products get by category
-export const getCategoryByProducts = asyncHandler(async (req, res) => {
-  const categoryProducts = await Product.distinct("category");
+//*********** Secondery Screen or Page Controller ***********
 
-  if (categoryProducts.length === 0) {
-    throw new ApiError(404, "No products found in the database!");
-  }
-
-  // array to store one product from each category
-  const productByCategory = [];
-  for (const category of categoryProducts) {
-    const product = await Product.findOne({ category });
-    if (product) productByCategory.push(product);
-  }
-  res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
-});
-
-export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
-  const { category } = req?.body || req?.query;
-
-  if (!category) {
-    throw new ApiError(400, "Missing required parameters");
-  }
-  const product = await Product.find({ category });
-  if (!product) {
-    throw new ApiError(
-      404,
-      "No products found in the database for this category!"
-    );
-  }
-  res.status(200).json(new ApiResponse(200, product, "Products"));
-});
-
+// get product details wise product id
 export const getProductDetailsByProductId = asyncHandler(async (req, res) => {
   // get access token from cookies and check which user is logged in
   let accessToken = req.cookies?.accessToken;
@@ -313,6 +330,7 @@ export const getProductDetailsByProductId = asyncHandler(async (req, res) => {
     );
 });
 
+// search product
 export const searchProduct = asyncHandler(async (req, res) => {
   const query = req?.query?.q;
 
@@ -328,6 +346,7 @@ export const searchProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, product, "Products Search Successfully"));
 });
 
+// filter product by category
 export const filterProduct = asyncHandler(async (req, res) => {
   const categoryList = req?.body?.category || [];
 
@@ -355,6 +374,7 @@ export const filterProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, product, "Products Filter Successfully"));
 });
 
+// like and dislike product
 export const likeProduct = asyncHandler(async (req, res) => {
   const { productId } = req?.params;
   const { userId } = req?.user;
@@ -389,7 +409,7 @@ export const likeProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, product, "Product Liked Successfully"));
 });
 
-// Testing purposes only
+//! Testing purposes only
 export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
   const { publicId } = req.params;
   if (!publicId) {
@@ -403,11 +423,4 @@ export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, null, "Image deleted successfully"));
-});
-
-//********** Main Screen API **********
-
-export const bestSellingProduct = asyncHandler(async (req, res) => {
-  const product = await Product.find().sort({ sellingPrice: -1 }).limit(8);
-  res.status(200).json(new ApiResponse(200, product, "Best Selling Products"));
 });
