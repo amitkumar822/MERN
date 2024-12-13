@@ -15,6 +15,8 @@ const AllProducts = () => {
   const handlePageChange = (event, value) => {
     setPage(value); // `value` is the selected page number
     updateUrl(value, limit);
+    setLimit(50);
+    fetchAllProduct();
   };
 
   // Function to update the URL
@@ -44,7 +46,7 @@ const AllProducts = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const currentPage = parseInt(params.get("page")) || 1; // Default to 1
-    const currentLimit = parseInt(params.get("limit")) || 4; // Default to 4
+    const currentLimit = parseInt(params.get("limit")) || 50; // Default to 50
     if (currentPage !== page || currentLimit !== limit) {
       setPage(currentPage);
       setLimit(currentLimit);

@@ -6,6 +6,7 @@ import {
   deleteProduct,
   filterProduct,
   getAllProducts,
+  getBrandWiseProduct,
   getCategoryByProducts,
   getCategoryNameWiseProducts,
   getProductDetailsByProductId,
@@ -19,6 +20,15 @@ import { isAuthenticated } from "../middlewares/userAuth.js";
 import { isAdminAuth } from "../middlewares/adminAuth.js";
 
 const router = Router();
+
+//********** Main Screen API **********
+// get products by category like "mouse, mobile, laptop...."
+router
+  .route("/get-category-namewise-product")
+  .post(getCategoryNameWiseProducts);
+router.route("/get-category-product").get(getCategoryByProducts);
+router.route("/best-selling-product").get(bestSellingProduct);
+router.route("/get-brand-wise-product/:brand").post(getBrandWiseProduct);
 
 //*********** Admin Product Routes ***********
 // Define routes here
@@ -60,16 +70,6 @@ router
 router.route("/search").get(searchProduct);
 router.route("/filter").post(filterProduct);
 router.route("/like/:productId").post(isAuthenticated, likeProduct);
-
-
-//********** Main Screen API **********
-// get products by category like "mouse, mobile, laptop...."
-router
-  .route("/get-category-namewise-product")
-  .post(getCategoryNameWiseProducts);
-router.route("/get-category-product").get(getCategoryByProducts);
-router.route("/best-selling-product").get(bestSellingProduct);
-
 
 //! Testing purposes only delete products image on cloudinary
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);

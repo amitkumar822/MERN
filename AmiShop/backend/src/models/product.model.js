@@ -106,6 +106,10 @@ const productSchema = new Schema(
         ref: "User",
       },
     ],
+    isLiked: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

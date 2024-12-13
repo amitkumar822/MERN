@@ -23,6 +23,7 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
       "No products found in the database for this category!"
     );
   }
+
   res.status(200).json(new ApiResponse(200, product, "Products"));
 });
 
@@ -47,6 +48,23 @@ export const getCategoryByProducts = asyncHandler(async (_, res) => {
 export const bestSellingProduct = asyncHandler(async (_, res) => {
   const product = await Product.find().sort({ sellingPrice: -1 }).limit(8);
   res.status(200).json(new ApiResponse(200, product, "Best Selling Products"));
+});
+
+// get brand wise product
+export const getBrandWiseProduct = asyncHandler(async (req, res) => {
+  const { brand } = req?.params;
+  if (!brand) {
+    throw new ApiError(400, "Missing required parameters");
+  }
+  const product = await Product.find({ brand });
+  console.log(product);
+  if (!product) {
+    throw new ApiError(
+      404,
+      "No products found in the database for this brand!"
+    );
+  }
+  res.status(200).json(new ApiResponse(200, product, "Brand Wise Products"));
 });
 
 //*********** Admin Product Controller ***********
@@ -132,7 +150,7 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     description,
     price,
     sellingPrice,
-    brand,
+    brand: brand.toLowerCase(),
     category,
     quantity,
     discountPercentage,
@@ -240,7 +258,8 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
   // Update other product fields if provided in req.body
   Object.keys(req.body).forEach((key) => {
-    updatedProduct[key] = req.body[key];
+    updatedProduct[key] =
+      key === "brand" ? req.body[key].toLowerCase() : req.body[key];
   });
 
   const calculateDiscountPercentage = () => {
@@ -317,7 +336,7 @@ export const getProductDetailsByProductId = asyncHandler(async (req, res) => {
   if (!product) throw new ApiError(404, "Product Not Found!");
 
   // check if the user has liked the product
-  const isLiked = product.likes.some((lk) => lk.toString() === userId);
+  const isLiked = product.likes?.some((lk) => lk.toString() === userId);
 
   res
     .status(200)

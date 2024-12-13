@@ -20,7 +20,6 @@ import DeleteAdminProduct from "../../../../../DeleteAdminProduct";
 
 function Row({ row, fetchAllProduct }) {
   const [open, setOpen] = useState(false);
-  console.log("row: ", row);
 
   const [eachProduct, setEachProduct] = useState({});
   const [productId, setProductId] = useState("");

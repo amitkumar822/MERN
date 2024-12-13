@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
@@ -152,6 +151,8 @@ const Cart = ({ category, heading }) => {
                               />
                             </svg>
                           </button>
+
+                          {/* Add to Favorites or heart */}
                           <button
                             type="button"
                             className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
