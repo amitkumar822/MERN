@@ -13,8 +13,8 @@ const BestSellingProduct = () => {
   const fetchData = async () => {
     const category = "mobiles";
     try {
-      const { data } = await axios.post(
-        "/api/product/get-category-namewise-product",
+      const { data } = await axios.get(
+        "/api/product/best-selling-product",
         { category },
         { "content-type": "application/json" }
       );
@@ -99,8 +99,9 @@ const BestSellingProduct = () => {
       <div className="relative bg-gradient-to-r from-rose-100 to-teal-100 lg:w-2/3 max-h-full overflow-hidden rounded-lg shadow hover:shadow-lg md:flex hidden flex-col">
         {/* Text Content */}
         <div className="text-center mt-10">
-          <h2 className="lg:text-4xl md:text-xl text-sm font-bold drop-shadow-md">
-            Top Selling Smartphones
+          <h2 className="lg:text-3xl md:text-xl text-sm flex gap-2 justify-center font-bold drop-shadow-md">
+            Top Brand <h1 className="text-blue-500">{data[2]?.brand}</h1> And <h1 className="text-blue-500">{data[0]?.brand}</h1>
+            {/* Top Selling Smartphones */}
           </h2>
           <p className="lg:text-lg text-sm">Latest Technology, Best Brands</p>
         </div>

@@ -80,7 +80,6 @@ export const verifyPayment = async (req, res) => {
       .digest("hex");
 
     const isValid = expectedSignature === razorpay_signature;
-    console.log("expected signature: ", expectedSignature);
 
     if (isValid) {
       await Order.updateOne(

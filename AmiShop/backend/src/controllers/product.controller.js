@@ -404,3 +404,10 @@ export const deleteOnlyCloudinaryImage = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, null, "Image deleted successfully"));
 });
+
+//********** Main Screen API **********
+
+export const bestSellingProduct = asyncHandler(async (req, res) => {
+  const product = await Product.find().sort({ sellingPrice: -1 }).limit(8);
+  res.status(200).json(new ApiResponse(200, product, "Best Selling Products"));
+});

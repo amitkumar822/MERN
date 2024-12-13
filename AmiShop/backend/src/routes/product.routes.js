@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  bestSellingProduct,
   deleteOnlyCloudinaryImage,
   deletePhotoOnCloudinary,
   deleteProduct,
@@ -60,6 +61,8 @@ router.route("/like/:productId").post(isAuthenticated, likeProduct);
 // only delete products image on cloudinary for testing purposes
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);
 
+//********** Main Screen API **********
+router.route("/best-selling-product").get(bestSellingProduct);
 
 export default router;
 

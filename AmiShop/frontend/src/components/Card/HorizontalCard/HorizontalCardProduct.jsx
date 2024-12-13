@@ -62,11 +62,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
         <Button
           onClick={scrollLeft}
           variant="contained"
-          className="z-50 bg-white"
+          className="z-[2] bg-white"
           sx={{
             position: "absolute",
             top: "8rem",
-            left: "0rem",
+            left: "1.2rem",
             transform: "translateX(-50%) rotate(-90deg)",
             bgcolor: "white",
           }}
@@ -80,11 +80,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
         <Button
           onClick={scrollRight}
           variant="contained"
-          className="z-50 bg-white"
+          className="z-[2] bg-white"
           sx={{
             position: "absolute",
             top: "8rem",
-            right: "0rem",
+            right: "1.2rem",
             transform: "translateX(50%) rotate(90deg)",
             bgcolor: "white",
           }}

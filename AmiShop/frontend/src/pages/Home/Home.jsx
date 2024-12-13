@@ -17,7 +17,7 @@ const Home = () => {
       {/* Carousel or Banner Component */}
       <Carousel />
 
-      {/* Left Right Banner */}
+      {/* Best Selling Product */}
       <BestSellingProduct />
 
       <HorizontalCardProduct
