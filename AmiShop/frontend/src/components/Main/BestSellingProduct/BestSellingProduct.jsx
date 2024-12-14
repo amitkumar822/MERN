@@ -100,7 +100,8 @@ const BestSellingProduct = () => {
         {/* Text Content */}
         <div className="text-center mt-10">
           <h2 className="lg:text-3xl md:text-xl text-sm flex gap-2 justify-center font-bold drop-shadow-md">
-            Top Brand <h1 className="text-blue-500">{data[2]?.brand}</h1> And <h1 className="text-blue-500">{data[0]?.brand}</h1>
+            {/* Top Brand <h1 className="text-blue-500">{data[2]?.brand}</h1> And <h1 className="text-blue-500">{data[0]?.brand}</h1> */}
+            Top Brand <h1 className="text-blue-500">Samsung</h1> And <h1 className="text-blue-500">Apple</h1>
             {/* Top Selling Smartphones */}
           </h2>
           <p className="lg:text-lg text-sm">Latest Technology, Best Brands</p>
@@ -108,13 +109,15 @@ const BestSellingProduct = () => {
 
         <div className="w-full h-full flex justify-center items-end gap-8">
           <img
-            src={data[0]?.productImage[2]?.url}
-            alt={data[0]?.productName}
+            // src={data[0]?.productImage[2]?.url}
+            src="	https://res.cloudinary.com/dud6rs8er/image/upload/v1733588937/tlcs98wk5demml4igqs6.webp"
+            // alt={data[0]?.productName}
             className="xl:h-[90%] md:h-[70%] h-[60%] mix-blend-darken rotate-12"
           />
           <img
-            src={data[1]?.productImage[2]?.url}
-            alt={data[1]?.productName}
+            src="https://res.cloudinary.com/dud6rs8er/image/upload/v1733551466/n0jo9df8ejmctouwerhg.jpg"
+            // src={data[1]?.productImage[2]?.url}
+            // alt={data[1]?.productName}
             className="md:h-[90%] xl:block hidden mix-blend-darken rotate-12"
           />
         </div>

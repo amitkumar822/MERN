@@ -153,7 +153,7 @@ Row.propTypes = {
 export default function ProductTable({ products, fetchAllProduct }) {
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="no-scrollbar">
         <Table stickyHeader>
           <TableHead>
             <TableRow>

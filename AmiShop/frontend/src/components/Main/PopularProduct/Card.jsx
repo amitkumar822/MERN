@@ -4,7 +4,7 @@ import "./ProductCard.css";
 const Card = ({ product }) => {
   return (
     <div data-aos="zoom-in">
-      <div className="productCard lg:w-[19rem] w-[10.6rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+      <div className="productCard lg:w-[18.5rem] w-[10.6rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
         {/* Image Section */}
         <div className="md:h-[220px] h-[155px] w-full bg-blue-100  flex items-center justify-center">
           <img

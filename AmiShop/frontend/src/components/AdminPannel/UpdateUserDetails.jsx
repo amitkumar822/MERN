@@ -53,7 +53,9 @@ const UpdateUserDetails = ({
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg underline text-center">Update User Details!</h3>
+          <h3 className="font-bold text-lg underline text-center">
+            Update User Details!
+          </h3>
 
           <form onSubmit={handleUpdate} className="pt-2">
             <div className="flex flex-col items-start">
