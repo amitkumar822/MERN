@@ -5,6 +5,7 @@ import axios from "axios";
 const CategoryList = () => {
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  console.log(categoryProduct)
 
   const categoryLoading = new Array(13).fill(null);
 

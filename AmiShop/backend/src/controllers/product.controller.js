@@ -29,19 +29,20 @@ export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
 
 // Website top category list controller, so products get by category
 export const getCategoryByProducts = asyncHandler(async (_, res) => {
-  const categoryProducts = await Product.distinct("category");
+  const categoryProducts = await Product.aggregate([
+    { $group: { _id: "$category", product: { $first: "$$ROOT" } } }, // Group by category and pick the first product
+    { $replaceRoot: { newRoot: "$product" } }, // Replace the root document with the product object
+  ]);
 
-  if (categoryProducts.length === 0) {
+  if (!categoryProducts || categoryProducts.length === 0) {
     throw new ApiError(404, "No products found in the database!");
   }
 
-  // array to store one product from each category
-  const productByCategory = [];
-  for (const category of categoryProducts) {
-    const product = await Product.findOne({ category });
-    if (product) productByCategory.push(product);
-  }
-  res.status(200).json(new ApiResponse(200, productByCategory, "Products"));
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, categoryProducts, "Products fetched successfully")
+    );
 });
 
 // Best Selling Product Controller
@@ -57,8 +58,8 @@ export const getBrandWiseProduct = asyncHandler(async (req, res) => {
   if (!brand) {
     throw new ApiError(400, "Missing required parameters");
   }
+
   const product = await Product.find({ brand });
-  console.log(product);
   if (!product) {
     throw new ApiError(
       404,
