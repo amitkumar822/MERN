@@ -46,7 +46,8 @@ export const getCategoryByProducts = asyncHandler(async (_, res) => {
 
 // Best Selling Product Controller
 export const bestSellingProduct = asyncHandler(async (_, res) => {
-  const product = await Product.find().sort({ sellingPrice: -1 }).limit(8);
+  // Fetch 6 random products
+  const product = await Product.aggregate([{ $sample: { size: 6 } }]);
   res.status(200).json(new ApiResponse(200, product, "Best Selling Products"));
 });
 

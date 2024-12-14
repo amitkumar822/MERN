@@ -16,6 +16,7 @@ const ProductDetailsPage = () => {
   const productId = useParams();
 
   const [data, setData] = useState({});
+  console.log(data?.description);
   const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -96,6 +97,37 @@ const ProductDetailsPage = () => {
     }
   };
 
+  //*********** Table functionality *********** */
+  const isRelevantCategory =
+    data?.category === "mobiles" ||
+    data?.category === "televisions" ||
+    data?.category === "laptops";
+
+  if (!isRelevantCategory) {
+    return null;
+  }
+
+  const specifications = [
+    { label: "Type", value: data?.category },
+    { label: "RAM", value: data?.ram },
+    { label: "SSD", value: data?.ssd },
+    { label: "Processor Type", value: data?.processorType },
+    { label: "Processor Speed", value: data?.processorSpeed },
+    {
+      label: "Display Size",
+      value: data?.displaySize && `${data.displaySize} inches`,
+    }, // Added units here
+    { label: "Display Type", value: data?.displayType },
+    { label: "Display Resolution", value: data?.displayResolution },
+    { label: "Operating System", value: data?.operatingSystem },
+    { label: "Battery Capacity", value: data?.batteryCapacity },
+    { label: "Primary Camera", value: data?.primaryCamera },
+    { label: "Secondary Camera", value: data?.secondaryCamera },
+    { label: "In the Box", value: data?.inTheBox },
+  ];
+
+  // *********** End of Table functionality *********** */
+
   return (
     <div>
       <div className="font-sans bg-white">
@@ -130,7 +162,10 @@ const ProductDetailsPage = () => {
                   )}
                 </div>
                 {/* Heart rate or dil */}
-                <button onClick={handleLikeProduct} className="absolute top-4 right-4">
+                <button
+                  onClick={handleLikeProduct}
+                  className="absolute top-4 right-4"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"
@@ -200,7 +235,9 @@ const ProductDetailsPage = () => {
                 </p>
                 <p className="text-red-600 text-base">
                   <strike>{displayINRCurrency(data?.price)}</strike>{" "}
-                  <span className="text-sm ml-1">Tax included</span>
+                  <span className="text-lg ml-1 font-semibold text-green-500">
+                    {data?.discountPercentage}% off
+                  </span>
                 </p>
               </div>
 
@@ -254,107 +291,75 @@ const ProductDetailsPage = () => {
                 Product Description :
               </h3>
 
-              {data?.description &&
-                data.description.split("\n").map((line, index) => {
-                  // Check if the line is a header or body text based on formatting
-                  const isHeader = line.endsWith(":") || line.endsWith(".");
-                  return (
-                    <p
-                      key={index}
-                      className={`${
-                        isHeader
-                          ? "text-lg font-semibold text-gray-700 mt-4"
-                          : "text-gray-800 mt-2"
-                      }`}
-                    >
-                      {line}
-                    </p>
-                  );
-                })}
+              {data?.description && (
+                <div className="mt-10 bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+                  <h3 className="text-2xl font-bold text-gray-800 border-b pb-3">
+                    Product Description
+                  </h3>
+                  <div className="mt-4 space-y-4">
+                    {data.description.split("\n").map((line, index) => {
+                      const isHeader = line.endsWith(":") || line.endsWith(".");
+                      return (
+                        <div key={index} className="flex items-start">
+                          <div
+                            className={`w-2 h-full rounded-lg mr-4 ${
+                              isHeader ? "bg-blue-500" : "bg-gray-300"
+                            }`}
+                          ></div>
+                          <p
+                            className={`${
+                              isHeader
+                                ? "text-lg font-semibold text-red-700"
+                                : "text-gray-600 leading-relaxed"
+                            }`}
+                          >
+                            {line}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             <hr className="mt-6" />
             {/* Category by hidde information */}
-            <div
-              className={`${
-                data?.category === "mobiles" ||
-                data?.category === "televisions" ||
-                data?.category === "laptops"
-                  ? ""
-                  : "hidden"
-              } mt-10`}
-            >
+            <div className={`${isRelevantCategory ? "" : "hidden"} mt-10`}>
               <h3 className="text-xl font-bold text-gray-800">
-              Specifications: 
+                Specifications:
               </h3>
-              <ul className="mt-4 space-y-6 text-gray-800 uppercase">
-                <li className={`${data?.category ? "block" : "hidden"}`}>
-                  TYPE{" "}
-                  <span className="ml-4 float-right">{data?.category}</span>
-                </li>
-                <li className={`${data?.ram ? "block" : "hidden"}`}>
-                  RAM <span className="ml-4 float-right">{data?.ram}</span>
-                </li>
-                <li className={`${data?.ssd ? "block" : "hidden"}`}>
-                  SSD <span className="ml-4 float-right">{data?.ssd}</span>
-                </li>
-                <li className={`${data?.processorType ? "block" : "hidden"}`}>
-                  PROCESSOR TYPE{" "}
-                  <span className="ml-4 float-right">
-                    {data?.processorType}
-                  </span>
-                </li>
-                <li className={`${data?.processorSpeed ? "block" : "hidden"}`}>
-                  PROCESSOR SPEED{" "}
-                  <span className="ml-4 float-right">
-                    {data?.processorSpeed}
-                  </span>
-                </li>
-                <li className={`${data?.displaySize ? "block" : "hidden"}`}>
-                  DISPLAY SIZE INCH{" "}
-                  <span className="ml-4 float-right">{data?.displaySize}</span>
-                </li>
-                <li className={`${data?.displayType ? "block" : "hidden"}`}>
-                  DISPLAY TYPE{" "}
-                  <span className="ml-4 float-right">{data?.displayType}</span>
-                </li>
-                <li
-                  className={`${data?.displayResolution ? "block" : "hidden"}`}
-                >
-                  DISPLAY RESOLUTION{" "}
-                  <span className="ml-4 float-right">
-                    {data?.displayResolution}
-                  </span>
-                </li>
-                <li className={`${data?.operatingSystem ? "block" : "hidden"}`}>
-                  OPERATING SYSTEM{" "}
-                  <span className="ml-4 float-right">
-                    {data?.operatingSystem}
-                  </span>
-                </li>
-                <li className={`${data?.batteryCapacity ? "block" : "hidden"}`}>
-                  BATTERY CAPACITY{" "}
-                  <span className="ml-4 float-right">
-                    {data?.batteryCapacity}
-                  </span>
-                </li>
-                <li className={`${data?.primaryCamera ? "block" : "hidden"}`}>
-                  PRIMARY CAMERA{" "}
-                  <span className="ml-4 float-right">
-                    {data?.primaryCamera}
-                  </span>
-                </li>
-                <li className={`${data?.secondaryCamera ? "block" : "hidden"}`}>
-                  SECONDARY CAMERA{" "}
-                  <span className="ml-4 float-right">
-                    {data?.secondaryCamera}
-                  </span>
-                </li>
-                <li className={`${data?.inTheBox ? "block" : "hidden"}`}>
-                  IN THE BOX{" "}
-                  <span className="ml-4 float-right">{data?.inTheBox}</span>
-                </li>
-              </ul>
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full table-auto border-collapse border border-gray-300">
+                  <thead className="bg-gray-200">
+                    <tr>
+                      <th className="border border-gray-300 px-4 py-2 text-left font-medium">
+                        Feature
+                      </th>
+                      {/* Added font-medium */}
+                      <th className="border border-gray-300 px-4 py-2 text-left font-medium">
+                        Details
+                      </th>
+                      {/* Added font-medium */}
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-800">
+                    {specifications.map(
+                      (spec, index) =>
+                        spec.value && ( // Simplified conditional rendering
+                          <tr key={index}>
+                            <td className="border border-gray-300 px-4 py-2">
+                              {spec.label}
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2">
+                              {spec.value}
+                            </td>
+                          </tr>
+                        )
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 

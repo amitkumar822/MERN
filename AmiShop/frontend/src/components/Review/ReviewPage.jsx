@@ -82,9 +82,9 @@ const ReviewPage = () => {
   }, [allReviews, productId, ""]);
 
   return (
-    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full mx-auto p-6 md:mt-2 mt-10 bg-white rounded-lg shadow-lg">
       {/*******👇 Write and Edit Review 👇**********/}
-      <div className="flex justify-end -mb-10">
+      <div className="md:flex md:justify-end md:-mb-10">
         {myReviewId ? (
           <div
             className={`bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 text-white font-semibold rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl`}
