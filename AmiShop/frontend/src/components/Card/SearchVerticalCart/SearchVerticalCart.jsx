@@ -13,55 +13,77 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
     await AddToCart(e, id);
     fetchCountAddToCart();
   };
+  console.log(data)
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center md:justify-between md:gap-4 overflow-x-scroll no-scrollbar transition-all p-3">
+    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4 bg-gray-50">
       {loading
-        ? loadingList.map((product, index) => (
-            <div key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-gradient-to-b from-gray-50 to-gray-200 rounded-xl shadow-lg">
-              <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse rounded-t-xl"></div>
-              <div className="p-4 grid gap-3">
-                <h2 className="font-semibold text-lg text-black animate-pulse rounded-md bg-gray-300 h-6"></h2>
-                <p className="capitalize text-gray-500 animate-pulse rounded-md bg-gray-300 h-4"></p>
-                <div className="flex gap-3">
-                  <p className="text-red-600 font-medium animate-pulse rounded-md bg-gray-300 w-1/2 h-4"></p>
-                  <p className="text-gray-400 line-through animate-pulse rounded-md bg-gray-300 w-1/2 h-4"></p>
+        ? loadingList.map((_, index) => (
+            <div
+              key={index}
+              className="w-full bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg shadow-md overflow-hidden animate-pulse"
+            >
+              <div className="h-36 bg-gray-400 flex justify-center items-center"></div>
+              <div className="p-3 space-y-3">
+                <div className="h-4 bg-gray-500 rounded-md"></div>
+                <div className="h-3 bg-gray-500 rounded-md"></div>
+                <div className="flex space-x-3">
+                  <div className="h-3 bg-gray-500 rounded-md w-1/2"></div>
+                  <div className="h-3 bg-gray-500 rounded-md w-1/2"></div>
                 </div>
-                <button className="text-sm bg-gray-300 text-gray-500 px-3 py-2 rounded-full animate-pulse"></button>
+                <div className="h-6 bg-gray-500 rounded-full"></div>
               </div>
             </div>
           ))
         : data.map((product, index) => (
-            <Link
-              to={`/product/${product?._id}`}
+            <div
               key={index}
-              className="w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] overflow-hidden bg-gradient-to-r from-white via-gray-50 to-gray-100 rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105"
-              onClick={scrollTop}
+              className="w-full bg-white rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 overflow-hidden"
             >
-              <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center rounded-t-xl">
-                <img
-                  src={product?.productImage[0]?.url}
-                  className="object-scale-down h-full hover:scale-110 transition-transform mix-blend-multiply rounded-lg"
-                />
-              </div>
-              <div className="p-4 grid gap-3">
-                <h2 className="font-semibold text-lg md:text-xl text-ellipsis line-clamp-1 text-black">
-                  {product?.productName}
-                </h2>
-                <p className="capitalize text-gray-500">{product?.category}</p>
-                <div className="flex gap-3">
-                  <p className="text-red-500 font-bold text-lg">
-                    {displayINRCurrency(product?.sellingPrice)}
-                  </p>
-                  <p className="text-gray-400 line-through">
-                    {displayINRCurrency(product?.price)}
-                  </p>
+              <Link to={`/product/${product?._id}`} onClick={scrollTop}>
+                <div className="relative h-36 bg-gray-100 flex justify-center items-center">
+                  <img
+                    src={product?.productImage[0]?.url}
+                    alt={product?.productName}
+                    className="object-contain h-full w-full transition-transform duration-300 hover:scale-110"
+                  />
                 </div>
-                <button className="text-sm bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-3 py-1 rounded-full shadow-sm transition-colors">
+                <div className="p-3 space-y-2">
+                  <h2 className="font-bold text-base text-gray-900 truncate">
+                    {product?.productName}
+                  </h2>
+                  <p className="text-xs text-gray-600 capitalize">
+                    {product?.category}
+                  </p>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-lg font-semibold text-blue-600">
+                      {displayINRCurrency(product?.sellingPrice)}
+                    </p>
+                    {product?.price && (
+                      <p className="text-xs text-gray-500 line-through">
+                        {displayINRCurrency(product?.price)}
+                      </p>
+                    )}
+                    {product?.discountPercentage && (
+                      <p className="text-xs font-semibold text-green-500">
+                        {product?.discountPercentage}% off
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </Link>
+              <div className="p-3 flex gap-2">
+                <button
+                  onClick={(e) => handleAddToCart(e, product?._id)}
+                  className="w-1/2 text-xs font-medium bg-gradient-to-r from-green-500 to-green-600 text-white py-1 rounded-md shadow hover:from-green-600 hover:to-green-700 transition-colors"
+                >
                   Add to Cart
                 </button>
+                <button className="w-1/2 text-xs font-medium bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-1 rounded-md shadow hover:from-yellow-600 hover:to-yellow-700 transition-colors">
+                  Buy Now
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
     </div>
   );

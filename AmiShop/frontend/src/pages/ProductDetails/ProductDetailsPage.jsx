@@ -16,7 +16,6 @@ const ProductDetailsPage = () => {
   const productId = useParams();
 
   const [data, setData] = useState({});
-  console.log(data?.description);
   const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -285,12 +284,8 @@ const ProductDetailsPage = () => {
           </div>
 
           {/* Product information */}
-          <div className="mt-16 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
+          <div className=" shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
             <div className="mt-6">
-              <h3 className="text-xl font-bold text-gray-800">
-                Product Description :
-              </h3>
-
               {data?.description && (
                 <div className="mt-10 bg-white shadow-lg rounded-lg p-6 border border-gray-200">
                   <h3 className="text-2xl font-bold text-gray-800 border-b pb-3">

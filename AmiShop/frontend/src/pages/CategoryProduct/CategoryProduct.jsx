@@ -99,7 +99,7 @@ const CategoryProduct = () => {
   return (
     <div className="w-full mx-auto">
       {/***desktop version */}
-      <div className="hidden lg:grid grid-cols-[200px,1fr]">
+      <div className="hidden lg:grid grid-cols-[200px,auto]">
         {/***left side */}
         <div className="bg-white p-4 min-h-[calc(100vh-120px)] overflow-y-scroll">
           {/**sort by */}
