@@ -1,26 +1,25 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import scrollTop from "../../helpers/scrollTop";
-import displayINRCurrency from "../../helpers/displayINRCurrency";
 import UserContext from "../../context/userContext";
+import AddToCart from "../../helpers/AddToCart";
 
 const ProductCard = ({ product }) => {
-  console.log(product);
+  const navigate = useNavigate();
   const { fetchCountAddToCart } = useContext(UserContext);
 
-  const onClickToggle = async () => {
-    scrollTop();
-    // await fetchCountAddToCart();
+  const handleAddToCart = async (e, id) => {
+    await AddToCart(e, id);
+    fetchCountAddToCart();
   };
 
-  const handleAddToCart = async (e, id) => {
-    console.log(id);
-    console.log(e);
-    // await AddToCart(e, id);
-    // fetchCountAddToCart();
+  const handleBuyProduct = async (e, id) => {
+    await AddToCart(e, id);
+    navigate("/view-cart");
   };
+
   return (
-    <Link to={`/product/${product?._id}`} onClick={onClickToggle}>
+    <Link to={`/product/${product?._id}`} onClick={scrollTop()}>
       <div className="productCard bg-white md:w-[13.7rem] lg:w-[16.6rem] xl:w-[18.6rem] w-[11rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
         {/* Image Section */}
         <div className="md:h-[220px] h-[155px] w-full bg-blue-100  flex items-center justify-center">
@@ -68,11 +67,17 @@ const ProductCard = ({ product }) => {
           </div> */}
 
           <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
-            <button className="bg-blue-600 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl">
+            <button
+              onClick={(e) => handleBuyProduct(e, product?._id)}
+              className="bg-blue-600 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+            >
               Buy Now
             </button>
 
-            <button className="bg-red-500 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl">
+            <button
+              onClick={(e) => handleAddToCart(e, product?._id)}
+              className="bg-red-500 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+            >
               Add to Cart
             </button>
           </div>

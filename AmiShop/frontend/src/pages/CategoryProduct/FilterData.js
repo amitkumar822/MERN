@@ -81,9 +81,9 @@ export const singleFilter = [
 ];
 
 export const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Most Popular", label: "mostPopular", current: true },
+  { name: "Best Rating", label: "bestRating", current: false },
+  { name: "Newest", label: "newest", current: false },
+  { name: "Price: Low to High", label: "priceLowToHigh", current: false },
+  { name: "Price: High to Low", label: "priceHighToLow", current: false },
 ];

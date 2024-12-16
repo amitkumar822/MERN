@@ -30,7 +30,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Checkbox from "@mui/material/Checkbox";
 import { filters, singleFilter, sortOptions } from "./FilterData";
 import axios from "axios";
-import SearchVerticalCart from "../../components/Card/SearchVerticalCart/SearchVerticalCart";
 import ProductCard from "./ProductCard";
 import { useLocation, useNavigate } from "react-router";
 
@@ -85,7 +84,6 @@ export default function CategoryFilterPage() {
 
   // Sync filter checkbox UI based on URL categories
   useEffect(() => {
-    // Update checkbox checked state in filters
     setFilter((prevFilters) =>
       prevFilters.map((section) => ({
         ...section,
@@ -133,10 +131,24 @@ export default function CategoryFilterPage() {
     navigate("/category-filter?" + urlFormat.join("&"), { replace: true });
   }, [selectCategory]);
 
-  // Sync URL categories with checkbox state on initial render
   useEffect(() => {
-    setSelectCategory(urlCategoryListObject); // Set initial category state from URL
+    setSelectCategory(urlCategoryListObject);
   }, []);
+
+  // Filter Sort Handler
+  const handleSort = (label) => {
+    let sortedData = [...data];
+
+    if (label === "priceLowToHigh") {
+      sortedData = sortedData.sort((a, b) => a.sellingPrice - b.sellingPrice);
+    }
+
+    if (label === "priceHighToLow") {
+      sortedData = sortedData.sort((a, b) => b.sellingPrice - a.sellingPrice);
+    }
+
+    setData(sortedData);
+  };
 
   return (
     <div className="w-full">
@@ -265,8 +277,8 @@ export default function CategoryFilterPage() {
                   <div className="py-1">
                     {sortOptions.map((option, index) => (
                       <MenuItem key={index}>
-                        <a
-                          href={option.href}
+                        <button
+                          onClick={() => handleSort(option.label)}
                           className={classNames(
                             option.current
                               ? "font-medium text-gray-900"
@@ -275,7 +287,7 @@ export default function CategoryFilterPage() {
                           )}
                         >
                           {option.name}
-                        </a>
+                        </button>
                       </MenuItem>
                     ))}
                   </div>
@@ -426,9 +438,8 @@ export default function CategoryFilterPage() {
               </form>
 
               {/* **********👇 Product Card or Right Side Product Card 👇********** */}
-              <div className="lg:col-span-4 col-span-2 w-full mx-auto md:p-4 max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
-                <h1 className="text-2xl font-bold text-center">
-                </h1>
+              <div className="lg:col-span-4 col-span-2 w-full pb-10 mx-auto md:p-4 max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
+                
                 <div className="w-full mx-auto flex flex-wrap">
                   {data?.length &&
                     data.map((product, index) => (

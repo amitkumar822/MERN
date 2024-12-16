@@ -82,6 +82,7 @@ const CategoryProduct = () => {
 
   const handleOnChangeSortBy = (e) => {
     const { value } = e.target;
+    console.log(value);
 
     setSortBy(value);
 

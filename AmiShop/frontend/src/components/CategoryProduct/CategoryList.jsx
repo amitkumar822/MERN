@@ -5,7 +5,7 @@ import axios from "axios";
 const CategoryList = () => {
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(categoryProduct)
+  console.log(categoryProduct);
 
   const categoryLoading = new Array(13).fill(null);
 
@@ -38,18 +38,20 @@ const CategoryList = () => {
                 <Link
                   to={"/product-category?category=" + product?.category}
                   className="cursor-pointer"
-                  key={product?.category}
+                  key={product?.category + index}
                 >
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 flex items-center justify-center bg-gradient-to-r from-rose-100 to-teal-100">
-                    <img
-                      src={product?.productImage[0]?.url}
-                      alt={product?.category}
-                      className="h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all"
-                    />
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 flex items-center justify-center bg-gradient-to-r from-rose-100 to-teal-100">
+                      <img
+                        src={product?.productImage[0]?.url}
+                        alt={product?.category}
+                        className="h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all"
+                      />
+                    </div>
+                    <p className="text-center text-sm md:text-base capitalize">
+                      {product?.category}
+                    </p>
                   </div>
-                  <p className="text-center text-sm md:text-base capitalize">
-                    {product?.category}
-                  </p>
                 </Link>
               );
             })}
