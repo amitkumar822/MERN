@@ -22,6 +22,7 @@ import Success from "../pages/Cart/Success";
 import Failed from "../pages/Cart/Failed";
 import Order from "../components/Order/Order";
 import AllOrder from "../pages/AdminPanel/AllOrder";
+import CategoryFilterPage from "../pages/CategoryProduct/CategoryFilterPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/product-category" element={<CategoryProduct />} />
+      <Route path="/category-filter" element={<CategoryFilterPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/view-cart" element={<OrderViewCart />} />
       <Route path="/search" element={<SearchProduct />} />

@@ -19,7 +19,7 @@ const CategoryProduct = () => {
 
   const [selectCategory, setSelectCategory] = useState(urlCategoryListObject);
   const [filterCategoryList, setFilterCategoryList] = useState([]);
-
+  
   const [sortBy, setSortBy] = useState("");
 
   const fetchData = async () => {

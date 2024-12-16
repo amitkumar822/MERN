@@ -13,7 +13,6 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
     await AddToCart(e, id);
     fetchCountAddToCart();
   };
-  console.log(data)
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4 bg-gray-50">
