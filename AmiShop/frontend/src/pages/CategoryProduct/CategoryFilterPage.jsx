@@ -139,7 +139,7 @@ export default function CategoryFilterPage() {
   }, []);
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full">
       <div>
         {/* Mobile filter dialog */}
         <Dialog
@@ -194,7 +194,7 @@ export default function CategoryFilterPage() {
                         </span>
                       </DisclosureButton>
                     </h3>
-                   
+
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-1">
                         {section.options.map((option, optionIdx) => (
@@ -209,7 +209,6 @@ export default function CategoryFilterPage() {
                                     )
                                   }
                                   checked={option.checked}
-                                  
                                   sx={{
                                     color: "", // Unchecked color
                                     "&.Mui-checked": {
@@ -234,11 +233,20 @@ export default function CategoryFilterPage() {
         {/* Desktop Filter */}
         <main className="w-full mx-auto px-2">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-2">
-            <h1 className="md:text-2xl font-semibold tracking-tight text-gray-900">
-              Discover What's New
-            </h1>
+            <div className="w-full overflow-hidden whitespace-nowrap">
+              <div
+                className="inline-block animate-scroll md:text-xl text-sm font-manrope font-black leading-snug text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-pink-600 to-purple-600"
+                style={{
+                  willChange: "transform",
+                  width: "max-content",
+                }}
+              >
+                🎉 New Arrivals at AmiShop! 🚀 Up to 70% OFF on Top Products &
+                Accessories. 💥 Shop Now & Save Big! 🛒
+              </div>
+            </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center pl-4">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -299,7 +307,7 @@ export default function CategoryFilterPage() {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               {/* Filters */}
-              <form className="hidden lg:block">
+              <form className="hidden lg:block pl-4">
                 <div className="flex justify-between items-center py-2">
                   <h1 className="text-lg opacity-50 font-bold">Filters</h1>
                   <FilterListIcon />
@@ -330,7 +338,10 @@ export default function CategoryFilterPage() {
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-1">
                         {section.options.map((option, optionIdx) => (
-                          <div key={option.value + optionIdx} className="flex items-center">
+                          <div
+                            key={option.value + optionIdx}
+                            className="flex items-center"
+                          >
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -415,8 +426,10 @@ export default function CategoryFilterPage() {
               </form>
 
               {/* **********👇 Product Card or Right Side Product Card 👇********** */}
-              <div className="lg:col-span-4 col-span-2 w-full mx-auto p-4 bg-red-500">
-                <div className=" flex flex-wrap gap-4 md:gap-6">
+              <div className="lg:col-span-4 col-span-2 w-full mx-auto md:p-4 max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
+                <h1 className="text-2xl font-bold text-center">
+                </h1>
+                <div className="w-full mx-auto flex flex-wrap">
                   {data?.length &&
                     data.map((product, index) => (
                       <ProductCard product={product} key={index} />

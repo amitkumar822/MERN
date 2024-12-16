@@ -4,7 +4,17 @@ import daisyui from "daisyui";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        scroll: "scroll 40s linear infinite",
+      },
+    },
   },
   plugins: [
     daisyui,
@@ -25,6 +35,7 @@ export default {
       addUtilities(newUtilities);
       addBase(baseStyles);
     },
+    require("tailwind-scrollbar")({ nocompatible: true }),
   ],
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]

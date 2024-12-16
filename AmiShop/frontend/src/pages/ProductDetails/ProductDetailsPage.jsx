@@ -102,10 +102,6 @@ const ProductDetailsPage = () => {
     data?.category === "televisions" ||
     data?.category === "laptops";
 
-  if (!isRelevantCategory) {
-    return null;
-  }
-
   const specifications = [
     { label: "Type", value: data?.category },
     { label: "RAM", value: data?.ram },
