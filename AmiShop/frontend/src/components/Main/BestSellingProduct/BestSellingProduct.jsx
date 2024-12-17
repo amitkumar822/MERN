@@ -43,7 +43,7 @@ const BestSellingProduct = () => {
         {/* Single Button for all cards */}
         <div className="w-full flex justify-between">
           <h1 className="md:text-2xl font-manrope font-black leading-snug text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-pink-600 to-purple-600">Best Selling Products</h1>
-          <Link to={"/product-category?category=" + "mobiles"}>
+          <Link to={"/category-filter?category=" + "mobiles"}>
             <Button
               variant="contained"
               color="primary"

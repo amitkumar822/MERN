@@ -11,7 +11,6 @@ import AdminPanel from "../pages/AdminPanel/AdminPanel";
 import NotFound404 from "../components/NotFound404";
 import AllUsers from "../pages/AdminPanel/AllUsers";
 import AllProducts from "../pages/AdminPanel/AllProducts";
-import CategoryProduct from "../pages/CategoryProduct/CategoryProduct";
 import Home from "../pages/Home/Home";
 import SearchProduct from "../pages/SearchProductPage/SearchProduct";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
@@ -31,7 +30,6 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/product-category" element={<CategoryProduct />} />
       <Route path="/category-filter" element={<CategoryFilterPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/view-cart" element={<OrderViewCart />} />

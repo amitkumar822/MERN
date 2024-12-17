@@ -31,7 +31,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { filters, singleFilter, sortOptions } from "./FilterData";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
-import { ProductCard, ProductSkeleton } from "./ProductCard";
+import { ProductCard, ProductSkeleton } from "../../components/Card/CategoryFilterCard/CategoryFilterCard";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

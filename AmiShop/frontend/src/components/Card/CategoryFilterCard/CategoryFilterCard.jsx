@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import scrollTop from "../../helpers/scrollTop";
-import UserContext from "../../context/userContext";
-import AddToCart from "../../helpers/AddToCart";
+import scrollTop from "../../../helpers/scrollTop";
+import AddToCart from "../../../helpers/AddToCart";
+import UserContext from "../../../context/userContext";
 
 export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
