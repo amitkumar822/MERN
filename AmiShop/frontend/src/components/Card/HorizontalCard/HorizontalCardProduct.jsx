@@ -62,13 +62,14 @@ const HorizontalCardProduct = ({ category, heading }) => {
         <Button
           onClick={scrollLeft}
           variant="contained"
-          className="z-[2] bg-white"
+          className="z-[2] bg-white md:block hidden"
           sx={{
             position: "absolute",
             top: "8rem",
             left: "1.2rem",
             transform: "translateX(-50%) rotate(-90deg)",
             bgcolor: "white",
+            display: { xs: "none", md: "block" },
           }}
           aria-label="next"
         >
@@ -81,13 +82,14 @@ const HorizontalCardProduct = ({ category, heading }) => {
         <Button
           onClick={scrollRight}
           variant="contained"
-          className="z-[2] bg-white"
+          className="z-[2]"
           sx={{
             position: "absolute",
             top: "8rem",
             right: "1.2rem",
             transform: "translateX(50%) rotate(90deg)",
             bgcolor: "white",
+            display: { xs: "none", md: "block" },
           }}
           aria-label="next"
         >

@@ -30,8 +30,8 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Checkbox from "@mui/material/Checkbox";
 import { filters, singleFilter, sortOptions } from "./FilterData";
 import axios from "axios";
-import ProductCard from "./ProductCard";
 import { useLocation, useNavigate } from "react-router";
+import { ProductCard, ProductSkeleton } from "./ProductCard";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -40,6 +40,7 @@ function classNames(...classes) {
 export default function CategoryFilterPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   // Parse the initial category list from the URL
   const urlSearch = new URLSearchParams(location.search);
@@ -103,8 +104,12 @@ export default function CategoryFilterPage() {
       });
 
       setData(response?.data?.data || []);
+      if (response?.data?.data?.length > 0) {
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
+      setLoading(true);
     }
   };
 
@@ -438,13 +443,22 @@ export default function CategoryFilterPage() {
               </form>
 
               {/* **********👇 Product Card or Right Side Product Card 👇********** */}
-              <div className="lg:col-span-4 col-span-2 w-full pb-10 mx-auto md:p-4 max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
-                
+              <div className="lg:col-span-4 col-span-2 w-full pb-10 mx-auto md:p-4 min-h-[85vh] max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
+                {filterCategoryList.length === 0 && (
+                  <h1 className="text-xl font-bold">
+                    Please Select Category😊
+                  </h1>
+                )}
                 <div className="w-full mx-auto flex flex-wrap">
-                  {data?.length &&
-                    data.map((product, index) => (
-                      <ProductCard product={product} key={index} />
-                    ))}
+                  {filterCategoryList.length === 0 || loading ? (
+                    Array.from({ length: 8 }).map((_, index) => (
+                      <ProductSkeleton key={index} />
+                    ))
+                  ) : (
+                    data.map((product) => (
+                      <ProductCard product={product} />
+                    ))
+                  )}
                 </div>
               </div>
             </div>

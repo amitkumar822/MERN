@@ -4,7 +4,7 @@ import scrollTop from "../../helpers/scrollTop";
 import UserContext from "../../context/userContext";
 import AddToCart from "../../helpers/AddToCart";
 
-const ProductCard = ({ product }) => {
+export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { fetchCountAddToCart } = useContext(UserContext);
 
@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
         {/* Image Section */}
         <div className="md:h-[220px] h-[155px] w-full bg-blue-100  flex items-center justify-center">
           <img
-            className="h-full w-full object-contain p-2 mix-blend-darken"
+            className="h-full w-full object-contain p-2 mix-blend-darken hover:scale-110 transition-all duration-300 ease-in-out"
             src={product?.productImage[0]?.url}
             alt={product?.productName}
           />
@@ -47,10 +47,10 @@ const ProductCard = ({ product }) => {
             <p className="md:text-sm xl:text-lg text-xs font-bold text-green-600">
               ₹{product?.sellingPrice.toLocaleString()}
             </p>
-            <p className="line-through md:text-sm xl:text-lg text-[8px] text-gray-400">
+            <p className="line-through md:text-sm xl:text-base text-[8px] text-gray-400">
               ₹{product?.price.toLocaleString()}
             </p>
-            <p className="lg:text-sm xl:text-lg text-[8px] text-green-500 font-semibold">
+            <p className="lg:text-sm xl:text-base text-[8px] text-green-500 font-semibold">
               {product?.discountPercentage}% off
             </p>
           </div>
@@ -87,4 +87,37 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export const ProductSkeleton = () => {
+  return (
+    <div className="productCard bg-white md:w-[13.7rem] lg:w-[16.6rem] xl:w-[18.6rem] w-[11rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+      {/* Image Section */}
+      <div className="md:h-[220px] h-[155px] w-full flex justify-center items-center bg-gray-300 skeleton">
+        <img
+          className="w-[70%] skeleton animate-spin rounded-full bg-gray-200 mix-blend-multiply"
+          src="https://via.placeholder.com/150"
+        />
+      </div>
+
+      {/* Text Section */}
+      <div className="textPart bg-white p-4">
+        {/* Brand and Name */}
+        <div>
+          <p className="bg-gray-200 w-1/2 h-4 rounded-lg skeleton"></p>
+          <p className="bg-gray-200 w-full h-4 rounded-lg skeleton mt-2"></p>
+        </div>
+
+        {/* Price and Discount */}
+        <div className="flex items-center md:mt-2 mt-1 md:space-x-3 space-x-1">
+          <p className="bg-gray-200 w-full h-4 rounded-lg skeleton"></p>
+          <p className="bg-gray-200 w-full h-4 rounded-lg skeleton"></p>
+          <p className="bg-gray-200 w-full h-4 rounded-lg skeleton"></p>
+        </div>
+
+        <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
+          <button className="bg-gray-200 w-full h-4 rounded-lg skeleton"></button>
+          <button className="bg-gray-200 w-full h-4 rounded-lg skeleton"></button>
+        </div>
+      </div>
+    </div>
+  );
+};

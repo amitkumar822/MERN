@@ -4,10 +4,10 @@ import axios from "axios";
 
 const CategoryList = () => {
   const [categoryProduct, setCategoryProduct] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   console.log(categoryProduct);
 
-  const categoryLoading = new Array(13).fill(null);
+  const categoryLoading = new Array(16).fill(null);
 
   const fetchCategoryProduct = async () => {
     setLoading(true);
@@ -27,16 +27,16 @@ const CategoryList = () => {
         {loading
           ? categoryLoading.map((el, index) => {
               return (
-                <div
-                  className="h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-slate-200 animate-pulse"
-                  key={"categoryLoading" + index}
-                ></div>
+                <div className="flex flex-col items-center justify-center" key={index}>
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 skeleton bg-gray-200"></div>
+                  <p className="h-4 w-14 bg-gray-200 mt-2 skeleton rounded-full"></p>
+                </div>
               );
             })
           : categoryProduct.map((product, index) => {
               return (
                 <Link
-                  to={"/product-category?category=" + product?.category}
+                  to={"/category-filter?category=" + product?.category}
                   className="cursor-pointer"
                   key={product?.category + index}
                 >
