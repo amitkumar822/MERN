@@ -18,7 +18,6 @@ const AddToCart = async (event, id) => {
         credentials: "include",
       }
     );
-    console.log(data);
     toast.success("Product added to cart successfully!");
     return data?.data;
   } catch (error) {

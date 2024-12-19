@@ -9,11 +9,11 @@ import "aos/dist/aos.css";
 
 function App() {
   useEffect(() => {
-    AOS.init({ once: true,  });
+    AOS.init({ once: true });
   }, []);
 
   return (
-    <div>
+    <>
       <>
         <Header />
         <main className="min-h-[calc(100vh-57px)] pt-16">
@@ -26,7 +26,7 @@ function App() {
         theme="colored"
         autoClose="2000"
       />
-    </div>
+    </>
   );
 }
 

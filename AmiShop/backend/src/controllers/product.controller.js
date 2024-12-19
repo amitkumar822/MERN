@@ -207,10 +207,12 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 export const getAllProducts = asyncHandler(async (req, res) => {
   // pagination
   let page = Number(req.query.page) || 1;
-  let limit = Number(req.query.limit) || 3;
+  let limit = Number(req.query.limit) || 40;
   let skip = (page - 1) * limit;
 
-  const products = await Product.find().skip(skip).limit(limit);
+  const products = await Product.find().skip(skip).limit(limit).sort({
+    createdAt: -1,
+  });
 
   if (products.length === 0) {
     throw new ApiError(404, "No Any Product In Database!");
@@ -428,6 +430,30 @@ export const likeProduct = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, product, "Product Liked Successfully"));
+});
+
+// get best selling all product
+export const getBestSellingAllProduct = asyncHandler(async (req, res) => {
+  // pagination
+  let page = Number(req.query.page) || 2;
+  let limit = Number(req.query.limit) || 4;
+  let skip = (page - 1) * limit;
+
+  // aggregate pipeline
+  const pipeline = [
+    { $sample: { size: skip + limit } },
+    { $skip: skip },
+    { $limit: limit },
+    { $sort: { createdAt: -1 } },
+  ];
+
+  const product = await Product.aggregate(pipeline);
+
+  if (product.length === 0) {
+    throw new ApiError(404, "No Any Product In Database!");
+  }
+
+  res.status(200).json(new ApiResponse(200, product, "Products"));
 });
 
 //! Testing purposes only

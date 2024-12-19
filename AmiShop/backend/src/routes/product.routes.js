@@ -6,6 +6,7 @@ import {
   deleteProduct,
   filterProduct,
   getAllProducts,
+  getBestSellingAllProduct,
   getBrandWiseProduct,
   getCategoryByProducts,
   getCategoryNameWiseProducts,
@@ -70,9 +71,11 @@ router
 router.route("/search").get(searchProduct);
 router.route("/filter").post(filterProduct);
 router.route("/like/:productId").post(isAuthenticated, likeProduct);
+router.route("/get-best-selling-all-product").get(getBestSellingAllProduct);
 
 //! Testing purposes only delete products image on cloudinary
 router.delete("/delete-image-cloudinary/:publicId", deleteOnlyCloudinaryImage);
 
 // route export
 export default router;
+

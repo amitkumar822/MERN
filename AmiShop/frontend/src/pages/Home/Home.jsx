@@ -49,7 +49,7 @@ const Home = () => {
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />
-      <Cart category={"mouse"} heading={"Mouses"} />
+      <Cart category={"trimmers"} heading={"Trimmers"} />
       {/* <Review /> */}
     </div>
   );

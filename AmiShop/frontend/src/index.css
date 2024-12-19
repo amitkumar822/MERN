@@ -8,8 +8,8 @@
 
 @layer utilities {
   * {
-    @apply scrollbar-none;
-    /* @apply scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400; */
+    /* @apply scrollbar-none; */
+    @apply scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400;
   }
 }
 
