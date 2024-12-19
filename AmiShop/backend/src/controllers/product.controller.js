@@ -435,19 +435,13 @@ export const likeProduct = asyncHandler(async (req, res) => {
 // get best selling all product
 export const getBestSellingAllProduct = asyncHandler(async (req, res) => {
   // pagination
-  let page = Number(req.query.page) || 2;
-  let limit = Number(req.query.limit) || 4;
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 40;
   let skip = (page - 1) * limit;
 
-  // aggregate pipeline
-  const pipeline = [
-    { $sample: { size: skip + limit } },
-    { $skip: skip },
-    { $limit: limit },
-    { $sort: { createdAt: -1 } },
-  ];
-
-  const product = await Product.aggregate(pipeline);
+  const product = await Product.find().skip(skip).limit(limit).sort({
+    createdAt: -1,
+  });
 
   if (product.length === 0) {
     throw new ApiError(404, "No Any Product In Database!");
