@@ -371,21 +371,38 @@ export const searchProduct = asyncHandler(async (req, res) => {
 
 // filter product by category
 export const filterProduct = asyncHandler(async (req, res) => {
-  const categoryList = req?.body?.category || [];
+  const { category, price, stock, discount } = req.body;
+  console.log("price: ", price)
 
-  // console.log("Filter Product: " + categoryList);
+  const filterQuery = {};
 
-  // if (categoryList.length === undefined || category.length === 0) {
-  //   throw new ApiError(400, "Missing Required Parameters");
-  // }
+  if (category && category.length > 0) {
+    // $in operator find same category document like ["mobile", "mouse"]
+    filterQuery.category = { $in: category };
+  }
 
-  const product = await Product.find({
-    category: {
-      $in: categoryList,
-    },
-  });
+  if (price) {
+    const [minPrice, maxPrice] = price.split("-").map(Number);
+    console.log("Price: ", minPrice, maxPrice);
+    // The $gte operator is used to find documents where a field’s value is greater than or equal to a specified value.
+    // The $lte operator is used to find documents where a field’s value is less than or equal to a specified value.
+    filterQuery.sellingPrice = { $gte: minPrice, $lte: maxPrice };
+  }
 
-  if (!product) {
+  if (discount) {
+    filterQuery.discountPercentage = { $gte: discount };
+  }
+
+  if (stock) {
+    filterQuery.stock = { $gte: stock };
+  }
+
+  console.log("FQ: ", filterQuery);
+
+  const products = await Product.find(filterQuery);
+  // console.log(products)
+
+  if (!products || products.length === 0) {
     throw new ApiError(
       404,
       "No products found in the database for these categories!"
@@ -394,7 +411,7 @@ export const filterProduct = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json(new ApiResponse(200, product, "Products Filter Successfully"));
+    .json(new ApiResponse(200, products, "Products Filter Successfully"));
 });
 
 // like and dislike product

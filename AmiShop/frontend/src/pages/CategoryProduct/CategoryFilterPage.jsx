@@ -31,7 +31,10 @@ import Checkbox from "@mui/material/Checkbox";
 import { filters, singleFilter, sortOptions } from "./FilterData";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
-import { ProductCard, ProductSkeleton } from "../../components/Card/CategoryFilterCard/CategoryFilterCard";
+import {
+  ProductCard,
+  ProductSkeleton,
+} from "../../components/Card/CategoryFilterCard/CategoryFilterCard";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -96,11 +99,30 @@ export default function CategoryFilterPage() {
     );
   }, [filters]);
 
+  // Single Filter Price, discount and stock
+  const [selectedSingleFilter, setSelectedSingleFilter] = useState({
+    price: null,
+    discount: null,
+    stock: null,
+  });
+
+  const handleRadioFilterChange = (value, sectionId) => {
+    setSelectedSingleFilter((prev) => ({
+      ...prev,
+      [sectionId]: prev[sectionId] === value ? null : value,
+    }));
+  };
+
+  console.log(selectedSingleFilter);
+  
+
   // Fetch data based on selected filters
   const fetchData = async () => {
     try {
       const response = await axios.post("/api/product/filter", {
         category: filterCategoryList,
+        discount: selectedSingleFilter?.discount,
+        price: selectedSingleFilter?.price
       });
 
       setData(response?.data?.data || []);
@@ -115,7 +137,7 @@ export default function CategoryFilterPage() {
 
   useEffect(() => {
     fetchData();
-  }, [filterCategoryList]);
+  }, [filterCategoryList, selectedSingleFilter]);
 
   // Sync `selectCategory` state with URL and `filterCategoryList`
   useEffect(() => {
@@ -154,6 +176,8 @@ export default function CategoryFilterPage() {
 
     setData(sortedData);
   };
+
+  
 
   return (
     <div className="w-full">
@@ -426,11 +450,18 @@ export default function CategoryFilterPage() {
                               <div key={optionIdx}>
                                 <FormControlLabel
                                   onChange={(e) =>
-                                    handleRadioFilterChange(e, section.id)
+                                    handleRadioFilterChange(
+                                      e.target.value,
+                                      section.id
+                                    )
                                   }
                                   value={option.value}
                                   control={<Radio />}
                                   label={option.label}
+                                  checked={
+                                    selectedSingleFilter[section.id] ===
+                                    option.value
+                                  }
                                 />
                               </div>
                             ))}
@@ -450,15 +481,13 @@ export default function CategoryFilterPage() {
                   </h1>
                 )}
                 <div className="w-full mx-auto flex flex-wrap gap-1">
-                  {filterCategoryList.length === 0 || loading ? (
-                    Array.from({ length: 8 }).map((_, index) => (
-                      <ProductSkeleton key={index} />
-                    ))
-                  ) : (
-                    data.map((product) => (
-                      <ProductCard product={product} />
-                    ))
-                  )}
+                  {filterCategoryList.length === 0 || loading
+                    ? Array.from({ length: 8 }).map((_, index) => (
+                        <ProductSkeleton key={index} />
+                      ))
+                    : data.map((product) => (
+                        <ProductCard product={product} key={product._id} />
+                      ))}
                 </div>
               </div>
             </div>
