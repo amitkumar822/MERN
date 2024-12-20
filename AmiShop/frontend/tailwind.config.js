@@ -14,6 +14,11 @@ export default {
       animation: {
         scroll: "scroll 40s linear infinite",
       },
+      screens: {
+        xs1: "360px", // Custom breakpoint for 360px,
+        xs2: "390px",
+        xs3: "414px"
+      },
     },
   },
   plugins: [

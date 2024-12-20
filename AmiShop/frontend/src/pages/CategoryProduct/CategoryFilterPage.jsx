@@ -443,13 +443,13 @@ export default function CategoryFilterPage() {
               </form>
 
               {/* **********👇 Product Card or Right Side Product Card 👇********** */}
-              <div className="lg:col-span-4 col-span-2 w-full pb-10 mx-auto md:p-4 min-h-[85vh] max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
+              <div className="lg:col-span-4 col-span-2 w-full pb-10 mx-auto md:px-2 min-h-[85vh] max-h-[120vh] overflow-y-auto bg-gradient-to-r from-rose-100 to-teal-100">
                 {filterCategoryList.length === 0 && (
                   <h1 className="text-xl font-bold">
                     Please Select Category😊
                   </h1>
                 )}
-                <div className="w-full mx-auto flex flex-wrap">
+                <div className="w-full mx-auto flex flex-wrap gap-1">
                   {filterCategoryList.length === 0 || loading ? (
                     Array.from({ length: 8 }).map((_, index) => (
                       <ProductSkeleton key={index} />

@@ -20,7 +20,7 @@ export const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/product/${product?._id}`} onClick={scrollTop()}>
-      <div className="productCard bg-white md:w-[13.7rem] lg:w-[16.6rem] xl:w-[18.6rem] w-[11rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+      <div className="md:productCard bg-white xl:w-[17.6rem] lg:w-[16.6rem] md:w-[15rem] xs1:w-[10.6rem] xs2:w-[11rem] xs3:w-[11.8rem] w-[11rem] xs2:m-1 md:mt-4 transition-transform transform md:hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
         {/* Image Section */}
         <div className="md:h-[220px] h-[155px] w-full bg-blue-100  flex items-center justify-center">
           <img
@@ -69,14 +69,14 @@ export const ProductCard = ({ product }) => {
           <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
             <button
               onClick={(e) => handleBuyProduct(e, product?._id)}
-              className="bg-blue-600 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-blue-600 lg:text-base md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Buy Now
             </button>
 
             <button
               onClick={(e) => handleAddToCart(e, product?._id)}
-              className="bg-red-500 lg:text-lg md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-red-500 lg:text-base md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Add to Cart
             </button>
@@ -89,11 +89,11 @@ export const ProductCard = ({ product }) => {
 
 export const ProductSkeleton = () => {
   return (
-    <div className="productCard bg-white md:w-[13.7rem] lg:w-[16.6rem] xl:w-[18.6rem] w-[11rem] md:m-3 mx-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+    <div className="productCard bg-white xl:w-[18.3rem] lg:w-[16.6rem] md:w-[13.7rem] w-[11rem] m-1 mt-4 transition-transform transform hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
       {/* Image Section */}
       <div className="md:h-[220px] h-[155px] w-full flex justify-center items-center bg-gray-300 skeleton">
         <img
-          className="w-[70%] skeleton animate-spin rounded-full bg-gray-200 mix-blend-multiply"
+          className="w-[70%] h-full skeleton animate-spin rounded-full bg-gray-200 mix-blend-multiply"
           src="https://via.placeholder.com/150"
         />
       </div>
