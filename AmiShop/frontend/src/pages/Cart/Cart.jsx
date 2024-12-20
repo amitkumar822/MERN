@@ -71,6 +71,7 @@ const Cart = ({ category, heading }) => {
               left: "1.2rem",
               transform: "translateX(-50%) rotate(-90deg)",
               bgcolor: "white",
+              display: { xs: "none", md: "block" },
             }}
             aria-label="next"
           >
@@ -90,6 +91,7 @@ const Cart = ({ category, heading }) => {
               right: "1.2rem",
               transform: "translateX(50%) rotate(90deg)",
               bgcolor: "white",
+              display: { xs: "none", md: "block" },
             }}
             aria-label="next"
           >

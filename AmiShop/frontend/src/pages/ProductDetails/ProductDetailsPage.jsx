@@ -260,20 +260,28 @@ const ProductDetailsPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 mt-8">
+              <div className={`flex flex-wrap gap-4 mt-8 ${zoomImage ? "hidden" : "block"}`}>
                 <button
                   onClick={(e) => handleBuyProduct(e, data?._id)}
-                  type="button"
-                  className="min-w-[200px] px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded"
+                  className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
                 >
-                  Buy now
+                  <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+
+                  <span className="relative text-lg font-semibold text-indigo-600 transition-colors group-hover:text-white">
+                    Buy Now
+                  </span>
                 </button>
+
                 <button
                   onClick={(e) => handleAddToCart(e, data?._id)}
-                  type="button"
-                  className="min-w-[200px] px-4 py-2.5 border border-blue-600 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-semibold rounded"
+                  className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                  href="#"
                 >
-                  Add to cart
+                  <span className="absolute inset-y-0 right-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+
+                  <span className="relative text-lg font-semibold text-indigo-600 transition-colors group-hover:text-white">
+                    Add to cart
+                  </span>
                 </button>
               </div>
             </div>

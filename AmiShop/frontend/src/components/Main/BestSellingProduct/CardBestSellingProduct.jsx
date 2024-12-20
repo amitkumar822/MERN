@@ -6,7 +6,7 @@ import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
 import BeatLoader from "react-spinners/BeatLoader";
 
-const CardBestSellingProduct = ({ item, buttonHidden }) => {
+const CardBestSellingProduct = ({ item, idx }) => {
   const { fetchCountAddToCart } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState("");
@@ -20,25 +20,28 @@ const CardBestSellingProduct = ({ item, buttonHidden }) => {
     setLoading(false);
   };
 
+
   return (
     <>
       <Link
         to={`/product/${item?._id}`}
         onClick={scrollTop()}
-        className="max-w-[20rem] w-[19rem] overflow-hidden p-4 border rounded-lg shadow hover:shadow-lg bg-white transition-transform transform hover:-translate-y-2 group"
+        className="xl:w-[22rem] md:w-[18rem] sm:w-[11.3rem] w-[10.7rem] md:h-[20.5rem] overflow-hidden md:px-4 px-2 pt-4 pb-2 border rounded-lg shadow hover:shadow-lg bg-white transition-transform transform md:hover:-translate-y-2 group"
       >
         {/* Image Section */}
         <div className="flex justify-center items-center">
           <img
             src={item.productImage[0].url}
-            alt={item.productName}
-            className=" h-36 mb-2"
+            alt={item.category}
+            className={`md:h-36 h-32 mb-2 transition-all ease-in-out duration-300 transform hover:scale-125 ${
+              idx % 2 === 0 ? "hover:rotate-12" : "hover:-rotate-12"
+            }`}
           />
         </div>
 
         {/* Text Section */}
-        <div className="bg-white text-container transition-transform transform group-hover:-translate-y-4">
-          <h3 className="md:text-lg text-sm font-semibold text-gray-500 uppercase">
+        <div className="bg-white text-container transition-transform transform md:group-hover:-translate-y-4">
+          <h3 className="md:text-sm text-xs font-semibold text-gray-500 uppercase">
             {item.brand}
           </h3>
           <h3 className="lg:text-[16px] md:text-sm text-xs font-semibold line-clamp-2">
@@ -59,11 +62,7 @@ const CardBestSellingProduct = ({ item, buttonHidden }) => {
 
           {/* Button Section */}
           <button
-            className={`${
-              buttonHidden
-                ? "bg-blue-500 text-white px-4 py-2 rounded-md mt-2 w-full"
-                : "hidden"
-            }`}
+            className={`bg-blue-500 text-white md:px-4 px-3 md:py-2 py-1 rounded-md mt-2 w-full`}
             disabled={loading}
             onClick={(event) => handleAddToCart(event, item?._id)}
           >

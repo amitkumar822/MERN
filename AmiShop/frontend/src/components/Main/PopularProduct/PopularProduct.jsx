@@ -59,7 +59,7 @@ const PopularProduct = () => {
           </Box>
         </div>
 
-        <div className="w-full md:max-h-[62rem] overflow-y-auto flex flex-wrap justify-center items-center gap-1 py-4 mx-auto">
+        <div className="w-full md:max-h-[62rem] overflow-y-auto flex flex-wrap justify-center items-center gap-2 py-4 mx-auto">
           {loading
             ? Array.from({ length: 10 }).map((_, index) => (
                 <Skeleton key={index} />

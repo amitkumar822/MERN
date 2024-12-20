@@ -74,7 +74,7 @@ const BestSellingProduct = () => {
                 <div className="flex justify-center items-center">
                   <img
                     src={item.productImage[0].url}
-                    alt={item.productName}
+                    alt={item.category}
                     className=" h-36 mb-2"
                   />
                 </div>
