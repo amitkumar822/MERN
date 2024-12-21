@@ -4,7 +4,7 @@ import scrollTop from "../../../helpers/scrollTop";
 import AddToCart from "../../../helpers/AddToCart";
 import UserContext from "../../../context/userContext";
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, index }) => {
   const navigate = useNavigate();
   const { fetchCountAddToCart } = useContext(UserContext);
 
@@ -20,11 +20,13 @@ export const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/product/${product?._id}`} onClick={scrollTop()}>
-      <div className="md:productCard bg-white xl:w-[17.6rem] lg:w-[16.6rem] md:w-[15rem] xs1:w-[10.6rem] xs2:w-[11rem] xs3:w-[11.8rem] w-[11rem] xs2:m-1 md:mt-4 transition-transform transform md:hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+      <div className="md:productCard bg-white xl:w-[17.4rem] lg:w-[16.6rem] md:w-[15rem] xs1:w-[10.6rem] xs2:w-[11rem] xs3:w-[11.8rem] w-[11rem] xs2:m-1 transition-transform transform md:hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
         {/* Image Section */}
-        <div className="md:h-[220px] h-[155px] w-full bg-blue-100  flex items-center justify-center">
+        <div className="md:h-[140px] h-[120px] w-full bg-blue-100  flex items-center justify-center overflow-hidden">
           <img
-            className="h-full w-full object-contain p-2 mix-blend-darken hover:scale-110 transition-all duration-300 ease-in-out"
+            className={`h-full w-full object-contain p-2 mix-blend-darken hover:scale-125 transition-all duration-300 ease-in-out ${
+              index % 2 === 0 ? "md:hover:rotate-12" : "md:hover:-rotate-12"
+            }`}
             src={product?.productImage[0]?.url}
             alt={product?.productName}
           />
@@ -34,23 +36,23 @@ export const ProductCard = ({ product }) => {
         <div className="textPart bg-white p-4">
           {/* Brand and Name */}
           <div>
-            <p className="lg:text-sm xl:text-lg text-xs font-bold text-gray-600 uppercase">
+            <p className="lg:text-sm text-xs font-bold text-gray-600 uppercase">
               {product?.brand}
             </p>
-            <p className="lg:text-sm xl:text-lg text-xs font-semibold text-gray-800 truncate">
+            <p className="lg:text-sm xl:text-[16px] text-xs font-semibold text-gray-800 truncate">
               {product?.productName}
             </p>
           </div>
 
           {/* Price and Discount */}
-          <div className="flex items-center md:mt-2 mt-1 md:space-x-3 space-x-1">
-            <p className="md:text-sm xl:text-lg text-xs font-bold text-green-600">
+          <div className="flex items-center mt-1 md:space-x-2 space-x-1">
+            <p className="md:text-sm xl:text-[16px] text-xs font-bold text-green-600">
               ₹{product?.sellingPrice.toLocaleString()}
             </p>
-            <p className="line-through md:text-sm xl:text-base text-[8px] text-gray-400">
+            <p className="line-through md:text-sm text-[8px] text-gray-400">
               ₹{product?.price.toLocaleString()}
             </p>
-            <p className="lg:text-sm xl:text-base text-[8px] text-green-500 font-semibold">
+            <p className="lg:text-sm text-[8px] text-green-500 font-semibold">
               {product?.discountPercentage}% off
             </p>
           </div>
@@ -69,14 +71,14 @@ export const ProductCard = ({ product }) => {
           <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
             <button
               onClick={(e) => handleBuyProduct(e, product?._id)}
-              className="bg-blue-600 lg:text-base md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-blue-600 md:text-sm text-[10.3px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Buy Now
             </button>
 
             <button
               onClick={(e) => handleAddToCart(e, product?._id)}
-              className="bg-red-500 lg:text-base md:text-sm text-[10.3px] xl:px-4 xl:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-red-500 md:text-sm text-[10.3px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Add to Cart
             </button>

@@ -71,14 +71,14 @@ export const singleFilter = [
       { value: "80", label: "80% And Above" },
     ],
   },
-  {
-    id: "stock",
-    name: "Availability",
-    options: [
-      { value: "inStock", label: "In Stock" },
-      { value: "outOfStock", label: "Out Of Stock" },
-    ],
-  },
+  // {
+  //   id: "stock",
+  //   name: "Availability",
+  //   options: [
+  //     { value: "inStock", label: "In Stock" },
+  //     { value: "outOfStock", label: "Out Of Stock" },
+  //   ],
+  // },
 ];
 
 export const sortOptions = [

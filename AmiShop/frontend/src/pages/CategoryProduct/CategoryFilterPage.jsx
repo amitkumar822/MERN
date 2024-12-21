@@ -113,16 +113,13 @@ export default function CategoryFilterPage() {
     }));
   };
 
-  console.log(selectedSingleFilter);
-  
-
   // Fetch data based on selected filters
   const fetchData = async () => {
     try {
       const response = await axios.post("/api/product/filter", {
         category: filterCategoryList,
         discount: selectedSingleFilter?.discount,
-        price: selectedSingleFilter?.price
+        price: selectedSingleFilter?.price,
       });
 
       setData(response?.data?.data || []);
@@ -176,8 +173,6 @@ export default function CategoryFilterPage() {
 
     setData(sortedData);
   };
-
-  
 
   return (
     <div className="w-full">
@@ -449,19 +444,29 @@ export default function CategoryFilterPage() {
                             {section.options.map((option, optionIdx) => (
                               <div key={optionIdx}>
                                 <FormControlLabel
-                                  onChange={(e) =>
-                                    handleRadioFilterChange(
-                                      e.target.value,
-                                      section.id
-                                    )
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedSingleFilter[section.id] ===
+                                        option.value
+                                      }
+                                      onChange={() =>
+                                        handleRadioFilterChange(
+                                          option.value,
+                                          section.id
+                                        )
+                                      }
+                                      sx={{
+                                        "&.Mui-checked": {
+                                          color: "primary.main",
+                                        },
+                                        "&:hover": {
+                                          color: "primary.light",
+                                        },
+                                      }}
+                                    />
                                   }
-                                  value={option.value}
-                                  control={<Radio />}
                                   label={option.label}
-                                  checked={
-                                    selectedSingleFilter[section.id] ===
-                                    option.value
-                                  }
                                 />
                               </div>
                             ))}
@@ -480,13 +485,13 @@ export default function CategoryFilterPage() {
                     Please Select Category😊
                   </h1>
                 )}
-                <div className="w-full mx-auto flex flex-wrap gap-1">
+                <div className="w-full mx-auto flex flex-wrap gap-[6px] mt-2">
                   {filterCategoryList.length === 0 || loading
                     ? Array.from({ length: 8 }).map((_, index) => (
                         <ProductSkeleton key={index} />
                       ))
-                    : data.map((product) => (
-                        <ProductCard product={product} key={product._id} />
+                    : data.map((product, index) => (
+                        <ProductCard product={product} index={index} key={product._id} />
                       ))}
                 </div>
               </div>
