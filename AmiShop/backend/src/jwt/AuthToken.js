@@ -33,7 +33,7 @@ const createTokensAndSaveCookies = async (userId, res) => {
 
   await User.findByIdAndUpdate(userId, { refreshToken });
 
-  return { accessToken, refreshToken };
+  // return { accessToken, refreshToken };
 };
 
 export default createTokensAndSaveCookies;

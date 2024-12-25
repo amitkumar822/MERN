@@ -15,7 +15,7 @@ const ProductDetailsPage = () => {
   const { fetchCountAddToCart } = useContext(UserContext);
   const productId = useParams();
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);

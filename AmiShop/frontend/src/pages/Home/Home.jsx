@@ -8,6 +8,7 @@ import Cart from "../Cart/Cart";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
 import TopBrand from "../../components/Main/TopBrand/TopBrand";
 import BestSellingProduct from "../../components/Main/BestSellingProduct/BestSellingProduct";
+import ProductShowcase from "../ProductShowcase";
 
 const Home = () => {
   return (
@@ -16,6 +17,8 @@ const Home = () => {
 
       {/* Carousel or Banner Component */}
       <Carousel />
+
+      <ProductShowcase />
 
       {/* Best Selling Product */}
       <BestSellingProduct />

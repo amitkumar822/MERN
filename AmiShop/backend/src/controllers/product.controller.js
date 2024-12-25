@@ -8,7 +8,7 @@ import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary.js";
 import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
 
-//********** Main Screen API **********
+//! ********** Main Screen API **********
 // get products by category like "mouse, mobile, laptop...."
 export const getCategoryNameWiseProducts = asyncHandler(async (req, res) => {
   const { category } = req?.body || req?.query;
@@ -32,7 +32,7 @@ export const getCategoryByProducts = asyncHandler(async (_, res) => {
   const categoryProducts = await Product.aggregate([
     { $group: { _id: "$category", product: { $first: "$$ROOT" } } }, // Group by category and pick the first product
     { $replaceRoot: { newRoot: "$product" } }, // Replace the root document with the product object
-  ]);
+  ]).limit(20);
 
   if (!categoryProducts || categoryProducts.length === 0) {
     throw new ApiError(404, "No products found in the database!");
@@ -69,7 +69,7 @@ export const getBrandWiseProduct = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, product, "Brand Wise Products"));
 });
 
-//*********** Admin Product Controller ***********
+//! *********** Admin Product Controller ***********
 // upload product
 export const uploadProduct = asyncHandler(async (req, res) => {
   // Check if files are provided
@@ -134,12 +134,12 @@ export const uploadProduct = asyncHandler(async (req, res) => {
     });
   }
 
-  // Calculate discounted price percentage
-  const calculateDiscountedPercentage = () => {
-    const discountedPrice = price - sellingPrice;
-    const discountedPercentage = (discountedPrice / price) * 100;
-    return discountedPercentage.toFixed(2);
-  };
+  // // Calculate discounted price percentage
+  // const calculateDiscountedPercentage = () => {
+  //   const discountedPrice = price - sellingPrice;
+  //   const discountedPercentage = (discountedPrice / price) * 100;
+  //   return discountedPercentage.toFixed(2);
+  // };
 
   // Calculate discounted price percentage
   const discountPercentage = (((price - sellingPrice) / price) * 100).toFixed(
@@ -223,7 +223,9 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 
 // update product
 export const updateProduct = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { id } = req?.params;
+  const { userId } = req?.user;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new ApiError(404, "Invalid Product ID!");
   }
@@ -272,6 +274,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
     return discountPercentage.toFixed(2);
   };
   updatedProduct.discountPercentage = calculateDiscountPercentage();
+  updatedProduct.owner = userId;
 
   await updatedProduct.save();
 
@@ -315,7 +318,7 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
     );
 });
 
-//*********** Secondery Screen or Page Controller ***********
+//! *********** Secondery Screen or Page Controller ***********
 
 // get product details wise product id
 export const getProductDetailsByProductId = asyncHandler(async (req, res) => {
@@ -372,7 +375,6 @@ export const searchProduct = asyncHandler(async (req, res) => {
 // filter product by category
 export const filterProduct = asyncHandler(async (req, res) => {
   const { category, price, stock, discount } = req.body;
-  console.log("price: ", price)
 
   const filterQuery = {};
 
@@ -383,7 +385,6 @@ export const filterProduct = asyncHandler(async (req, res) => {
 
   if (price) {
     const [minPrice, maxPrice] = price.split("-").map(Number);
-    console.log("Price: ", minPrice, maxPrice);
     // The $gte operator is used to find documents where a field’s value is greater than or equal to a specified value.
     // The $lte operator is used to find documents where a field’s value is less than or equal to a specified value.
     filterQuery.sellingPrice = { $gte: minPrice, $lte: maxPrice };
@@ -397,10 +398,7 @@ export const filterProduct = asyncHandler(async (req, res) => {
     filterQuery.stock = { $gte: stock };
   }
 
-  console.log("FQ: ", filterQuery);
-
   const products = await Product.find(filterQuery);
-  // console.log(products)
 
   if (!products || products.length === 0) {
     throw new ApiError(

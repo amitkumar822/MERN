@@ -24,8 +24,6 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
       throw new ApiError(403, "Unauthorized Access");
     }
 
-    // Attach user details to request object
-    req.user = user;
     next();
   } catch (err) {
     // If access token is invalid or expired, check refresh token
@@ -35,7 +33,10 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
       }
 
       try {
-        const decodedRefresh = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
+        const decodedRefresh = jwt.verify(
+          refreshToken,
+          process.env.JWT_REFRESH_SECRET_KEY
+        );
         const user = await User.findById(decodedRefresh.userId);
 
         if (!user) {
@@ -47,9 +48,13 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
         }
 
         // Issue a new access token
-        accessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET_KEY, {
-          expiresIn: "15m",
-        });
+        accessToken = jwt.sign(
+          { userId: user._id },
+          process.env.JWT_ACCESS_SECRET_KEY,
+          {
+            expiresIn: "15m",
+          }
+        );
 
         // Set the new access token in the cookies
         res.cookie("accessToken", accessToken, {
@@ -59,8 +64,6 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
           maxAge: 15 * 60 * 1000, // 15 minutes
         });
 
-        // Attach user details to request object
-        req.user = user;
         next();
       } catch (refreshErr) {
         throw new ApiError(401, "Session expired. Please log in again");
@@ -70,9 +73,6 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
     }
   }
 });
-
-
-
 
 // import { asyncHandler } from "../../utils/asyncHandler.js";
 // import { ApiError } from "../../utils/ApiError.js";
