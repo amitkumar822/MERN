@@ -16,6 +16,7 @@ const ProductDetailsPage = () => {
   const productId = useParams();
 
   const [data, setData] = useState([]);
+  console.log(data)
   const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);

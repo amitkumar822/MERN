@@ -8,17 +8,15 @@ import Cart from "../Cart/Cart";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
 import TopBrand from "../../components/Main/TopBrand/TopBrand";
 import BestSellingProduct from "../../components/Main/BestSellingProduct/BestSellingProduct";
-import ProductShowcase from "../ProductShowcase";
+import CarouselDesktop from "../../components/Banner/CarouselDesktop";
 
 const Home = () => {
   return (
     <div>
       <CategoryList />
 
-      {/* Carousel or Banner Component */}
-      <Carousel />
-
-      <ProductShowcase />
+      {/* Carousel or Banner Component Desktop and mobile */}
+      <CarouselDesktop />
 
       {/* Best Selling Product */}
       <BestSellingProduct />

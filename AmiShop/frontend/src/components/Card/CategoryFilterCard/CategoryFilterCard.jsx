@@ -20,7 +20,7 @@ export const ProductCard = ({ product, index }) => {
 
   return (
     <Link to={`/product/${product?._id}`} onClick={scrollTop()}>
-      <div className="md:productCard bg-white xl:w-[17.4rem] lg:w-[16.6rem] md:w-[15rem] xs1:w-[10.6rem] xs2:w-[11rem] xs3:w-[11.8rem] w-[11rem] xs2:m-1 transition-transform transform md:hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
+      <div className="md:productCard bg-white xl:w-[17.4rem] lg:w-[16.6rem] md:w-[15rem] xs1:w-[10.5rem] xs2:w-[11rem] xs3:w-[11.8rem] w-[11rem] xs2:m-1 transition-transform transform md:hover:scale-105 cursor-pointer shadow-lg rounded-lg overflow-hidden">
         {/* Image Section */}
         <div className="md:h-[140px] h-[120px] w-full bg-blue-100  flex items-center justify-center overflow-hidden">
           <img
@@ -33,7 +33,7 @@ export const ProductCard = ({ product, index }) => {
         </div>
 
         {/* Text Section */}
-        <div className="textPart bg-white p-4">
+        <div className="textPart bg-white md:p-4 p-2">
           {/* Brand and Name */}
           <div>
             <p className="lg:text-sm text-xs font-bold text-gray-600 uppercase">
@@ -71,14 +71,14 @@ export const ProductCard = ({ product, index }) => {
           <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
             <button
               onClick={(e) => handleBuyProduct(e, product?._id)}
-              className="bg-blue-600 md:text-sm text-[10.3px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-blue-600 md:text-sm text-[10px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Buy Now
             </button>
 
             <button
               onClick={(e) => handleAddToCart(e, product?._id)}
-              className="bg-red-500 md:text-sm text-[10.3px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-red-500 md:text-sm text-[10px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Add to Cart
             </button>

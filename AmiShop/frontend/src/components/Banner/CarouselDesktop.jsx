@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import scrollTop from "../helpers/scrollTop";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/material";
-import AliceCarousel from "react-alice-carousel";
-import { AmazonBanner } from "../data/banner/BannerExport";
-import Carousel from "../components/Banner/Carousel";
+import Carousel from "./Carousel";
+import { AmazonBanner } from "../../data/banner/BannerExport";
+import scrollTop from "../../helpers/scrollTop";
 
-const ProductShowcase = () => {
+const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
 
   const fetchProduct = async () => {
@@ -43,17 +41,21 @@ const ProductShowcase = () => {
   return (
     <div className="bg-gray-100">
       {/* Banner Slideshow */}
-      <div className={`w-full xl:h-[58rem] lg:h-[46rem] bg-yellow-300 lg:block hidden`}
+      <div
+        className={`w-full xl:h-[58rem] lg:h-[46rem] bg-yellow-300 lg:block hidden`}
         style={{
           backgroundImage: `url(${AmazonBanner[currentIndex].image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      >
+      ></div>
+
+      {/* Mobile Carousel */}
+      <div className="lg:hidden block">
+        <Carousel />
       </div>
 
-      <div className="lg:hidden block"><Carousel /></div>
-
+      {/* Dekstop Carousel */}
       {/* Main Grid Container */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:-mt-[34rem] lg:-mt-[27rem] px-4 pb-2">
         {/* Column 1: Most-Loved Products */}
@@ -89,7 +91,6 @@ const ProductShowcase = () => {
 
         {/* Column 2: Revamp Your Home */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          
           <h2 className="xl:text-lg font-bold mb-2">
             Discover the Perfect T-Shirt to Redefine Your Look
           </h2>
@@ -107,7 +108,6 @@ const ProductShowcase = () => {
                     alt="Home Decor"
                     className="rounded-lg"
                   />
-                  {/* <Typography className="mt-1 text-sm" component={"div"}>{items?.category}</Typography> */}
                 </Link>
               ))}
           </div>
@@ -174,4 +174,4 @@ const ProductShowcase = () => {
   );
 };
 
-export default ProductShowcase;
+export default CarouselDesktop;
