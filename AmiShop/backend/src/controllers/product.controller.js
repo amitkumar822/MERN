@@ -59,14 +59,58 @@ export const getBrandWiseProduct = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Missing required parameters");
   }
 
-  const product = await Product.find({ brand });
-  if (!product) {
+  const product = await Product.find({
+    brand: brand.toLowerCase(),
+  });
+
+  if (product.length === 0) {
     throw new ApiError(
       404,
       "No products found in the database for this brand!"
     );
   }
   res.status(200).json(new ApiResponse(200, product, "Brand Wise Products"));
+});
+
+// get 4 categories layers product
+export const get4CategoriesProduct = asyncHandler(async (req, res) => {
+  const categorys = ["clocks", "tshirts", "diningtable", "sarees"];
+
+  const pipeline = [
+    { $match: { category: { $in: categorys } } }, // Filter by the specified categories
+    {
+      $group: {
+        _id: "$category", // Group products by category
+        products: { $push: "$$ROOT" }, // Push all products into an array for each category
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        category: "$_id", // Rename _id to category
+        products: { $slice: ["$products", 4] }, // Limit to the top 4 products per category
+      },
+    },
+    {
+      $addFields: {
+        categoryOrder: { $indexOfArray: [categorys, "$category"] }, // Map the category to its order in the input array
+      },
+    },
+    {
+      $sort: { categoryOrder: 1, createdAt: -1 }, // Sort by categoryOrder to ensure output matches categorys order
+    },
+    {
+      $project: { categoryOrder: 0 }, // Remove categoryOrder from the final output
+    },
+  ];
+
+  const product = await Product.aggregate(pipeline);
+
+  if (!product.length) {
+    throw new ApiError(404, "No Any Product In Database!");
+  }
+
+  res.status(200).json(new ApiResponse(200, product, "Products"));
 });
 
 //! *********** Admin Product Controller ***********
@@ -459,47 +503,6 @@ export const getBestSellingAllProduct = asyncHandler(async (req, res) => {
   });
 
   if (product.length === 0) {
-    throw new ApiError(404, "No Any Product In Database!");
-  }
-
-  res.status(200).json(new ApiResponse(200, product, "Products"));
-});
-
-// get 4 categories layers product
-export const get4CategoriesProduct = asyncHandler(async (req, res) => {
-  const categorys = ["clocks", "tshirts", "diningtable", "sarees"];
-
-  const pipeline = [
-    { $match: { category: { $in: categorys } } }, // Filter by the specified categories
-    {
-      $group: {
-        _id: "$category", // Group products by category
-        products: { $push: "$$ROOT" }, // Push all products into an array for each category
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        category: "$_id", // Rename _id to category
-        products: { $slice: ["$products", 4] }, // Limit to the top 4 products per category
-      },
-    },
-    {
-      $addFields: {
-        categoryOrder: { $indexOfArray: [categorys, "$category"] }, // Map the category to its order in the input array
-      },
-    },
-    {
-      $sort: { categoryOrder: 1, createdAt: -1 }, // Sort by categoryOrder to ensure output matches categorys order
-    },
-    {
-      $project: { categoryOrder: 0 }, // Remove categoryOrder from the final output
-    },
-  ];
-
-  const product = await Product.aggregate(pipeline);
-
-  if (!product.length) {
     throw new ApiError(404, "No Any Product In Database!");
   }
 

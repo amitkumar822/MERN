@@ -25,6 +25,7 @@ const productSchema = new Schema(
     brand: {
       type: String,
       required: true,
+      lowercase: true,
       trim: true,
     },
     category: {

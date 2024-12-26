@@ -9,13 +9,13 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
   const loadingList = new Array(13).fill(null);
   const { fetchCountAddToCart } = useContext(UserContext);
 
-  const handleAddToCart = async (e, id) => {
+  const handleAddToCart = async (e, id) => {  
     await AddToCart(e, id);
     fetchCountAddToCart();
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4 bg-gray-500">
+    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4">
       {loading
         ? loadingList.map((_, index) => (
             <div

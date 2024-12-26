@@ -171,7 +171,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                         </p>
                         <p>
                           <span className="text-xs md:text-base font-semibold text-slate-900">
-                            {product.sellingPrice.toLocaleString()}
+                          ₹{product.sellingPrice.toLocaleString()}
                           </span>
                           <span className="text-[12px] text-red-500 md:text-sm line-through ml-2">
                             {product?.price.toLocaleString()}
