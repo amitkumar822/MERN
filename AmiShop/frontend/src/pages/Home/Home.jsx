@@ -40,13 +40,6 @@ const Home = () => {
       <TopBrand />
 
       <VerticalCard category={"mouse"} heading={"Top Mouse"} />
-      {/* <VerticalCard category={"mouse"} heading={"Mouse"} />
-      <VerticalCard category={"televisions"} heading={"Televisions"} />
-      <VerticalCard category={"camera"} heading={"Camera & Photography"} />
-      <VerticalCard category={"earphones"} heading={"Wired Earphones"} />
-      <VerticalCard category={"speakers"} heading={"Bluetooth Speakers"} />
-      <VerticalCard category={"refrigerator"} heading={"Refrigerator"} />
-      <VerticalCard category={"trimmers"} heading={"Trimmers"} /> */}
 
       {/* Add your other components or pages here */}
       <Cart category={"mobiles"} heading={"Mobiles"} />

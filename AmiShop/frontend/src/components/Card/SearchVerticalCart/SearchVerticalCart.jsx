@@ -15,7 +15,7 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4 bg-gray-50">
+    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4 bg-gray-500">
       {loading
         ? loadingList.map((_, index) => (
             <div
@@ -40,27 +40,27 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
               className="w-full bg-white rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 overflow-hidden"
             >
               <Link to={`/product/${product?._id}`} onClick={scrollTop}>
-                <div className="relative h-36 bg-gray-100 flex justify-center items-center">
+                <div className="relative h-36 pt-2 bg-gray-100 flex justify-center items-center">
                   <img
                     src={product?.productImage[0]?.url}
                     alt={product?.productName}
                     className="object-contain h-full w-full transition-transform duration-300 hover:scale-110"
                   />
                 </div>
-                <div className="p-3 space-y-2">
-                  <h2 className="font-bold text-base text-gray-900 truncate">
+                <div className="p-3 space-y-1">
+                  <span className="text-sm font-semibold text-blue-900 capitalize bg-blue-100 px-2 rounded-full">
+                    {product?.brand}
+                  </span>
+                  <p className=" text-base text-gray-900 line-clamp-2">
                     {product?.productName}
-                  </h2>
-                  <p className="text-xs text-gray-600 capitalize">
-                    {product?.category}
                   </p>
                   <div className="flex items-center space-x-2">
                     <p className="text-lg font-semibold text-blue-600">
-                      {displayINRCurrency(product?.sellingPrice)}
+                    ₹{product?.sellingPrice.toLocaleString()}
                     </p>
                     {product?.price && (
                       <p className="text-xs text-gray-500 line-through">
-                        {displayINRCurrency(product?.price)}
+                        {product?.price.toLocaleString()}
                       </p>
                     )}
                     {product?.discountPercentage && (

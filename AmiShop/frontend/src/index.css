@@ -29,6 +29,11 @@ label {
   font-family: "Roboto",Helvetica, Arial, sans-serif;
 }
 
+p {
+  font-family: "Roboto", serif;
+  color: #212121;
+}
+
 span,
 button {
   font-family: "Fredoka", sans-serif;

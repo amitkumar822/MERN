@@ -7,6 +7,7 @@ import scrollTop from "../../helpers/scrollTop";
 
 const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchProduct = async () => {
     try {
@@ -15,6 +16,7 @@ const CarouselDesktop = () => {
         withCredentials: true,
       });
       setProduct(data?.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -61,10 +63,13 @@ const CarouselDesktop = () => {
         {/* Column 1: Most-Loved Products */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="xl:text-lg font-bold mb-2">
-            Customers' Most-Loved Products for you
+          Our Most Popular cloaks
           </h2>
           <div className="grid grid-cols-2 gap-2 overflow-hidden">
-            {product &&
+            {loading ? (
+              <Skeleton />
+            ) : (
+              product &&
               product[0]?.products?.map((items, index) => (
                 <Link
                   to={"/product/" + items?._id}
@@ -75,15 +80,18 @@ const CarouselDesktop = () => {
                   <img
                     src={items?.productImage[0].url}
                     alt="Home Decor"
-                    className="rounded-lg max-h-56 overflow-hidden"
+                    className="rounded-lg max-h-60 overflow-hidden"
                   />
                   {/* <p className="mt-1 text-sm line-clamp-1">{items?.productName}</p> */}
                 </Link>
-              ))}
+              ))
+            )}
           </div>
           <Link
             to={`category-filter?category=${product[0]?.category}`}
-            className="text-blue-500 text-sm mt-2 inline-block"
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -92,10 +100,14 @@ const CarouselDesktop = () => {
         {/* Column 2: Revamp Your Home */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="xl:text-lg font-bold mb-2">
-            Discover the Perfect T-Shirt to Redefine Your Look
+          Redefine Style with the Perfect T-Shirt
+            {/* Discover the Perfect T-Shirt to Redefine Your Look */}
           </h2>
           <div className="grid grid-cols-2 gap-2">
-            {product &&
+            {loading ? (
+              <Skeleton />
+            ) : (
+              product &&
               product[1]?.products?.map((items, index) => (
                 <Link
                   to={"/product/" + items?._id}
@@ -109,11 +121,14 @@ const CarouselDesktop = () => {
                     className="rounded-lg"
                   />
                 </Link>
-              ))}
+              ))
+            )}
           </div>
           <Link
             to={`category-filter?category=${product[1]?.category}`}
-            className="text-blue-500 text-sm mt-2 inline-block"
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -126,7 +141,10 @@ const CarouselDesktop = () => {
             Revamp your home in style
           </h2>
           <div className="grid grid-cols-2 gap-2">
-            {product &&
+            {loading ? (
+              <Skeleton />
+            ) : (
+              product &&
               product[2]?.products?.map((items, index) => (
                 <Link
                   to={"/product/" + items?._id}
@@ -145,11 +163,14 @@ const CarouselDesktop = () => {
                     {items?.productName}
                   </p>
                 </Link>
-              ))}
+              ))
+            )}
           </div>
           <Link
             to={`category-filter?category=${product[2]?.category}`}
-            className="text-blue-500 text-sm mt-2 inline-block"
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -158,16 +179,44 @@ const CarouselDesktop = () => {
         {/* Column 4: Sign In */}
         <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
           <h2 className="xl:text-lg font-bold mb-2">
-            Sign in for your best experience
+            {/* Explore more from Small Businesses */}
+            Traditional & Modern Sarees
           </h2>
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg mt-4">
-            Sign in securely
-          </button>
-          <img
-            src="https://res.cloudinary.com/dud6rs8er/image/upload/v1734151762/e6xleq1fv2max8qp7ise.webp"
-            alt="Product"
-            className="mt-4 rounded-lg h-[60%]"
-          />
+          <div className="grid grid-cols-2 gap-2">
+            {loading ? (
+              <Skeleton />
+            ) : (
+              product &&
+              product[3]?.products?.map((items, index) => (
+                <Link
+                  to={"/product/" + items?._id}
+                  onClick={scrollTop}
+                  className="text-center cursor-pointer"
+                  key={index}
+                >
+                  <div className="text-center">
+                    <img
+                      src={items?.productImage[0].url}
+                      alt={items?.brand}
+                      className="rounded-lg max-h-48"
+                    />
+                  </div>
+                  <p className="mt-1 text-sm line-clamp-1">
+                    {items?.productName}
+                  </p>
+                </Link>
+              ))
+            )}
+          </div>
+          <Link
+            aria-disabled
+            to={`category-filter?category=${product[3]?.category}`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
+          >
+            Explore all
+          </Link>
         </div>
       </div>
     </div>
@@ -175,3 +224,16 @@ const CarouselDesktop = () => {
 };
 
 export default CarouselDesktop;
+
+const Skeleton = () => {
+  return (
+    <>
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div key={index}>
+          <div className="bg-gray-200 w-40 h-40 flex justify-center items-center skeleton"></div>
+          <p className="mt-1 bg-gray-200 w-[95%] h-4 skeleton"></p>
+        </div>
+      ))}
+    </>
+  );
+};

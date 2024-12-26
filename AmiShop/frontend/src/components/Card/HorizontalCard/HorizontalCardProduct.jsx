@@ -162,19 +162,19 @@ const HorizontalCardProduct = ({ category, heading }) => {
                     <div className="p-2 flex flex-col justify-between h-full">
                       <div className="flex flex-col gap-2 ">
                         <div>
-                          <p className="font-bold text-gray-600 uppercase">
+                          <p className="text-sm font-semibold text-gray-600 uppercase">
                             {product?.brand}
                           </p>
                         </div>
-                        <h5 className="text-xs md:text-[15px] font-semibold tracking-tight text-slate-900 line-clamp-2 capitalize">
+                        <p className="text-xs md:text-base text-slate-900 line-clamp-2 capitalize">
                           {product?.productName}
-                        </h5>
+                        </p>
                         <p>
-                          <span className="text-xs md:text-[16px] font-semibold text-slate-900">
-                            {displayINRCurrency(product.sellingPrice)}
+                          <span className="text-xs md:text-base font-semibold text-slate-900">
+                            {product.sellingPrice.toLocaleString()}
                           </span>
                           <span className="text-[12px] text-red-500 md:text-sm line-through ml-2">
-                            {displayINRCurrency(product?.price)}
+                            {product?.price.toLocaleString()}
                           </span>
                         </p>
                       </div>

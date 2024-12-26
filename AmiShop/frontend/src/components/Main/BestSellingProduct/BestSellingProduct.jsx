@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import axios from "axios";
 import OfflineShareIcon from "@mui/icons-material/OfflineShare";
@@ -79,20 +79,20 @@ const BestSellingProduct = () => {
                   />
                 </div>
                 <div className="bg-white text-container transition-transform transform group-hover:-translate-y-4">
-                  <h3 className="md:text-lg text-sm font-semibold text-gray-500 uppercase">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
                     {item.brand}
                   </h3>
-                  <h3 className="lg:text-[16px] md:text-sm text-xs font-semibold line-clamp-2">
+                  <h3 className="lg:text-[16px] md:text-sm text-xs line-clamp-2">
                     {item.productName}
                   </h3>
                   <div className="flex items-center mt-2 md:space-x-2 space-x-1">
-                    <p className="lg:text-lg md:text-sm text-[12px] font-bold text-blue-600">
+                    <p className="lg:text-base md:text-sm text-[12px] font-semibold text-blue-800">
                       ₹{item?.sellingPrice.toLocaleString()}
                     </p>
                     <p className="lg:text-sm md:text-xs text-[9px] line-through text-gray-400">
                       ₹{item?.price.toLocaleString()}
                     </p>
-                    <p className="lg:text-sm md:text-xs text-[9px] text-green-500 font-semibold text-nowrap">
+                    <p className="lg:text-sm md:text-xs text-[9px] text-green-600 font-semibold text-nowrap">
                       {item?.discountPercentage}% off
                     </p>
                   </div>

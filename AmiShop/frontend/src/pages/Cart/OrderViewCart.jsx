@@ -14,6 +14,8 @@ const OrderViewCart = () => {
   const [allProductId, setAllProductId] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
+  console.log(allProductId)
+
   const fetchData = async () => {
     try {
       const { data } = await axios.get("/api/user/view-addtocart", {

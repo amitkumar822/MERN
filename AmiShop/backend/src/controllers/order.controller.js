@@ -180,6 +180,7 @@ export const getAllUserConfirmedOrder = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
 });
 
+//************ Admin Controller***************** */
 export const getAllAdminPlacedOrder = asyncHandler(async (req, res) => {
   const order = await Order.find({ status: { $ne: "refunded" } })
     .populate("productId")

@@ -28,7 +28,7 @@ export const ProductCard = ({ product, index }) => {
               index % 2 === 0 ? "md:hover:rotate-12" : "md:hover:-rotate-12"
             }`}
             src={product?.productImage[0]?.url}
-            alt={product?.productName}
+            alt={product?.brand}
           />
         </div>
 
@@ -36,10 +36,10 @@ export const ProductCard = ({ product, index }) => {
         <div className="textPart bg-white md:p-4 p-2">
           {/* Brand and Name */}
           <div>
-            <p className="lg:text-sm text-xs font-bold text-gray-600 uppercase">
+            <p className="lg:text-sm text-xs font-medium text-gray-600 uppercase">
               {product?.brand}
             </p>
-            <p className="lg:text-sm xl:text-[16px] text-xs font-semibold text-gray-800 truncate">
+            <p className="lg:text-sm xl:text-base text-xs line-clamp-2">
               {product?.productName}
             </p>
           </div>
@@ -71,14 +71,14 @@ export const ProductCard = ({ product, index }) => {
           <div className="flex justify-between items-center mt-4 lg:gap-3 gap-1">
             <button
               onClick={(e) => handleBuyProduct(e, product?._id)}
-              className="bg-blue-600 md:text-sm text-[10px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-blue-600 md:text-sm text-[10px] px-2 py-1 md:font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Buy Now
             </button>
 
             <button
               onClick={(e) => handleAddToCart(e, product?._id)}
-              className="bg-red-500 md:text-sm text-[10px] xl:px-3 md:py-2 px-2 py-1 font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
+              className="bg-red-500 md:text-sm text-[10px] px-2 py-1 md:font-semibold text-nowrap text-white uppercase rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:translate-y-[-2px] hover:shadow-xl"
             >
               Add to Cart
             </button>

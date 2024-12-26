@@ -112,7 +112,7 @@ export const uploadProduct = asyncHandler(async (req, res) => {
 
   if (
     !productName ||
-    !description ||
+    // !description ||
     !price ||
     !sellingPrice ||
     !brand ||
@@ -467,7 +467,7 @@ export const getBestSellingAllProduct = asyncHandler(async (req, res) => {
 
 // get 4 categories layers product
 export const get4CategoriesProduct = asyncHandler(async (req, res) => {
-  const categorys = ["clocks", "tshirts", "diningtable"];
+  const categorys = ["clocks", "tshirts", "diningtable", "sarees"];
 
   const pipeline = [
     { $match: { category: { $in: categorys } } }, // Filter by the specified categories

@@ -34,8 +34,8 @@ const PopularProduct = () => {
   }, [category || ""]);
 
   return (
-    <div className=" mx-auto my-8 md:px-3">
-      <h1 className="font-bold md:text-2xl mb-2">Top Popular Product</h1>
+    <div className=" mx-auto my-8 md:p-3 ">
+      <h1 className="font-bold md:text-2xl">Top Popular Product</h1>
       <div className="mx-auto">
         <div>
           {/* Category Buttons */}
@@ -44,7 +44,7 @@ const PopularProduct = () => {
               display: "flex",
               justifyContent: "end",
               gap: 2,
-              mb: 4,
+              mb: 2,
             }}
           >
             {["mobiles", "laptops", "televisions"].map((cat) => (

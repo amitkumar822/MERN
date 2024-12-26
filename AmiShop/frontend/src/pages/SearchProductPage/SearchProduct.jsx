@@ -28,10 +28,10 @@ const SearchProduct = () => {
 
   return (
     <div>
-      <div className="w-full mx-auto p-4">
+      <div className="w-full mx-auto px-4">
         {loading && <p className="text-lg text-center">Loading ...</p>}
 
-        <p className="text-lg font-semibold my-3">
+        <p className="text-lg font-semibold my-1">
           Search Results : {data.length}
         </p>
 
