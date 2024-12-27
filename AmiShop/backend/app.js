@@ -43,7 +43,7 @@ import orderRoutes from "./src/routes/order.routes.js";
 import googleRoutes from "./src/routes/google.routes.js";
 import reviewRoutes from "./src/routes/review.routes.js";
 
-// difine router
+// define router
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/banner-slider", bannerSliderRouter);
@@ -51,11 +51,11 @@ app.use("/api/v1/order", orderRoutes);
 app.use("/api/v1/auth", googleRoutes); // integrate with google login routes
 app.use("/api/v1/review", reviewRoutes);
 
-// difine captch router
+// define captcha router
 import captchaRouter from "./src/routes/captcha.routes.js";
 app.use("/api/v1/captcha", captchaRouter);
 
-// difine sale router
+// define sale router
 import saleRouter from "./src/routes/sale.routes.js";
 app.use("/api/v1/sale", saleRouter);
 

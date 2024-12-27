@@ -17,15 +17,15 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Banner Slider Routes
 
-### POST /upload
+### POST /api/v1/banner-slider/upload
 
 - **Description**: Upload a new banner image.
 - **Status Codes**: 
   - `201`: Banner uploaded successfully.
   - `400`: Banner photo must be provided or invalid format.
 - **Data Requirements**:
-  - `bannerImg`: File (image/jpeg, image/png, image/webp)
-  - `category`: String
+  - `bannerImg` (required): File (image/jpeg, image/png, image/webp)
+  - `category` (required): String
 - **Example Output**:
   - Success: 
     ```json
@@ -46,7 +46,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-banner
+### GET /api/v1/banner-slider/get-banner
 
 - **Description**: Retrieve all banners.
 - **Status Codes**: 
@@ -74,7 +74,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### DELETE /delete/:bannerId
+### DELETE /api/v1/banner-slider/delete/:bannerId
 
 - **Description**: Delete a banner by ID.
 - **Status Codes**: 
@@ -96,7 +96,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-banner-by-id/:bannerId
+### GET /api/v1/banner-slider/get-banner-by-id/:bannerId
 
 - **Description**: Retrieve a banner by ID.
 - **Status Codes**: 
@@ -126,14 +126,14 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Captcha Routes
 
-### POST /generate
+### POST /api/v1/captcha/generate
 
 - **Description**: Generate a CAPTCHA code and send it to the user's email.
 - **Status Codes**: 
   - `201`: Captcha generated successfully.
   - `400`: Email must be required or not found.
 - **Data Requirements**:
-  - `email`: String
+  - `email` (required): String
 - **Example Output**:
   - Success:
     ```json
@@ -154,7 +154,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /getcaptcha
+### GET /api/v1/captcha/getcaptcha
 
 - **Description**: Retrieve the latest CAPTCHA for a given email.
 - **Status Codes**: 
@@ -186,13 +186,13 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Google Authentication Routes
 
-### GET /google
+### GET /api/v1/auth/google
 
 - **Description**: Initiate Google login.
 - **Status Codes**: 
   - Redirects to Google login page.
 
-### GET /google/callback
+### GET /api/v1/auth/google/callback
 
 - **Description**: Handle Google login callback.
 - **Status Codes**: 
@@ -214,7 +214,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /current-user
+### GET /api/v1/auth/current-user
 
 - **Description**: Check the current logged-in user.
 - **Status Codes**: 
@@ -246,17 +246,17 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Order Routes
 
-### POST /checkout
+### POST /api/v1/order/checkout
 
 - **Description**: Create a new order.
 - **Status Codes**: 
   - `200`: Order created on RazorPay.
   - `400`: All fields are required.
 - **Data Requirements**:
-  - `productId`: Array of ObjectId
-  - `quantity`: Array of Number
-  - `amount`: Number
-  - `userId`: ObjectId
+  - `productId` (required): Array of ObjectId
+  - `quantity` (required): Array of Number
+  - `amount` (required): Number
+  - `userId` (required): ObjectId
 - **Example Output**:
   - Success:
     ```json
@@ -277,13 +277,13 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /payment-verification
+### POST /api/v1/order/payment-verification
 
 - **Description**: Verify payment.
 - **Status Codes**: 
   - Redirects to success or failed page based on verification.
 
-### GET /razorpay-key
+### GET /api/v1/order/razorpay-key
 
 - **Description**: Retrieve Razorpay key.
 - **Status Codes**: 
@@ -300,14 +300,14 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /cancel-order
+### POST /api/v1/order/cancel-order
 
 - **Description**: Cancel an order.
 - **Status Codes**: 
   - `200`: Order successfully canceled and refunded.
   - `400`: Order ID is required or already refunded.
 - **Data Requirements**:
-  - `orderId`: String
+  - `orderId` (required): String
 - **Example Output**:
   - Success:
     ```json
@@ -324,7 +324,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-all-confirmed-order
+### GET /api/v1/order/get-all-confirmed-order
 
 - **Description**: Retrieve all confirmed orders for a user.
 - **Status Codes**: 
@@ -352,7 +352,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-admin-all-order
+### GET /api/v1/order/get-admin-all-order
 
 - **Description**: Retrieve all orders for admin.
 - **Status Codes**: 
@@ -380,15 +380,15 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /update-status
+### POST /api/v1/order/update-status
 
 - **Description**: Update order status.
 - **Status Codes**: 
   - `200`: Order status updated successfully.
   - `404`: Invalid Order ID or not found.
 - **Data Requirements**:
-  - `orderId`: String
-  - `status`: String
+  - `orderId` (required): String
+  - `status` (required): String
 - **Example Output**:
   - Success:
     ```json
@@ -409,22 +409,22 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Product Routes
 
-### POST /upload
+### POST /api/v1/product/upload
 
 - **Description**: Upload a new product.
 - **Status Codes**: 
   - `201`: Product created successfully.
   - `400`: Product photos must be provided or invalid format.
 - **Data Requirements**:
-  - `productName`: String
+  - `productName` (required): String
   - `description`: String
-  - `price`: Number
-  - `sellingPrice`: Number
-  - `brand`: String
-  - `category`: String
-  - `productImage`: Array of Objects with `public_id` and `url`
-  - `quantity`: Number
-  - `discountPercentage`: Number
+  - `price` (required): Number
+  - `sellingPrice` (required): Number
+  - `brand` (required): String
+  - `category` (required): String
+  - `productImage` (required): Array of Objects with `public_id` and `url`
+  - `quantity` (required): Number
+  - `discountPercentage` (required): Number
 - **Example Output**:
   - Success:
     ```json
@@ -446,7 +446,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### DELETE /delete/:id
+### DELETE /api/v1/product/delete/:id
 
 - **Description**: Delete a product by ID.
 - **Status Codes**: 
@@ -468,7 +468,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-products
+### GET /api/v1/product/get-products
 
 - **Description**: Retrieve all products.
 - **Status Codes**: 
@@ -497,22 +497,22 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /update/:id
+### POST /api/v1/product/update/:id
 
 - **Description**: Update a product by ID.
 - **Status Codes**: 
   - `200`: Product updated successfully.
   - `404`: Invalid Product ID or not found.
 - **Data Requirements**:
-  - `productName`: String
+  - `productName` (required): String
   - `description`: String
-  - `price`: Number
-  - `sellingPrice`: Number
-  - `brand`: String
-  - `category`: String
-  - `productImage`: Array of Objects with `public_id` and `url`
-  - `quantity`: Number
-  - `discountPercentage`: Number
+  - `price` (required): Number
+  - `sellingPrice` (required): Number
+  - `brand` (required): String
+  - `category` (required): String
+  - `productImage` (required): Array of Objects with `public_id` and `url`
+  - `quantity` (required): Number
+  - `discountPercentage` (required): Number
 - **Example Output**:
   - Success:
     ```json
@@ -534,7 +534,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### DELETE /delete-product-img/:productId/image/:publicId
+### DELETE /api/v1/product/delete-product-img/:productId/image/:publicId
 
 - **Description**: Delete a product image from Cloudinary.
 - **Status Codes**: 
@@ -556,7 +556,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /getproduct-details-byid/:productId
+### GET /api/v1/product/getproduct-details-byid/:productId
 
 - **Description**: Retrieve product details by ID.
 - **Status Codes**: 
@@ -583,7 +583,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /search
+### GET /api/v1/product/search
 
 - **Description**: Search for products.
 - **Status Codes**: 
@@ -604,7 +604,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /filter
+### POST /api/v1/product/filter
 
 - **Description**: Filter products by category, price, stock, and discount.
 - **Status Codes**: 
@@ -638,7 +638,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /like/:productId
+### POST /api/v1/product/like/:productId
 
 - **Description**: Like or unlike a product.
 - **Status Codes**: 
@@ -660,7 +660,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-best-selling-all-product
+### GET /api/v1/product/get-best-selling-all-product
 
 - **Description**: Retrieve all best-selling products.
 - **Status Codes**: 
@@ -689,7 +689,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### DELETE /delete-image-cloudinary/:publicId
+### DELETE /api/v1/product/delete-image-cloudinary/:publicId
 
 - **Description**: Delete an image from Cloudinary.
 - **Status Codes**: 
@@ -715,15 +715,15 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Review Routes
 
-### POST /write-reviews/:productId
+### POST /api/v1/review/write-reviews/:productId
 
 - **Description**: Write a review for a product.
 - **Status Codes**: 
   - `201`: Review written successfully.
   - `400`: Invalid ProductId or rating.
 - **Data Requirements**:
-  - `rating`: Number
-  - `review`: String
+  - `rating` (required): Number
+  - `review` (required): String
   - `photo`: Object with `public_id` and `url`
 - **Example Output**:
   - Success:
@@ -745,7 +745,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-review/:productId
+### GET /api/v1/review/get-review/:productId
 
 - **Description**: Retrieve all reviews for a product.
 - **Status Codes**: 
@@ -773,7 +773,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /likes/:reviewId
+### POST /api/v1/review/likes/:reviewId
 
 - **Description**: Like or unlike a review.
 - **Status Codes**: 
@@ -795,7 +795,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### POST /dislikes/:reviewId
+### POST /api/v1/review/dislikes/:reviewId
 
 - **Description**: Dislike or remove dislike from a review.
 - **Status Codes**: 
@@ -817,15 +817,15 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### PUT /update/:reviewId
+### PUT /api/v1/review/update/:reviewId
 
 - **Description**: Update a review.
 - **Status Codes**: 
   - `200`: Review updated successfully.
   - `404`: Review not found.
 - **Data Requirements**:
-  - `rating`: Number
-  - `review`: String
+  - `rating` (required): Number
+  - `review` (required): String
   - `photo`: Object with `public_id` and `url`
 - **Example Output**:
   - Success:
@@ -847,7 +847,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### GET /get-single-review/:reviewId
+### GET /api/v1/review/get-single-review/:reviewId
 
 - **Description**: Retrieve a single review by ID.
 - **Status Codes**: 
@@ -873,7 +873,7 @@ This document provides an overview of the API endpoints available in the applica
     }
     ```
 
-### DELETE /delete/:reviewId
+### DELETE /api/v1/review/delete/:reviewId
 
 - **Description**: Delete a review by ID.
 - **Status Codes**: 
@@ -899,7 +899,7 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Sale Routes
 
-### GET /sale-timer
+### GET /api/v1/sale/sale-timer
 
 - **Description**: Retrieve the remaining time for the sale.
 - **Status Codes**: 
@@ -928,16 +928,16 @@ This document provides an overview of the API endpoints available in the applica
 
 ## User Routes
 
-### POST /register
+### POST /api/v1/user/register
 
 - **Description**: Register a new user.
 - **Status Codes**: 
   - `201`: User created successfully.
   - `400`: User photo must be required or invalid format.
 - **Data Requirements**:
-  - `name`: String
-  - `email`: String
-  - `password`: String
+  - `name` (required): String
+  - `email` (required): String
+  - `password` (required): String
   - `avatar`: Object with `public_id` and `url`
 - **Example Output**:
   - Success:
@@ -946,88 +946,312 @@ This document provides an overview of the API endpoints available in the applica
       "status": 201,
       "message": "User created successfully",
       "data": {
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "User photo must be required or invalid format"
+    }
+    ```
 
-### POST /login
+### POST /api/v1/user/login
 
 - **Description**: Log in a user.
 - **Status Codes**: 
   - `201`: User login successfully.
   - `400`: All fields must be required or password wrong.
+- **Data Requirements**:
+  - `email` (required): String
+  - `password` (required): String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "User login successfully",
+      "data": {
+        "token": "jwt_token"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "All fields must be required or password wrong"
+    }
+    ```
 
-### POST /logout
+### POST /api/v1/user/logout
 
 - **Description**: Log out a user.
 - **Status Codes**: 
   - `200`: User logged out successfully.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "User logged out successfully"
+    }
+    ```
 
-### GET /get-user-details
+### GET /api/v1/user/get-user-details
 
 - **Description**: Retrieve details of the logged-in user.
 - **Status Codes**: 
   - `200`: User details retrieved.
   - `404`: User not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "User details retrieved",
+      "data": {
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "User not found"
+    }
+    ```
 
-### GET /get-all-users
+### GET /api/v1/user/get-all-users
 
 - **Description**: Retrieve all users.
 - **Status Codes**: 
   - `200`: Get all users.
   - `404`: No users found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Get all users",
+      "data": [
+        {
+          "name": "John Doe",
+          "email": "john@example.com"
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No users found"
+    }
+    ```
 
-### POST /update-user-details/:id
+### POST /api/v1/user/update-user-details/:id
 
 - **Description**: Update user details.
 - **Status Codes**: 
   - `200`: User updated successfully.
   - `404`: Invalid User ID or not found.
+- **Data Requirements**:
+  - `name` (required): String
+  - `email` (required): String
+  - `password`: String
+  - `avatar`: Object with `public_id` and `url`
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "User updated successfully",
+      "data": {
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid User ID or not found"
+    }
+    ```
 
-### DELETE /delete-user/:id
+### DELETE /api/v1/user/delete-user/:id
 
 - **Description**: Delete a user by ID.
 - **Status Codes**: 
   - `200`: User deleted successfully.
   - `404`: Invalid User ID or not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "User deleted successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid User ID or not found"
+    }
+    ```
 
-### POST /addtocart
+### POST /api/v1/user/addtocart
 
 - **Description**: Add a product to the cart.
 - **Status Codes**: 
   - `201`: Product added to cart successfully.
   - `400`: Invalid ProductId or already in cart.
+- **Data Requirements**:
+  - `productId` (required): ObjectId
+  - `quantity` (required): Number
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "Product added to cart successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Invalid ProductId or already in cart"
+    }
+    ```
 
-### GET /getaddtocart
+### GET /api/v1/user/getaddtocart
 
 - **Description**: Retrieve the count of products in the cart.
 - **Status Codes**: 
   - `200`: Total products in cart.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Total products in cart",
+      "data": {
+        "count": 5
+      }
+    }
+    ```
 
-### GET /view-addtocart
+### GET /api/v1/user/view-addtocart
 
 - **Description**: View products in the cart.
 - **Status Codes**: 
   - `200`: Product details retrieved.
   - `404`: Product not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product details retrieved",
+      "data": [
+        {
+          "productId": "product_123456",
+          "quantity": 2
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Product not found"
+    }
+    ```
 
-### POST /update-addtocart
+### POST /api/v1/user/update-addtocart
 
 - **Description**: Update the quantity of a product in the cart.
 - **Status Codes**: 
   - `200`: Product update success.
   - `400`: Product Id must be required.
+- **Data Requirements**:
+  - `productId` (required): ObjectId
+  - `quantity` (required): Number
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product update success"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Product Id must be required"
+    }
+    ```
 
-### POST /delete-addtocart
+### POST /api/v1/user/delete-addtocart
 
 - **Description**: Delete a product from the cart.
 - **Status Codes**: 
   - `200`: Product delete successfully.
   - `400`: Product delete failed.
+- **Data Requirements**:
+  - `productId` (required): ObjectId
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product delete successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Product delete failed"
+    }
+    ```
 
-### POST /forgotPassword
+### POST /api/v1/user/forgotPassword
 
 - **Description**: Reset password using CAPTCHA.
 - **Status Codes**: 
   - `200`: Password successfully changed.
   - `400`: Invalid Captcha or email not found.
+- **Data Requirements**:
+  - `email` (required): String
+  - `captcha` (required): String
+  - `newPassword` (required): String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Password successfully changed"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Invalid Captcha or email not found"
+    }
+    ```
 
 ---
 
@@ -1036,64 +1260,64 @@ This document provides an overview of the API endpoints available in the applica
 ### AddToCart Model
 
 - **Fields**:
-  - `productId`: ObjectId, required
-  - `quantity`: Number, required, min 1
-  - `userId`: ObjectId, required
+  - `productId` (required): ObjectId
+  - `quantity` (required): Number, min 1
+  - `userId` (required): ObjectId
 
 ### BannerSlider Model
 
 - **Fields**:
-  - `category`: String, required
-  - `bannerImg`: Object with `public_id` and `url`
+  - `category` (required): String
+  - `bannerImg` (required): Object with `public_id` and `url`
   - `owner`: ObjectId
 
 ### Captcha Model
 
 - **Fields**:
-  - `email`: String, required
-  - `code`: String, required
-  - `expiresAt`: Date, required
+  - `email` (required): String
+  - `code` (required): String
+  - `expiresAt` (required): Date
 
 ### Order Model
 
 - **Fields**:
-  - `productId`: Array of ObjectId
-  - `quantity`: Array of Number
-  - `amount`: Number
+  - `productId` (required): Array of ObjectId
+  - `quantity` (required): Array of Number
+  - `amount` (required): Number
   - `order_id`: String
   - `razorpay_payment_id`: String
   - `status`: String, enum
-  - `userId`: ObjectId
+  - `userId` (required): ObjectId
 
 ### Product Model
 
 - **Fields**:
-  - `productName`: String, required
+  - `productName` (required): String
   - `description`: String
-  - `price`: Number, required
-  - `sellingPrice`: Number, required
-  - `brand`: String, required
-  - `category`: String, required
-  - `productImage`: Array of Objects with `public_id` and `url`
-  - `quantity`: Number, required
-  - `discountPercentage`: Number, required
-  - `owner`: ObjectId, required
+  - `price` (required): Number
+  - `sellingPrice` (required): Number
+  - `brand` (required): String
+  - `category` (required): String
+  - `productImage` (required): Array of Objects with `public_id` and `url`
+  - `quantity` (required): Number
+  - `discountPercentage` (required): Number
+  - `owner` (required): ObjectId
 
 ### Review Model
 
 - **Fields**:
-  - `rating`: Number, required
-  - `review`: String, required
+  - `rating` (required): Number
+  - `review` (required): String
   - `photo`: Object with `public_id` and `url`
-  - `productId`: ObjectId
-  - `userId`: ObjectId
+  - `productId` (required): ObjectId
+  - `userId` (required): ObjectId
   - `likes`: Array of ObjectId
   - `dislikes`: Array of ObjectId
 
 ### User Model
 
 - **Fields**:
-  - `name`: String, required
+  - `name` (required): String
   - `mobile`: String
   - `country`: String
   - `state`: String
@@ -1101,7 +1325,7 @@ This document provides an overview of the API endpoints available in the applica
   - `pincode`: String
   - `address`: String
   - `dob`: String
-  - `email`: String, required, unique
+  - `email` (required): String, unique
   - `password`: String, select false
   - `avatar`: Object with `public_id` and `url`
   - `token`: String
