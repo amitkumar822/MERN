@@ -424,7 +424,6 @@ This document provides an overview of the API endpoints available in the applica
   - `category` (required): String
   - `productImage` (required): Array of Objects with `public_id` and `url`
   - `quantity` (required): Number
-  - `discountPercentage` (required): Number
 - **Example Output**:
   - Success:
     ```json
@@ -512,7 +511,6 @@ This document provides an overview of the API endpoints available in the applica
   - `category` (required): String
   - `productImage` (required): Array of Objects with `public_id` and `url`
   - `quantity` (required): Number
-  - `discountPercentage` (required): Number
 - **Example Output**:
   - Success:
     ```json
@@ -1300,7 +1298,6 @@ This document provides an overview of the API endpoints available in the applica
   - `category` (required): String
   - `productImage` (required): Array of Objects with `public_id` and `url`
   - `quantity` (required): Number
-  - `discountPercentage` (required): Number
   - `owner` (required): ObjectId
 
 ### Review Model
