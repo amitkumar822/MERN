@@ -26,6 +26,25 @@ This document provides an overview of the API endpoints available in the applica
 - **Data Requirements**:
   - `bannerImg`: File (image/jpeg, image/png, image/webp)
   - `category`: String
+- **Example Output**:
+  - Success: 
+    ```json
+    {
+      "status": 201,
+      "message": "Banner uploaded successfully",
+      "data": {
+        "bannerImg": "url_to_image",
+        "category": "example_category"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Banner photo must be provided or invalid format"
+    }
+    ```
 
 ### GET /get-banner
 
@@ -33,6 +52,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Get all banners.
   - `404`: No banners found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Get all banners",
+      "data": [
+        {
+          "bannerImg": "url_to_image",
+          "category": "example_category"
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No banners found"
+    }
+    ```
 
 ### DELETE /delete/:bannerId
 
@@ -40,6 +80,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Banner deleted successfully.
   - `404`: Invalid Banner ID or not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Banner deleted successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid Banner ID or not found"
+    }
+    ```
 
 ### GET /get-banner-by-id/:bannerId
 
@@ -47,6 +102,25 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Banner fetched successfully.
   - `404`: Banner not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Banner fetched successfully",
+      "data": {
+        "bannerImg": "url_to_image",
+        "category": "example_category"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Banner not found"
+    }
+    ```
 
 ---
 
@@ -58,6 +132,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `201`: Captcha generated successfully.
   - `400`: Email must be required or not found.
+- **Data Requirements**:
+  - `email`: String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "Captcha generated successfully",
+      "data": {
+        "email": "example@example.com",
+        "captcha": "123456"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Email must be required or not found"
+    }
+    ```
 
 ### GET /getcaptcha
 
@@ -65,6 +160,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: All CAPTCHAs fetched successfully.
   - `404`: No CAPTCHA found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "All CAPTCHAs fetched successfully",
+      "data": [
+        {
+          "email": "example@example.com",
+          "captcha": "123456"
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No CAPTCHA found"
+    }
+    ```
 
 ---
 
@@ -82,12 +198,49 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Redirects to frontend on success.
   - `401`: User not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Redirects to frontend on success"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 401,
+      "message": "User not found"
+    }
+    ```
 
 ### GET /current-user
 
 - **Description**: Check the current logged-in user.
 - **Status Codes**: 
   - `200`: Returns user data or null.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "User data retrieved",
+      "data": {
+        "user": {
+          "name": "John Doe",
+          "email": "john@example.com"
+        }
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 200,
+      "message": "No user logged in",
+      "data": null
+    }
+    ```
 
 ---
 
@@ -99,6 +252,30 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Order created on RazorPay.
   - `400`: All fields are required.
+- **Data Requirements**:
+  - `productId`: Array of ObjectId
+  - `quantity`: Array of Number
+  - `amount`: Number
+  - `userId`: ObjectId
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order created on RazorPay",
+      "data": {
+        "order_id": "order_123456",
+        "amount": 1000
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "All fields are required"
+    }
+    ```
 
 ### POST /payment-verification
 
@@ -111,6 +288,17 @@ This document provides an overview of the API endpoints available in the applica
 - **Description**: Retrieve Razorpay key.
 - **Status Codes**: 
   - `200`: Success get Razor Pay key.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Success get Razor Pay key",
+      "data": {
+        "key": "rzp_test_123456"
+      }
+    }
+    ```
 
 ### POST /cancel-order
 
@@ -118,6 +306,23 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Order successfully canceled and refunded.
   - `400`: Order ID is required or already refunded.
+- **Data Requirements**:
+  - `orderId`: String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order successfully canceled and refunded"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Order ID is required or already refunded"
+    }
+    ```
 
 ### GET /get-all-confirmed-order
 
@@ -125,6 +330,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Order get successfully.
   - `404`: Order not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order get successfully",
+      "data": [
+        {
+          "order_id": "order_123456",
+          "amount": 1000
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Order not found"
+    }
+    ```
 
 ### GET /get-admin-all-order
 
@@ -132,6 +358,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Order get successfully.
   - `404`: Order not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order get successfully",
+      "data": [
+        {
+          "order_id": "order_123456",
+          "amount": 1000
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Order not found"
+    }
+    ```
 
 ### POST /update-status
 
@@ -139,6 +386,24 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Order status updated successfully.
   - `404`: Invalid Order ID or not found.
+- **Data Requirements**:
+  - `orderId`: String
+  - `status`: String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order status updated successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid Order ID or not found"
+    }
+    ```
 
 ---
 
@@ -150,6 +415,36 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `201`: Product created successfully.
   - `400`: Product photos must be provided or invalid format.
+- **Data Requirements**:
+  - `productName`: String
+  - `description`: String
+  - `price`: Number
+  - `sellingPrice`: Number
+  - `brand`: String
+  - `category`: String
+  - `productImage`: Array of Objects with `public_id` and `url`
+  - `quantity`: Number
+  - `discountPercentage`: Number
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "Product created successfully",
+      "data": {
+        "productName": "Example Product",
+        "price": 1000,
+        "sellingPrice": 900
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Product photos must be provided or invalid format"
+    }
+    ```
 
 ### DELETE /delete/:id
 
@@ -157,6 +452,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Product deleted successfully.
   - `404`: Invalid Product ID or not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product deleted successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid Product ID or not found"
+    }
+    ```
 
 ### GET /get-products
 
@@ -164,6 +474,28 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Products retrieved successfully.
   - `404`: No products found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Products retrieved successfully",
+      "data": [
+        {
+          "productName": "Example Product",
+          "price": 1000,
+          "sellingPrice": 900
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No products found"
+    }
+    ```
 
 ### POST /update/:id
 
@@ -171,6 +503,36 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Product updated successfully.
   - `404`: Invalid Product ID or not found.
+- **Data Requirements**:
+  - `productName`: String
+  - `description`: String
+  - `price`: Number
+  - `sellingPrice`: Number
+  - `brand`: String
+  - `category`: String
+  - `productImage`: Array of Objects with `public_id` and `url`
+  - `quantity`: Number
+  - `discountPercentage`: Number
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product updated successfully",
+      "data": {
+        "productName": "Updated Product",
+        "price": 1100,
+        "sellingPrice": 1000
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Invalid Product ID or not found"
+    }
+    ```
 
 ### DELETE /delete-product-img/:productId/image/:publicId
 
@@ -178,6 +540,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Image deleted and product updated successfully.
   - `404`: Product not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Image deleted and product updated successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Product not found"
+    }
+    ```
 
 ### GET /getproduct-details-byid/:productId
 
@@ -185,12 +562,47 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Product details retrieved successfully.
   - `404`: Product not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product details retrieved successfully",
+      "data": {
+        "productName": "Example Product",
+        "price": 1000,
+        "sellingPrice": 900
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Product not found"
+    }
+    ```
 
 ### GET /search
 
 - **Description**: Search for products.
 - **Status Codes**: 
   - `200`: Products search successfully.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Products search successfully",
+      "data": [
+        {
+          "productName": "Example Product",
+          "price": 1000,
+          "sellingPrice": 900
+        }
+      ]
+    }
+    ```
 
 ### POST /filter
 
@@ -198,6 +610,33 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Products filter successfully.
   - `404`: No products found for these categories.
+- **Data Requirements**:
+  - `category`: String
+  - `price`: Number
+  - `stock`: Number
+  - `discount`: Number
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Products filter successfully",
+      "data": [
+        {
+          "productName": "Filtered Product",
+          "price": 800,
+          "sellingPrice": 700
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No products found for these categories"
+    }
+    ```
 
 ### POST /like/:productId
 
@@ -205,6 +644,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Product liked or like removed successfully.
   - `404`: Product not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Product liked or like removed successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Product not found"
+    }
+    ```
 
 ### GET /get-best-selling-all-product
 
@@ -212,6 +666,28 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Products retrieved successfully.
   - `404`: No products found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Products retrieved successfully",
+      "data": [
+        {
+          "productName": "Best Selling Product",
+          "price": 1200,
+          "sellingPrice": 1100
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "No products found"
+    }
+    ```
 
 ### DELETE /delete-image-cloudinary/:publicId
 
@@ -219,6 +695,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Image deleted successfully.
   - `400`: Failed to delete image from Cloudinary.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Image deleted successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Failed to delete image from Cloudinary"
+    }
+    ```
 
 ---
 
@@ -230,6 +721,29 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `201`: Review written successfully.
   - `400`: Invalid ProductId or rating.
+- **Data Requirements**:
+  - `rating`: Number
+  - `review`: String
+  - `photo`: Object with `public_id` and `url`
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "Review written successfully",
+      "data": {
+        "rating": 5,
+        "review": "Great product!"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "Invalid ProductId or rating"
+    }
+    ```
 
 ### GET /get-review/:productId
 
@@ -237,6 +751,27 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Review details retrieved.
   - `404`: Reviews not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Review details retrieved",
+      "data": [
+        {
+          "rating": 5,
+          "review": "Great product!"
+        }
+      ]
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Reviews not found"
+    }
+    ```
 
 ### POST /likes/:reviewId
 
@@ -244,6 +779,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Like added or removed successfully.
   - `404`: Review not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Like added or removed successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Review not found"
+    }
+    ```
 
 ### POST /dislikes/:reviewId
 
@@ -251,6 +801,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Dislike added or removed successfully.
   - `404`: Review not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Dislike added or removed successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Review not found"
+    }
+    ```
 
 ### PUT /update/:reviewId
 
@@ -258,6 +823,29 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Review updated successfully.
   - `404`: Review not found.
+- **Data Requirements**:
+  - `rating`: Number
+  - `review`: String
+  - `photo`: Object with `public_id` and `url`
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Review updated successfully",
+      "data": {
+        "rating": 4,
+        "review": "Updated review"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Review not found"
+    }
+    ```
 
 ### GET /get-single-review/:reviewId
 
@@ -265,6 +853,25 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Review details retrieved.
   - `404`: Review not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Review details retrieved",
+      "data": {
+        "rating": 5,
+        "review": "Great product!"
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Review not found"
+    }
+    ```
 
 ### DELETE /delete/:reviewId
 
@@ -272,6 +879,21 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Review deleted successfully.
   - `404`: Review not found.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Review deleted successfully"
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 404,
+      "message": "Review not found"
+    }
+    ```
 
 ---
 
@@ -283,6 +905,24 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `200`: Sale timer retrieved.
   - `200`: Sale has ended.
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Sale timer retrieved",
+      "data": {
+        "timeRemaining": "2 hours"
+      }
+    }
+    ```
+  - Sale Ended:
+    ```json
+    {
+      "status": 200,
+      "message": "Sale has ended"
+    }
+    ```
 
 ---
 
@@ -294,6 +934,18 @@ This document provides an overview of the API endpoints available in the applica
 - **Status Codes**: 
   - `201`: User created successfully.
   - `400`: User photo must be required or invalid format.
+- **Data Requirements**:
+  - `name`: String
+  - `email`: String
+  - `password`: String
+  - `avatar`: Object with `public_id` and `url`
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 201,
+      "message": "User created successfully",
+      "data": {
 
 ### POST /login
 
