@@ -73,16 +73,49 @@ const OrderCard = () => {
             {/* Refund Information Section */}
             <div className="text-sm text-gray-700">
               <p>
-                <strong>Refund ID:</strong> CR2412011635283536417403
+                <strong className="text-pink-600">Hello,</strong>{" "}
+                <span className="font-semibold text-lg text-green-600">
+                  {order?.name}
+                </span>
               </p>
               <p className="mt-1">
-                ₹3302.0 will be refunded to your Bank Account linked with
-                Flipkart UPI on <strong>Dec 03</strong>.
+                <strong>Order Id: </strong> {order?._id}
               </p>
-              <p className="mt-1">
-                For any questions, please contact your bank with reference
-                number <strong>433618849560</strong>.
-              </p>
+              <div className="mt-1 flex space-x-10">
+                <div className="box group">
+                  <p className="font-semibold text-base leading-7 text-gray-800 mb-1 transition-all duration-500 group-hover:text-gray-700">
+                    Country
+                  </p>
+                  <h6 className=" font-manrope md:text-xl leading-9 text-gray-500">
+                    {order?.country}
+                  </h6>
+                </div>
+
+                <div className="box group">
+                  <p className="font-semibold text-base leading-7 text-gray-800 mb-1 transition-all duration-500 group-hover:text-gray-700">
+                    State
+                  </p>
+                  <h6 className=" font-manrope md:text-xl leading-9 text-gray-500">
+                    {order?.state}
+                  </h6>
+                </div>
+                <div className="box group">
+                  <p className="font-semibold text-base leading-7 text-gray-800 mb-1 transition-all duration-500 group-hover:text-gray-700">
+                    City
+                  </p>
+                  <h6 className=" font-manrope md:text-xl leading-9 text-gray-500">
+                    {order?.city}
+                  </h6>
+                </div>
+                <div className="box group">
+                  <p className="font-semibold text-base leading-7 text-gray-800 mb-1 transition-all duration-500 group-hover:text-gray-700">
+                    Full Address
+                  </p>
+                  <h6 className=" font-manrope md:text-xl leading-9 text-gray-500">
+                    {order?.address}
+                  </h6>
+                </div>
+              </div>
             </div>
 
             {/* Footer Actions */}
@@ -136,11 +169,11 @@ const OrderCard = () => {
             )}
           </div>
         ))}
-      <h6 className="font-manrope font-bold text-2xl leading-9 text-black mb-3">
-        Thank you for shopping with{" "}
-        <span className="font-semibold text-pink-600">Ami</span>
-        <span className="font-semibold text-green-600">Shop</span>!
-      </h6>
+        <h6 className="font-manrope font-bold text-2xl leading-9 text-black mb-3">
+          Thank you for shopping with{" "}
+          <span className="font-semibold text-pink-600">Ami</span>
+          <span className="font-semibold text-green-600">Shop</span>!
+        </h6>
       </div>
     </div>
   );
