@@ -11,7 +11,7 @@ const Card = ({ product }) => {
           <img
             className="h-full w-full object-contain p-2 mix-blend-darken"
             src={product?.productImage[0]?.url}
-            alt={product?.productName}
+            alt={product?.category}
           />
         </div>
 
@@ -22,7 +22,7 @@ const Card = ({ product }) => {
             <p className="md:text-sm text-xs font-semibold text-gray-600 uppercase">
               {product?.brand}
             </p>
-            <p className="md:text-base text-xs text-gray-800 line-clamp-2">
+            <p className="md:text-base text-xs text-gray-800 font-medium line-clamp-2">
               {product?.productName}
             </p>
           </div>
@@ -42,10 +42,10 @@ const Card = ({ product }) => {
           </div>
 
           {/* Additional Info */}
-          <div className="mt-1 md:text-sm text-[8px] text-gray-500">
-            <p>RAM: {product?.ram}</p>
-            <p>Storage: {product?.ssd}</p>
-            <p>Display: {product?.displaySize}</p>
+          <div className="mt-1 md:text-sm text-[8px] text-gray-900 flex flex-wrap gap-1">
+            <span className="bg-gray-200 p-1 rounded-md px-2 text-nowrap">RAM: {product?.ram}</span>
+            <span className="bg-gray-200 p-1 rounded-md px-2 text-nowrap">Storage: {product?.ssd}</span>
+            <span className="bg-gray-200 p-1 rounded-md px-2 text-nowrap">Display: {product?.displaySize}</span>
           </div>
         </div>
       </div>

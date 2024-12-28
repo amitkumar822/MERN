@@ -12,7 +12,7 @@ import CarouselDesktop from "../../components/Banner/CarouselDesktop";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <CategoryList />
 
       {/* Carousel or Banner Component Desktop and mobile */}
@@ -45,7 +45,7 @@ const Home = () => {
       <Cart category={"mobiles"} heading={"Mobiles"} />
       <Cart category={"trimmers"} heading={"Trimmers"} />
       {/* <Review /> */}
-    </div>
+    </>
   );
 };
 

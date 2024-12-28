@@ -14,6 +14,7 @@ const LogOut = () => {
       await axios.post("/api/user/logout", {
         credentials: "include",
       });
+      localStorage.clear();
       dispatch(setUserDetails(null));
       navigate("/login");
       toast.success("Logged out successfully");

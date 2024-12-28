@@ -19,7 +19,7 @@ import OrderViewCart from "../pages/Cart/OrderViewCart";
 import Profile from "../components/Profile/Profile";
 import Success from "../pages/Cart/Success";
 import Failed from "../pages/Cart/Failed";
-import Order from "../components/Order/Order";
+import OrderCard from "../components/Order/OrderCard";
 import AllOrder from "../pages/AdminPanel/AllOrder";
 import CategoryFilterPage from "../pages/CategoryProduct/CategoryFilterPage";
 import AllBestSellingProduct from "../components/Main/BestSellingProduct/AllBestSellingProduct";
@@ -38,7 +38,7 @@ const router = createBrowserRouter(
       <Route path="/profile" element={<Profile />} />
       <Route path="/success" element={<Success />} />
       <Route path="/failed" element={<Failed />} />
-      <Route path="/order" element={<Order />} />
+      <Route path="/order" element={<OrderCard />} />
       <Route path="/best-selling-product" element={<AllBestSellingProduct />} />
 
       {/* Admin Panel Routes */}

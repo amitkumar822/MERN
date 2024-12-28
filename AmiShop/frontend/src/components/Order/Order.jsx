@@ -4,7 +4,6 @@ import displayINRCurrency from "../../helpers/displayINRCurrency";
 import { toast } from "react-toastify";
 import SyncLoader from "react-spinners/SyncLoader";
 import { useNavigate } from "react-router";
-import OrderCard from "./OrderCard";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ const Order = () => {
     });
   };
 
-  //! Cancle Order
+  // Cancel your order.
   const handleCancelOrder = async (orderId) => {
     setLoading(true);
 
@@ -338,8 +337,6 @@ const Order = () => {
           </div>
         </div>
       )}
-
-      <OrderCard />
     </>
   );
 };

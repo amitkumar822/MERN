@@ -9,6 +9,11 @@ import LogOut from "../Auth/LogOut"
 
 const AdminPanel = () => {
   const user = useSelector((state) => state?.user?.user);
+  const token = localStorage.getItem("token");
+
+  if (!token && user?.role !== ROLE.ADMIN) {
+    return <Login />;
+  }
 
   return (
     <>
@@ -66,7 +71,8 @@ const AdminPanel = () => {
           </main>
         </div>
       ) : (
-        <Login />
+        // <Login />
+        <div className="min-h-[calc(100vh-70px)] flex justify-center items-center"><h2>Loading...</h2></div>
       )}
     </>
   );

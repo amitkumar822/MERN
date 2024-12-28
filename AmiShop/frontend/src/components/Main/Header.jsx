@@ -12,6 +12,17 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
 
+  if (user?.refreshToken) {
+    localStorage.setItem("token", user?.refreshToken);
+  } else {
+    setTimeout(() => {
+      localStorage.clear();
+    }, 3000);
+  }
+
+  const token = localStorage.getItem("token");
+
+
   const { cartProductCount } = useContext(UserContext);
 
   const searchInput = useLocation(); // get URL search input (object format)
@@ -88,10 +99,6 @@ const Header = () => {
                     className="w-10 rounded-full border text-[8px]"
                   />
                 ) : (
-                  //   <img
-                  //     alt="User Avatar"
-                  //     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  //   />
                   <div className="w-full h-full flex justify-center items-center">
                     <FaRegCircleUser className="text-4xl" />
                   </div>
@@ -103,7 +110,8 @@ const Header = () => {
               onClick={scrollTop}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              <li>
+              <li
+                className={`${user?.name ? "block" : "hidden"}`}>
                 <Link to="/profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
@@ -114,11 +122,12 @@ const Header = () => {
               >
                 <Link to="/admin-panel">Admin Panel</Link>
               </li>
-              <li>
+              <li
+                className={`${user?.name ? "block" : "hidden"}`}>
                 <Link to="/order">Order</Link>
               </li>
               <li>
-                {user?.name ? <LogOut /> : <Link to="/login">Login</Link>}
+                {token ? <LogOut /> : <Link to="/login">Login</Link>}
               </li>
             </ul>
           </div>

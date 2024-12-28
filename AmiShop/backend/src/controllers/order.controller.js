@@ -8,7 +8,7 @@ import { AddToCart } from "../models/addToCart.modal.js";
 import mongoose from "mongoose";
 
 //====== 👇Payment Controller👇 ======================
-export const createOrder = asyncHandler(async (req, res) => {
+export const createOrderRazorPayOnline = asyncHandler(async (req, res) => {
   const userId = req?.user?.userId;
   const {
     amount,
@@ -83,16 +83,19 @@ export const verifyPayment = async (req, res) => {
 
     if (isValid) {
       await Order.updateOne(
-        { order_id: razorpay_order_id }, // Match the order
+        { order_id: razorpay_order_id },
         {
           $set: {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
+            status: "confirmed",
+            paymentMethod: "online",
           },
         }
       );
 
+      // delete items the user store (view order)
       await AddToCart.deleteMany({ userId });
 
       return res.redirect(
@@ -165,13 +168,68 @@ export const cancelOrder = asyncHandler(async (req, res) => {
     );
   }
 });
-
 //======👆End Payment Controller👆=============
 
+export const createOrderCOD = asyncHandler(async (req, res) => {
+  const userId = req?.user?.userId;
+  const {
+    amount,
+    mobile,
+    country,
+    state,
+    city,
+    pincode,
+    address,
+    email,
+    name,
+    productId,
+    quantity,
+  } = req.body;
+
+  if (
+    !amount ||
+    !mobile ||
+    !country ||
+    !state ||
+    !city ||
+    !pincode ||
+    !address ||
+    !email ||
+    !name ||
+    productId.length === 0 ||
+    quantity.length === 0
+  ) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const order = await Order.create({
+    amount,
+    mobile,
+    country,
+    state,
+    city,
+    pincode,
+    address,
+    email,
+    name,
+    productId,
+    quantity,
+    userId,
+    paymentMethod: "cod",
+    status: "confirmed",
+  });
+
+  // delete items the user store (view order)
+  await AddToCart.deleteMany({ userId });
+
+  res.status(200).json(new ApiResponse(200, order, "Order Created On COD"));
+});
+
+//*********** User Controller ************/
 export const getAllUserConfirmedOrder = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
-  const order = await Order.find({ userId })
+  const order = await Order.find({ userId, status: { $ne: "pending" } })
     .populate("productId")
     .sort({ _id: -1 });
 
@@ -191,9 +249,9 @@ export const getAllAdminPlacedOrder = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, order, "Order Get Successfully"));
 });
 
+// this controller helps us ADMIN control the order status
 export const updateOrderStatus = asyncHandler(async (req, res) => {
   const { orderId, status } = req.body;
-  console.log(orderId, status);
 
   if (!mongoose.Types.ObjectId.isValid(orderId))
     throw new ApiError(404, "Invalid Order ID");

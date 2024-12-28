@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import EditProfile from "./EditProfile";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router";
+import Login from "../../pages/Auth/Login";
+
 
 const Profile = () => {
-  const navigate = useNavigate()
   const user = useSelector((state) => state?.user?.user);
 
-  // if(!user?.name) {
-  //   useEffect(() => {
-  //     navigate("/login");
-  //   })
-  // }
+  const token = localStorage.getItem("token");
+  if(!token && !user?.name) {
+    return <Login />
+  }
 
   return (
     <div className="w-full mx-auto">

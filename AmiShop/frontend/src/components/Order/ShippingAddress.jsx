@@ -88,45 +88,50 @@ const ShippingAddress = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  // Data format for place order
+  const newData = {
+    name: formData.name,
+    email: formData.email,
+    mobile: formData.mobile,
+    address: formData.address,
+    pincode: formData.pincode,
+    country: country.name,
+    state: selectedState.name,
+    city: selectedCity.name,
+    amount: totalPrice,
+    productId: allProductId,
+    quantity: quantity,
+  };
+
+  const handleOnliePay = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const newData = {
-      name: formData.name,
-      email: formData.email,
-      mobile: formData.mobile,
-      address: formData.address,
-      pincode: formData.pincode,
-      country: country.name,
-      state: selectedState.name,
-      city: selectedCity.name,
-      amount: totalPrice,
-      productId: allProductId,
-      quantity: quantity,
-    };
-
     try {
-      const respomse = await axios.get("/api/order/razorpay-key");
-      const rezorPayKey = respomse?.data?.data;
+      const response = await axios.get("/api/order/razorpay-key");
+      const rezorPayKey = response?.data?.data;
 
-      const { data } = await axios.post("/api/order/checkout", newData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const { data } = await axios.post(
+        "/api/order/create-online-pay",
+        newData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // close modal
       document.getElementById("shippingAddress_modal").close();
 
       const options = {
-        key: rezorPayKey, // Enter the Key ID generated from the Dashboard
-        amount: data?.data?.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        key: rezorPayKey,
+        amount: data?.data?.amount,
         currency: "INR",
         // currency: data?.currency,
         name: "AmiShop",
         description: "Test Transaction",
-        image: {logo}, //! LOGO
+        image: { logo }, //! LOGO
         order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "/api/order/payment-verification",
         prefill: {
@@ -144,6 +149,7 @@ const ShippingAddress = ({
       };
 
       const rzp = new Razorpay(options);
+      console.log("rzp-Open1: ", rzp);
       rzp.open();
 
       toast.success("Successfully your transaction");
@@ -152,29 +158,53 @@ const ShippingAddress = ({
     } catch (error) {
       console.error(error);
       setLoading(false);
+      console.log("Failed to open transaction");
       toast.error("Failed to checkout. Please try again.");
     }
   };
 
+  const [loadingCOD, setLoadingCOD] = useState(false);
+
+  const handleCashPay = async (e) => {
+    e.preventDefault();
+    setLoadingCOD(true);
+    try {
+      const { data } = await axios.post("/api/order/create-cod-pay", newData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setShowModalComponent(false);
+      toast.success("Successfully processed with cash on delivery");
+      setShowModalComponent(false);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+      setLoadingCOD(false);
+      toast.error("Failed to process with cash on delivery. Please try again.");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+    <>
       <dialog id="shippingAddress_modal" className="modal">
-        <div className="modal-box">
-          <form method="dialog">
+        <div className="md:w-[50%] w-[97%] relative p-4 h-[90vh] md:pt-8 overflow-auto bg-white rounded-xl">
+          <form method="dialog" className="bg-yellow-300">
             {/* if there is a button in form, it will close the modal */}
             <button
               onClick={() => setShowModalComponent(false)}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              className="btn btn-sm border border-gray-400 btn-circle btn-ghost absolute right-2 top-2"
             >
               ✕
             </button>
           </form>
 
-          <div className="bg-white shadow-lg rounded-xl p-8 max-w-lg w-full">
-            <h2 className="text-3xl font-bold text-center mb-6">
+          <div>
+            <h2 className="xl:text-3xl md:text-2xl text-xl font-bold text-center mb-6">
               Shipping Address
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-5">
+
+            <form className="space-y-5">
               {/* Name */}
               <div className="form-control">
                 <label className="label flex items-center justify-start text-lg font-semibold">
@@ -305,21 +335,38 @@ const ShippingAddress = ({
                   required
                 ></textarea>
               </div>
-              {/* Submit Button */}
-              <div className="form-control mt-6">
-                <button className="btn btn-primary w-full text-lg">
-                  {loading ? (
-                    <SyncLoader color="#fff" size={14} loading={loading} />
-                  ) : (
-                    "Confirm Order"
-                  )}
-                </button>
-              </div>
             </form>
+
+            {/* Payment Button */}
+            <div className=" mt-6 flex items-center justify-around">
+              <button
+                onClick={handleOnliePay}
+                disabled={loading || loadingCOD}
+                className="btn btn-primary text-lg w-[40%]"
+              >
+                {loading ? (
+                  <SyncLoader color="#fff" size={14} loading={loading} />
+                ) : (
+                  "Online Pay"
+                )}
+              </button>
+
+              <button
+                onClick={handleCashPay}
+                disabled={loading || loadingCOD}
+                className="btn bg-green-600 hover:bg-green-700 duration-200 ease-in-out text-white text-lg w-[40%]"
+              >
+                {loadingCOD ? (
+                  <SyncLoader color="#fff" size={14} loading={loadingCOD} />
+                ) : (
+                  "Cash Pay"
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </dialog>
-    </div>
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ const OrderViewCart = () => {
   const [allProductId, setAllProductId] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
-  console.log(allProductId)
+  console.log(allProductId);
 
   const fetchData = async () => {
     try {
@@ -118,7 +118,7 @@ const OrderViewCart = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="font-[sans-serif] bg-white">
         {data.length > 0 ? (
           <div className="max-w-7xl max-lg:max-w-3xl mx-auto p-6">
@@ -351,7 +351,7 @@ const OrderViewCart = () => {
         )}
       </div>
 
-      {/* Shippding Modal */}
+      {/* Shipping Modal */}
       <div className={`${showModalComponent ? "block" : "hidden"}`}>
         <ShippingAddress
           totalPrice={totalPrice}
@@ -360,7 +360,7 @@ const OrderViewCart = () => {
           setShowModalComponent={setShowModalComponent}
         />
       </div>
-    </div>
+    </>
   );
 };
 

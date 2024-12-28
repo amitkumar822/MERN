@@ -35,11 +35,19 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["refunded", "pending", "confirmed", "canceled", "shipped", "delivered"],
+      enum: [
+        "refunded",
+        "pending",
+        "confirmed",
+        "canceled",
+        "shipped",
+        "delivered",
+      ],
       default: "pending",
     },
     mobile: {
       type: String,
+      trim: true,
     },
     country: {
       type: String,
@@ -77,6 +85,11 @@ const orderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["cod", "online"],
+      default: "cod",
     },
   },
   { timestamps: true }

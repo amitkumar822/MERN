@@ -1,7 +1,8 @@
 import express from "express";
 import {
   cancelOrder,
-  createOrder,
+  createOrderCOD,
+  createOrderRazorPayOnline,
   getAllAdminPlacedOrder,
   getAllUserConfirmedOrder,
   getRazorpayKey,
@@ -14,7 +15,8 @@ import { isAdminAuth } from "../middlewares/adminAuth.js";
 const router = express.Router();
 
 //! Payment Router 
-router.post("/checkout",isAuthenticated, createOrder);
+router.post("/create-online-pay",isAuthenticated, createOrderRazorPayOnline);
+router.post("/create-cod-pay",isAuthenticated, createOrderCOD);
 router.post("/payment-verification",isAuthenticated, verifyPayment);
 router.get("/razorpay-key",isAuthenticated, getRazorpayKey);
 

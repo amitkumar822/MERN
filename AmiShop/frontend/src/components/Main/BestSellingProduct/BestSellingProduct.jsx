@@ -82,7 +82,7 @@ const BestSellingProduct = () => {
                   <h3 className="text-sm font-semibold text-gray-500 uppercase">
                     {item.brand}
                   </h3>
-                  <h3 className="lg:text-[16px] md:text-sm text-xs line-clamp-2">
+                  <h3 className="lg:text-base md:text-sm text-xs font-medium line-clamp-2">
                     {item.productName}
                   </h3>
                   <div className="flex items-center mt-2 md:space-x-2 space-x-1">

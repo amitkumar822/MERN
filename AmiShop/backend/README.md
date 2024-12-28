@@ -246,7 +246,83 @@ This document provides an overview of the API endpoints available in the applica
 
 ## Order Routes
 
-### POST /api/v1/order/checkout
+### POST /api/v1/order/create-online-pay
+
+- **Description**: Create a new order using RazorPay.
+- **Status Codes**: 
+  - `200`: Order created on RazorPay.
+  - `400`: All fields are required.
+- **Data Requirements**:
+  - `productId` (required): Array of ObjectId
+  - `quantity` (required): Array of Number
+  - `amount` (required): Number
+  - `userId` (required): ObjectId
+  - `mobile` (required): String
+  - `country` (required): String
+  - `state` (required): String
+  - `city` (required): String
+  - `pincode` (required): String
+  - `address` (required): String
+  - `email` (required): String
+  - `name` (required): String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order created on RazorPay",
+      "data": {
+        "order_id": "order_123456",
+        "amount": 1000
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "All fields are required"
+    }
+    ```
+
+### POST /api/v1/order/create-cod-pay
+
+- **Description**: Create a new order using Cash on Delivery (COD).
+- **Status Codes**: 
+  - `200`: Order created on COD.
+  - `400`: All fields are required.
+- **Data Requirements**:
+  - `productId` (required): Array of ObjectId
+  - `quantity` (required): Array of Number
+  - `amount` (required): Number
+  - `userId` (required): ObjectId
+  - `mobile` (required): String
+  - `country` (required): String
+  - `state` (required): String
+  - `city` (required): String
+  - `pincode` (required): String
+  - `address` (required): String
+  - `email` (required): String
+  - `name` (required): String
+- **Example Output**:
+  - Success:
+    ```json
+    {
+      "status": 200,
+      "message": "Order created on COD",
+      "data": {
+        "order_id": "order_123456",
+        "amount": 1000
+      }
+    }
+    ```
+  - Error:
+    ```json
+    {
+      "status": 400,
+      "message": "All fields are required"
+    }
+    ```
 
 - **Description**: Create a new order.
 - **Status Codes**: 
@@ -1352,3 +1428,4 @@ Controllers handle the business logic for each route. They interact with the mod
 To use the API, send HTTP requests to the endpoints listed above. Ensure that you provide the required data in the request body or query parameters as specified. Use appropriate HTTP methods (GET, POST, PUT, DELETE) for each endpoint.
 
 Example request to create a new product:
+
