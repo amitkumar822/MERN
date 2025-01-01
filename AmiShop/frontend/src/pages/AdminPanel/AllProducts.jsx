@@ -13,7 +13,7 @@ const AllProducts = () => {
   const [limit, setLimit] = useState(50);
 
   const handlePageChange = (event, value) => {
-    setPage(value); // `value` is the selected page number
+    setPage(value);
     updateUrl(value, limit);
     setLimit(50);
     fetchAllProduct();
