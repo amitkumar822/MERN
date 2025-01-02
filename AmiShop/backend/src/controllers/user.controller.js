@@ -36,7 +36,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     throw new ApiError(400, "User All Ready Register With This Email!");
   }
-  // console.log("Avatar", avatar)
+  
   const cloudinarResponse = await uploadOnCloudinary(avatar?.path);
   if (cloudinarResponse === null) {
     throw new ApiError(400, "Failed to upload avatar!");
@@ -83,14 +83,13 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(404, "User Not Found With This Email!");
   }
-  
+
   if (!user.password) {
     throw new ApiError(
       400,
       "You Signup With Google Login, Try To Google Login Or Forgot Password And Set Password"
     );
   }
-
 
   const isPasswordMatch = await user.comparePassword(password);
   if (!isPasswordMatch) {
@@ -109,6 +108,14 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 export const logOut = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  // Remove refresh token from database
+  await User.findByIdAndUpdate(
+    userId,
+    { refreshToken: "", token: "" },
+    { new: true }
+  );
+
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
 
