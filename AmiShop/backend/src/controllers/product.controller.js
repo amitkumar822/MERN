@@ -73,7 +73,7 @@ export const getBrandWiseProduct = asyncHandler(async (req, res) => {
 });
 
 // get 4 categories layers product
-export const get4CategoriesProduct = asyncHandler(async (req, res) => {
+export const get4CategoriesProduct = asyncHandler(async (_, res) => {
   const categorys = ["clocks", "tshirts", "diningtable", "sarees"];
 
   const pipeline = [

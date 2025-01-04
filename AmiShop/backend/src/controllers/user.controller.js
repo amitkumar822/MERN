@@ -112,12 +112,20 @@ export const logOut = asyncHandler(async (req, res) => {
   // Remove refresh token from database
   await User.findByIdAndUpdate(
     userId,
-    { refreshToken: "", token: "" },
+    {$set: { refreshToken: "", token: "" }},
     { new: true }
   );
 
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
 
   return res
     .status(200)
