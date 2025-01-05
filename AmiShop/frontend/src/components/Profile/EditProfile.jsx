@@ -12,6 +12,12 @@ import { toast } from "react-toastify";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+
 const Fade = forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -141,8 +147,8 @@ export default function EditProfile({ user }) {
   const handleCityChange = (selectedOption) => {
     setSelectedCity({ name: selectedOption.value });
   };
-  //! =======�� Country, State And City Functionality End ��==================
 
+  //! =======�� Country, State And City Functionality End ��==================
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -180,6 +186,16 @@ export default function EditProfile({ user }) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
     }
   };
+
+  const handleDateChange = (newValue) => {
+    if (newValue) {
+      const formattedDate = dayjs(newValue).format('DD-MM-YYYY');
+      setData((prevData) => ({ ...prevData, dob: formattedDate }));
+    }
+  };
+
+
+
 
   return (
     <div>
@@ -251,7 +267,6 @@ export default function EditProfile({ user }) {
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
                               >
                                 <path
                                   stroke-linecap="round"
@@ -292,7 +307,6 @@ export default function EditProfile({ user }) {
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
                               >
                                 <path
                                   stroke-linecap="round"
@@ -379,16 +393,22 @@ export default function EditProfile({ user }) {
                             <option value="Female">Female</option>
                           </select>
                         </div>
-                        <div className="w-full">
+
+                        {/* DOB or Calendar */}
+                        <div className="w-full -mt-2">
                           <label htmlFor="dob">Date Of Birth</label>
-                          <input
-                            id="dob"
-                            name="dob"
-                            value={data.dob}
-                            onChange={handleChange}
-                            type="date"
-                            className="text-grey p-4 w-full border-2 rounded-lg"
-                          />
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DatePicker']}>
+                              <DatePicker
+                                label="Date of Birth"
+                                value={data?.dob ? dayjs(data?.dob, 'DD-MM-YYYY') : null}
+                                onChange={handleDateChange}
+                                disableFuture
+                              />
+                            </DemoContainer>
+                          </LocalizationProvider>
+
+                          {data?.dob}
                         </div>
                       </div>
 
