@@ -196,7 +196,6 @@ export default function EditProfile({ user }) {
 
 
 
-
   return (
     <div>
       <Button onClick={handleOpen}>
