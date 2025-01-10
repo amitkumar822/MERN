@@ -48,7 +48,7 @@ router.route("/upload").post(
   uploadProduct
 );
 router.route("/delete/:id").delete(isAuthenticated, isAdminAuth, deleteProduct);
-router.route("/get-products").get(getAllProducts);
+router.route("/get-products").get(isAuthenticated, isAdminAuth, getAllProducts);
 router.route("/update/:id").post(
   isAuthenticated,
   isAdminAuth,

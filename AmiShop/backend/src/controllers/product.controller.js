@@ -114,6 +114,7 @@ export const get4CategoriesProduct = asyncHandler(async (_, res) => {
 });
 
 //! *********** Admin Product Controller ***********
+
 // upload product
 export const uploadProduct = asyncHandler(async (req, res) => {
   // Check if files are provided
@@ -249,14 +250,19 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 
 // get all products
 export const getAllProducts = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  
   // pagination
   let page = Number(req.query.page) || 1;
   let limit = Number(req.query.limit) || 40;
   let skip = (page - 1) * limit;
 
-  const products = await Product.find().skip(skip).limit(limit).sort({
-    createdAt: -1,
-  });
+  const products = await Product.find({ owner: userId })
+    .skip(skip)
+    .limit(limit)
+    .sort({
+      createdAt: -1,
+    });
 
   if (products.length === 0) {
     throw new ApiError(404, "No Any Product In Database!");
@@ -362,7 +368,7 @@ export const deletePhotoOnCloudinary = asyncHandler(async (req, res) => {
     );
 });
 
-//! *********** Secondery Screen or Page Controller ***********
+//! *********** Secondary Screen or Page Controller ***********
 
 // get product details wise product id
 export const getProductDetailsByProductId = asyncHandler(async (req, res) => {

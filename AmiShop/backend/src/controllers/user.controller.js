@@ -10,6 +10,7 @@ import { AddToCart } from "../models/addToCart.modal.js";
 import bcrypt from "bcrypt";
 import { Captcha } from "../models/captcha.modals.js";
 import { AllowedFormatType } from "../../utils/AllowedFormatType.js";
+import { Product } from "../models/product.model.js";
 
 // Register User Endpoint
 export const registerUser = asyncHandler(async (req, res) => {
@@ -36,7 +37,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     throw new ApiError(400, "User All Ready Register With This Email!");
   }
-  
+
   const cloudinarResponse = await uploadOnCloudinary(avatar?.path);
   if (cloudinarResponse === null) {
     throw new ApiError(400, "Failed to upload avatar!");
@@ -112,7 +113,7 @@ export const logOut = asyncHandler(async (req, res) => {
   // Remove refresh token from database
   await User.findByIdAndUpdate(
     userId,
-    {$set: { refreshToken: "", token: "" }},
+    { $set: { refreshToken: "", token: "" } },
     { new: true }
   );
 
@@ -149,7 +150,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id))
-    throw new ApiError(404, "Invalid User ID!");
+    throw new ApiError(400, "Invalid User ID!");
 
   const updatedUser = await User.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -165,16 +166,30 @@ export const updateUser = asyncHandler(async (req, res) => {
 
 export const deleteUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    throw new ApiError(404, "Invalid User ID!");
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid User ID!");
+  }
 
   const user = await User.findById(id);
   if (!user) throw new ApiError(404, "User Not Found!");
 
+  const product = await Product.find({ owner: user._id });
+
+  if (product?.length > 0) {
+    throw new ApiError(
+      400,
+      "User cannot be deleted while they own products. Please delete all associated products first."
+    );
+  }
+
   if (user?.avatar && user?.avatar?.public_id) {
     const result = await cloudinary.uploader.destroy(user.avatar.public_id);
     if (result.result !== "ok")
-      throw new ApiError(500, "Failed to delete user avatar!");
+      throw new ApiError(
+        500,
+        `Failed to delete user avatar: ${result.error || "Unknown error"}`
+      );
   }
 
   const deletedUser = await User.findByIdAndDelete(id);
