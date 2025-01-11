@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema(
       public_id: String,
       url: String,
     },
+    token: {
+      type: String,
+      default: "",
+    }
   },
   { timestamps: true }
 );
