@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from './components/ui/button'
-import Login from './pages/Login'
+import LoginSignup from './pages/LoginSignup'
 
 const App = () => {
   return (
     <div>
-      <Login />
+      <LoginSignup />
     </div>
   )
 }

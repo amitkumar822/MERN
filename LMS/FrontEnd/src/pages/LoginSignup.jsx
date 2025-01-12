@@ -15,9 +15,15 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { useState } from "react"
+import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi"
+import { Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
-const Login = () => {
+const LoginSignup = () => {
+    const [registerUser, { data: regData, error: regError, isLoading: regIsLoading, isSuccess: regIsSuccess }] = useRegisterUserMutation()
+    const [loginUser, { data: logData, error: logError, isLoading: logIsLoading, isSuccess: logIsSuccess }] = useLoginUserMutation();
+
     const [signupInput, setSignupInput] = useState({
         name: "",
         email: "",
@@ -38,10 +44,27 @@ const Login = () => {
         }
     }
 
-    const handleSubmit = (type) => {
+    const handleSubmit = async (type) => {
         const inputData = type === "signup" ? signupInput : loginInput;
-        console.log(inputData);
+        const action = type === "signup" ? registerUser : loginUser;
+        const rep = await action(inputData);
+        console.log("Response: ", rep)
     }
+
+    useEffect(() => {
+        if (regIsSuccess && regData) {
+            toast.success(regData?.message || "Signup Success.");
+        }
+        if (regError) {
+            toast.error(regError?.data.message || "Signup Failed.");
+        }
+        if (logIsSuccess && logData) {            
+            toast.success(logData?.message || "Login Successful.");
+        }
+        if (logError) {
+            toast.error(logError?.data.message || "Login Failed.");
+        }
+    }, [regIsLoading, logIsLoading, regData, logData, regError, logError])
 
     return (
         <div className="flex items-center w-full justify-center mt-20">
@@ -74,7 +97,11 @@ const Login = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button onClick={() => handleSubmit("signup")} className="w-full">Signup</Button>
+                            <Button onClick={() => handleSubmit("signup")} className="w-full">{
+                                regIsLoading ? <>
+                                    <Loader2 className="mr-2 w-4 h-4 animate-spin" /> Please wait...
+                                </> : "Signup"
+                            }</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -98,7 +125,11 @@ const Login = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button onClick={() => handleSubmit("login")} className="w-full">Login</Button>
+                            <Button onClick={() => handleSubmit("login")} className="w-full">{
+                                logIsLoading ? <>
+                                    <Loader2 className="mr-2 w-4 h-4 animate-spin" /> Please wait...
+                                </> : "Login"
+                            }</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -107,4 +138,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginSignup

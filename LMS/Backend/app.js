@@ -1,9 +1,14 @@
 import express from "express";
+import {config} from "dotenv"
+config(".enc")
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorHandler from "./src/middlewares/errorHandler.js";
 
 const app = express();
+
+console.log("PORT: ", process.env.CORS_ORIGIN);
+
 
 // middleware
 app.use(
