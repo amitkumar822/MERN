@@ -30,8 +30,6 @@ import {
 } from "@/components/ui/sheet"
 
 
-
-
 const Navbar = () => {
   const user = true;
   return (
@@ -41,12 +39,12 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full">
         <div className="flex items-center gap-2">
           {/* <School size={30} /> */}
-          <BookOpenText size={30} />
-          {/* <Link to="/"> */}
+          <BookOpenText size={25} className='mt-1' />
+          <Link to="/">
           <h1 className="hidden md:block font-extrabold text-2xl">
             E-Learning
           </h1>
-          {/* </Link> */}
+          </Link>
         </div>
 
         <div className='flex gap-4'>
@@ -101,7 +99,7 @@ const Navbar = () => {
 
       {/* Mobile Device */}
       <div className="flex md:hidden items-center justify-between px-4 h-full">
-        <h1 className="font-extrabold text-2xl">E-learning</h1>
+        <h1 className="font-extrabold text-2xl flex justify-center items-center gap-2"><BookOpenText size={20} className='mt-1' />E-learning</h1>
         <MobileNavbar />
       </div>
     </div>
