@@ -1,11 +1,15 @@
 import React from 'react'
-import { Button } from './components/ui/button'
 import LoginSignup from './pages/LoginSignup'
+import Navbar from './components/Navbar'
+import { ThemeProvider } from './components/ThemeProvider'
 
 const App = () => {
   return (
     <div>
-      <LoginSignup />
+      <ThemeProvider>
+        <Navbar />
+        <LoginSignup />
+      </ThemeProvider>
     </div>
   )
 }
