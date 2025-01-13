@@ -45,3 +45,34 @@ export const login = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, { user, token }, "User logged in successfully"));
 });
+
+export const logout = AsyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  // Remove token from database
+  await User.findByIdAndUpdate(userId, { $set: { token: "" } }, { new: true });
+
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "", "User Logged Out Successfully"));
+});
+
+export const getUserProfile = AsyncHandler(async (req, res) => {
+  const { userId } = req.user;
+
+  if (!userId) throw new ApiError(401, "Unauthorized");
+
+  const user = await User.findById(userId);
+  if (!user) throw new ApiError(404, "User not found");
+
+  return res.status(200).json(new ApiResponse(200, user, "User Profile"));
+});
+
+export const updateUserProfile = AsyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  const { name, email } = req.body; 
+});

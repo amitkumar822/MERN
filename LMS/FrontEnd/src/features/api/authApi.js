@@ -8,6 +8,10 @@ export const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: USER_API,
         credentials: "include", // Send cookies with requests
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -33,10 +37,33 @@ export const authApi = createApi({
                 }
             }
         }),
+        logoutUser: builder.mutation({
+            query: () => ({
+                url: "/logout",
+                method: "GET"
+            })
+        }),
+        getUserProfile: builder.query({
+            query: () => ({
+                url: "/profile",
+                method: "GET"
+            }),
+
+            // async onQueryStarted(_, {queryFulfilled, dispatch}) {
+            //     try {
+            //        const result = await queryFulfilled();
+            //        dispatch()
+            //     } catch (error) {
+            //         console.error("getUserProfile Error: ", error);
+            //     }
+            // }
+        })
     })
 });
 
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,
+    useLogoutUserMutation,
+    useGetUserProfileQuery
 } = authApi;

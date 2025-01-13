@@ -10,12 +10,12 @@ export const generateToken = async (userId, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days expiry time
   });
 
   await User.findByIdAndUpdate(
     userId,
     { token },
-    { new: true }
   );
   return token;
 };

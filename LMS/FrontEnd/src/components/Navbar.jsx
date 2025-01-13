@@ -6,7 +6,7 @@ import {
   BookOpenText,
   Menu
 } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,10 +28,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { useLogoutUserMutation } from '@/features/api/authApi'
+import { toast } from 'sonner'
 
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const user = true;
+  const [logoutUser, { data, isSuccess, error }] = useLogoutUserMutation();
+
+  const handleLogout = async () => {
+    const res = await logoutUser();
+    console.log(res);
+
+  }
+
+  useEffect(() => {
+    if (data && isSuccess) {
+      navigate('/')
+      toast.success(data?.message || "User logged out")
+    }
+    if (error) {
+      toast.error(error?.data.message || "Failed to log out")
+    }
+  }, [isSuccess, error])
+
   return (
     <div className="h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10">
 
@@ -41,9 +62,9 @@ const Navbar = () => {
           {/* <School size={30} /> */}
           <BookOpenText size={25} className='mt-1' />
           <Link to="/">
-          <h1 className="hidden md:block font-extrabold text-2xl">
-            E-Learning
-          </h1>
+            <h1 className="hidden md:block font-extrabold text-2xl">
+              E-Learning
+            </h1>
           </Link>
         </div>
 
@@ -71,7 +92,7 @@ const Navbar = () => {
                       <Edit size={16} /> Edit Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex items-center gap-2">
+                  <DropdownMenuItem className="flex items-center gap-2" onClick={handleLogout}>
                     <LogOut size={16} /> Log Out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
