@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
         ref: "Course",
       },
     ],
-    photoUrl: {
+    avatar: {
       public_id: String,
       url: String,
     },

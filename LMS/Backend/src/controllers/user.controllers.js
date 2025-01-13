@@ -1,6 +1,10 @@
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
+import {
+  deleteMediaFromCloudinary,
+  uploadMedia,
+} from "../../utils/cloudinary.js";
 import generateToken from "../jwt/generateToken.js";
 import { User } from "../models/user.model.js";
 
@@ -66,7 +70,7 @@ export const getUserProfile = AsyncHandler(async (req, res) => {
 
   if (!userId) throw new ApiError(401, "Unauthorized");
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).lean();
   if (!user) throw new ApiError(404, "User not found");
 
   return res.status(200).json(new ApiResponse(200, user, "User Profile"));
@@ -74,5 +78,45 @@ export const getUserProfile = AsyncHandler(async (req, res) => {
 
 export const updateUserProfile = AsyncHandler(async (req, res) => {
   const { userId } = req.user;
-  const { name, email } = req.body; 
+  const { name, email } = req.body;
+  const avatar = req.file;
+
+  const user = await User.findById(userId).lean();
+  if (!user) throw new ApiError(404, "User not found");
+
+  if (user?.avatar?.public_id) {
+    await deleteMediaFromCloudinary(user?.avatar?.public_id);
+  }
+
+  let cloudinaryResponse = "";
+  if (avatar) {
+    const result = await uploadMedia(avatar?.path);
+
+    if (result?.error) throw new ApiError(500, result?.error?.message);
+    cloudinaryResponse = result;
+  }
+
+  const updateData = {
+    name,
+    email,
+  };
+
+  if (cloudinaryResponse) {
+    updateData.avatar = {
+      public_id: cloudinaryResponse?.public_id,
+      url: cloudinaryResponse?.secure_url,
+    };
+  }
+
+  const newUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      $set: updateData,
+    },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, newUser, "User Profile Updated"));
 });
