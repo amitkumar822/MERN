@@ -30,17 +30,18 @@ import {
 } from "@/components/ui/sheet"
 import { useLogoutUserMutation } from '@/features/api/authApi'
 import { toast } from 'sonner'
+import { useSelector } from 'react-redux'
 
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = true;
-  const [logoutUser, { data, isSuccess, error }] = useLogoutUserMutation();
+  const { user } = useSelector((store) => store.auth);
+  console.log("USER: ", user);
+  
+  const [logoutUser, { data, isSuccess, error }, refetch] = useLogoutUserMutation();  
 
   const handleLogout = async () => {
-    const res = await logoutUser();
-    console.log(res);
-
+    await logoutUser();
   }
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const Navbar = () => {
     <div className="h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10">
 
       {/* Desktop */}
-      <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full">
+      <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full px-4">
         <div className="flex items-center gap-2">
           {/* <School size={30} /> */}
           <BookOpenText size={25} className='mt-1' />
@@ -107,10 +108,12 @@ const Navbar = () => {
 
           ) : (
             <div className="flex items-center gap-2">
+              <Link to={"/login"}>
               <Button variant="outline">
                 Login
               </Button>
-              <Button >Signup</Button>
+              </Link>
+              <Link to="/signup"><Button >Signup</Button></Link>
             </div>
           )}
 

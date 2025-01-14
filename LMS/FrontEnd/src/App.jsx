@@ -26,6 +26,10 @@ const appRouter = createBrowserRouter([
         element: <LoginSignup />,
       },
       {
+        path: "/signup",
+        element: <LoginSignup />,
+      },
+      {
         path: "my-learning",
         element: <MyLearning />,
       },

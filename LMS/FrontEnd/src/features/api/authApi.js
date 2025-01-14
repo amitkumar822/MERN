@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { userLoggedIn } from "../authSlice";
+import { userLoggedIn, userLoggedOut } from "../authSlice";
 
 const USER_API = "/api/user"
 
@@ -7,11 +7,7 @@ export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: USER_API,
-        credentials: "include", // Send cookies with requests
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
+        credentials: "include", // Send cookies with request
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -41,7 +37,14 @@ export const authApi = createApi({
             query: () => ({
                 url: "/logout",
                 method: "GET"
-            })
+            }),
+            async onQueryStarted(_, {queryFulfilled, dispatch}) {
+                try {
+                    dispatch(userLoggedOut());
+                } catch (error) {
+                    console.error("logoutUser Error: ", error);
+                }
+            }
         }),
         getUserProfile: builder.query({
             query: () => ({
@@ -49,14 +52,21 @@ export const authApi = createApi({
                 method: "GET"
             }),
 
-            // async onQueryStarted(_, {queryFulfilled, dispatch}) {
-            //     try {
-            //        const result = await queryFulfilled();
-            //        dispatch()
-            //     } catch (error) {
-            //         console.error("getUserProfile Error: ", error);
-            //     }
-            // }
+            async onQueryStarted(_, {queryFulfilled, dispatch}) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(userLoggedIn({user: result.data.data}));
+                } catch (error) {
+                    console.error("LoginError: ", error);
+                }
+            }
+        }),
+        updateUserProfile: builder.mutation({
+            query: (formData) => ({
+                url: "/update-profile",
+                method: "PUT",
+                body: formData,
+            })
         })
     })
 });
@@ -65,5 +75,6 @@ export const {
     useRegisterUserMutation,
     useLoginUserMutation,
     useLogoutUserMutation,
-    useGetUserProfileQuery
+    useGetUserProfileQuery,
+    useUpdateUserProfileMutation
 } = authApi;

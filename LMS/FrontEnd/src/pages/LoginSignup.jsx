@@ -18,11 +18,19 @@ import {
 import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { toast } from "sonner"
 
 const LoginSignup = () => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const [loginSignup, setLoginSignup] = useState("login")
+
+    useEffect(() => {
+        const newPath = pathname.split('/')[1];
+        setLoginSignup(newPath);
+    }, [pathname])
+
     const [registerUser, { data: regData, error: regError, isLoading: regIsLoading, isSuccess: regIsSuccess }] = useRegisterUserMutation()
     const [loginUser, { data: logData, error: logError, isLoading: logIsLoading, isSuccess: logIsSuccess }] = useLoginUserMutation();
 
@@ -61,7 +69,7 @@ const LoginSignup = () => {
             toast.error(regError?.data?.message || "Signup Failed.");
         }
         if (logIsSuccess && logData) {
-            navigate("/");            
+            navigate("/");
             toast.success(logData?.message || "Login Successful.");
         }
         if (logError) {
@@ -71,10 +79,10 @@ const LoginSignup = () => {
 
     return (
         <div className="flex items-center w-full justify-center mt-20">
-            <Tabs defaultValue="login" className="w-[400px]">
+            <Tabs value={loginSignup} className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="signup">Signup</TabsTrigger>
-                    <TabsTrigger value="login">Login</TabsTrigger>
+                    <TabsTrigger value="signup" onClick={() => setLoginSignup("signup")}>Signup</TabsTrigger>
+                    <TabsTrigger value="login" onClick={() => setLoginSignup("login")}>Login</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="signup">

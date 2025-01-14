@@ -77,6 +77,8 @@ export const getUserProfile = AsyncHandler(async (req, res) => {
 });
 
 export const updateUserProfile = AsyncHandler(async (req, res) => {
+  console.log("BODY: ",req.body);
+  
   const { userId } = req.user;
   const { name, email } = req.body;
   const avatar = req.file;
