@@ -36,9 +36,8 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
-  console.log("USER: ", user);
-  
-  const [logoutUser, { data, isSuccess, error }, refetch] = useLogoutUserMutation();  
+
+  const [logoutUser, { data, isSuccess, error }, refetch] = useLogoutUserMutation();
 
   const handleLogout = async () => {
     await logoutUser();
@@ -74,8 +73,8 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src={user?.avatar.url || "https://github.com/shadcn.png"} />
+                  <AvatarFallback>{user?.name}</AvatarFallback>
                 </Avatar>
 
               </DropdownMenuTrigger>
@@ -97,21 +96,22 @@ const Navbar = () => {
                     <LogOut size={16} /> Log Out
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link to="/admin/dashboard" className="flex items-center gap-2">
-                    <LayoutDashboard size={16} /> Dashboard
-                  </Link>
-                </DropdownMenuItem>
+                {user?.role === "instructor" && (
+                  <>
+                  <DropdownMenuSeparator />
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem><Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
 
           ) : (
             <div className="flex items-center gap-2">
               <Link to={"/login"}>
-              <Button variant="outline">
-                Login
-              </Button>
+                <Button variant="outline">
+                  Login
+                </Button>
               </Link>
               <Link to="/signup"><Button >Signup</Button></Link>
             </div>
@@ -124,7 +124,7 @@ const Navbar = () => {
       {/* Mobile Device */}
       <div className="flex md:hidden items-center justify-between px-4 h-full">
         <h1 className="font-extrabold text-2xl flex justify-center items-center gap-2"><BookOpenText size={20} className='mt-1' />E-learning</h1>
-        <MobileNavbar />
+        <MobileNavbar user={user} />
       </div>
     </div>
   )
@@ -134,9 +134,8 @@ export default Navbar
 
 
 
-const MobileNavbar = () => {
+const MobileNavbar = (user) => {
   const navigate = useNavigate();
-  const user = [];
 
   return (
     <Sheet>
