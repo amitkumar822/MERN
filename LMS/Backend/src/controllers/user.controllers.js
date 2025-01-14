@@ -42,7 +42,7 @@ export const login = AsyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid credentials");
   }
 
-  const token = await generateToken(user?._id, res);
+  const token = await generateToken(user, res);
   user.password = "";
 
   return res

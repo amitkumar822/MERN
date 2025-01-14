@@ -1,8 +1,11 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 
-export const generateToken = async (userId, res) => {
-  const token = jwt.sign({ userId }, process.env.JWT_TOKEN_SECRET, {
+export const generateToken = async (user, res) => {
+  const userId = user._id;
+  const currentRole= user?.role;
+  
+  const token = jwt.sign({ userId, currentRole }, process.env.JWT_TOKEN_SECRET, {
     expiresIn: process.env.JWT_TOKEN_EXPIRY,
   });
 
@@ -16,6 +19,7 @@ export const generateToken = async (userId, res) => {
   await User.findByIdAndUpdate(
     userId,
     { token },
+    { new: true}
   );
   return token;
 };

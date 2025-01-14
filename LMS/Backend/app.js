@@ -20,9 +20,11 @@ app.use(cookieParser());
 
 // import all router
 import userRoutes from "./src/routes/user.routes.js";
+import courseRoutes from "./src/routes/course.routes.js";
 
 // define router
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/course", courseRoutes);
 
 // error middleware
 app.use(errorHandler);

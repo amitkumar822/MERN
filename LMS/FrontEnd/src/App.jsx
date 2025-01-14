@@ -6,6 +6,10 @@ import LoginSignup from './pages/LoginSignup'
 import Courses from './components/Courses'
 import MyLearning from './components/MyLearning'
 import Profile from './components/Profile'
+import Sidebar from './pages/admin/Sidebar'
+import Dashboard from './pages/admin/Dashboard'
+import CourseTable from './pages/admin/course/CourseTable'
+import AddCourse from './pages/admin/course/AddCourse'
 
 const appRouter = createBrowserRouter([
   {
@@ -36,6 +40,28 @@ const appRouter = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+
+
+      // admin routes start here
+      {
+        path: "admin",
+        element: <Sidebar />,
+        children: [
+          {
+            path: "dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "course",
+            element: <CourseTable />,
+          },
+          {
+            path: "course/create",
+            element: <AddCourse />,
+          },
+
+        ]
       }
     ]
   }
