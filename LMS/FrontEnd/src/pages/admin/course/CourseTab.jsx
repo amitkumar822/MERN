@@ -49,8 +49,7 @@ const CourseTab = () => {
   const [previewThumbnail, setPreviewThumbnail] = useState("" || course?.courseThumbnail?.url);
   const navigate = useNavigate();
 
-  const [editCourse, { data, isLoading, isSuccess, error }] =
-    useEditCourseMutation();
+  const [editCourse, { data, isLoading, isSuccess, error }] = useEditCourseMutation();
 
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
@@ -63,7 +62,7 @@ const CourseTab = () => {
   const selectCourseLevel = (value) => {
     setInput({ ...input, courseLevel: value });
   };
-  
+
   // get file
   const selectThumbnail = (e) => {
     const file = e.target.files?.[0];
