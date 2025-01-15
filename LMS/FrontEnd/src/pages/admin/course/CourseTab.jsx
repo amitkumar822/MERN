@@ -28,11 +28,11 @@ const CourseTab = () => {
 
   const params = useParams();
   const courseId = params?.courseId;
-  const { data: courseByIdData, isLoading: courseByIdLoading , refetch} =
-  useGetCourseByIdQuery(courseId);
+  const { data: courseByIdData, isLoading: courseByIdLoading, refetch } =
+    useGetCourseByIdQuery(courseId);
 
   const course = courseByIdData?.data;
-  
+
   const [input, setInput] = useState({
     courseTitle: "" || course?.courseTitle,
     subTitle: "" || course?.subTitle,
@@ -44,24 +44,9 @@ const CourseTab = () => {
   });
 
 
-    // const [publishCourse, {}] = usePublishCourseMutation();
- 
-  // useEffect(() => {
-  //   if (courseByIdData?.data) { 
-  //       const course = courseByIdData?.data;
-  //     setInput({
-  //       courseTitle: course?.courseTitle,
-  //       subTitle: course?.subTitle,
-  //       description: course?.description,
-  //       category: course?.category,
-  //       courseLevel: course?.courseLevel,
-  //       coursePrice: course?.coursePrice,
-  //       courseThumbnail: "",
-  //     });
-  //   }
-  // }, [courseByIdData?.data]);
+  // const [publishCourse, {}] = usePublishCourseMutation();
 
-  const [previewThumbnail, setPreviewThumbnail] = useState("" || course?.thumbnail?.url);
+  const [previewThumbnail, setPreviewThumbnail] = useState("" || course?.courseThumbnail?.url);
   const navigate = useNavigate();
 
   const [editCourse, { data, isLoading, isSuccess, error }] =
@@ -90,44 +75,44 @@ const CourseTab = () => {
   };
 
   const updateCourseHandler = async () => {
-    
-    const formData = new FormData();
-    formData.append("courseTitle", input.courseTitle);
-    formData.append("subTitle", input.subTitle);
-    formData.append("description", input.description);
-    formData.append("category", input.category);
-    formData.append("courseLevel", input.courseLevel);
-    formData.append("coursePrice", input.coursePrice);
-    formData.append("thumbnail", input.courseThumbnail);
 
-    const result = await editCourse({ formData, courseId });
+    const formData = new FormData();
+    formData.append("courseTitle", input?.courseTitle);
+    formData.append("subTitle", input?.subTitle);
+    formData.append("description", input?.description);
+    formData.append("category", input?.category);
+    formData.append("courseLevel", input?.courseLevel);
+    formData.append("coursePrice", input?.coursePrice);
+    formData.append("courseThumbnail", input?.courseThumbnail);
+
+    await editCourse({ formData, courseId });
   };
 
   const publishStatusHandler = async (action) => {
     try {
-    //   const response = await publishCourse({courseId, query:action});
-    //   if(response.data){
-    //     refetch();
-    //     toast.success(response.data.message);
-    //   }
+      //   const response = await publishCourse({courseId, query:action});
+      //   if(response.data){
+      //     refetch();
+      //     toast.success(response.data.message);
+      //   }
     } catch (error) {
       toast.error("Failed to publish or unpublish course");
     }
   }
 
-//   useEffect(() => {
-//     if (isSuccess) {
-//       toast.success(data.message || "Course update.");
-//     }
-//     if (error) {
-//       toast.error(error.data.message || "Failed to update course");
-//     }
-//   }, [isSuccess, error]);
+    useEffect(() => {
+      if (isSuccess) {
+        toast.success(data?.message || "Course update.");
+      }
+      if (error) {
+        toast.error(error?.data?.message || "Failed to update course");
+      }
+    }, [isSuccess, error]);
 
-//   if(courseByIdLoading) return <h1>Loading...</h1>
+  //   if(courseByIdLoading) return <h1>Loading...</h1>
 
-    // const isLoading = false;
- 
+  // const isLoading = false;
+
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between">

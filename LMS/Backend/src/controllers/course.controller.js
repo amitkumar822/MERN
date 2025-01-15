@@ -64,28 +64,24 @@ export const editCourse = AsyncHandler(async (req, res) => {
     courseLevel,
     coursePrice,
   } = req.body;
-  const thumbnail = req.file;
-  console.log(courseId);
-  console.log(req?.body);
-  
-  
+  const courseThumbnail = req.file;  
 
   const course = await Course.findById(courseId).lean();
   if (!course) {
     throw new ApiError(404, "Course not found");
   }
 
-  let courseThumbnail = course?.courseThumbnail;
-  if (thumbnail) {
+  let newCourseThumbnail = course?.courseThumbnail;
+  if (courseThumbnail) {
     if (course?.courseThumbnail?.public_id) {
       await deleteMediaFromCloudinary(course?.courseThumbnail.public_id);
     }
 
-    const result = await uploadMedia(thumbnail.path);
+    const result = await uploadMedia(courseThumbnail.path);
     if (result === null) {
       throw new ApiError(400, "Failed to upload thumbnail!");
     }
-    courseThumbnail = {
+    newCourseThumbnail = {
       public_id: result.public_id,
       url: result.secure_url,
     };
@@ -98,7 +94,7 @@ export const editCourse = AsyncHandler(async (req, res) => {
     ...(category && { category }),
     ...(courseLevel && { courseLevel }),
     ...(coursePrice && { coursePrice }),
-    courseThumbnail,
+    courseThumbnail: newCourseThumbnail
   };
 
   const updatedCourse = await Course.findByIdAndUpdate(

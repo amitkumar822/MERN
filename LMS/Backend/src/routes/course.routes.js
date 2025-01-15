@@ -9,6 +9,6 @@ const router = Router();
 router.post("/create", isInstructorAuthenticated, createCourse);
 router.get("/get-courses", isInstructorAuthenticated, getAllCourses);
 router.get("/get-course-by-id/:courseId", isInstructorAuthenticated, getCourseById);
-router.put("/edit-course/:courseId", isInstructorAuthenticated, upload.single("thumbnail"), editCourse);
+router.put("/edit-course/:courseId", isInstructorAuthenticated, upload.single("courseThumbnail"), editCourse);
 
 export default router;
