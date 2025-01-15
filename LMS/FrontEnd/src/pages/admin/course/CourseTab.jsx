@@ -63,6 +63,7 @@ const CourseTab = () => {
   const selectCourseLevel = (value) => {
     setInput({ ...input, courseLevel: value });
   };
+  
   // get file
   const selectThumbnail = (e) => {
     const file = e.target.files?.[0];
@@ -100,18 +101,16 @@ const CourseTab = () => {
     }
   }
 
-    useEffect(() => {
-      if (isSuccess) {
-        toast.success(data?.message || "Course update.");
-      }
-      if (error) {
-        toast.error(error?.data?.message || "Failed to update course");
-      }
-    }, [isSuccess, error]);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "Course update.");
+    }
+    if (error) {
+      toast.error(error?.data?.message || "Failed to update course");
+    }
+  }, [isSuccess, error]);
 
-  //   if(courseByIdLoading) return <h1>Loading...</h1>
-
-  // const isLoading = false;
+  if (courseByIdLoading) return <h1>Loading...</h1>
 
   return (
     <Card>
