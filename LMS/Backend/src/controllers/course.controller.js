@@ -40,3 +40,74 @@ export const getAllCourses = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, courses, "Courses get successfully"));
 });
+
+export const getCourseById = AsyncHandler(async (req, res) => {
+  const { courseId } = req.params;
+  console.log(courseId);
+
+  const course = await Course.findById(courseId).lean().exec();
+
+  if (!course) {
+    throw new ApiError(404, "Course not found");
+  }
+  res.status(200).json(new ApiResponse(200, course, " "));
+});
+
+export const editCourse = AsyncHandler(async (req, res) => {
+  const { courseId } = req.params;
+
+  const {
+    courseTitle,
+    subTitle,
+    description,
+    category,
+    courseLevel,
+    coursePrice,
+  } = req.body;
+  const thumbnail = req.file;
+  console.log(courseId);
+  console.log(req?.body);
+  
+  
+
+  const course = await Course.findById(courseId).lean();
+  if (!course) {
+    throw new ApiError(404, "Course not found");
+  }
+
+  let courseThumbnail = course?.courseThumbnail;
+  if (thumbnail) {
+    if (course?.courseThumbnail?.public_id) {
+      await deleteMediaFromCloudinary(course?.courseThumbnail.public_id);
+    }
+
+    const result = await uploadMedia(thumbnail.path);
+    if (result === null) {
+      throw new ApiError(400, "Failed to upload thumbnail!");
+    }
+    courseThumbnail = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
+
+  const updatedData = {
+    ...(courseTitle && { courseTitle }),
+    ...(subTitle && { subTitle }),
+    ...(description && { description }),
+    ...(category && { category }),
+    ...(courseLevel && { courseLevel }),
+    ...(coursePrice && { coursePrice }),
+    courseThumbnail,
+  };
+
+  const updatedCourse = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updatedData },
+    { new: true, lean: true },
+  ).lean();
+  
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedCourse, "Course updated successfully"));
+});

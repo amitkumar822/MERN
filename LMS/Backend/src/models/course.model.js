@@ -29,7 +29,8 @@ const courseSchema = new mongoose.Schema({
         defaultValue: 0,
     },
     courseThumbnail:{
-        type:String
+        public_id: String,
+        url: String,
     },
     enrolledStudents:[
         {

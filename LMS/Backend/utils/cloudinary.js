@@ -16,6 +16,7 @@ export const uploadMedia = async (path) => {
 
     return result;
   } catch (error) {
+    return null;
     console.error("UploadOnCloudinary Error: \n",error);
   }
 };
