@@ -43,7 +43,23 @@ export const courseApi = createApi({
             })
         }),
 
-        
+        // Lectures routes defined
+        createLecture: builder.mutation({
+            query: ({lectureTitle, courseId}) => ({
+                url: `/create/${courseId}/lecture`,
+                method: "POST",
+                body: {lectureTitle},
+            })
+        }),
+        getCourseLectures: builder.query({
+            query: (courseId) => ({
+                url: `/get-lecture/${courseId}/lecture`,
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+        })
     })
 });
 
@@ -51,5 +67,9 @@ export const {
     useCreateCourseMutation,
     useGetCreatedCoursesQuery,
     useGetCourseByIdQuery,
-    useEditCourseMutation
+    useEditCourseMutation,
+
+    // Define lecture
+    useCreateLectureMutation,
+    useGetCourseLecturesQuery
 } = courseApi;

@@ -43,7 +43,6 @@ export const getAllCourses = AsyncHandler(async (req, res) => {
 
 export const getCourseById = AsyncHandler(async (req, res) => {
   const { courseId } = req.params;
-  console.log(courseId);
 
   const course = await Course.findById(courseId).lean().exec();
 

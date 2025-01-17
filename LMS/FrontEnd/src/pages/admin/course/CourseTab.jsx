@@ -1,3 +1,4 @@
+import LoadingSpinner from "@/components/LoadingSpinner";
 import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import {
@@ -109,7 +110,7 @@ const CourseTab = () => {
     }
   }, [isSuccess, error]);
 
-  if (courseByIdLoading) return <h1>Loading...</h1>
+  if (courseByIdLoading) return <>{ <LoadingSpinner /> }</>
 
   return (
     <Card>
@@ -121,9 +122,12 @@ const CourseTab = () => {
           </CardDescription>
         </div>
         <div className="space-x-2">
-          {/* <Button disabled={courseByIdData?.course?.lectures?.length === 0} variant="outline" onClick={()=> publishStatusHandler(courseByIdData?.course?.isPublished ? "false" : "true")}>
+          <Button
+            disabled={courseByIdData?.course?.lectures?.length === 0}
+            variant="outline" onClick={() => publishStatusHandler(courseByIdData?.course?.isPublished ? "false" : "true")}
+          >
             {courseByIdData?.course?.isPublished ? "Unpublished" : "Publish"}
-          </Button> */}
+          </Button>
           <Button>Remove Course</Button>
         </div>
       </CardHeader>
