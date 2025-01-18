@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import Lecture from "./Lecture";
 import { useCreateLectureMutation, useGetCourseLecturesQuery } from "@/features/api/courseApi";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
@@ -81,7 +82,7 @@ const CreateLecture = () => {
         </div>
         <div className="mt-10">
           {lectureLoading ? (
-            <p>Loading lectures...</p>
+            <p>{<LoadingSpinner />}</p>
           ) : lectureError ? (
             <p>Failed to load lectures.</p>
           ) : lectureData?.data?.length === 0 ? (

@@ -49,7 +49,7 @@ export const courseApi = createApi({
                 url: `/create/${courseId}/lecture`,
                 method: "POST",
                 body: {lectureTitle},
-            })
+            }),
         }),
         getCourseLectures: builder.query({
             query: (courseId) => ({
@@ -58,7 +58,7 @@ export const courseApi = createApi({
                 headers: {
                     "Content-Type": "application/json"
                 },
-            })
+            }),
         })
     })
 });

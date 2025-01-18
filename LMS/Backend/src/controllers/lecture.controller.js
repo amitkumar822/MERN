@@ -12,7 +12,7 @@ export const createLecture = AsyncHandler(async (req, res) => {
   const { lectureTitle } = req.body;
   const { courseId } = req.params;
 
-  if(!lectureTitle || !courseId) {
+  if (!lectureTitle || !courseId) {
     throw new ApiError(400, "Lecture title and course ID are required");
   }
 
@@ -20,9 +20,13 @@ export const createLecture = AsyncHandler(async (req, res) => {
   const lecture = await Lecture.create({ lectureTitle });
 
   // add the lecture to the course
-  await Course.findByIdAndUpdate(courseId, { $push: { lectures: lecture._id } });
+  await Course.findByIdAndUpdate(courseId, {
+    $push: { lectures: lecture._id },
+  });
 
-  res.status(201).json(new ApiResponse(201, lecture, "Lecture created successfully"));
+  res
+    .status(201)
+    .json(new ApiResponse(201, lecture, "Lecture created successfully"));
 });
 
 export const getCourseLectureById = AsyncHandler(async (req, res) => {
@@ -34,5 +38,13 @@ export const getCourseLectureById = AsyncHandler(async (req, res) => {
     throw new ApiError(404, "Course not found");
   }
 
-  res.status(200).json(new ApiResponse(200, course.lectures, "Lecture fetch successfully"));
-})
+  res
+    .status(200)
+    .json(new ApiResponse(200, course.lectures, "Lecture fetch successfully"));
+});
+
+export const editLecture = AsyncHandler(async (req, res) => {
+  const { lectureTitle, videoInfo, isPreviewFree } = req.body;
+
+  const { courseId, lectureId } = req.params;
+});
