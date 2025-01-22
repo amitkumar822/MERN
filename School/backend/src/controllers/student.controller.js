@@ -74,5 +74,5 @@ export const getAllStudents = asyncHandler(async (_, res) => {
     throw new ApiError("No students found", 404);
   }
 
-  res.json(new ApiResponse(200, students, "Students fetched successfully"));
+  res.status(200).json(new ApiResponse(200, students, "Students fetched successfully"));
 });

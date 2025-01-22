@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { classValidate } from "../helpers/classValidate";
 
 const classSchema = new mongoose.Schema(
   {
@@ -6,19 +7,23 @@ const classSchema = new mongoose.Schema(
       type: String,
       required: [true, "Class name is required"],
       trim: true,
+      enum: {
+        values: classValidate,
+        message: "Please specify a class name from 1st to 12th",
+      }
     },
-    students: [
+    studentsId: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
-        required: [true, "At least one student is required"],
+        // required: [true, "At least one student is required"],
       },
     ],
     timeTable: [
       {
         day: {
           type: String,
-          required: [true, "Day is required"],
+          // required: [true, "Day is required"],
           enum: {
             values: [
               "Sunday",
@@ -28,7 +33,6 @@ const classSchema = new mongoose.Schema(
               "Thursday",
               "Friday",
               "Saturday",
-              "Sunday",
             ],
             message:
               "Please enter a valid days Sunday or Monday or Tuesday or Wednesday or Thursday or Friday or Saturday",
@@ -38,20 +42,20 @@ const classSchema = new mongoose.Schema(
           {
             subject: {
               type: String,
-              required: [true, "Subject is required"],
+              // required: [true, "Subject is required"],
             },
             startTime: {
               type: String,
-              required: [true, "Start time is required"],
+              // required: [true, "Start time is required"],
             },
             endTime: {
               type: String,
-              required: [true, "End time is required"],
+              // required: [true, "End time is required"],
             },
-            teacher: {
+            teacherId: {
               type: mongoose.Schema.Types.ObjectId,
               ref: "Teacher",
-              required: [true, "Teacher is required"],
+              // required: [true, "Teacher is required"],
             },
           },
         ],
@@ -60,22 +64,29 @@ const classSchema = new mongoose.Schema(
     subjects: [
       {
         type: String,
-        required: [true, "Subject list is required"],
+        // required: [true, "Subject list is required"],
       },
     ],
     roomNumber: {
       type: String,
-      required: [true, "Room number is required"],
+      // required: [true, "Room number is required"],
     },
     capacity: {
       type: Number,
-      required: [true, "Capacity is required"],
+      // required: [true, "Capacity is required"],
       min: [1, "Capacity must be at least 1"],
     },
     academicYear: {
       type: String,
-      required: [true, "Academic year is required"],
+      // required: [true, "Academic year is required"],
     },
+    sections: {
+      type: String,
+      enum: {
+        values: ["A", "B", "C", "D"],
+        message: "Invalid section",
+      },
+    }
   },
   { timestamps: true }
 );
