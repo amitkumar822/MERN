@@ -91,14 +91,23 @@ export const getTeacherById = asyncHandler(async (req, res) => {
 });
 
 export const addTimeTablesTeacher = asyncHandler(async (req, res) => {
-  const { day, subject, startTime, endTime, roomNumber, className, section } = req.body;
+  const { day, subject, startTime, endTime, roomNumber, className, section } =
+    req.body;
   const { teacherId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(teacherId)) {
     throw new ApiError(400, "Invalid Teacher ID!");
   }
 
-  if (!day || !subject || !startTime || !endTime || !roomNumber || !className || !section) {
+  if (
+    !day ||
+    !subject ||
+    !startTime ||
+    !endTime ||
+    !roomNumber ||
+    !className ||
+    !section
+  ) {
     throw new ApiError(400, "All fields are required");
   }
 
@@ -118,7 +127,34 @@ export const addTimeTablesTeacher = asyncHandler(async (req, res) => {
     throw new ApiError(400, `Teacher does not teach ${subject}`);
   }
 
-  const period = { subject, startTime, endTime, roomNumber, className, section };
+  const periodExists = teacher.timeTable.some((t) => {
+    return (
+      t.day === day &&
+      t.periods.some(
+        (p) =>
+          p.startTime === startTime &&
+          p.endTime === endTime &&
+          p.className === className &&
+          p.section === section
+      )
+    );
+  });
+
+  if (periodExists) {
+    throw new ApiError(
+      400,
+      "Duplicate timetable entry for the same day, time, class, and section."
+    );
+  }
+
+  const period = {
+    subject,
+    startTime,
+    endTime,
+    roomNumber,
+    className,
+    section,
+  };
 
   // Check if the day already exists in the timetable
   const dayIndex = teacher.timeTable.findIndex((t) => t.day === day);
@@ -137,4 +173,104 @@ export const addTimeTablesTeacher = asyncHandler(async (req, res) => {
     message: "Timetable updated successfully",
     teacher,
   });
+});
+
+export const deleteTimeTablePeriod = asyncHandler(async (req, res) => {
+  const { teacherId } = req.params;
+  const { day, periodId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(teacherId)) {
+    throw new ApiError(400, "Invalid Teacher ID!");
+  }
+
+  const teacher = await Teacher.findById(teacherId);
+  if (!teacher) {
+    throw new ApiError(404, "Teacher not found");
+  }
+
+  const dayIndex = teacher.timeTable.findIndex((t) => t.day === day);
+  if (dayIndex === -1) {
+    throw new ApiError(404, "Day not found in timetable");
+  }
+
+  const periodIndex = teacher.timeTable[dayIndex].periods.findIndex(
+    (p) => p._id.toString() === periodId
+  );
+
+  if (periodIndex === -1) {
+    throw new ApiError(404, "Period not found in timetable");
+  }
+
+  teacher.timeTable[dayIndex].periods.splice(periodIndex, 1);
+
+  if (teacher.timeTable[dayIndex].periods.length === 0) {
+    teacher.timeTable.splice(dayIndex, 1);
+  }
+
+  await teacher.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Period deleted successfully",
+    teacher,
+  });
+});
+
+export const updateTimeTablePeriod = asyncHandler(async (req, res) => {
+  const { teacherId } = req.params;
+  const {
+    day,
+    periodId,
+    subject,
+    startTime,
+    endTime,
+    roomNumber,
+    className,
+    section,
+  } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(teacherId)) {
+    throw new ApiError(400, "Invalid Teacher ID!");
+  }
+
+  if (
+    !day
+  ) {
+    throw new ApiError(400, "Day must be required");
+  }
+
+  const teacher = await Teacher.findById(teacherId);
+  if (!teacher) {
+    throw new ApiError(404, "Teacher not found");
+  }
+
+  const dayIndex = teacher.timeTable.findIndex((t) => t.day === day);
+  if (dayIndex === -1) {
+    throw new ApiError(404, "Day not found in timetable");
+  }
+
+  const periodIndex = teacher.timeTable[dayIndex].periods.findIndex(
+    (p) => p._id.toString() === periodId
+  );
+  if (periodIndex === -1) {
+    throw new ApiError(404, "Period not found in timetable");
+  }
+
+  const existingPeriod = teacher.timeTable[dayIndex].periods[periodIndex];
+
+  teacher.timeTable[dayIndex].periods[periodIndex] = {
+    ...existingPeriod,
+    subject: subject || existingPeriod.subject,
+    startTime: startTime || existingPeriod.startTime,
+    endTime: endTime || existingPeriod.endTime,
+    roomNumber: roomNumber || existingPeriod.roomNumber,
+    className: className || existingPeriod.className,
+    section: section || existingPeriod.section,
+  };
+
+  await teacher.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, teacher, "Period updated successfully"));
 });
