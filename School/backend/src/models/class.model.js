@@ -66,7 +66,6 @@ const classSchema = new mongoose.Schema(
       {
         type: String,
         trim: true,
-        // required: [true, "Subject list is required"],
       },
     ],
     roomNumber: {

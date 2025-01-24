@@ -86,16 +86,14 @@ export const addStudentInClassWise = asyncHandler(async (req, res) => {
 
   const uniqueStudentsId = [...new Set(studentsId)];
   const existingStudentsId = new Set(
-    classObj.studentsId.map((id) => id.toString())
+    classObj?.studentsId?.map((id) => id?.toString())
   );
   const newStudentsId = uniqueStudentsId.filter(
     (id) => !existingStudentsId.has(id)
   );
 
   if (newStudentsId.length === 0) {
-    return res
-      .status(200)
-      .json(new ApiResponse(200, classObj, "No new students to add"));
+    throw new ApiError(400, "Similar students");
   }
 
   const updatedClass = await Class.findByIdAndUpdate(
@@ -107,4 +105,40 @@ export const addStudentInClassWise = asyncHandler(async (req, res) => {
   return res.json(
     new ApiResponse(200, updatedClass, "Students added to class successfully")
   );
+});
+
+export const addSubjectsInClassWise = asyncHandler(async (req, res) => {
+  const { classId } = req.params;
+  const { subjects } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(classId) || subjects.length === 0) {
+    throw new ApiError(400, "Invalid class id or subjects is required");
+  }
+
+  const classObj = await Class.findById(classId).lean();
+  if (!classObj) {
+    throw new ApiError(404, "Class not found");
+  }
+
+  const uniqueSubjects = [...new Set(subjects)];
+  const existingSubjects = new Set(
+    classObj?.subjects?.map((subject) => subject.toString())
+  );
+  const newSubjects = uniqueSubjects.filter(
+    (subject) => !existingSubjects.has(subject)
+  );
+
+  if (newSubjects.length === 0) {
+    throw new ApiError(400, "Similar subjects exist");
+  }
+
+  const updatedClass = await Class.findByIdAndUpdate(
+    classId,
+    { $addToSet: { subjects: { $each: newSubjects } } },
+    { new: true }
+  ).lean();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedClass, "Successfully subjects added"));
 });

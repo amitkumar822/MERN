@@ -3,7 +3,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { generateExcel } from "../helpers/generateExcel.js";
 import { generatePDF } from "../helpers/generatePDF.js";
-import Attendance from "../models/attandance.model.js";
+import Attendance from "../models/attendance.model.js";
 
 export const createAttendance = asyncHandler(async (req, res) => {
   const { month, day, year, status } = req.body;
