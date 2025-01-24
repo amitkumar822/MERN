@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { classValidate } from "../helpers/classValidate";
+import { classValidate } from "../helpers/classValidate.js";
 
 const classSchema = new mongoose.Schema(
   {
@@ -9,7 +9,7 @@ const classSchema = new mongoose.Schema(
       trim: true,
       enum: {
         values: classValidate,
-        message: "Please specify a class name from 1st to 12th",
+        message: `Please specify a class name from ${classValidate}`,
       }
     },
     studentsId: [
@@ -42,6 +42,7 @@ const classSchema = new mongoose.Schema(
           {
             subject: {
               type: String,
+              trim: true,
               // required: [true, "Subject is required"],
             },
             startTime: {
@@ -64,6 +65,7 @@ const classSchema = new mongoose.Schema(
     subjects: [
       {
         type: String,
+        trim: true,
         // required: [true, "Subject list is required"],
       },
     ],
@@ -82,6 +84,7 @@ const classSchema = new mongoose.Schema(
     },
     sections: {
       type: String,
+      trim: true,
       enum: {
         values: ["A", "B", "C", "D"],
         message: "Invalid section",
