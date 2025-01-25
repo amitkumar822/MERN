@@ -209,102 +209,6 @@ export const removeSubjectsFromClassWise = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedClass, "Successfully subjects removed"));
 });
 
-// export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
-//   const { classId } = req.params;
-//   const { day, subject, startTime, endTime, teacherId } = req.body;
-
-//   // Validate inputs
-//   if (
-//     !mongoose.Types.ObjectId.isValid(classId) ||
-//     !mongoose.Types.ObjectId.isValid(teacherId) ||
-//     !day ||
-//     !subject ||
-//     !startTime ||
-//     !endTime
-//   ) {
-//     throw new ApiError(
-//       400,
-//       "Invalid class/teacher ID or missing required fields"
-//     );
-//   }
-
-//   if (!validDays.includes(day)) {
-//     throw new ApiError(
-//       400,
-//       `Invalid day. Valid days are: ${validDays.join(", ")}`
-//     );
-//   }
-
-//   // Check if the daySlot for the given day already exists in the timeTable
-//   const classObj = await Class.findById(classId, { timeTable: 1 }).lean();
-//   if (!classObj) {
-//     throw new ApiError(404, "Class not found");
-//   }
-  
-//   let timeTable = classObj.timeTable || [];
-//   let daySlot = timeTable.find((slot) => slot.day === day);
-  
-
-//   if (!daySlot) {
-//     // Add a new daySlot if it doesn't exist
-//     daySlot = { day, periods: [] };
-//     timeTable.push(daySlot);
-//   }
-
-//   // Check for conflicting periods within the same daySlot
-//   const isSlotConflict = daySlot.periods.some(
-//     (period) =>
-//       period.startTime === startTime &&
-//       period.endTime === endTime &&
-//       period.subject === subject
-//   );
-  
-
-//   if (isSlotConflict) {
-//     throw new ApiError(
-//       409,
-//       `Time slot for ${day}, ${startTime} - ${endTime} already exists`
-//     );
-//   }
-
-//   // Add the new period to the day's periods array
-//   const newPeriod = {
-//     subject,
-//     startTime,
-//     endTime,
-//     teacherId,
-//   };
-
-//   // Use findByIdAndUpdate to update only the timeTable field
-//   const updatedClass = await Class.findByIdAndUpdate(
-//     classId,
-//     {
-//       $push: {
-//         "timeTable.$[daySlot].periods": newPeriod,
-//       },
-//     },
-//     {
-//       arrayFilters: [{ "daySlot.day": day }], // Filter for the specific daySlot
-//       new: true, // Return the updated document
-//       upsert: false, // Do not create the document if it doesn't exist
-//     }
-//   ).select({ timeTable: 1 }); // Only return the timeTable field
-
-//   if (!updatedClass) {
-//     throw new ApiError(404, "Class not found or unable to update");
-//   }
-
-//   res
-//     .status(200)
-//     .json(
-//       new ApiResponse(
-//         200,
-//         updatedClass, // Return only the updated timeTable
-//         "Successfully added time slot to class"
-//       )
-//     );
-// });
-
 export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
   const { classId } = req.params;
   const { day, subject, startTime, endTime, teacherId } = req.body;
@@ -345,20 +249,19 @@ export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
     // Check for conflicts within the existing `daySlot`
     const isSlotConflict = daySlot.periods.some(
       (period) =>
-        period.startTime === startTime &&
-        period.endTime === endTime &&
+        (period.startTime === startTime && period.endTime === endTime) ||
         period.subject === subject
     );
 
     if (isSlotConflict) {
       throw new ApiError(
         409,
-        `Time slot for ${day}, ${startTime} - ${endTime} already exists`
+        `Time slot for ${day}, ${startTime} - ${endTime} or same subject ${subject} already exists`
       );
     }
 
     // Update the `daySlot` by adding a new period
-    await Class.findOneAndUpdate(
+    const updatedClass = await Class.findOneAndUpdate(
       { _id: classId, "timeTable.day": day },
       {
         $push: {
@@ -372,6 +275,16 @@ export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
       },
       { new: true }
     );
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedClass.timeTable,
+          "Successfully added time slot to class"
+        )
+      );
   } else {
     // Create a new `daySlot` if it doesn't exist
     const newDaySlot = {
@@ -386,7 +299,7 @@ export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
       ],
     };
 
-    await Class.findByIdAndUpdate(
+    const updatedClass = await Class.findByIdAndUpdate(
       classId,
       {
         $push: {
@@ -395,18 +308,83 @@ export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
       },
       { new: true }
     );
-  }
 
-  // Fetch the updated `timeTable`
-  const updatedClass = await Class.findById(classId, { timeTable: 1 }).lean();
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedClass.timeTable,
+          "Successfully added time slot to class"
+        )
+      );
+  }
+});
+
+export const removeTimeTableSlotDayPeriodWise = asyncHandler(
+  async (req, res) => {
+    const { classId } = req.params;
+    const { periodId } = req.body;
+
+    if (
+      !mongoose.Types.ObjectId.isValid(periodId) ||
+      !mongoose.Types.ObjectId.isValid(classId)
+    ) {
+      throw new ApiError(400, "Invalid timeslot ID or class ID");
+    }
+
+    const updatedClass = await Class.findOneAndUpdate(
+      {
+        _id: classId,
+        "timeTable.periods._id": periodId,
+      },
+      {
+        $pull: {
+          "timeTable.$.periods": { _id: periodId },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedClass) {
+      throw new ApiError(404, "Class or time slot not found");
+    }
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { day: updatedClass.timeTable },
+          "Successfully deleted time slot"
+        )
+      );
+  }
+);
+
+export const removeTimeSlotSameDaysWise = asyncHandler(async (req, res) => {
+  const { classId } = req.params;
+  const { dayslotId } = req.body;
+
+  const updatedTimeSlot = await Class.findOneAndUpdate(
+    {
+      _id: classId,
+    },
+    {
+      $pull: {
+        timeTable: { _id: dayslotId },
+      },
+    },
+    { new: true, projection: { timeTable: { $elemMatch: { _id: dayslotId } } } }
+  );
+
+  if (!updatedTimeSlot) {
+    throw new ApiError(404, "Class or time slot not found");
+  }
 
   res
     .status(200)
     .json(
-      new ApiResponse(
-        200,
-        updatedClass.timeTable,
-        "Successfully added time slot to class"
-      )
+      new ApiResponse(200, updatedTimeSlot, "Remove day slot successfully")
     );
 });
