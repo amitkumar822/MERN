@@ -213,7 +213,6 @@ export const addTimeTableFromClassWise = asyncHandler(async (req, res) => {
   const { classId } = req.params;
   const { day, subject, startTime, endTime, teacherId } = req.body;
 
-  // Validate inputs
   if (
     !mongoose.Types.ObjectId.isValid(classId) ||
     !mongoose.Types.ObjectId.isValid(teacherId) ||

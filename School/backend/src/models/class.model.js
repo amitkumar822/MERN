@@ -49,6 +49,7 @@ const classSchema = new mongoose.Schema(
         ],
       },
     ],
+    //~ Below all remaining work. 
     subjects: [
       {
         type: String,
