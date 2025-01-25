@@ -177,6 +177,281 @@
   }
   ```
 
+# Class API Endpoints
+
+This document outlines the API endpoints for managing classes in the School application.
+
+## Endpoints
+
+### 1. Create Class
+- **Endpoint:** `POST /api/class/create`
+- **Description:** Create a new class.
+- **Request Body:**
+  ```json
+  {
+    "className": "Class A" // Required: String, must be one of the predefined class names
+  }
+  ```
+- **Response:**
+  - **Status Code:** 201
+  - **Body:**
+  ```json
+  {
+    "status": 201,
+    "data": {
+      "_id": "classId",
+      "className": "Class A",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Class created successfully"
+  }
+  ```
+
+### 2. Get All Classes
+- **Endpoint:** `GET /api/class/get-all-class`
+- **Description:** Retrieve all classes.
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": [
+      {
+        "_id": "classId",
+        "className": "Class A",
+        "studentsId": ["studentId1", "studentId2"],
+        "createdAt": "2023-01-01T00:00:00.000Z",
+        "updatedAt": "2023-01-01T00:00:00.000Z"
+      }
+    ],
+    "message": "All classes fetched successfully"
+  }
+  ```
+
+### 3. Get Class by ID
+- **Endpoint:** `GET /api/class/get-class-byid/:classId`
+- **Description:** Retrieve a class by its ID.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "className": "Class A",
+      "studentsId": ["studentId1", "studentId2"],
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Class fetched successfully"
+  }
+  ```
+
+### 4. Add Students to Class
+- **Endpoint:** `PUT /api/class/add-student/:classId`
+- **Description:** Add students to a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "studentsId": ["studentId1", "studentId2"] // Required: Array of Strings (ObjectId)
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "studentsId": ["studentId1", "studentId2", "studentId3"],
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Students added to class successfully"
+  }
+  ```
+
+### 5. Remove Student from Class
+- **Endpoint:** `DELETE /api/class/remove-student/:classId`
+- **Description:** Remove a student from a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "studentId": "studentId" // Required: String (ObjectId)
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "studentsId": ["studentId1", "studentId2"],
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Student removed from class successfully"
+  }
+  ```
+
+### 6. Add Subjects to Class
+- **Endpoint:** `PUT /api/class/add-subjects/:classId`
+- **Description:** Add subjects to a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "subjects": ["Math", "Science"] // Required: Array of Strings
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "subjects": ["Math", "Science"],
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Successfully added new subjects to the class"
+  }
+  ```
+
+### 7. Remove Subject from Class
+- **Endpoint:** `DELETE /api/class/remove-subject/:classId`
+- **Description:** Remove a subject from a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "subject": "Math" // Required: String
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "subjects": ["Science"],
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Successfully subjects removed"
+  }
+  ```
+
+### 8. Add Time Table to Class
+- **Endpoint:** `PUT /api/class/add-time-table/:classId`
+- **Description:** Add a time table entry to a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "day": "Monday", // Required: String
+    "subject": "Math", // Required: String
+    "startTime": "09:00", // Required: String
+    "endTime": "10:00", // Required: String
+    "teacherId": "teacherId" // Required: String (ObjectId)
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "timeTable": [
+        {
+          "day": "Monday",
+          "periods": [
+            {
+              "subject": "Math",
+              "startTime": "09:00",
+              "endTime": "10:00",
+              "teacherId": "teacherId"
+            }
+          ]
+        }
+      ],
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    },
+    "message": "Successfully added time slot to class"
+  }
+  ```
+
+### 9. Remove Time Table Slot
+- **Endpoint:** `DELETE /api/class/remove-time-day-period-slot/:classId`
+- **Description:** Remove a time table slot from a class.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "periodId": "periodId" // Required: String (ObjectId)
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "day": "Monday",
+      "periods": [
+        // Remaining periods after deletion
+      ]
+    },
+    "message": "Successfully deleted time slot"
+  }
+  ```
+
+### 10. Remove Time Slot Same Days
+- **Endpoint:** `DELETE /api/class/remove-time-same-day-slot/:classId`
+- **Description:** Remove a time slot for the same day.
+- **Path Parameters:**
+  - `classId`: Required, String (ObjectId)
+- **Request Body:**
+  ```json
+  {
+    "dayslotId": "dayslotId" // Required: String (ObjectId)
+  }
+  ```
+- **Response:**
+  - **Status Code:** 200
+  - **Body:**
+  ```json
+  {
+    "status": 200,
+    "data": {
+      "_id": "classId",
+      "timeTable": [
+        // Remaining time slots after deletion
+      ]
+    },
+    "message": "Remove day slot successfully"
+  }
+  ```
+
 ## Notes
 - All date fields should be in the format `YYYY-MM-DD`.
 - All time fields should be in the format `HH:MM`.
