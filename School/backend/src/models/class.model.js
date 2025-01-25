@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { classValidate } from "../helpers/classValidate.js";
+import { validDays } from "../helpers/validDays.js";
 
 const classSchema = new mongoose.Schema(
   {
@@ -16,26 +17,16 @@ const classSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
-        // required: [true, "At least one student is required"],
       },
     ],
     timeTable: [
       {
         day: {
           type: String,
-          // required: [true, "Day is required"],
           enum: {
-            values: [
-              "Sunday",
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-            ],
+            values: validDays,
             message:
-              "Please enter a valid days Sunday or Monday or Tuesday or Wednesday or Thursday or Friday or Saturday",
+              `Invalid day. Please enter a valid day: ${validDays.join(", ")}`,
           },
         },
         periods: [
@@ -43,20 +34,16 @@ const classSchema = new mongoose.Schema(
             subject: {
               type: String,
               trim: true,
-              // required: [true, "Subject is required"],
             },
             startTime: {
               type: String,
-              // required: [true, "Start time is required"],
             },
             endTime: {
               type: String,
-              // required: [true, "End time is required"],
             },
             teacherId: {
               type: mongoose.Schema.Types.ObjectId,
               ref: "Teacher",
-              // required: [true, "Teacher is required"],
             },
           },
         ],
@@ -70,16 +57,13 @@ const classSchema = new mongoose.Schema(
     ],
     roomNumber: {
       type: String,
-      // required: [true, "Room number is required"],
     },
     capacity: {
       type: Number,
-      // required: [true, "Capacity is required"],
       min: [1, "Capacity must be at least 1"],
     },
     academicYear: {
       type: String,
-      // required: [true, "Academic year is required"],
     },
     sections: {
       type: String,
