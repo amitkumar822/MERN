@@ -1,45 +1,72 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useTexture } from "@react-three/drei";
+import Typed from "typed.js";
 
 // 3D Rotating Cube Component
-const Cube = () => {
-  const texture = useTexture(
-    "https://webnox.in/wp-content/uploads/2022/06/web-design-800x533.png"
-  );
-  const cubeRef = useRef();
+// const Cube = () => {
+//   const texture = useTexture(
+//     "https://img.freepik.com/free-vector/esports-coaching-abstract-concept-illustration-lessons-with-pro-gamer-free-esport-webinar-player-performance-video-game-training-application-cybersport-team_335657-135.jpg?t=st=1738177536~exp=1738181136~hmac=166037c0f9971bcf65ebd1c97eb567fa05215a47b6caad1c5cab4278cd74bdf5&w=740"
+//   );
+//   const cubeRef = useRef();
 
-  return (
-    <mesh ref={cubeRef} rotation={[0.5, 0.5, 0]}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial map={texture} />
-    </mesh>
-  );
-};
-const Cube2 = () => {
-  const texture = useTexture(
-    "https://img.freepik.com/free-vector/online-education-isometric-concept-with-pupils-using-electronic-devices-studying-home-3d-vector-illustration_1284-29986.jpg?t=st=1738090590~exp=1738094190~hmac=d0088e4f480b662c82a05a51115eb45d5ff1618a8f510040d051ec047a79e597&w=740"
-  );
-  const cubeRef = useRef();
+//   return (
+//     <mesh ref={cubeRef} rotation={[0.5, 0.5, 0]}>
+//       <boxGeometry args={[2, 2, 2]} />
+//       <meshStandardMaterial map={texture} />
+//     </mesh>
+//   );
+// };
+// const Cube2 = () => {
+//   const texture = useTexture(
+//     "https://img.freepik.com/premium-photo/people-as-operators-with-laptops-are-providing-support_441797-8721.jpg?w=826"
+//   );
+//   const cubeRef = useRef();
 
-  return (
-    <mesh ref={cubeRef} rotation={[0.5, 0.5, 0]}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial map={texture} />
-    </mesh>
-  );
-};
+//   return (
+//     <mesh ref={cubeRef} rotation={[0.5, 0.5, 0]}>
+//       <boxGeometry args={[2, 2, 2]} />
+//       <meshStandardMaterial map={texture} />
+//     </mesh>
+//   );
+// };
 
 const Portfolio = () => {
+  const typedRef = useRef(null);
+
+  useEffect(() => {
+    const options = {
+      strings: [
+        "Showcasing Our Expertise and Creativity",
+        "Transforming Ideas into Reality",
+        "Innovative Solutions for Your Business",
+        "Crafting Digital Experiences with Precision",
+        "Where Technology Meets Excellence",
+        "Your Vision, Our Execution",
+        "Pioneering the Future of Web and App Development",
+        "Delivering Perfection, One Project at a Time",
+        "Design. Develop. Inspire.",
+      ],
+      typeSpeed: 50,
+      backSpeed: 50,
+      loop: true,
+    };
+    const typed = new Typed(typedRef.current, options);
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
+
   return (
     <div className="bg-gray-50 text-gray-800">
       {/* Hero Section with 3D Cube */}
       <section className="relative flex flex-col items-center justify-center h-[15rem] text-white bg-gradient-to-r from-purple-600 to-blue-600">
         {/* 3D Cube Left Section */}
-        <div>
+        {/* <div>
           <div className="absolute left-10 top-1/2 -translate-y-1/2 w-72 h-72 hidden md:block">
             <Canvas>
               <ambientLight intensity={2} />
@@ -64,7 +91,7 @@ const Portfolio = () => {
               />
             </Canvas>
           </div>
-        </div>
+        </div> */}
 
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -75,13 +102,16 @@ const Portfolio = () => {
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
             Our Portfolio
           </h1>
-          <p className="text-lg md:text-xl">
+          {/* <p className="text-lg md:text-xl">
             Showcasing Our Expertise and Creativity
+          </p> */}
+          <p className="text-lg md:text-xl bg-gradient-to-r from-purple-500 to-yellow-500 shadow-md shadow-yellow-400">
+            <span ref={typedRef}></span>
           </p>
         </motion.div>
 
         {/* 3D Cube Right Side */}
-        <div>
+        {/* <div>
           <div className="absolute top-1/2 -translate-y-1/2 right-10 w-72 h-72 hidden md:block">
             <Canvas>
               <ambientLight intensity={2} />
@@ -106,7 +136,7 @@ const Portfolio = () => {
               />
             </Canvas>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Featured Projects */}

@@ -22,7 +22,7 @@ const ServicePage = () => {
           transition={{ duration: 1 }}
         >
           <img
-            src="https://webnox.in/wp-content/uploads/2022/06/web-design-800x533.png"
+            src="https://img.freepik.com/free-photo/standard-quality-control-concept-m_23-2150041863.jpg?t=st=1738177588~exp=1738181188~hmac=6155d30a05e74c12ac1ed92ca6156cd655ac6763f29ffc33bfc8b933cf5e916c&w=900"
             alt="IT Services"
             className="w-full h-[25rem] rounded-2xl shadow-lg"
           />

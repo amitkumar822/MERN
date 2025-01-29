@@ -4,54 +4,41 @@ import { FaStar } from "react-icons/fa";
 
 const reviews = [
   {
-    name: "John Doe",
-    position: "CEO, Tech Innovators",
-    review:
-      "Weband transformed our business with a sleek and high-performing website. Their expertise in modern web technologies is top-notch!",
+    name: "Saurav Sharma",
+    review: "Weband delivered an outstanding website with seamless performance. Highly impressed!",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
     rating: 5,
   },
   {
-    name: "Sarah Johnson",
-    position: "Founder, Startup X",
-    review:
-      "The team at Weband delivered an incredible mobile app that exceeded our expectations. Their UI/UX design skills are phenomenal!",
+    name: "Priya Verma",
+    review: "Their mobile app UI/UX design is top-notch. The final product exceeded my expectations!",
     image: "https://randomuser.me/api/portraits/women/45.jpg",
     rating: 5,
   },
   {
-    name: "Michael Lee",
-    position: "Manager, CloudSync",
-    review:
-      "We needed a robust e-commerce platform, and Weband built a scalable solution with seamless integration. Highly recommend!",
+    name: "Rajat Mohan",
+    review: "The e-commerce solution they built for us is smooth and scalable. Fantastic work!",
     image: "https://randomuser.me/api/portraits/men/50.jpg",
     rating: 5,
   },
   {
-    name: "Jessica Brown",
-    position: "CTO, FinTech Hub",
-    review:
-      "Their SEO services boosted our website traffic by 200%! Weband is a game-changer in the digital space.",
-    image: "https://randomuser.me/api/portraits/women/60.jpg",
+    name: "Ankit Mehta",
+    review: "Their SEO strategies boosted our site traffic significantly. Definitely recommend Weband!",
+    image: "https://randomuser.me/api/portraits/men/60.jpg",
     rating: 5,
   },
   {
-    name: "Michael Lee",
-    position: "Manager, CloudSync",
-    review:
-      "We needed a robust e-commerce platform, and Weband built a scalable solution with seamless integration. Highly recommend!",
-    image: "https://randomuser.me/api/portraits/men/50.jpg",
+    name: "Neha Kapoor",
+    review: "A highly professional team! They revamped our web platform beautifully.",
+    image: "https://randomuser.me/api/portraits/women/55.jpg",
     rating: 5,
   },
   {
-    name: "Sarah Johnson",
-    position: "Founder, Startup X",
-    review:
-      "The team at Weband delivered an incredible mobile app that exceeded our expectations. Their UI/UX design skills are phenomenal!",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
+    name: "Kunal Singh",
+    review: "Exceptional support and top-tier development expertise. Weband is truly reliable!",
+    image: "https://randomuser.me/api/portraits/men/40.jpg",
     rating: 5,
   },
-  
 ];
 
 const ReviewSection = () => {
@@ -78,7 +65,6 @@ const ReviewSection = () => {
                 className="w-20 h-20 rounded-full border-4 border-blue-500 mb-4"
               />
               <h3 className="text-lg font-semibold">{review.name}</h3>
-              <p className="text-sm text-gray-500">{review.position}</p>
               <p className="text-gray-700 mt-4">{review.review}</p>
               <div className="flex mt-4">
                 {Array.from({ length: review.rating }).map((_, i) => (
