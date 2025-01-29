@@ -4,7 +4,7 @@ import { createAttendance, getAllAttendance, getAttendanceDayMonthYearWise } fro
 const router = Router();
 
 // Route defin
-router.post("/create/:studentId", createAttendance);
+router.post("/create", createAttendance);
 router.get("/get-all-attendance", getAllAttendance);
 router.get("/get-all-attendance-daymonthyear", getAttendanceDayMonthYearWise);
 

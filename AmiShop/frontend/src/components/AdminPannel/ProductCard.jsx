@@ -16,7 +16,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditProduct from "./EditProduct";
-import DeleteAdminProduct from "../../../../../DeleteAdminProduct";
+// import DeleteAdminProduct from "../../../../../DeleteAdminProduct";
 
 function Row({ row, fetchAllProduct }) {
   const [open, setOpen] = useState(false);
@@ -122,13 +122,13 @@ function Row({ row, fetchAllProduct }) {
       )}
 
       {/* Delete Product Modal */}
-      {productId && (
+      {/*{productId && (
         <DeleteAdminProduct
           productId={productId}
           setProductId={setProductId}
           fetchAllProduct={fetchAllProduct}
         />
-      )}
+      )}*/}
     </>
   );
 }

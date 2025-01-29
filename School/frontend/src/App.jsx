@@ -1,7 +1,7 @@
 import React from "react";
-import Home from "./layouts/home/Home";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router";
+import Home from "./layouts/home/Home";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import Students from "./pages/dashboard/Students";
 import Attendances from "./pages/dashboard/Attendances";
