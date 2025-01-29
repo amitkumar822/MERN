@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-
 const ContactUs = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-800">
@@ -16,15 +15,28 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-white rounded-lg shadow-lg">
               <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-              <p className="text-gray-600">info@weband.com</p>
+              <a
+                href="mailto:tech.weband@gmail.com"
+                className="text-blue-600 hover:text-blue-800 duration-200"
+              >
+                tech.weband@gmail.com
+              </a>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-lg">
               <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-              <p className="text-gray-600">+1 234 567 890</p>
+              <a
+                href="tel: +91 79799 50560"
+                className="text-blue-600 hover:text-blue-800 duration-200"
+              >
+                +91 79799 50560
+              </a>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-lg">
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="text-gray-600">123 Weband Street, Tech City</p>
+              <p className="text-gray-600">
+                Dr. Hedgewar Nagar, Barawat sena, Bettiah West Champaran, Bihar
+                845438
+              </p>
             </div>
           </div>
           <form className="mt-8 max-w-xl mx-auto">

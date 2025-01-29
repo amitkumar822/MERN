@@ -47,19 +47,22 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">Get In Touch</h3>
             <p className="text-gray-400 mb-2">
-              <span className="font-bold">Address:</span> 123 Weband Street,
-              Tech City
+              <span className="font-bold">Address:</span> Dr. Hedgewar Nagar,
+              Barawat sena, Bettiah West Champaran, Bihar 845438
             </p>
             <p className="text-gray-400 mb-2">
               <span className="font-bold">Email:</span>{" "}
-              <a href="mailto:info@weband.com" className="hover:text-white">
-                info@weband.com
+              <a
+                href="mailto:tech.weband@gmail.com"
+                className="hover:text-white"
+              >
+                tech.weband@gmail.com
               </a>
             </p>
             <p className="text-gray-400">
               <span className="font-bold">Phone:</span>{" "}
-              <a href="tel:+1234567890" className="hover:text-white">
-                +1 234 567 890
+              <a href="tel:+91 79799 50560" className="hover:text-white">
+                +91 79799 50560
               </a>
             </p>
           </div>

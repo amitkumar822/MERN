@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ServicePage from "./ServicePage";
 import Portfolio from "./Portfolio";
 import ReviewSection from "./ReviewSection";
+import { Link } from "react-router";
 
 const Home = () => {
   return (
@@ -51,28 +52,28 @@ const Home = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Get Started
+              <Link to="/service">Get Started</Link>
             </motion.button>
             <motion.button
               className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Learn More
+              <Link to="/about-us">Learn More</Link>
             </motion.button>
           </motion.div>
         </div>
       </header>
 
       {/* Services Section */}
-      <section className="py-16">
+      {/* <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-8">Our Services</h2>
           <p className="mb-12 text-gray-600 max-w-3xl mx-auto">
             We offer a wide range of services to cater to your digital needs,
             from web development to mobile applications and UI/UX design.
           </p>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Data.map((details, index) => (
               <motion.div
                 key={index}
@@ -96,9 +97,9 @@ const Home = () => {
                 </motion.button>
               </motion.div>
             ))}
-          </div> */}
+          </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Another All Landing Section */}
       <ServicePage />

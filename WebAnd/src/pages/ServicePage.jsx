@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const ServicePage = () => {
   return (
@@ -46,7 +47,7 @@ const ServicePage = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Explore Services
+            <Link to="/portfolio">Explore Services</Link>
           </motion.button>
         </motion.div>
       </header>
@@ -136,30 +137,7 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="px-4 py-16 md:px-20">
-        <h2 className="text-center text-3xl font-bold text-gray-800 md:text-4xl">
-          What Our Clients Say
-        </h2>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {[1, 2, 3].map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="rounded-lg bg-white p-6 shadow-md"
-            >
-              <p className="text-gray-600">
-                "WebAnd transformed our business with their top-notch services.
-                We highly recommend them!"
-              </p>
-              <h4 className="mt-4 font-bold text-gray-800">John Doe</h4>
-              <p className="text-sm text-gray-500">CEO, ExampleCorp</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      
     </div>
   );
 };
