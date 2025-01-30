@@ -80,25 +80,33 @@ const Home = () => {
           </motion.div>
         </div> */}
 
-        <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-screen text-center">
-          {/* 3D Animated Text */}
+        <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-screen text-center space-y-10">
+          {/* 3D Flip Animation */}
           <motion.h1
-            className="text-3xl md:text-7xl font-extrabold mb-4 text-white"
-            initial={{ opacity: 0, y: -50, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            whileHover={{
-              textShadow: "0px 0px 20px rgba(255,255,100,0.8)",
-              scale: 1.05,
-            }}
+            className="text-3xl md:text-7xl font-extrabold text-white flex flex-wrap justify-center"
+            initial="hidden"
+            animate="visible"
           >
-            Welcome to{" "}
-            <span
-              className="text-yellow-300"
-              style={{ textShadow: "4px 4px 10px rgba(255,255,100,0.6)" }}
-            >
-              Weband
-            </span>
+            {Data.map((char, index) => (
+              <motion.span
+                key={`flip-${index}`}
+                className="inline-block"
+                initial={{ opacity: 0, y: 30, scale: 0.5, rotateX: 90 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.1,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  scale: 1.3,
+                  rotateY: 20,
+                  textShadow: "0px 0px 10px rgba(255,255,100,0.9)",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
           </motion.h1>
 
           {/* 3D Animated Subtitle */}
@@ -106,7 +114,7 @@ const Home = () => {
             className="text-lg md:text-2xl mb-6 max-w-3xl mx-auto text-gray-200"
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
             whileHover={{ textShadow: "0px 0px 15px rgba(200,200,255,0.7)" }}
           >
             Your trusted partner for{" "}
@@ -122,7 +130,7 @@ const Home = () => {
             className="flex justify-center gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
           >
             <Link to="/portfolio">
               <motion.button
@@ -163,3 +171,23 @@ const Home = () => {
 };
 
 export default Home;
+
+const Data = [
+  "W",
+  "e",
+  "l",
+  "c",
+  "o",
+  "m",
+  "e",
+  " ",
+  "t",
+  "o",
+  " ",
+  "W",
+  "e",
+  "b",
+  "a",
+  "n",
+  "d",
+];

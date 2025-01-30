@@ -41,7 +41,7 @@ const LearnMore = () => {
           </mesh>
         </Canvas>
 
-        {/* Hero Content */}
+        {/* Hero Content
         <motion.div
           className="relative z-10"
           initial={{ opacity: 0, y: -50 }}
@@ -56,6 +56,106 @@ const LearnMore = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Where innovation meets technology. Explore our journey and expertise
+            in creating digital solutions that matter.
+          </motion.p>
+        </motion.div> */}
+
+        {/* Hero Content */}
+        <motion.div
+          className="relative z-10 flex justify-center items-center flex-col"
+          initial="hidden"
+          animate="visible"
+        >
+          {/* New Animated Text: "Empowering Digital Transformation" */}
+          <motion.div className="text-xl md:text-3xl font-semibold text-gray-300 mb-4 flex justify-center">
+            {[
+              "E",
+              "m",
+              "p",
+              "o",
+              "w",
+              "e",
+              "r",
+              "i",
+              "n",
+              "g",
+              " ",
+              "D",
+              "i",
+              "g",
+              "i",
+              "t",
+              "a",
+              "l",
+              " ",
+              "T",
+              "r",
+              "a",
+              "n",
+              "s",
+              "f",
+              "o",
+              "r",
+              "m",
+              "a",
+              "t",
+              "i",
+              "o",
+              "n",
+            ].map((char, index) => (
+              <motion.span
+                key={index}
+                className="inline-block"
+                initial={{
+                  opacity: 0,
+                  y: index % 2 === 0 ? -30 : 30,
+                  scale: 0.8,
+                }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.05,
+                  ease: "easeOut",
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          {/* Existing Weband Animated Text */}
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 flex">
+            Discover
+            <span className="ml-2 text-yellow-300 flex">
+              {["W", "e", "b", "a", "n", "d"].map((char, index) => (
+                <motion.span
+                  key={index}
+                  className="inline-block"
+                  initial={{
+                    opacity: 0,
+                    y: index % 2 === 0 ? -50 : 50,
+                    rotate: -20,
+                  }}
+                  animate={{ opacity: 1, y: 0, rotate: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    ease: "easeOut",
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          </h1>
+
+          <motion.p
+            className="text-lg md:text-2xl max-w-3xl mx-auto mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
           >
             Where innovation meets technology. Explore our journey and expertise
             in creating digital solutions that matter.
@@ -114,7 +214,6 @@ const LearnMore = () => {
           </p>
         </motion.div>
       </section>
-
 
       {/* Our Expertise Section */}
       <section className="container mx-auto px-4 py-16">

@@ -91,18 +91,57 @@ const Portfolio = () => {
           </div>
         </div>
 
+        {/* Wave Effect Animation */}
+
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="text-center z-10"
         >
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+          {/* <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
             Our Portfolio
-          </h1>
-          {/* <p className="text-lg md:text-xl">
-            Showcasing Our Expertise and Creativity
-          </p> */}
+          </h1> */}
+          <motion.h1
+            className="text-3xl md:text-7xl font-extrabold text-white flex flex-wrap justify-center"
+            initial="hidden"
+            animate="visible"
+          >
+            {[
+              "O",
+              "u",
+              "r",
+              " ",
+              "P",
+              "o",
+              "r",
+              "t",
+              "f",
+              "o",
+              "l",
+              "i",
+              "o",
+            ].map((char, index) => (
+              <motion.span
+                key={`wave-${index}`}
+                className="inline-block"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: [0, -10, 0] }}
+                transition={{
+                  duration: 0.2,
+                  delay: index * 0.1,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  textShadow: "0px 0px 12px rgba(100,255,255,1)",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </motion.h1>
           <p className="text-lg md:text-xl bg-gradient-to-r from-purple-500 to-yellow-500 shadow-md shadow-yellow-400">
             <span ref={typedRef}></span>
           </p>
