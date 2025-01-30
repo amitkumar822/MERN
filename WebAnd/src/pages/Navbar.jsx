@@ -39,7 +39,7 @@ const Navbar = () => {
     };
   }, [lastScrollTop]);
 
-  //^ Here dropdown menu controller 
+  //^ Here dropdown menu controller
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -75,16 +75,23 @@ const Navbar = () => {
           isScrolled ? "-translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className="flex justify-between items-center md:py-2 md:px-4">
-          <a href="tel:+91 79799 50560" className="text-sm font-semibold flex gap-1">
+        <div className="md:text-sm text-xs flex justify-between items-center md:py-2 p-1 md:px-4">
+          <a href="tel:+91 79799 50560" className="font-semibold flex gap-1">
             📞<span className="md:block hidden">Contact:</span> +91 79799 50560
           </a>
           {/* 24/7 Service */}
-          <div className="text-sm font-semibold flex gap-1">
-            🕒 <span className="flex gap-1">24/7 <span className="md:block hidden"> Service Available</span></span>
+          <div className="font-semibold flex gap-1">
+            🕒{" "}
+            <span className="flex gap-1">
+              24/7 <span className="md:block hidden"> Service Available</span>
+            </span>
           </div>
-          <a href="mailto:tech.weband@gmail.com" className="text-sm font-semibold flex gap-1">
-            📧 <span className="md:block hidden">Email:</span> tech.weband@gmail.com
+          <a
+            href="mailto:tech.weband@gmail.com"
+            className="font-semibold flex gap-1"
+          >
+            📧 <span className="md:block hidden">Email:</span>{" "}
+            tech.weband@gmail.com
           </a>
         </div>
       </div>
@@ -96,7 +103,10 @@ const Navbar = () => {
         }`}
       >
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-2xl font-bold bg-pink-100">
+          <Link
+            to="/"
+            className="btn btn-ghost md:text-2xl text-xl font-bold bg-pink-100"
+          >
             <span className="text-orange-500 bg-orange-200 px-1 rounded-lg rotate-12">
               W
             </span>
@@ -119,44 +129,6 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        {/* <div className="flex-none lg:hidden">
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost">
-              <FaBars className="text-xl" />
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-            >
-              <li className="">
-                <Link to="/">
-                  <FaHome className="mr-2" /> Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/service">
-                  <FaBriefcase className="mr-2" /> Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/portfolio">
-                  <FaLaptopCode className="mr-2" /> Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link to="/about-us">
-                  <FaInfoCircle className="mr-2" /> About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact-us">
-                  <FaPhoneAlt className="mr-2" /> Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div> */}
-
         <div className="flex-none lg:hidden" ref={dropdownRef}>
           <div className="dropdown dropdown-end">
             <button onClick={toggleDropdown} className="btn btn-ghost">

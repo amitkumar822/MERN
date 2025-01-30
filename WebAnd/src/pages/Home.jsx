@@ -1,51 +1,153 @@
 import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Sphere } from "@react-three/drei";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import ServicePage from "./ServicePage";
 import Portfolio from "./Portfolio";
 import ReviewSection from "./ReviewSection";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Sphere } from "@react-three/drei";
+import { Link } from "react-router";
 
 const Home = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-800 z-10">
-      <header className="relative w-full md:h-[90vh] h-[50vh] bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-center justify-center text-center px-6">
-        {/* 3D Sphere Animation */}
+      {/* Hero Section */}
+      <header className="relative w-full h-[90vh] bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
         <div className="absolute top-0 left-0 w-full h-full opacity-50">
           <Canvas>
             <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
-            <ambientLight intensity={0.1} />
+            <ambientLight intensity={0.5} />
             <directionalLight position={[3, 2, 1]} />
             <Suspense fallback={null}>
               <Sphere args={[1.5, 100, 100]}>
-                <meshStandardMaterial color="white" wireframe />
+                <meshStandardMaterial color="#212121" wireframe />
               </Sphere>
             </Suspense>
           </Canvas>
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-3xl">
-          <h1 className="text-3xl md:text-7xl font-extrabold mb-4">
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.img
+            src="https://cdn.wallpapersafari.com/86/65/nqENxl.jpg"
+            alt="weband"
+            className="w-full h-full object-cover opacity-40"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        </div>
+
+        {/* <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full text-center">
+          <motion.h1
+            className="text-3xl md:text-7xl font-extrabold mb-4"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             Welcome to <span className="text-yellow-300">Weband</span>
-          </h1>
-          <p className="text-lg md:text-2xl mb-6">
+          </motion.h1>
+          <motion.p
+            className="text-lg md:text-2xl mb-6 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Your trusted partner for Web and Android App Development Services.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              to="/service"
-              className="px-6 py-3 bg-yellow-300 text-gray-800 font-semibold rounded-lg shadow-lg hover:bg-yellow-400 transition"
+          </motion.p>
+          <motion.div
+            className="flex justify-center gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <motion.button
+              className="px-6 py-3 bg-yellow-300 text-gray-800 font-semibold rounded-lg shadow-lg hover:bg-yellow-400"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Get Started
-            </Link>
-            <Link
-              to="/about-us"
-              className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transition"
+            </motion.button>
+            <motion.button
+              className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Learn More
-            </Link>
-          </div>
+            </motion.button>
+          </motion.div>
+        </div> */}
+
+        <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-screen text-center">
+          {/* 3D Animated Text */}
+          <motion.h1
+            className="text-3xl md:text-7xl font-extrabold mb-4 text-white"
+            initial={{ opacity: 0, y: -50, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            whileHover={{
+              textShadow: "0px 0px 20px rgba(255,255,100,0.8)",
+              scale: 1.05,
+            }}
+          >
+            Welcome to{" "}
+            <span
+              className="text-yellow-300"
+              style={{ textShadow: "4px 4px 10px rgba(255,255,100,0.6)" }}
+            >
+              Weband
+            </span>
+          </motion.h1>
+
+          {/* 3D Animated Subtitle */}
+          <motion.p
+            className="text-lg md:text-2xl mb-6 max-w-3xl mx-auto text-gray-200"
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            whileHover={{ textShadow: "0px 0px 15px rgba(200,200,255,0.7)" }}
+          >
+            Your trusted partner for{" "}
+            <span className="text-pink-400 font-bold">Web</span> and{" "}
+            <span className="text-green-400 font-bold">
+              Android App Development
+            </span>{" "}
+            Services.
+          </motion.p>
+
+          {/* Buttons with Floating Effect */}
+          <motion.div
+            className="flex justify-center gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <motion.button
+              className="px-6 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-400"
+              whileHover={{
+                scale: 1.1,
+                y: -3,
+                boxShadow: "0px 4px 10px rgba(255, 255, 100, 0.8)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link to="/portfolio">Get Started</Link>
+            </motion.button>
+
+            <motion.button
+              className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100"
+              whileHover={{
+                scale: 1.1,
+                y: -3,
+                boxShadow: "0px 4px 10px rgba(200, 200, 255, 0.8)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link to="/learn-more"> Learn More</Link>
+            </motion.button>
+          </motion.div>
         </div>
       </header>
 

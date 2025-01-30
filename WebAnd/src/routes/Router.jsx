@@ -9,6 +9,7 @@ import ServicePage from "../pages/ServicePage";
 import Portfolio from "../pages/Portfolio";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
+import LearnMore from "../pages/LearnMore";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/contact-us" element={<ContactUs />} />
+      <Route path="/learn-more" element={<LearnMore />} />
     </Route>
   )
 );
