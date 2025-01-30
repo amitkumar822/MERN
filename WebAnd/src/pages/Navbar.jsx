@@ -8,6 +8,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import logo from "../data/logo/logo-weband.jpg"
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -102,7 +103,14 @@ const Navbar = () => {
           isScrolled ? "-translate-y-[2.3rem]" : "translate-y-0"
         }`}
       >
-        <div className="flex-1">
+
+        {/* Logo */}
+        <div className="flex-1 md:ml-2">
+          <Link to="/" className="logo">
+            <img src={logo} alt="Logo" className="w-12 rounded-full" />
+          </Link>
+        </div>
+        {/* <div className="flex-1">
           <Link
             to="/"
             className="btn btn-ghost md:text-2xl text-xl font-bold bg-pink-100"
@@ -126,7 +134,7 @@ const Navbar = () => {
               d
             </span>
           </Link>
-        </div>
+        </div> */}
 
         {/* Mobile Menu */}
         <div className="flex-none lg:hidden" ref={dropdownRef}>

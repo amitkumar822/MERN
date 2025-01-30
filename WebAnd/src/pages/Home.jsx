@@ -124,29 +124,32 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <motion.button
-              className="px-6 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-400"
-              whileHover={{
-                scale: 1.1,
-                y: -3,
-                boxShadow: "0px 4px 10px rgba(255, 255, 100, 0.8)",
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link to="/portfolio">Get Started</Link>
-            </motion.button>
-
-            <motion.button
-              className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100"
-              whileHover={{
-                scale: 1.1,
-                y: -3,
-                boxShadow: "0px 4px 10px rgba(200, 200, 255, 0.8)",
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link to="/learn-more"> Learn More</Link>
-            </motion.button>
+            <Link to="/portfolio">
+              <motion.button
+                className="px-6 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-400"
+                whileHover={{
+                  scale: 1.1,
+                  y: -3,
+                  boxShadow: "0px 4px 10px rgba(255, 255, 100, 0.8)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+              </motion.button>
+            </Link>
+            <Link to="/learn-more">
+              <motion.button
+                className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-gray-100"
+                whileHover={{
+                  scale: 1.1,
+                  y: -3,
+                  boxShadow: "0px 4px 10px rgba(200, 200, 255, 0.8)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Learn More
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </header>

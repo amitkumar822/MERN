@@ -34,8 +34,7 @@ const ContactUs = () => {
             <div className="p-6 bg-white rounded-lg shadow-lg">
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
               <p className="text-gray-600">
-                Dr. Hedgewar Nagar, Barawat sena, Bettiah West Champaran, Bihar
-                845438
+              NH-727 , Fatehpur chauk,West-champran Bihar(845452)
               </p>
             </div>
           </div>

@@ -93,8 +93,7 @@ const AboutUs = () => {
             <ul className="space-y-4">
               <li className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-blue-600 text-2xl" />
-                <span>Dr. Hedgewar Nagar, Barawat sena, Bettiah West Champaran, Bihar
-                845438</span>
+                <span>NH-727 , Fatehpur chauk,West-champran Bihar(845452)</span>
               </li>
               <li className="flex items-center space-x-4">
                 <FaPhoneAlt className="text-blue-600 text-2xl" />

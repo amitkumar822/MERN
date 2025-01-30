@@ -47,8 +47,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">Get In Touch</h3>
             <p className="text-gray-400 mb-2">
-              <span className="font-bold">Address:</span> Dr. Hedgewar Nagar,
-              Barawat sena, Bettiah West Champaran, Bihar 845438
+              <span className="font-bold">Address:</span> NH-727 , Fatehpur chauk,West-champran Bihar(845452)
             </p>
             <p className="text-gray-400 mb-2">
               <span className="font-bold">Email:</span>{" "}

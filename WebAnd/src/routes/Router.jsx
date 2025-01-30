@@ -10,6 +10,7 @@ import Portfolio from "../pages/Portfolio";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import LearnMore from "../pages/LearnMore";
+import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/learn-more" element={<LearnMore />} />
+      <Route path="/*" element={<NotFound />} />
     </Route>
   )
 );

@@ -7,7 +7,7 @@ const LearnMore = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-800">
       {/* Hero Section */}
-      <header className="relative w-full h-screen bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-center justify-center text-center p-6 overflow-hidden">
+      <header className="relative w-full h-screen bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-center justify-center text-center md:p-6 p-2 overflow-hidden">
         {/* 3D Background Animation */}
 
         <Canvas className="absolute top-0 left-0 w-full h-full z-0">
@@ -63,24 +63,6 @@ const LearnMore = () => {
         </motion.div>
       </header>
 
-      {/* Our Vision Section */}
-      <section className="container mx-auto px-4 py-16">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Vision</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            At Weband, we envision a future where technology empowers businesses
-            to achieve their full potential. Our mission is to deliver
-            innovative, scalable, and user-centric solutions that drive growth
-            and transformation.
-          </p>
-        </motion.div>
-      </section>
-
       {/* Interactive 3D Experience Section */}
       <section className="relative w-full h-[500px] bg-gray-900 flex items-center justify-center">
         <Canvas>
@@ -115,6 +97,24 @@ const LearnMore = () => {
           </p>
         </motion.div>
       </section>
+      {/* Our Vision Section */}
+      <section className="container mx-auto px-4 py-16">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Vision</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            At Weband, we envision a future where technology empowers businesses
+            to achieve their full potential. Our mission is to deliver
+            innovative, scalable, and user-centric solutions that drive growth
+            and transformation.
+          </p>
+        </motion.div>
+      </section>
+
 
       {/* Our Expertise Section */}
       <section className="container mx-auto px-4 py-16">
