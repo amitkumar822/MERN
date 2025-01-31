@@ -7,6 +7,7 @@ import {
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
+import { amit, rohit, khushjeet, prince, uttam } from "../data/teamphoto/teamphotoexport";
 
 const AboutUs = () => {
   return (
@@ -53,7 +54,7 @@ const AboutUs = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-16">
+      {/* <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-6 text-center">Our Services</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -79,7 +80,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Information Section */}
       <section className="py-16 bg-gray-200">
@@ -111,8 +112,15 @@ const AboutUs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2087.2132812801087!2d84.54215800751932!3d26.77298151304001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39936be83255d23b%3A0xc5322a0939086a96!2sQGCR%2BPXF%2C%20Barwat%20Sena%2C%20Bihar%20845438!5e1!3m2!1sen!2sin!4v1738175399812!5m2!1sen!2sin" width={600} height={450} style={{border: 0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2087.2132812801087!2d84.54215800751932!3d26.77298151304001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39936be83255d23b%3A0xc5322a0939086a96!2sQGCR%2BPXF%2C%20Barwat%20Sena%2C%20Bihar%20845438!5e1!3m2!1sen!2sin!4v1738175399812!5m2!1sen!2sin"
+              width={600}
+              height={450}
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </motion.div>
         </div>
       </section>
@@ -125,57 +133,26 @@ const AboutUs = () => {
             Our dedicated team of professionals is here to provide you with the
             best service possible.
           </p>
-          <div className="grid md:grid-cols-5 gap-8">
-            <div className="bg-white shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Khushjeet Kumar</h3>
-              <p className="text-gray-700">Mobile App Developer</p>
-              <a
-                href="tel:+91 79799 50560"
-                className="text-blue-700 hover:text-blue-800"
-              >
-                +91 79799 50560
-              </a>
-            </div>
-            <div className="bg-white shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Rohit Kumar</h3>
-              <p className="text-gray-700">UI/UX Designer</p>
-              <a
-                href="tel:+91 72580 01494"
-                className="text-blue-700 hover:text-blue-800"
-              >
-                +91 72580 01494
-              </a>
-            </div>
-            <div className="bg-white shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Amit Kumar</h3>
-              <p className="text-gray-700">Website Developer</p>
-              <a
-                href="tel:+91 82288 43870"
-                className="text-blue-700 hover:text-blue-800"
-              >
-                +91 82288 43870
-              </a>
-            </div>
-            <div className="bg-white shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Uttam Kumar</h3>
-              <p className="text-gray-700">Data Analytic</p>
-              <a
-                href="tel:+91 74794 73721"
-                className="text-blue-700 hover:text-blue-800"
-              >
-                +91 74794 73721
-              </a>
-            </div>
-            <div className="bg-white shadow-md p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-2">Prince Kumar</h3>
-              <p className="text-gray-700">Devops Engineer</p>
-              <a
-                href="tel:+91 91629 96487"
-                className="text-blue-700 hover:text-blue-800"
-              >
-                +91 91629 96487
-              </a>
-            </div>
+          <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-8">
+            {temData.map((item) => (
+              <div key={item.id} className="bg-white shadow-md py-3 rounded-lg">
+                <div className="w-full flex justify-center items-center">
+                  <img
+                    src={item.url}
+                    alt=""
+                    className="w-32 h-32 rounded-full shadow-md border border-blue-200 shadow-blue-600 p-1"
+                  />
+                </div>
+                <h3 className="text-xl font-bold my-2">{item.name}</h3>
+                <p className="text-gray-700">{item.role}</p>
+                <a
+                  href={`tel:${item.mobile}`}
+                  className="text-blue-700 hover:text-blue-800"
+                >
+                  {item.mobile}
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -184,3 +161,43 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
+const temData = [
+  {
+    id: 1,
+    name: "Khushjeet Kumar",
+    url: khushjeet,
+    role: "Mobile App Developer",
+    mobile: "+91 79799 50560",
+  },
+  {
+    id: 2,
+    name: "Amit Kumar",
+    url: amit,
+    role: "Website Developer",
+    mobile: "+91 82288 43870",
+  },
+  {
+    id: 3,
+    name: "Rohit Kumar",
+    url: rohit,
+    role: "UI/UX Designer",
+    mobile: "+91 72580 01494",
+  },
+  {
+    id: 4,
+    name: "Uttam Kumar",
+    url: uttam,
+    role: "Data Analytic",
+    mobile: "+91 72580 01494",
+  },
+  {
+    id: 5,
+    name: "Prince Kumar",
+    url: prince,
+    role: "Devops Engineer",
+    mobile: "+91 91629 96487",
+  },
+  
+];
+

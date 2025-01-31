@@ -6,6 +6,7 @@ import ReviewSection from "./ReviewSection";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import { Link } from "react-router";
+import AboutUs from "./AboutUs";
 
 const Home = () => {
   return (
@@ -166,6 +167,7 @@ const Home = () => {
       <ServicePage />
       <Portfolio />
       <ReviewSection />
+      <AboutUs />
     </div>
   );
 };
