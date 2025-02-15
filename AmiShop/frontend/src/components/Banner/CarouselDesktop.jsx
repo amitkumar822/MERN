@@ -3,30 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
 import scrollTop from "../../helpers/scrollTop";
-// import { AmazonBanner } from "../../data/banner/BannerExport.js";
-import banner1 from "../../data/banner/AmazonBanner1.jpg"
-import banner2 from "../../data/banner/AmazonBanner2.jpg"
-import banner3 from "../../data/banner/AmazonBanner3.jpg"
-import banner4 from "../../data/banner/AmazonBanner4.jpg"
-
-export const AmazonBanner = [
-  {
-      id: 1,
-      image: banner1
-  },
-  {
-      id: 2,
-      image: banner2
-  },
-  {
-      id: 3,
-      image: banner3
-  },
-  {
-      id: 4,
-      image: banner4
-  }
-]
+import { AmazonBanner } from "../../../public/banner/BannerExport";
 
 const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
