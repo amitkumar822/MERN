@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
-import { AmazonBanner } from "../../data/banner/BannerExport.jsx";
 import scrollTop from "../../helpers/scrollTop";
+import { AmazonBanner } from "../../data/banner/BannerExport.js";
 
 const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
