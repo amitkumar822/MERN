@@ -7,6 +7,10 @@ config({ path: ".env" });
 
 const PORT = process.env.PORT || 4001;
 
+app.get("/", (req, res) => {
+  res.send("Hello from Vercel!");
+});
+
 // Connect to MongoDB
 connectDB()
   .then(() => {
