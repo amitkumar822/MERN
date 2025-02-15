@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
 import scrollTop from "../../helpers/scrollTop";
-import { AmazonBanner } from "../../../public/banner/BannerExport";
 
 const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  // Fetch desktop banner
+  const [AmazonBanner, setAmazonBanner] = useState([]);
 
   const fetchProduct = async () => {
     try {
@@ -17,6 +18,12 @@ const CarouselDesktop = () => {
       });
       setProduct(data?.data);
       setLoading(false);
+
+      const response = await axios.get("/api/desktop-banner-slider/get-banner", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      setAmazonBanner(response?.data?.data);
     } catch (error) {
       console.error(error);
     }
@@ -29,7 +36,7 @@ const CarouselDesktop = () => {
   // Banner slideshow
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const slideCount = AmazonBanner.length || 0; // Total number of slides
+  const slideCount = AmazonBanner?.length || 0; // Total number of slides
 
   // Automatically change slide every 3 seconds
   useEffect(() => {
@@ -46,7 +53,7 @@ const CarouselDesktop = () => {
       <div
         className={`w-full xl:h-[58rem] lg:h-[46rem] bg-yellow-300 lg:block hidden`}
         style={{
-          backgroundImage: `url(${AmazonBanner[currentIndex].image})`,
+          backgroundImage: `url(${AmazonBanner[currentIndex]?.bannerImg?.url})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -63,7 +70,7 @@ const CarouselDesktop = () => {
         {/* Column 1: Most-Loved Products */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="xl:text-lg font-bold mb-2">
-          Our Most Popular cloaks
+            Our Most Popular cloaks
           </h2>
           <div className="grid grid-cols-2 gap-2 overflow-hidden">
             {loading ? (
@@ -89,9 +96,8 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[0]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${
-              loading ? "hidden" : "block"
-            }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
+              }`}
           >
             Explore all
           </Link>
@@ -100,7 +106,7 @@ const CarouselDesktop = () => {
         {/* Column 2: Revamp Your Home */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="xl:text-lg font-bold mb-2">
-          Redefine Style with the Perfect T-Shirt
+            Redefine Style with the Perfect T-Shirt
             {/* Discover the Perfect T-Shirt to Redefine Your Look */}
           </h2>
           <div className="grid grid-cols-2 gap-2">
@@ -126,9 +132,8 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[1]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${
-              loading ? "hidden" : "block"
-            }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
+              }`}
           >
             Explore all
           </Link>
@@ -168,9 +173,8 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[2]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${
-              loading ? "hidden" : "block"
-            }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
+              }`}
           >
             Explore all
           </Link>
@@ -211,9 +215,8 @@ const CarouselDesktop = () => {
           <Link
             aria-disabled
             to={`category-filter?category=${product[3]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${
-              loading ? "hidden" : "block"
-            }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
+              }`}
           >
             Explore all
           </Link>
