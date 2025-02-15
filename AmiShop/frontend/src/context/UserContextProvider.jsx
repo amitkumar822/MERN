@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserContext from "./userContext";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from "../store/UserSlice";
+import { setUserDetails } from "../stores/UserSlice";
 
 const UserContextProvider = ({ children }) => {
   const dispatch = useDispatch();

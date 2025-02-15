@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { setUserDetails } from "../../store/UserSlice";
+import { setUserDetails } from "../../stores/UserSlice";
 
 const LogOut = () => {
   const navigate = useNavigate();
