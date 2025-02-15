@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import scrollTop from "../../../helpers/scrollTop";
 import { IoMdArrowDown, IoMdTrendingDown } from "react-icons/io";
 import AddToCart from "../../../helpers/AddToCart";
-import UserContext from "../../../context/userContext";
+import userContext from "../../../context/userContext";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const CardBestSellingProduct = ({ item, idx }) => {
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
   const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState("");
 

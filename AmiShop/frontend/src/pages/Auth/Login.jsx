@@ -3,12 +3,12 @@ import loginPageImage from "../../data/loginPageImage.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import UserContext from "../../context/userContext.js";
+import userContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
 
 const Login = () => {
   const user = useSelector((state) => state?.user?.user);
-  const { fetchUserDetails } = useContext(UserContext);
+  const { fetchUserDetails } = useContext(userContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);

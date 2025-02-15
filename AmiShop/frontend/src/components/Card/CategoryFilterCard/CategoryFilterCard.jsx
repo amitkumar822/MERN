@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import scrollTop from "../../../helpers/scrollTop";
 import AddToCart from "../../../helpers/AddToCart";
-import UserContext from "../../../context/userContext";
+import userContext from "../../../context/userContext";
 
 export const ProductCard = ({ product, index }) => {
   const navigate = useNavigate();
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
 
   const handleAddToCart = async (e, id) => {
     await AddToCart(e, id);

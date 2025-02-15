@@ -6,13 +6,13 @@ import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
 import AddToCart from "../../helpers/AddToCart";
-import UserContext from "../../context/userContext";
+import userContext from "../../context/userContext";
 import ReviewPage from "../../components/Review/ReviewPage";
 
 const ProductDetailsPage = () => {
-  const { userReview } = useContext(UserContext);
+  const { userReview } = useContext(userContext);
 
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
   const productId = useParams();
 
   const [data, setData] = useState([]);

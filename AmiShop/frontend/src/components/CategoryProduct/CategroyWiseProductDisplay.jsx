@@ -4,14 +4,14 @@ import displayINRCurrency from "../../helpers/displayINRCurrency";
 import AddToCart from "../../helpers/AddToCart";
 import axios from "axios";
 import scrollTop from "../../helpers/scrollTop";
-import UserContext from "../../context/userContext";
+import userContext from "../../context/userContext";
 
 const CategroyWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const loadingList = new Array(13).fill(null);
 
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
 
   const handleAddToCart = async (e, id) => {
     await AddToCart(e, id);

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
-import UserContext from "../../context/userContext";
+import userContext from "../../context/userContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import ShippingAddress from "../../components/Order/ShippingAddress";
 const OrderViewCart = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
   // TODO: This two all products id and quantity are used placed order time in ShippingAddress component
   const [allProductId, setAllProductId] = useState([]);
   const [quantity, setQuantity] = useState(0);

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import UserContext from "../context/UserContext.js";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../stores/UserSlice";
-import UserContext from "./userContext.js";
+import userContext from "./userContext.js";
 
 const UserContextProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -51,7 +50,7 @@ const UserContextProvider = ({ children }) => {
   const [userReview, setUserReview] = useState([]);
 
   return (
-    <UserContext.Provider
+    <userContext.Provider
       value={{
         fetchUserDetails,
         cartProductCount,
@@ -61,7 +60,7 @@ const UserContextProvider = ({ children }) => {
       }}
     >
       {children}
-    </UserContext.Provider>
+    </userContext.Provider>
   );
 };
 

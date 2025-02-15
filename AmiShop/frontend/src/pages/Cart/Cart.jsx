@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import AddToCart from "../../helpers/AddToCart";
-import UserContext from "../../context/userContext";
+import userContext from "../../context/userContext";
 import { Button } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
@@ -44,7 +44,7 @@ const Cart = ({ category, heading }) => {
     scrollElement.current.scrollLeft -= 300;
   };
 
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
 
   const handleAddToCart = async (event, id) => {
     await AddToCart(event, id);

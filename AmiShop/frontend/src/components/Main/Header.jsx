@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../../context/userContext.js";
+import userContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/Auth/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -23,7 +23,7 @@ const Header = () => {
   const token = localStorage.getItem("token");
 
 
-  const { cartProductCount } = useContext(UserContext);
+  const { cartProductCount } = useContext(userContext);
 
   const searchInput = useLocation(); // get URL search input (object format)
   const URLSearch = new URLSearchParams(searchInput?.search); // get search actual input

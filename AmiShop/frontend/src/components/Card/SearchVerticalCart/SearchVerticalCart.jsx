@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import scrollTop from "../../../helpers/scrollTop";
 import { Link } from "react-router-dom";
 import AddToCart from "../../../helpers/AddToCart";
-import UserContext from "../../../context/userContext";
+import userContext from "../../../context/userContext";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 
 const SearchVerticalCart = ({ loading, data = [] }) => {
   const loadingList = new Array(13).fill(null);
-  const { fetchCountAddToCart } = useContext(UserContext);
+  const { fetchCountAddToCart } = useContext(userContext);
 
   const handleAddToCart = async (e, id) => {  
     await AddToCart(e, id);
