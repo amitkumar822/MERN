@@ -3,9 +3,8 @@ import { FaHeart, FaEye } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
-import userContext from "../../../context/userContext";
+import userContext from "../../../context/userContext.js";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const HorizontalCardProduct = ({ category, heading }) => {

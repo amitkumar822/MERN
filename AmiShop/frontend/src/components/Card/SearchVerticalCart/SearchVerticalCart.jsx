@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import scrollTop from "../../../helpers/scrollTop";
 import { Link } from "react-router-dom";
 import AddToCart from "../../../helpers/AddToCart";
-import userContext from "../../../context/userContext";
-import displayINRCurrency from "../../../helpers/displayINRCurrency";
+import userContext from "../../../context/userContext.js";
 
 const SearchVerticalCart = ({ loading, data = [] }) => {
   const loadingList = new Array(13).fill(null);

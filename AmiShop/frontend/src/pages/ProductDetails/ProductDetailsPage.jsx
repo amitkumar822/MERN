@@ -6,7 +6,7 @@ import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
 import AddToCart from "../../helpers/AddToCart";
-import userContext from "../../context/userContext";
+import userContext from "../../context/userContext.js";
 import ReviewPage from "../../components/Review/ReviewPage";
 
 const ProductDetailsPage = () => {

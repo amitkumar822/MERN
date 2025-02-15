@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
-import userContext from "../../context/userContext";
+import userContext from "../../context/userContext.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";

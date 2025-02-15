@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import scrollTop from "../../../helpers/scrollTop";
 import { IoMdArrowDown, IoMdTrendingDown } from "react-icons/io";
 import AddToCart from "../../../helpers/AddToCart";
-import userContext from "../../../context/userContext";
+import userContext from "../../../context/userContext.js";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const CardBestSellingProduct = ({ item, idx }) => {

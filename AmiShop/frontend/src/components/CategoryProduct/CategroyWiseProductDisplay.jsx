@@ -4,7 +4,7 @@ import displayINRCurrency from "../../helpers/displayINRCurrency";
 import AddToCart from "../../helpers/AddToCart";
 import axios from "axios";
 import scrollTop from "../../helpers/scrollTop";
-import userContext from "../../context/userContext";
+import userContext from "../../context/userContext.js";
 
 const CategroyWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);

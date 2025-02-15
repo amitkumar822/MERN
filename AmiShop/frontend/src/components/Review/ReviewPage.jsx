@@ -6,7 +6,7 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { formatDateToDDMMYYYY } from "../../helpers/FormatDateToDDMMYYYY";
 import { useSelector } from "react-redux";
-import userContext from "../../context/userContext";
+import userContext from "../../context/userContext.js";
 import { EditReview } from "./EditReview";
 
 const ReviewPage = () => {
