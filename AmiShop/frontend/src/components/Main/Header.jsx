@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../../context/userContext";
+import UserContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
 import LogOut from "../../pages/Auth/LogOut";
 import { FaRegCircleUser } from "react-icons/fa6";

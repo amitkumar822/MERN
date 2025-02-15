@@ -3,7 +3,7 @@ import loginPageImage from "../../data/loginPageImage.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import UserContext from "../../context/userContext";
+import UserContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
 
 const Login = () => {
