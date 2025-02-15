@@ -8,7 +8,8 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import logo from "../data/logo/logo-weband.jpg"
+import { BsFillBadge3dFill } from "react-icons/bs";
+import logo from "../data/logo/logo-weband.jpg";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -103,7 +104,6 @@ const Navbar = () => {
           isScrolled ? "-translate-y-[2.3rem]" : "translate-y-0"
         }`}
       >
-
         {/* Logo */}
         <div className="flex-1 md:ml-2">
           <Link to="/" className="logo">
@@ -161,6 +161,11 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li onClick={closeDropdown}>
+                  <Link to="/3D-views">
+                    <BsFillBadge3dFill className="mr-2" /> 3D Views
+                  </Link>
+                </li>
+                <li onClick={closeDropdown}>
                   <Link to="/about-us">
                     <FaInfoCircle className="mr-2" /> About Us
                   </Link>
@@ -191,6 +196,11 @@ const Navbar = () => {
             <li>
               <Link to="/portfolio">
                 <FaLaptopCode className="mr-2" /> Portfolio
+              </Link>
+            </li>
+            <li>
+              <Link to="/3D-views">
+                <BsFillBadge3dFill className="mr-2" /> 3D Views
               </Link>
             </li>
             <li>

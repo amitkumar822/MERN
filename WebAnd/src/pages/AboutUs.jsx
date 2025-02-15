@@ -184,20 +184,20 @@ const temData = [
     role: "UI/UX Designer",
     mobile: "+91 72580 01494",
   },
-  {
-    id: 4,
-    name: "Uttam Kumar",
-    url: uttam,
-    role: "Data Analytic",
-    mobile: "+91 72580 01494",
-  },
-  {
-    id: 5,
-    name: "Prince Kumar",
-    url: prince,
-    role: "Devops Engineer",
-    mobile: "+91 91629 96487",
-  },
+  // {
+  //   id: 4,
+  //   name: "Uttam Kumar",
+  //   url: uttam,
+  //   role: "Data Analytic",
+  //   mobile: "+91 72580 01494",
+  // },
+  // {
+  //   id: 5,
+  //   name: "Prince Kumar",
+  //   url: prince,
+  //   role: "Devops Engineer",
+  //   mobile: "+91 91629 96487",
+  // },
   
 ];
 

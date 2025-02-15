@@ -11,6 +11,7 @@ import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import LearnMore from "../pages/LearnMore";
 import NotFound from "../pages/NotFound";
+import ThreeD from "../pages/3Dpage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/learn-more" element={<LearnMore />} />
+      <Route path="/3D-views" element={<ThreeD />} />
       <Route path="/*" element={<NotFound />} />
     </Route>
   )

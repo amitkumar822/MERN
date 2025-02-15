@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
-    <div>
+    <div className="w-full overflow-hidden">
       <Navbar />
 
       <main>

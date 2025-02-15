@@ -28,7 +28,7 @@ const attendanceSchema = new mongoose.Schema(
         remarks: {
           type: String,
           trim: true,
-          maxlength: [250, "Remarks should not exceed 250 characters"],
+          max: [250, "Remarks should not exceed 250 characters"],
         },
       },
     ],
