@@ -6,7 +6,7 @@ import Carousel from "../../components/Banner/Carousel";
 import TimeCountDown from "../../components/Main/TimeCountDown";
 import Cart from "../Cart/Cart";
 import PopularProduct from "../../components/Main/PopularProduct/PopularProduct";
-// import TopBrand from "../../components/Main/TopBrand/TopBrand";
+import TopBrand from "../../components/Main/TopBrand/TopBrand";
 import BestSellingProduct from "../../components/Main/BestSellingProduct/BestSellingProduct";
 import CarouselDesktop from "../../components/Banner/CarouselDesktop";
 
@@ -37,7 +37,7 @@ const Home = () => {
       <VerticalCard category={"laptops"} heading={"Best Laptops"} />
 
       {/* Top Brand */}
-      {/* <TopBrand /> */}
+      <TopBrand />
 
       <VerticalCard category={"mouse"} heading={"Top Mouse"} />
 

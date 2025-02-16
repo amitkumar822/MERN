@@ -43,6 +43,7 @@ import desktopBannerSliderRouter from "./src/routes/desktopBannerSlider.routes.j
 import orderRoutes from "./src/routes/order.routes.js";
 import googleRoutes from "./src/routes/google.routes.js";
 import reviewRoutes from "./src/routes/review.routes.js";
+import topBrandRoutes from "./src/routes/topBrand.routes.js";
 
 // define router
 app.use("/api/v1/user", userRouter);
@@ -52,6 +53,7 @@ app.use("/api/v1/desktop-banner-slider", desktopBannerSliderRouter);
 app.use("/api/v1/order", orderRoutes);
 app.use("/api/v1/auth", googleRoutes); // integrate with google login routes
 app.use("/api/v1/review", reviewRoutes);
+app.use("/api/v1/top-brand", topBrandRoutes);
 
 // define captcha router
 import captchaRouter from "./src/routes/captcha.routes.js";

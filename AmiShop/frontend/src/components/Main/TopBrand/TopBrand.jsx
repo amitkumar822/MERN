@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { brandLogo } from "../../../data/BrandLogo/BrandLogoExport";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SearchVerticalCart from "../../Card/SearchVerticalCart/SearchVerticalCart";
 import { Button, Dialog } from "@mui/material";
@@ -7,6 +6,29 @@ import { toast } from "react-toastify";
 
 const TopBrand = () => {
   const marqueeRef = useRef(null);
+
+  const [brandLogo, setBrandLogo] = useState([]);
+
+  const fetchTopBrand = async (req, res) => {
+    try {
+      const { data } = await axios.get(`/api/top-brand/get-top-brand`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setBrandLogo(data?.data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "No Brand Logo!");
+    }
+  };
+
+  useEffect(() => {
+    fetchTopBrand();
+  }, []);
+
+  console.log("Brand: ", brandLogo);
+  
 
   const handleMouseEnter = () => {
     if (marqueeRef.current) {
@@ -53,12 +75,12 @@ const TopBrand = () => {
         onMouseLeave={handleMouseLeave}
       >
         <div className="w-full flex items-center gap-6 py-4">
-          {brandLogo.map((img, index) => (
+          {brandLogo?.map((img, index) => (
             <img
               key={index + img.id}
-              src={img.image}
-              alt={img.name}
-              onClick={() => handleBrandClick(img.name)}
+              src={img?.bannerImg.url}
+              alt={img?.brandName}
+              onClick={() => handleBrandClick(img?.brandName)}
               className="max-w-60 min-w-60 max-h-32 min-h-32 overflow-hidden cursor-pointer p-2 mix-blend-darken bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
             />
           ))}

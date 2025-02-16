@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import loginPageImage from "../../data/loginPageImage.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -146,7 +145,7 @@ const Login = () => {
           {/* Right Section */}
           <div className="justify-center py-4">
             <div>
-              <img className="w-full mx-auto" src={loginPageImage} alt="Login" />
+              <img className="mx-auto h-[32rem] w-[32rem] rounded-full" src={"https://img.freepik.com/free-vector/woman-online-shopping_603843-3344.jpg?t=st=1739681586~exp=1739685186~hmac=b2fb39ad10d27cdf46951c99428bd4257bd38a73f4b304ca29b045d2f9d74dcc&w=740"} alt="Login" />
               <div className="text-center mt-4">
                 <h3 className="text-2xl font-bold">
                   Welcome to <span className="text-pink-600">Ami</span>
