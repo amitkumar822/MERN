@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000/api/v1', // URL of your backend
-        // target: 'https://amishop-api.vercel.app/api/v1', // URL of your backend
+        // target: 'http://localhost:4000/api/v1', // URL of your backend
+        target: 'https://amishop-api.vercel.app/api/v1', // URL of your backend
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
