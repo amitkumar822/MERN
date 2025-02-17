@@ -20,11 +20,20 @@ const CarouselDesktop = () => {
       setProduct(data?.data);
       setLoading(false);
 
-      const response = await API.get("/desktop-banner-slider/get-banner", {
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchDesktopBanner = async () => {
+    try {
+
+      const { data } = await API.get("/desktop-banner-slider/get-banner", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      setAmazonBanner(response?.data?.data);
+      setAmazonBanner(data?.data);
+
     } catch (error) {
       console.error(error);
     }
@@ -34,8 +43,12 @@ const CarouselDesktop = () => {
     fetchProduct();
   }, []);
 
+  useEffect(() => {
+    fetchDesktopBanner();
+  }, []);
+
   console.log("DesktopBannerData: \n", AmazonBanner);
-  
+
 
   // Banner slideshow
   const [currentIndex, setCurrentIndex] = useState(0);
