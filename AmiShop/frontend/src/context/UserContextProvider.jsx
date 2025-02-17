@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../stores/UserSlice";
 import userContext from "./userContext.js";
+import API from "../api/axiosInstance.js";
 
 const UserContextProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const UserContextProvider = ({ children }) => {
   // TODO: Fetch User Details
   const fetchUserDetails = async () => {
     try {
-      const { data } = await axios.get("/api/user/get-user-details", {
+      const { data } = await API.get("/user/get-user-details", {
         credentials: "include",
         headers: {
           "content-type": "application/json",
@@ -30,7 +30,7 @@ const UserContextProvider = ({ children }) => {
   // TODO: Add To Cart count toatl items
   const fetchCountAddToCart = async () => {
     try {
-      const { data } = await axios.get("/api/user/getaddtocart", {
+      const { data } = await API.get("/user/getaddtocart", {
         headers: {
           "Content-Type": "application/json",
         },

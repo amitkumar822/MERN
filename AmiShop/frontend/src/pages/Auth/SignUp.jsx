@@ -4,9 +4,9 @@ import { FaEyeSlash } from "react-icons/fa";
 import loginLogo from "../../assets/signin.gif";
 import { Link } from "react-router-dom";
 import ImageToBase64 from "../../helpers/ImageToBase64";
-import axios from "axios";
 import { toast } from "react-toastify";
 import SyncLoader from "react-spinners/SyncLoader";
+import API from "../../api/axiosInstance";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ const SignUp = () => {
     }
 
     try {
-      await axios.post("/api/user/register", formData);
+      await API.post("/user/register", formData);
       setLoading(false);
       toast.success("Signup successful. You can now login.");
     } catch (error) {

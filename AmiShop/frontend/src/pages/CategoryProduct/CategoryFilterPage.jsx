@@ -29,12 +29,12 @@ import {
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Checkbox from "@mui/material/Checkbox";
 import { filters, singleFilter, sortOptions } from "./FilterData";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
 import {
   ProductCard,
   ProductSkeleton,
 } from "../../components/Card/CategoryFilterCard/CategoryFilterCard";
+import API from "../../api/axiosInstance";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -116,7 +116,7 @@ export default function CategoryFilterPage() {
   // Fetch data based on selected filters
   const fetchData = async () => {
     try {
-      const response = await axios.post("/api/product/filter", {
+      const response = await API.post("/product/filter", {
         category: filterCategoryList,
         discount: selectedSingleFilter?.discount,
         price: selectedSingleFilter?.price,

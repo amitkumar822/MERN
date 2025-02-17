@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-import axios from "axios";
+import API from "../../api/axiosInstance";
 
 const BannerSlideProduct = () => {
   const [images, setImages] = useState([]);
 
   const fetchAllBanner = async () => {
     try {
-      const { data } = await axios.get("/api/banner-slider/get-banner");
+      const { data } = await API.get("/banner-slider/get-banner");
       setImages(data?.data);
     } catch (error) {
       console.error("Error fetching banners:", error);

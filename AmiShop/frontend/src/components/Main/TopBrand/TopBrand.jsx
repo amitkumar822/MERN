@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import SearchVerticalCart from "../../Card/SearchVerticalCart/SearchVerticalCart";
 import { Button, Dialog } from "@mui/material";
 import { toast } from "react-toastify";
+import API from "../../../api/axiosInstance";
 
 const TopBrand = () => {
   const marqueeRef = useRef(null);
@@ -11,7 +11,7 @@ const TopBrand = () => {
 
   const fetchTopBrand = async (req, res) => {
     try {
-      const { data } = await axios.get(`/api/top-brand/get-top-brand`, {
+      const { data } = await API.get(`/top-brand/get-top-brand`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -26,8 +26,6 @@ const TopBrand = () => {
   useEffect(() => {
     fetchTopBrand();
   }, []);
-
-  console.log("Brand: ", brandLogo);
   
 
   const handleMouseEnter = () => {
@@ -47,8 +45,8 @@ const TopBrand = () => {
 
   const handleBrandClick = async (brand) => {
     try {
-      const { data } = await axios.post(
-        `/api/product/get-brand-wise-product/${brand}`,
+      const { data } = await API.post(
+        `/product/get-brand-wise-product/${brand}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +55,6 @@ const TopBrand = () => {
       );
       setBrandWiseProduct(data?.data);
       setLoading(false);
-      console.log(data?.data);
     } catch (error) {
       console.error(error)
       toast.error(error?.response?.data?.message || "No Any Product!");

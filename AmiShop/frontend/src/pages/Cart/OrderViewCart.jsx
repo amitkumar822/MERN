@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import userContext from "../../context/userContext.js";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import ShippingAddress from "../../components/Order/ShippingAddress";
+import API from "../../api/axiosInstance.js";
 
 const OrderViewCart = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const OrderViewCart = () => {
 
   const fetchData = async () => {
     try {
-      const { data } = await axios.get("/api/user/view-addtocart", {
+      const { data } = await API.get("/user/view-addtocart", {
         credentials: "include",
         headers: {
           "content-type": "application/json",
@@ -42,7 +42,7 @@ const OrderViewCart = () => {
 
   const increaseQty = async (id, qty) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await API.post(
         "/api/user/update-addtocart",
         { _id: id, quantity: qty + 1 },
         {
@@ -62,7 +62,7 @@ const OrderViewCart = () => {
   const decraseQty = async (id, qty) => {
     if (qty >= 2) {
       try {
-        await axios.post(
+        await API.post(
           "/api/user/update-addtocart",
           { _id: id, quantity: qty - 1 },
           {
@@ -81,7 +81,7 @@ const OrderViewCart = () => {
 
   const deleteCartProduct = async (id) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await API.post(
         "/api/user/delete-addtocart",
         { _id: id },
         {

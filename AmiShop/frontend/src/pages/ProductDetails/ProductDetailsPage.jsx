@@ -2,12 +2,12 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import CategroyWiseProductDisplay from "../../components/CategoryProduct/CategroyWiseProductDisplay";
 import AddToCart from "../../helpers/AddToCart";
 import userContext from "../../context/userContext.js";
 import ReviewPage from "../../components/Review/ReviewPage";
+import API from "../../api/axiosInstance.js";
 
 const ProductDetailsPage = () => {
   const { userReview } = useContext(userContext);
@@ -33,8 +33,8 @@ const ProductDetailsPage = () => {
   const fetchProductDetails = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(
-        `/api/product/getproduct-details-byid/${productId?.id}`,
+      const { data } = await API.get(
+        `/product/getproduct-details-byid/${productId?.id}`,
         { headers: { "Content-Type": "application/json" } }
       );
 
@@ -87,7 +87,7 @@ const ProductDetailsPage = () => {
 
   const handleLikeProduct = async () => {
     try {
-      await axios.post(`/api/product/like/${productId?.id}`, {
+      await API.post(`/product/like/${productId?.id}`, {
         withCredentials: true,
       });
       // fetchProductDetails();

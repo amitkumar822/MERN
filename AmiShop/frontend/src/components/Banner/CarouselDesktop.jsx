@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
 import scrollTop from "../../helpers/scrollTop";
+import API from "../../api/axiosInstance";
 
 const CarouselDesktop = () => {
   const [product, setProduct] = useState([]);
@@ -12,14 +13,14 @@ const CarouselDesktop = () => {
 
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get("/api/product/get4category-product", {
+      const { data } = await API.get("/product/get4category-product", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
       setProduct(data?.data);
       setLoading(false);
 
-      const response = await axios.get("/api/desktop-banner-slider/get-banner", {
+      const response = await API.get("/desktop-banner-slider/get-banner", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -32,6 +33,9 @@ const CarouselDesktop = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
+
+  console.log("DesktopBannerData: \n", AmazonBanner);
+  
 
   // Banner slideshow
   const [currentIndex, setCurrentIndex] = useState(0);

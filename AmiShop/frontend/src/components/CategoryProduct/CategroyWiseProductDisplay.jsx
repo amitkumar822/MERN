@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import AddToCart from "../../helpers/AddToCart";
-import axios from "axios";
 import scrollTop from "../../helpers/scrollTop";
 import userContext from "../../context/userContext.js";
+import API from "../../api/axiosInstance.js";
 
 const CategroyWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -21,8 +21,8 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "/api/product/get-category-namewise-product",
+      const { data } = await API.post(
+        "/product/get-category-namewise-product",
         { category },
         { "content-type": "application/json" }
       );

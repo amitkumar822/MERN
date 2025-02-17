@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Chip } from "@mui/material";
 import Card from "./Card";
 import scrollTop from "../../../helpers/scrollTop";
 import { Skeleton } from "../../Card/Skeleton";
+import API from "../../../api/axiosInstance";
 
 const PopularProduct = () => {
   const [category, setCategory] = useState("mobiles");
@@ -13,8 +13,8 @@ const PopularProduct = () => {
 
   const fetchData = async () => {
     try {
-      const { data } = await axios.post(
-        "/api/product/get-category-namewise-product",
+      const { data } = await API.post(
+        "/product/get-category-namewise-product",
         { category },
         { "content-type": "application/json" }
       );

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import SyncLoader from "react-spinners/SyncLoader";
+import API from "../../api/axiosInstance";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function ForgotPassword() {
     setLoading(true); // Start loading spinner
 
     try {
-      await axios.post("/api/captcha/generate", { email });
+      await API.post("/captcha/generate", { email });
       setOtpSendMessage(false);
       setLoading(false);
 
@@ -76,7 +76,7 @@ function ForgotPassword() {
     setLoading(true);
 
     try {
-      await axios.post("/api/user/forgotPassword", data);
+      await API.post("/user/forgotPassword", data);
 
       toast.success("Successfully Change Your Password");
 

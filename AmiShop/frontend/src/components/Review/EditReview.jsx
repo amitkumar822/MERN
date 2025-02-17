@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { CircularProgress, IconButton, Input, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import API from "../../api/axiosInstance";
 
 const style = {
   position: "absolute",
@@ -39,8 +39,8 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
   // fetch single review
   const fetchSingleReview = async (req, res) => {
     try {
-      const { data } = await axios.get(
-        `/api/review/get-single-review/${myReviewId}`,
+      const { data } = await API.get(
+        `/review/get-single-review/${myReviewId}`,
         {
           withCredentials: true,
           headers: {
@@ -68,7 +68,7 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
     formData.append("rating", rating);
 
     try {
-      await axios.put(`/api/review/update/${myReviewId}`, formData, {
+      await API.put(`/review/update/${myReviewId}`, formData, {
         withCredentials: true,
       });
       setLoading(false);
@@ -93,7 +93,7 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
   const handleDelete = async () => {
     setDeleteLoading(true);
     try {
-      await axios.delete(`/api/review/delete/${myReviewId}`);
+      await API.delete(`/review/delete/${myReviewId}`);
       toast.success("Delete Review Successfully");
       setDeleteLoading(false);
       handleClose();

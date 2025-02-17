@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaHeart, FaEye } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import AddToCart from "../../../helpers/AddToCart";
 import userContext from "../../../context/userContext.js";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import API from "../../../api/axiosInstance.js";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const { fetchCountAddToCart } = useContext(userContext);
@@ -18,8 +18,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "/api/product/get-category-namewise-product",
+      const { data } = await API.post(
+        "/product/get-category-namewise-product",
         { category },
         { "content-type": "application/json" }
       );

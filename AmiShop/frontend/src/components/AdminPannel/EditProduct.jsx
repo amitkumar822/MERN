@@ -3,9 +3,9 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ProductCategory from "../../helpers/ProductCategory";
 import { toast } from "react-toastify";
-import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "../DisplayImage";
+import API from "../../api/axiosInstance";
 
 const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   const fileInputRef = useRef(null);
@@ -103,8 +103,8 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   const handleRemoveImage = async ({ index, public_id, productId }) => {
     if (public_id && productId) {
       try {
-        await axios.delete(
-          `/api/product/delete-product-img/${productId}/image/${public_id}`
+        await API.delete(
+          `/product/delete-product-img/${productId}/image/${public_id}`
         );
         fetchAllProduct();
         toast.success("Successfully deleted product Image");
@@ -159,7 +159,7 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
     });
 
     try {
-      await axios.post(`/api/product/update/${product?._id}`, formData);
+      await API.post(`/product/update/${product?._id}`, formData);
       fetchAllProduct();
       setLoading(false);
       document.getElementById("edit_product_modal").close();

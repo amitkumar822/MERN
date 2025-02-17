@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UploadProduct from "../../components/AdminPannel/UploadProduct";
-import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate } from "react-router";
 import ProductCard from "../../components/AdminPannel/ProductCard";
+import API from "../../api/axiosInstance";
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -31,8 +31,8 @@ const AllProducts = () => {
 
   const fetchAllProduct = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/product/get-products?page=${page}&limit=${limit}`
+      const { data } = await API.get(
+        `/product/get-products?page=${page}&limit=${limit}`
       );
       setProductList(data.data);
     } catch (error) {

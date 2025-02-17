@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
@@ -11,6 +10,7 @@ import {
 } from "react-icons/fa";
 import SyncLoader from "react-spinners/SyncLoader";
 import logo from "../../data/logo.png";
+import API from "../../api/axiosInstance";
 
 const ShippingAddress = ({
   totalPrice,
@@ -108,11 +108,11 @@ const ShippingAddress = ({
     setLoading(true);
 
     try {
-      const response = await axios.get("/api/order/razorpay-key");
+      const response = await API.get("/order/razorpay-key");
       const rezorPayKey = response?.data?.data;
 
-      const { data } = await axios.post(
-        "/api/order/create-online-pay",
+      const { data } = await API.post(
+        "/order/create-online-pay",
         newData,
         {
           headers: {
@@ -133,7 +133,7 @@ const ShippingAddress = ({
         description: "Test Transaction",
         image: { logo }, //! LOGO
         order_id: data?.data?.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "/api/order/payment-verification",
+        callback_url: "/order/payment-verification",
         prefill: {
           name: "",
           // name: "Amit Kumar",
@@ -169,7 +169,7 @@ const ShippingAddress = ({
     e.preventDefault();
     setLoadingCOD(true);
     try {
-      const { data } = await axios.post("/api/order/create-cod-pay", newData, {
+      const { data } = await API.post("/order/create-cod-pay", newData, {
         headers: {
           "Content-Type": "application/json",
         },

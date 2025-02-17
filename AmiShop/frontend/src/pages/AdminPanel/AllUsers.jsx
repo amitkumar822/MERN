@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import moment from "moment";
 import UpdateUserDetails from "../../components/AdminPannel/UpdateUserDetails";
@@ -7,6 +6,7 @@ import DeleteUser from "../../components/AdminPannel/DeleteUser";
 import { IconButton } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import API from "../../api/axiosInstance";
 
 const AllUsers = () => {
   const [allUser, setAllUser] = useState([]);
@@ -15,7 +15,7 @@ const AllUsers = () => {
 
   const fetchAllUsers = async () => {
     try {
-      const { data } = await axios.get("/api/user/get-all-users", {
+      const { data } = await API.get("/user/get-all-users", {
         credentials: "include",
       });
       setAllUser(data?.data);

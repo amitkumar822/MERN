@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import axios from "axios";
 import OfflineShareIcon from "@mui/icons-material/OfflineShare";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
 import scrollTop from "../../../helpers/scrollTop";
+import API from "../../../api/axiosInstance";
 
 const BestSellingProduct = () => {
   const [data, setData] = useState([]);
@@ -14,8 +14,8 @@ const BestSellingProduct = () => {
   const fetchData = async () => {
     const category = "mobiles";
     try {
-      const { data } = await axios.get(
-        "/api/product/best-selling-product",
+      const { data } = await API.get(
+        "/product/best-selling-product",
         { category },
         { "content-type": "application/json" }
       );

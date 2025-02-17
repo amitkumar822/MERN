@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import userContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
+import API from "../../api/axiosInstance.js";
 
 const Login = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -30,7 +30,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/user/login", data);
+      const response = await API.post("/user/login", data);
       toast.success("Login Successfully");
       fetchUserDetails();
       navigate("/");

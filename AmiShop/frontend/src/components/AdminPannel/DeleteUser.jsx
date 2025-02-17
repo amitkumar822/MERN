@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import API from "../../api/axiosInstance";
 
 const DeleteUser = ({ userId, setUserId, fetchAllUsers }) => {
   const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const DeleteUser = ({ userId, setUserId, fetchAllUsers }) => {
   const handleDeleteUser = async () => {
     setLoading(true);
     try {
-      await axios.delete(`/api/user/delete-user/${userId}`);
+      await API.delete(`/user/delete-user/${userId}`);
       toast.success("User deleted successfully");
       setLoading(false);
       setUserId("");

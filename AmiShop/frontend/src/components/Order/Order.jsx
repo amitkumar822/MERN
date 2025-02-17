@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import { toast } from "react-toastify";
 import SyncLoader from "react-spinners/SyncLoader";
 import { useNavigate } from "react-router";
+import API from "../../api/axiosInstance";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Order = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const { data } = await axios.get("/api/order/get-all-confirmed-order", {
+      const { data } = await API.get("/order/get-all-confirmed-order", {
         headers: { "Content-Type": "application/json" },
       });
       setOrderDetails(data?.data);
@@ -43,7 +43,7 @@ const Order = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`/api/order/cancel-order`, { orderId });
+      const { data } = await API.post(`/order/cancel-order`, { orderId });
 
       fetchOrderDetails();
       setLoading(false);

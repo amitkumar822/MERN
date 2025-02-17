@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import { IoMdClose } from "react-icons/io";
 import { useSpring, animated } from "@react-spring/web";
 import { FaEdit } from "react-icons/fa";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
@@ -17,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import API from "../../api/axiosInstance";
 
 const Fade = forwardRef(function Fade(props, ref) {
   const {
@@ -169,8 +169,8 @@ export default function EditProfile({ user }) {
     };
 
     try {
-      const response = await axios.post(
-        `/api/user/update-user-details/${user?._id}`,
+      const response = await API.post(
+        `/user/update-user-details/${user?._id}`,
         newData,
         {
           credentials: "include",

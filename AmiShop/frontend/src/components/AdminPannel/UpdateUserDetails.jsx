@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ROLE } from "../../common/Role";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../../api/axiosInstance";
 
 const UpdateUserDetails = ({
   selectedUser,
@@ -22,8 +22,8 @@ const UpdateUserDetails = ({
     e.preventDefault();
 
     try {
-      const rep = await axios.post(
-        `/api/user/update-user-details/${selectedUser?._id}`,
+      const rep = await API.post(
+        `/user/update-user-details/${selectedUser?._id}`,
         data,
         {
           credentials: "include",

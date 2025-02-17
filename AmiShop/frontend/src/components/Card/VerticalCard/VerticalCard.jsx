@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaHeart, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import displayINRCurrency from "../../../helpers/displayINRCurrency";
 import AddToCart from "../../../helpers/AddToCart";
 import userContext from "../../../context/userContext.js";
 import { Button } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import API from "../../../api/axiosInstance.js";
 
 const VerticalCard = ({ category, heading }) => {
   const [isHovered, setIsHovered] = useState(null);
@@ -18,8 +18,8 @@ const VerticalCard = ({ category, heading }) => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "/api/product/get-category-namewise-product",
+      const { data } = await API.post(
+        "/product/get-category-namewise-product",
         { category },
         { "content-type": "application/json" }
       );

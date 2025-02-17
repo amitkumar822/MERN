@@ -3,9 +3,9 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ProductCategory from "../../helpers/ProductCategory";
 import { toast } from "react-toastify";
-import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import DisplayImage from "../DisplayImage";
+import API from "../../api/axiosInstance";
 
 const UploadProduct = ({ fetchAllProduct }) => {
   let [loading, setLoading] = useState(false);
@@ -112,7 +112,7 @@ const UploadProduct = ({ fetchAllProduct }) => {
     });
 
     try {
-      await axios.post("/api/product/upload", formData);
+      await API.post("/product/upload", formData);
       setLoading(false);
       toast.success("Product Uploaded Successfully!");
       fetchAllProduct();

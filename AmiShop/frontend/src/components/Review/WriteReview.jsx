@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { CircularProgress, IconButton, Input, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import API from "../../api/axiosInstance";
 
 const style = {
   position: "absolute",
@@ -43,7 +43,7 @@ export const WriteReview = ({ productId, fetchReview }) => {
     formData.append("rating", rating);
 
     try {
-      await axios.post(`/api/review/write-reviews/${productId}`, formData, {
+      await API.post(`/review/write-reviews/${productId}`, formData, {
         withCredentials: true,
       });
       setLoading(false);

@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import SearchVerticalCart from "../../components/Card/SearchVerticalCart/SearchVerticalCart";
+import API from "../../api/axiosInstance";
 
 const SearchProduct = () => {
   const query = useLocation();
@@ -12,7 +12,7 @@ const SearchProduct = () => {
   const fetchSearchProduct = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("/api/product/search" + query.search);
+      const { data } = await API.get("/product/search" + query.search);
       setData(data?.data);
       setLoading(false);
     } catch (error) {

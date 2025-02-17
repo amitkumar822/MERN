@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaStar, FaRegStar, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
 import { WriteReview } from "./WriteReview";
-import axios from "axios";
 import { useParams } from "react-router";
 import { formatDateToDDMMYYYY } from "../../helpers/FormatDateToDDMMYYYY";
 import { useSelector } from "react-redux";
 import userContext from "../../context/userContext.js";
 import { EditReview } from "./EditReview";
+import API from "../../api/axiosInstance.js";
 
 const ReviewPage = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -29,7 +29,7 @@ const ReviewPage = () => {
   // ==========👇 Get Review 👇======
   const fetchReview = async () => {
     try {
-      const { data } = await axios.get(`/api/review/get-review/${productId}`, {
+      const { data } = await API.get(`/review/get-review/${productId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -49,7 +49,7 @@ const ReviewPage = () => {
   // ==========�� Post Likes and Dislikes ��======
   const handleLike = async (reviewId) => {
     try {
-      await axios.post(`/api/review/likes/${reviewId}`);
+      await API.post(`/review/likes/${reviewId}`);
       fetchReview();
     } catch (error) {
       console.log(error?.response?.data?.message || error);
@@ -58,7 +58,7 @@ const ReviewPage = () => {
 
   const handleDisLike = async (reviewId) => {
     try {
-      await axios.post(`/api/review/dislikes/${reviewId}`);
+      await API.post(`/review/dislikes/${reviewId}`);
       fetchReview();
     } catch (error) {
       console.log(error?.response?.data?.message || error);

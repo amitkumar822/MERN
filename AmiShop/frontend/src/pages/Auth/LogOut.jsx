@@ -1,9 +1,9 @@
-import axios from "axios";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../../stores/UserSlice";
+import API from "../../api/axiosInstance";
 
 const LogOut = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const LogOut = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.post("/api/user/logout", {
+      await API.post("/user/logout", {
         credentials: "include",
       });
       localStorage.clear();

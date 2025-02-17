@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "../../Card/Skeleton";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useLocation, useNavigate } from "react-router";
 import CardBestSellingProduct from "./CardBestSellingProduct";
+import API from "../../../api/axiosInstance";
 
 const AllBestSellingProduct = () => {
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const AllBestSellingProduct = () => {
 
   const fetchProductData = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/product/get-best-selling-all-product?page=${page}&limit=${limit}`,
+      const { data } = await API.get(
+        `/product/get-best-selling-all-product?page=${page}&limit=${limit}`,
         {
           headers: {
             "content-type": "application/json",

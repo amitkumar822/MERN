@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import API from "../../api/axiosInstance";
+
 
 const TimeCountDown = () => {
   const [counter, setCounter] = useState(null);
@@ -8,7 +9,7 @@ const TimeCountDown = () => {
     // Fetch remaining time from the backend
     const fetchRemainingTime = async () => {
       try {
-        const { data } = await axios.get("/api/sale/sale-timer", {
+        const { data } = await API.get("/sale/sale-timer", {
           headers: {
             "Content-Type": "application/json",
           },

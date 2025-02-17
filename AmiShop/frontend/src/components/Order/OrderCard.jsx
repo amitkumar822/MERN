@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import API from "../../api/axiosInstance";
 
 const OrderCard = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const OrderCard = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const { data } = await axios.get("/api/order/get-all-confirmed-order", {
+      const { data } = await API.get("/order/get-all-confirmed-order", {
         headers: { "Content-Type": "application/json" },
       });
       setOrderDetails(data?.data);
