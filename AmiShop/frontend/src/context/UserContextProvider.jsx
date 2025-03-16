@@ -21,8 +21,8 @@ const UserContextProvider = ({ children }) => {
       dispatch(setUserDetails(data?.data));
     } catch (error) {
       console.log(
-        "Error Featching User Details ",
-        error.response.data.message || "Intrnal Server Error"
+        "Error Fetching User Details ",
+        error.response.data.message || "Internal Server Error"
       );
     }
   };
