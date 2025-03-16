@@ -93,7 +93,7 @@ const CourseTab = () => {
     try {
       //   const response = await publishCourse({courseId, query:action});
       //   if(response.data){
-      //     refetch();
+      //      ();
       //     toast.success(response.data.message);
       //   }
     } catch (error) {

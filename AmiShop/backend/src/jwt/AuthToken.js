@@ -12,7 +12,7 @@ const createTokensAndSaveCookies = async (userId, res) => {
     { userId },
     process.env.JWT_REFRESH_SECRET_KEY,
     {
-      expiresIn: process.env.JWT_REFRESH_EXPIRES, // Long lifespan
+      expiresIn: process.env.JWT_REFRESH_EXPIRES,
     }
   );
 
@@ -21,7 +21,7 @@ const createTokensAndSaveCookies = async (userId, res) => {
     httpOnly: true,
     // secure: true,
     sameSite: "strict",
-    maxAge: 24 * 60 * 1000, // 1 day
+    maxAge: 24 * 60 * 1000,
   });
 
   res.cookie("refreshToken", refreshToken, {
