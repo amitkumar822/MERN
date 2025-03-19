@@ -20,12 +20,10 @@ export const isAuthenticated = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log("IsAuthenticated Error: " + error.message);
     return res.status(401).json({ message: "user is not authenticated" });
   }
 };
 
-// autherization the user
 export const isAdmin = (...roles) => {
   try {
     return (req, res, next) => {
