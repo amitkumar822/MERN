@@ -1,4 +1,5 @@
 import daisyui from "daisyui";
+import tailwindScrollbar from "tailwind-scrollbar";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -40,7 +41,7 @@ export default {
       addUtilities(newUtilities);
       addBase(baseStyles);
     },
-    require("tailwind-scrollbar")({ nocompatible: true }),
+    tailwindScrollbar({ nocompatible: true }),
   ],
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
