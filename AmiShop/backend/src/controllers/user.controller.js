@@ -74,6 +74,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
+  
 
   if (!email || !password) {
     throw new ApiError(400, "All Fields Must Be Required!");
@@ -102,6 +104,8 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   // generate token and save
   const token = await createTokenAndSaveCookie(user._id, res);
+  console.log("TOken: ", token);
+  
 
   return res
     .status(201)

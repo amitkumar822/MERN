@@ -19,21 +19,21 @@ const createTokensAndSaveCookies = async (userId, res) => {
   // Set cookies
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: "strict",
     maxAge: 24 * 60 * 1000,
   });
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: "strict",
     maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   });
 
   await User.findByIdAndUpdate(userId, { refreshToken });
 
-  // return { accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };
 
 export default createTokensAndSaveCookies;

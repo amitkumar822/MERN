@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "./Carousel";
@@ -19,7 +18,6 @@ const CarouselDesktop = () => {
       });
       setProduct(data?.data);
       setLoading(false);
-
     } catch (error) {
       console.error(error);
     }
@@ -27,28 +25,21 @@ const CarouselDesktop = () => {
 
   const fetchDesktopBanner = async () => {
     try {
-
       const { data } = await API.get("/desktop-banner-slider/get-banner", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
       setAmazonBanner(data?.data);
-
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
+    fetchDesktopBanner();
     fetchProduct();
   }, []);
-
-  useEffect(() => {
-    fetchDesktopBanner();
-  }, []);
-
-  console.log("DesktopBannerData: \n", AmazonBanner);
-
+  
 
   // Banner slideshow
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -62,7 +53,7 @@ const CarouselDesktop = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [slideCount]);
+  }, [AmazonBanner?.length]);
 
   return (
     <div className="bg-gray-100">
@@ -86,9 +77,7 @@ const CarouselDesktop = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:-mt-[34rem] lg:-mt-[27rem] px-4 pb-2">
         {/* Column 1: Most-Loved Products */}
         <div className="bg-white shadow-md rounded-lg p-4">
-          <h2 className="xl:text-lg font-bold mb-2">
-            Our Most Popular cloaks
-          </h2>
+          <h2 className="xl:text-lg font-bold mb-2">Our Most Popular cloaks</h2>
           <div className="grid grid-cols-2 gap-2 overflow-hidden">
             {loading ? (
               <Skeleton />
@@ -113,8 +102,9 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[0]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
-              }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -149,8 +139,9 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[1]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
-              }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -190,8 +181,9 @@ const CarouselDesktop = () => {
           </div>
           <Link
             to={`category-filter?category=${product[2]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
-              }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>
@@ -232,8 +224,9 @@ const CarouselDesktop = () => {
           <Link
             aria-disabled
             to={`category-filter?category=${product[3]?.category}`}
-            className={`text-blue-500 text-sm mt-2 inline-block ${loading ? "hidden" : "block"
-              }`}
+            className={`text-blue-500 text-sm mt-2 inline-block ${
+              loading ? "hidden" : "block"
+            }`}
           >
             Explore all
           </Link>

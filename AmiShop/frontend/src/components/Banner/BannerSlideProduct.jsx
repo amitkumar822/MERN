@@ -33,7 +33,8 @@ const BannerSlideProduct = () => {
 
   return (
     <div className="w-full mx-auto mt-2">
-      {carouselItems.length > 0 ? (
+      <h1>Banner is Comment</h1>
+      {/* {carouselItems.length > 0 ? (
         <AliceCarousel
           items={carouselItems}
           disableButtonsControls
@@ -48,7 +49,7 @@ const BannerSlideProduct = () => {
         />
       ) : (
         <p>Loading banners...</p>
-      )}
+      )} */}
     </div>
   );
 };

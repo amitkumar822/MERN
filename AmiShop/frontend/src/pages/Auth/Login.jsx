@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import userContext from "../../context/userContext.js";
-import { useSelector } from "react-redux";
 import API from "../../api/axiosInstance.js";
 
+// get API from env
+export const apiUrl = import.meta.env.VITE_API_URL;
+
 const Login = () => {
-  const user = useSelector((state) => state?.user?.user);
   const { fetchUserDetails } = useContext(userContext);
-  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
@@ -30,10 +30,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await API.post("/user/login", data);
+      await API.post("/user/login", data);
       toast.success("Login Successfully");
       fetchUserDetails();
-      navigate("/");
     } catch (error) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
       console.error(error);
@@ -41,9 +40,9 @@ const Login = () => {
   };
 
   // google login
-  const handleGoogleLogin = async () => {
-    window.location.href = "/api/auth/google";
-  };
+  // const handleGoogleLogin = async () => {
+  //   window.location.href = "/api/auth/google";
+  // };
 
   return (
     <div>
@@ -69,7 +68,10 @@ const Login = () => {
               <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="text-base font-medium text-gray-900">
+                  <label
+                    htmlFor="email"
+                    className="text-base font-medium text-gray-900"
+                  >
                     Email address
                   </label>
                   <div className="mt-2.5">
@@ -88,7 +90,10 @@ const Login = () => {
                 {/* Password */}
                 <div>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="text-base font-medium text-gray-900">
+                    <label
+                      htmlFor="password"
+                      className="text-base font-medium text-gray-900"
+                    >
                       Password
                     </label>
                     <Link
@@ -123,7 +128,7 @@ const Login = () => {
               </form>
 
               {/* Google Login */}
-              <div
+              {/* <div
                 onClick={handleGoogleLogin}
                 className="flex items-center justify-center w-full mt-4 px-6 py-3 bg-white border rounded-lg shadow-md cursor-pointer hover:bg-gray-200"
               >
@@ -138,21 +143,28 @@ const Login = () => {
                   <path fill="#4285F4" d="M46.145 24c0-1.387-.214-2.88-.534-4.267H23.714v9.067H36.318c-.63 3.092-2.346 5.468-4.801 7.014l7.508 5.803c4.314-4.004 7.12-9.968 7.12-16.613z" />
                 </svg>
                 <span>Continue with Google</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Right Section */}
           <div className="justify-center py-4">
             <div>
-              <img className="mx-auto h-[32rem] w-[32rem] rounded-full" src={"https://img.freepik.com/free-vector/woman-online-shopping_603843-3344.jpg?t=st=1739681586~exp=1739685186~hmac=b2fb39ad10d27cdf46951c99428bd4257bd38a73f4b304ca29b045d2f9d74dcc&w=740"} alt="Login" />
+              <img
+                className="mx-auto h-[32rem] w-[32rem] rounded-full"
+                src={
+                  "https://img.freepik.com/free-vector/woman-online-shopping_603843-3344.jpg?t=st=1739681586~exp=1739685186~hmac=b2fb39ad10d27cdf46951c99428bd4257bd38a73f4b304ca29b045d2f9d74dcc&w=740"
+                }
+                alt="Login"
+              />
               <div className="text-center mt-4">
                 <h3 className="text-2xl font-bold">
                   Welcome to <span className="text-pink-600">Ami</span>
                   <span className="text-green-600">Shop</span>
                 </h3>
                 <p className="text-gray-500 mt-2">
-                  Explore premium products and exclusive deals. Log in now to start shopping!
+                  Explore premium products and exclusive deals. Log in now to
+                  start shopping!
                 </p>
               </div>
             </div>

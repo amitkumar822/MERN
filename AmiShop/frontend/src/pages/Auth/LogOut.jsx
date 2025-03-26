@@ -16,7 +16,7 @@ const LogOut = () => {
       });
       localStorage.clear();
       dispatch(setUserDetails(null));
-      navigate("/login");
+      // navigate("/login");
       toast.success("Logged out successfully");
     } catch (error) {
       console.log(error);

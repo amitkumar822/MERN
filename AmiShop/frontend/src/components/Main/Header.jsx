@@ -11,6 +11,8 @@ import scrollTop from "../../helpers/scrollTop";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
+  console.log("USER: ", user);
+  
 
   if (user?.refreshToken) {
     localStorage.setItem("token", user?.refreshToken);

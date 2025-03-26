@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import API from "../../api/axiosInstance";
 
@@ -29,7 +28,7 @@ const Carousel = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [slideCount]);
+  }, []);
 
   // Smoothly scroll to the top of the carousel when a button is clicked
   const handleButtonClick = (index) => {
@@ -48,7 +47,10 @@ const Carousel = () => {
           >
             {images.map((items, index) => {
               return (
-                <div className="carousel-item w-full md:h-full h-[20vh] flex-shrink-0" key={index}>
+                <div
+                  className="carousel-item w-full md:h-full h-[20vh] flex-shrink-0"
+                  key={index}
+                >
                   <img
                     src={items?.bannerImg?.url}
                     className="w-full"

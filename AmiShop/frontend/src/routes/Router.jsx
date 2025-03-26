@@ -23,14 +23,20 @@ import OrderCard from "../components/Order/OrderCard";
 import AllOrder from "../pages/AdminPanel/AllOrder";
 import CategoryFilterPage from "../pages/CategoryProduct/CategoryFilterPage";
 import AllBestSellingProduct from "../components/Main/BestSellingProduct/AllBestSellingProduct";
+import LoginPageProtectedRoute from "./LoginPageProtectedRoute";
+import DashboardProtectedRoute from "./DashboardProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/signup" element={<SignUp />} />
+      {/* Login page protaction when user login so not visit this page */}
+      <Route element={<LoginPageProtectedRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
+
       <Route path="/category-filter" element={<CategoryFilterPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/view-cart" element={<OrderViewCart />} />
@@ -38,14 +44,16 @@ const router = createBrowserRouter(
       <Route path="/profile" element={<Profile />} />
       <Route path="/success" element={<Success />} />
       <Route path="/failed" element={<Failed />} />
-      <Route path="/order" element={<OrderCard />} />
       <Route path="/best-selling-product" element={<AllBestSellingProduct />} />
 
       {/* Admin Panel Routes */}
-      <Route path="/admin-panel" element={<AdminPanel />}>
-        <Route path="" element={<AllUsers />} />
-        <Route path="all-products" element={<AllProducts />} />
-        <Route path="all-order" element={<AllOrder />} />
+      <Route element={<DashboardProtectedRoute allowedRoles={["ADMIN"]} />}>
+        <Route path="/admin-panel" element={<AdminPanel />}>
+          <Route path="" element={<AllUsers />} />
+          <Route path="all-products" element={<AllProducts />} />
+          <Route path="all-order" element={<AllOrder />} />
+        </Route>
+        <Route path="/order" element={<OrderCard />} />
       </Route>
       <Route path="/*" element={<NotFound404 />} />
     </Route>
