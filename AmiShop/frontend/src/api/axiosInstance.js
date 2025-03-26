@@ -1,8 +1,9 @@
 import axios from "axios";
 
+export const apiUrl = import.meta.env.VITE_API_URL;
+
 const API = axios.create({
-  baseURL: "http://localhost:4000/api/v1",
-  // baseURL: "https://amishop-api.vercel.app/api/v1",
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
