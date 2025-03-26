@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import userContext from "../../context/userContext.js";
 import API from "../../api/axiosInstance.js";
@@ -9,6 +9,7 @@ export const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const { fetchUserDetails } = useContext(userContext);
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
@@ -32,6 +33,7 @@ const Login = () => {
     try {
       await API.post("/user/login", data);
       toast.success("Login Successfully");
+      navigate("/");
       fetchUserDetails();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
