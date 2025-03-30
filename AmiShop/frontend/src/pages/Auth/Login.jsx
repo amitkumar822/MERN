@@ -12,6 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -29,6 +30,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       await API.post("/user/login", data);
@@ -38,6 +40,8 @@ const Login = () => {
     } catch (error) {
       toast.error(error?.response?.data?.message || "Internal Server Error");
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -122,9 +126,10 @@ const Login = () => {
                 <div>
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className="w-full py-4 text-white bg-blue-600 rounded-md hover:bg-blue-700"
                   >
-                    Log in
+                    {isLoading ? "Loading..." : "Login"}
                   </button>
                 </div>
               </form>
