@@ -12,13 +12,13 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
 
-  // if (user?.refreshToken) {
-  //   localStorage.setItem("token", user?.refreshToken);
-  // } else {
-  //   setTimeout(() => {
-  //     localStorage.clear();
-  //   }, 3000);
-  // }
+  if (user?.refreshToken) {
+    localStorage.setItem("token", user?.refreshToken);
+  } else {
+    setTimeout(() => {
+      localStorage.clear();
+    }, 3000);
+  }
 
   const token = localStorage.getItem("token");
 
