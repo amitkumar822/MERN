@@ -203,6 +203,11 @@ export const addToCart = asyncHandler(async (req, res) => {
   const { productId } = req?.body;
   const userId = req.user.userId;
 
+  console.log('====================================');
+  console.log(req.body);
+  console.log(productId);
+  console.log('====================================');
+
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new ApiError(400, "Invalid ProductId");
   }

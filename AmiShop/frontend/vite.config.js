@@ -17,4 +17,13 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1500, // Increase warning limit to 1.5 MB (temporary fix)
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000/api/v1', // URL of your backend
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
 });

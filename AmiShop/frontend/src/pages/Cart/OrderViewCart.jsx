@@ -10,7 +10,7 @@ const OrderViewCart = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const { fetchCountAddToCart } = useContext(userContext);
-  // TODO: This two all products id and quantity are used placed order time in ShippingAddress component
+  //* This two all products id and quantity are used placed order time in ShippingAddress component
   const [allProductId, setAllProductId] = useState([]);
   const [quantity, setQuantity] = useState(0);
 

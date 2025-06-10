@@ -1,13 +1,13 @@
-import axios from "axios";
 import { toast } from "react-toastify";
+import API from "../api/axiosInstance";
 
 const AddToCart = async (event, id) => {
   event?.stopPropagation();
   event?.preventDefault();
 
   try {
-    const { data } = await axios.post(
-      `/api/user/addtocart`,
+    const { data } = await API.post(
+      `/user/addtocart`,
       {
         productId: id,
       },
@@ -21,7 +21,7 @@ const AddToCart = async (event, id) => {
     toast.success("Product added to cart successfully!");
     return data?.data;
   } catch (error) {
-    console.error("Add To Card Error:\n ",error);
+    console.error("Add To Card Error:\n ", error?.response);
     toast.error(error?.response?.data?.message || "Failed to add to cart");
   }
 };
