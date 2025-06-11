@@ -22,7 +22,7 @@ const AddToCart = async (event, id) => {
     return data?.data;
   } catch (error) {
     console.error("Add To Card Error:\n ", error?.response);
-    toast.error(error?.response?.data?.message || "Failed to add to cart");
+    toast.warning(error?.response?.data?.message || "Failed to add to cart");
   }
 };
 

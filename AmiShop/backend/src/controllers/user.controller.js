@@ -5,7 +5,7 @@ import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import createTokenAndSaveCookie from "../jwt/AuthToken.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
-import { v2 as cloudinary } from "cloudinary"; // use in user delete controller
+import { v2 as cloudinary } from "cloudinary";
 import { AddToCart } from "../models/addToCart.modal.js";
 import bcrypt from "bcrypt";
 import { Captcha } from "../models/captcha.modals.js";
@@ -203,11 +203,6 @@ export const addToCart = asyncHandler(async (req, res) => {
   const { productId } = req?.body;
   const userId = req.user.userId;
 
-  console.log('====================================');
-  console.log(req.body);
-  console.log(productId);
-  console.log('====================================');
-
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new ApiError(400, "Invalid ProductId");
   }
@@ -284,9 +279,9 @@ export const deleteAddToCartProduct = asyncHandler(async (req, res) => {
     userId,
   });
 
-  if (!deleteProduct) throw new ApiError(400, "Product Delete Faild...");
+  if (!deleteProduct) throw new ApiError(400, "Product Removed Faild...");
 
-  res.status(200).json(new ApiResponse(200, [], "Product Delete Successfully"));
+  res.status(200).json(new ApiResponse(200, [], "Product Remove Successfully"));
 });
 
 // TODO: Forgot Password

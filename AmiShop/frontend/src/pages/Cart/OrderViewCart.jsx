@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import displayINRCurrency from "../../helpers/displayINRCurrency";
 import userContext from "../../context/userContext.js";
 import { toast } from "react-toastify";
@@ -14,8 +14,6 @@ const OrderViewCart = () => {
   const [allProductId, setAllProductId] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
-  console.log(allProductId);
-
   const fetchData = async () => {
     try {
       const { data } = await API.get("/user/view-addtocart", {
@@ -28,7 +26,7 @@ const OrderViewCart = () => {
       setAllProductId(data?.data.map((item) => item.productId._id));
       setQuantity(data?.data.map((item) => item.quantity));
     } catch (error) {
-      console.log(error);
+      console.log("Error Fetch View Cart Order:\n ", error);
     }
   };
 
@@ -42,8 +40,8 @@ const OrderViewCart = () => {
 
   const increaseQty = async (id, qty) => {
     try {
-      const { data } = await API.post(
-        "/api/user/update-addtocart",
+      await API.post(
+        "/user/update-addtocart",
         { _id: id, quantity: qty + 1 },
         {
           credentials: "include",
@@ -63,7 +61,7 @@ const OrderViewCart = () => {
     if (qty >= 2) {
       try {
         await API.post(
-          "/api/user/update-addtocart",
+          "/user/update-addtocart",
           { _id: id, quantity: qty - 1 },
           {
             credentials: "include",
@@ -82,7 +80,7 @@ const OrderViewCart = () => {
   const deleteCartProduct = async (id) => {
     try {
       const { data } = await API.post(
-        "/api/user/delete-addtocart",
+        "/user/delete-addtocart",
         { _id: id },
         {
           credentials: "include",
@@ -91,12 +89,13 @@ const OrderViewCart = () => {
           },
         }
       );
-      toast.success("Successfully Deleted");
+
+      toast.success(data?.message || "Successfully Remove Product");
       fetchData();
 
       fetchCountAddToCart();
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Faild To Delete!");
+      toast.error(error?.response?.data?.message || "Faild To Remove!");
       console.log(error);
     }
   };
