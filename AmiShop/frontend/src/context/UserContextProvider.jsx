@@ -9,7 +9,7 @@ const UserContextProvider = ({ children }) => {
 
   const [cartProductCount, setCartProductCount] = useState(0);
 
-  // TODO: Fetch User Details
+  //* Fetch User Details
   const fetchUserDetails = async () => {
     try {
       const { data } = await API.get("/user/get-user-details", {
@@ -28,7 +28,7 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  // TODO: Add To Cart count toatl items
+  //* Add To Cart count toatl items
   const fetchCountAddToCart = async () => {
     try {
       const { data } = await API.get("/user/getaddtocart", {
@@ -47,7 +47,7 @@ const UserContextProvider = ({ children }) => {
     fetchCountAddToCart();
   }, []);
 
-  // TODO: User Review come to Review Page
+  //^ User Review come to Review Page
   const [userReview, setUserReview] = useState([]);
 
   return (
@@ -58,6 +58,7 @@ const UserContextProvider = ({ children }) => {
         fetchCountAddToCart,
         userReview,
         setUserReview,
+        setCartProductCount
       }}
     >
       {children}

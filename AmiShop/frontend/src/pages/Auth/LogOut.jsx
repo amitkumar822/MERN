@@ -4,10 +4,14 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../../stores/UserSlice";
 import API from "../../api/axiosInstance";
+import { useContext } from "react";
+import userContext from "../../context/userContext";
 
 const LogOut = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { setCartProductCount } = useContext(userContext);
 
   const handleLogOut = async () => {
     try {
@@ -16,7 +20,8 @@ const LogOut = () => {
       });
       localStorage.clear();
       dispatch(setUserDetails(null));
-      // navigate("/login");
+      setCartProductCount(0)
+      navigate("/login");
       toast.success("Logged out successfully");
     } catch (error) {
       console.log(error);

@@ -46,9 +46,9 @@ const Login = () => {
   };
 
   // google login
-  // const handleGoogleLogin = async () => {
-  //   window.location.href = "/api/auth/google";
-  // };
+  const handleGoogleLogin = async () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/v1/auth/google`;
+  };
 
   return (
     <div>
@@ -135,7 +135,7 @@ const Login = () => {
               </form>
 
               {/* Google Login */}
-              {/* <div
+              <div
                 onClick={handleGoogleLogin}
                 className="flex items-center justify-center w-full mt-4 px-6 py-3 bg-white border rounded-lg shadow-md cursor-pointer hover:bg-gray-200"
               >
@@ -150,7 +150,7 @@ const Login = () => {
                   <path fill="#4285F4" d="M46.145 24c0-1.387-.214-2.88-.534-4.267H23.714v9.067H36.318c-.63 3.092-2.346 5.468-4.801 7.014l7.508 5.803c4.314-4.004 7.12-9.968 7.12-16.613z" />
                 </svg>
                 <span>Continue with Google</span>
-              </div> */}
+              </div>
             </div>
           </div>
 
