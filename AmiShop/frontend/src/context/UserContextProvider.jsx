@@ -13,7 +13,7 @@ const UserContextProvider = ({ children }) => {
   const fetchUserDetails = async () => {
     try {
       const { data } = await API.get("/user/get-user-details", {
-        // credentials: "include",
+        credentials: "include",
         withCredentials: true,
         headers: {
           "content-type": "application/json",
