@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import userContext from "../../context/userContext.js";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import logo from "../../data/logo.png";
 import { ROLE } from "../../common/Role";
 import scrollTop from "../../helpers/scrollTop";
+import useDebounce from "../../hook/useDebounce.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,18 +27,19 @@ const Header = () => {
 
   const searchInput = useLocation(); // get URL search input (object format)
   const URLSearch = new URLSearchParams(searchInput?.search); // get search actual input
-  const searchQuery = URLSearch.getAll("q"); // get search value after queary ("q")
+  const searchQuery = URLSearch.getAll("q"); // get search value after query ("q")
   const [search, setSearch] = useState(searchQuery);
 
-  const handleSearch = (e) => {
-    const { value } = e.target;
-    setSearch(value);
-    if (value) {
-      navigate(`/search?q=${value}`);
+  // debounce search input to prevent multiple requests
+  const debouncedSearch = useDebounce(search, 500);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      navigate(`/search?q=${debouncedSearch}`);
     } else {
       navigate("/");
     }
-  };
+  }, [debouncedSearch]);
 
   return (
     <div className="w-full mx-auto">
@@ -55,7 +57,7 @@ const Header = () => {
               placeholder="Search"
               className="input input-bordered w-24 md:w-auto"
               value={search}
-              onChange={handleSearch}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
