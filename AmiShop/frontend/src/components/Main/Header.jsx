@@ -34,7 +34,7 @@ const Header = () => {
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
-    if (debouncedSearch) {
+    if (!!debouncedSearch && debouncedSearch?.length !== 0) {
       navigate(`/search?q=${debouncedSearch}`);
     } else {
       navigate("/");
