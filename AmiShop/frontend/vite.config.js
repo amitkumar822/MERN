@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://amishop-api.onrender.com/api/v1', // URL of your backend
+        target: 'https://amishop-api.onrender.com/api/v1/l', // URL of your backend
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
