@@ -212,7 +212,7 @@ const OrderCard = () => {
                   <h3 className="md:font-semibold font-medium text-gray-800">
                     Product Details
                   </h3>
-                  {order?.productId.map((product, idx) => (
+                  {order?.productId?.map((product, idx) => (
                     <div
                       key={idx}
                       className="mt-2 flex flex-col sm:flex-row justify-between items-center gap-4"

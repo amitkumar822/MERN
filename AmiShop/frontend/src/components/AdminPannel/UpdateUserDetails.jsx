@@ -100,7 +100,7 @@ const UpdateUserDetails = ({
                 value={data.role} // Default to the current role
                 onChange={handleInputChange}
               >
-                {Object.values(ROLE).map((el) => (
+                {Object.values(ROLE)?.map((el) => (
                   <option value={el} key={el}>
                     {el}
                   </option>

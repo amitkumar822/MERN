@@ -67,10 +67,10 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
       return;
     }
 
-    const imagesArray2 = files.map((file) => file);
+    const imagesArray2 = files?.map((file) => file);
 
     // Create URLs for display and add files to imageFiles state for uploa
-    const imageObjects = files.map((file) => {
+    const imageObjects = files?.map((file) => {
       return {
         public_id: "", // public_id is empty for newly uploaded files
         url: URL.createObjectURL(file), // Use the blob URL for preview
@@ -87,7 +87,7 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
   // Set imageUrlList and newProductImage when productImage is loaded
   useEffect(() => {
     if (product?.productImage) {
-      const arrayOfProductImages = product.productImage.map((imageDetails) => ({
+      const arrayOfProductImages = product.productImage?.map((imageDetails) => ({
         public_id: imageDetails.public_id,
         url: imageDetails.url,
       }));
@@ -226,7 +226,7 @@ const EditProduct = ({ product, setEachProduct, fetchAllProduct }) => {
                       style={{ maxHeight: "200px", overflowY: "auto" }}
                       className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg"
                     >
-                      {ProductCategory.map((el, index) => (
+                      {ProductCategory?.map((el, index) => (
                         <div
                           key={index}
                           className="px-4 py-2 cursor-pointer hover:bg-gray-100"

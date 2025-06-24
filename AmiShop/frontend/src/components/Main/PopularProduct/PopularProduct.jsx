@@ -64,7 +64,7 @@ const PopularProduct = () => {
             ? Array.from({ length: 10 }).map((_, index) => (
                 <Skeleton key={index} />
               ))
-            : data?.slice(0, 10).map((product, index) => (
+            : data?.slice(0, 10)?.map((product, index) => (
                 <Link
                   to={"product/" + product?._id}
                   key={product?.productName + index}

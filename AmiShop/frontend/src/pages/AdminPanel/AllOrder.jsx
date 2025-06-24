@@ -142,7 +142,7 @@ export default function AllOrder() {
             justifyContent="flex-end"
             alignItems="center"
           >
-            {statuses.map((statusObj, index) => (
+            {statuses?.map((statusObj, index) => (
               <Button
                 key={index}
                 variant="contained"
@@ -172,7 +172,7 @@ export default function AllOrder() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns?.map((column) => (
                   <TableCell
                     key={column.id}
                     style={{ minWidth: column.minWidth }}
@@ -185,7 +185,7 @@ export default function AllOrder() {
             <TableBody>
               {filteredOrders
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order) => (
+                ?.map((order) => (
                   <TableRow hover key={order._id}>
                     <TableCell>{order._id}</TableCell>
                     <TableCell>{order.name}</TableCell>

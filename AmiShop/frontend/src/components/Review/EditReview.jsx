@@ -153,7 +153,7 @@ export const EditReview = ({ myReviewId, fetchReview }) => {
 
           {/* Rating */}
           <Box sx={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
-            {[...Array(5)].map((_, i) => (
+            {[...Array(5)]?.map((_, i) => (
               <IconButton
                 key={i}
                 sx={{

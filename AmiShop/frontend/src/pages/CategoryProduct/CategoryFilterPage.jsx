@@ -66,11 +66,11 @@ export default function CategoryFilterPage() {
   // Handle checkbox toggle
   const handleFilterCheckboxButton = (value, sectionId) => {
     setFilter((prevFilters) =>
-      prevFilters.map((section) =>
+      prevFilters?.map((section) =>
         section.id === sectionId
           ? {
               ...section,
-              options: section.options.map((option) =>
+              options: section.options?.map((option) =>
                 option.value === value
                   ? { ...option, checked: !option.checked }
                   : option
@@ -89,9 +89,9 @@ export default function CategoryFilterPage() {
   // Sync filter checkbox UI based on URL categories
   useEffect(() => {
     setFilter((prevFilters) =>
-      prevFilters.map((section) => ({
+      prevFilters?.map((section) => ({
         ...section,
-        options: section.options.map((option) => ({
+        options: section.options?.map((option) => ({
           ...option,
           checked: !!urlCategoryListObject[option.value],
         })),
@@ -140,7 +140,7 @@ export default function CategoryFilterPage() {
   useEffect(() => {
     // Create a list of selected categories
     const arrayOfCategory = Object.keys(selectCategory)
-      .map((categoryKeyName) => {
+      ?.map((categoryKeyName) => {
         if (selectCategory[categoryKeyName]) {
           return categoryKeyName;
         }
@@ -151,7 +151,7 @@ export default function CategoryFilterPage() {
     setFilterCategoryList(arrayOfCategory);
 
     // Update the URL based on selected categories
-    const urlFormat = arrayOfCategory.map((el) => `category=${el}`);
+    const urlFormat = arrayOfCategory?.map((el) => `category=${el}`);
     navigate("/category-filter?" + urlFormat.join("&"), { replace: true });
   }, [selectCategory]);
 
@@ -207,7 +207,7 @@ export default function CategoryFilterPage() {
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                {filter.map((section, index) => (
+                {filter?.map((section, index) => (
                   <Disclosure
                     key={index}
                     as="div"
@@ -233,7 +233,7 @@ export default function CategoryFilterPage() {
 
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-1">
-                        {section.options.map((option, optionIdx) => (
+                        {section.options?.map((option, optionIdx) => (
                           <div key={optionIdx} className="flex items-center">
                             <FormControlLabel
                               control={
@@ -299,7 +299,7 @@ export default function CategoryFilterPage() {
                   className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                   <div className="py-1">
-                    {sortOptions.map((option, index) => (
+                    {sortOptions?.map((option, index) => (
                       <MenuItem key={index}>
                         <button
                           onClick={() => handleSort(option.label)}
@@ -348,7 +348,7 @@ export default function CategoryFilterPage() {
                   <h1 className="text-lg opacity-50 font-bold">Filters</h1>
                   <FilterListIcon />
                 </div>
-                {filter.map((section, index) => (
+                {filter?.map((section, index) => (
                   <Disclosure
                     key={index}
                     as="div"
@@ -373,7 +373,7 @@ export default function CategoryFilterPage() {
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-1">
-                        {section.options.map((option, optionIdx) => (
+                        {section?.options?.map((option, optionIdx) => (
                           <div
                             key={option.value + optionIdx}
                             className="flex items-center"
@@ -406,7 +406,7 @@ export default function CategoryFilterPage() {
                 ))}
 
                 {/* Price, Discount and Availability Filter */}
-                {singleFilter.map((section, index) => (
+                {singleFilter?.map((section, index) => (
                   <Disclosure
                     key={index}
                     as="div"
@@ -441,7 +441,7 @@ export default function CategoryFilterPage() {
                             defaultValue="female"
                             name="radio-buttons-group"
                           >
-                            {section.options.map((option, optionIdx) => (
+                            {section.options?.map((option, optionIdx) => (
                               <div key={optionIdx}>
                                 <FormControlLabel
                                   control={
@@ -490,7 +490,7 @@ export default function CategoryFilterPage() {
                     ? Array.from({ length: 8 }).map((_, index) => (
                         <ProductSkeleton key={index} />
                       ))
-                    : data.map((product, index) => (
+                    : data?.map((product, index) => (
                         <ProductCard product={product} index={index} key={product._id} />
                       ))}
                 </div>

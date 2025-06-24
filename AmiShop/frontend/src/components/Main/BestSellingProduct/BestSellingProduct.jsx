@@ -58,7 +58,7 @@ const BestSellingProduct = () => {
         {/* Cards */}
         {loading ? (
           <div className="grid xl:grid-cols-3 grid-cols-2  lg:gap-4 gap-2 mt-4">
-            {Array.from({ length: 6 }).map((_, index) => (
+            {Array.from({ length: 6 })?.map((_, index) => (
               <Skeleton key={index} />
             ))}
           </div>

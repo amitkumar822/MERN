@@ -16,7 +16,7 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,250px))] justify-center gap-4 p-4">
       {loading
-        ? loadingList.map((_, index) => (
+        ? loadingList?.map((_, index) => (
             <div
               key={index}
               className="w-full bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg shadow-md overflow-hidden animate-pulse"
@@ -33,7 +33,7 @@ const SearchVerticalCart = ({ loading, data = [] }) => {
               </div>
             </div>
           ))
-        : data.map((product, index) => (
+        : data?.map((product, index) => (
             <div
               key={index}
               className="w-full bg-white rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 overflow-hidden"

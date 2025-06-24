@@ -65,7 +65,7 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {allUser.map((details, index) => (
+            {allUser?.map((details, index) => (
               <tr
                 key={index}
                 className="border-b last:border-none transition-colors duration-200 hover:bg-gray-100"

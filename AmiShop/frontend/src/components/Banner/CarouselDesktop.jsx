@@ -241,7 +241,7 @@ export default CarouselDesktop;
 const Skeleton = () => {
   return (
     <>
-      {Array.from({ length: 4 }).map((_, index) => (
+      {Array.from({ length: 4 })?.map((_, index) => (
         <div key={index}>
           <div className="bg-gray-200 w-40 h-40 flex justify-center items-center skeleton"></div>
           <p className="mt-1 bg-gray-200 w-[95%] h-4 skeleton"></p>

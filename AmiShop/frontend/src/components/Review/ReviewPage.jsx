@@ -107,7 +107,7 @@ const ReviewPage = () => {
         </h3>
 
         <div className="space-y-5">
-          {ratingAnalytics.map((count, i) => {
+          {ratingAnalytics?.map((count, i) => {
             // Colors for each rating level
             const colors = [
               "text-red-500",
@@ -168,7 +168,7 @@ const ReviewPage = () => {
           User Reviews ({allReviews.length})
         </h3>
         {allReviews.length > 0 ? (
-          allReviews.map((review) => (
+          allReviews?.map((review) => (
             <div
               key={review._id}
               className="p-4 bg-gray-100 rounded-lg shadow mb-4 flex gap-4"

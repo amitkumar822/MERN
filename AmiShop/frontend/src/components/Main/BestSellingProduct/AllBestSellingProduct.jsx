@@ -55,13 +55,13 @@ const AllBestSellingProduct = () => {
     <div className="w-full h-[92vh] mx-auto overflow-y-auto bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100">
       {loading ? (
         <div className="flex flex-wrap justify-center items-center">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Array.from({ length: 10 })?.map((_, index) => (
             <Skeleton key={index} />
           ))}
         </div>
       ) : (
         <div className="md:px-3 px-1 sm:pt-3 pt-1 flex flex-wrap justify-center items-center md:gap-3 gap-1 md:pb-16">
-          {productData.map((item, index) => (
+          {productData?.map((item, index) => (
             <CardBestSellingProduct item={item} key={index} idx={index} />
           ))}
         </div>

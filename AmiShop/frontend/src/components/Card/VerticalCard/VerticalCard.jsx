@@ -102,7 +102,7 @@ const VerticalCard = ({ category, heading }) => {
         </Button>
 
         {loading
-          ? loadingList.map((_, index) => (
+          ? loadingList?.map((_, index) => (
               <div
                 key={index}
                 className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex"
@@ -119,7 +119,7 @@ const VerticalCard = ({ category, heading }) => {
                 </div>
               </div>
             ))
-          : data.map((product, index) => (
+          : data?.map((product, index) => (
               <Link
                 to={"product/" + product?._id}
                 key={product?.productName + index}
@@ -174,7 +174,7 @@ const VerticalCard = ({ category, heading }) => {
 
                       {/* Reviews section */}
                       <div className="flex items-center justify-center gap-1 mt-2 text-yellow-500">
-                        {[...Array(5)].map((_, i) => (
+                        {[...Array(5)]?.map((_, i) => (
                           <svg
                             key={i}
                             xmlns="http://www.w3.org/2000/svg"

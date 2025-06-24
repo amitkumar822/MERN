@@ -16,7 +16,7 @@ const ProductDetailsPage = () => {
   const productId = useParams();
 
   const [data, setData] = useState([]);
-  console.log(data)
+  console.log(data);
   const [isLiked, setIsLiked] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -261,7 +261,11 @@ const ProductDetailsPage = () => {
                 </div>
               </div>
 
-              <div className={`flex flex-wrap gap-4 mt-8 ${zoomImage ? "hidden" : "block"}`}>
+              <div
+                className={`flex flex-wrap gap-4 mt-8 ${
+                  zoomImage ? "hidden" : "block"
+                }`}
+              >
                 <button
                   onClick={(e) => handleBuyProduct(e, data?._id)}
                   className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
@@ -297,7 +301,7 @@ const ProductDetailsPage = () => {
                     Product Description
                   </h3>
                   <div className="mt-4 space-y-4">
-                    {data.description.split("\n").map((line, index) => {
+                    {data.description.split("\n")?.map((line, index) => {
                       const isHeader = line.endsWith(":") || line.endsWith(".");
                       return (
                         <div key={index} className="flex items-start">
@@ -344,7 +348,7 @@ const ProductDetailsPage = () => {
                     </tr>
                   </thead>
                   <tbody className="text-gray-800">
-                    {specifications.map(
+                    {specifications?.map(
                       (spec, index) =>
                         spec.value && ( // Simplified conditional rendering
                           <tr key={index}>

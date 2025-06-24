@@ -47,7 +47,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll no-scrollbar transition-all">
         {loading
-          ? loadingList.map((product, index) => {
+          ? loadingList?.map((product, index) => {
               return (
                 <div
                   key={index}
@@ -66,7 +66,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
                 </div>
               );
             })
-          : data.map((product, index) => {
+          : data?.map((product, index) => {
               return (
                 <Link
                   to={"/product/" + product?._id}

@@ -98,7 +98,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
         </Button>
 
         {loading
-          ? loadingList.map((_, index) => (
+          ? loadingList?.map((_, index) => (
               <div
                 key={index}
                 className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex"
@@ -115,7 +115,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                 </div>
               </div>
             ))
-          : data.map((product, index) => (
+          : data?.map((product, index) => (
               <Link key={index}>
                 <div className="relative flex overflow-hidden rounded-lg transition-all duration-200 w-[21.5rem] h-[11.5rem]">
                   <div className="rounded-lg shadow-md shadow-gray-600 flex justify-center items-center overflow-hidden border m-1 bg-gray-200">

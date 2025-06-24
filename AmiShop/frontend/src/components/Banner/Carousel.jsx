@@ -45,7 +45,7 @@ const Carousel = () => {
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {images.map((items, index) => {
+            {images?.map((items, index) => {
               return (
                 <div
                   className="carousel-item w-full md:h-full h-[20vh] flex-shrink-0"
@@ -65,7 +65,7 @@ const Carousel = () => {
         {/* Navigation */}
         <div className="flex w-full justify-center absolute bottom-0">
           <div className="flex gap-2 p-2 pb-4 rounded-lg">
-            {[...Array(slideCount)].map((_, index) => (
+            {[...Array(slideCount)]?.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleButtonClick(index)}

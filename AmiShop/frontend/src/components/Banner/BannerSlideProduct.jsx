@@ -20,7 +20,7 @@ const BannerSlideProduct = () => {
   }, []);
 
   // Map images to carousel items
-  const carouselItems = images.map((items, index) => (
+  const carouselItems = images?.map((items, index) => (
     <div key={index} className="h-[300px] overflow-hidden">
       <img
         src={items?.bannerImg?.url}

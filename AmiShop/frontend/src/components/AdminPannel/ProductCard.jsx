@@ -93,7 +93,7 @@ function Row({ row, fetchAllProduct }) {
                 overflow="auto"
                 style={{ whiteSpace: "nowrap" }}
               >
-                {row.productImage.map((image, index) => (
+                {row?.productImage?.map((image, index) => (
                   <img
                     key={index}
                     src={image.url}
@@ -166,7 +166,7 @@ export default function ProductTable({ products, fetchAllProduct }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product) => (
+            {products?.map((product) => (
               <Row key={product._id} row={product} fetchAllProduct={fetchAllProduct} />
             ))}
           </TableBody>

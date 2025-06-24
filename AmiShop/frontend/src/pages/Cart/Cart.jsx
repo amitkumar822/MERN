@@ -101,8 +101,8 @@ const Cart = ({ category, heading }) => {
           </Button>
 
           {loading
-            ? loadingList.map((_, index) => <SkeletonLoading key={index} />)
-            : data.map((product, index) => (
+            ? loadingList?.map((_, index) => <SkeletonLoading key={index} />)
+            : data?.map((product, index) => (
                 <Link
                   to={"product/" + product?._id}
                   key={product?.productName + index}

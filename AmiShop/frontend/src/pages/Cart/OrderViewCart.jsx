@@ -23,8 +23,8 @@ const OrderViewCart = () => {
         },
       });
       setData(data?.data);
-      setAllProductId(data?.data.map((item) => item.productId._id));
-      setQuantity(data?.data.map((item) => item.quantity));
+      setAllProductId(data?.data?.map((item) => item.productId._id));
+      setQuantity(data?.data?.map((item) => item.quantity));
     } catch (error) {
       console.log("Error Fetch View Cart Order:\n ", error);
     }

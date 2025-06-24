@@ -63,7 +63,7 @@ const Order = () => {
             {/* Items Order section */}
 
             {orderDetails &&
-              orderDetails.map((orderItems, index) => (
+              orderDetails?.map((orderItems, index) => (
                 <div
                   key={orderItems._id}
                   className="border-b-2 border-black mb-4"
@@ -177,7 +177,7 @@ const Order = () => {
                     </div>
 
                     {/* Porduct Items */}
-                    {orderItems?.productId.map((itemsDetails, index) => (
+                    {orderItems?.productId?.map((itemsDetails, index) => (
                       <div key={index}>
                         <div className="grid grid-cols-7 w-full pb-6 border-b border-gray-100">
                           <div className="col-span-7 min-[500px]:col-span-2 md:col-span-1">
