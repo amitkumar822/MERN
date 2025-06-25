@@ -31,7 +31,7 @@ const createTokensAndSaveCookies = async (userId, res) => {
     maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   });
 
-  await User.findByIdAndUpdate(userId, { refreshToken });
+  await User.findByIdAndUpdate(userId, { refreshToken }, { new: true });
 
   return { accessToken, refreshToken };
 };

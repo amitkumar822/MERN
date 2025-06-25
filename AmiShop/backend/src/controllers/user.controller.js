@@ -100,6 +100,13 @@ export const loginUser = asyncHandler(async (req, res) => {
   // password remove in response
   user.password = "";
 
+  if (!!user?.refreshToken) {
+    throw new ApiError(
+      400,
+      "User is already logged in on another device. Please log out from other sessions to continue."
+    );
+  }
+
   // generate token and save
   const token = await createTokenAndSaveCookie(user._id, res);
 
