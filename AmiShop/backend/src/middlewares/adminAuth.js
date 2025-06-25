@@ -60,7 +60,7 @@ export const isAdminAuth = asyncHandler(async (req, res, next) => {
         res.cookie("accessToken", accessToken, {
           httpOnly: true,
           secure: true,
-          sameSite: "strict",
+          sameSite: "None",
           maxAge: 15 * 60 * 1000, // 15 minutes
         });
 

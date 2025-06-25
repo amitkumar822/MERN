@@ -28,7 +28,6 @@ const createTokensAndSaveCookies = async (userId, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
-    // sameSite: "strict",
     maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   });
 
