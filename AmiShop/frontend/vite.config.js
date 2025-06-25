@@ -16,7 +16,7 @@ export default defineConfig({
       },
     },
     sourcemap: true, // ✅ Add this
-    chunkSizeWarningLimit: 1500, // Increase warning limit to 1.5 MB (temporary fix)
+    chunkSizeWarningLimit: 1500,
   },
   server: {
     proxy: {
