@@ -16,7 +16,7 @@ const LogOut = () => {
   const handleLogOut = async () => {
     try {
       await API.post("/user/logout", {
-        credentials: "include",
+        withCredentials: true,
       });
       localStorage.clear();
       dispatch(setUserDetails(null));
