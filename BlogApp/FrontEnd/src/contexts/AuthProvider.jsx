@@ -16,20 +16,17 @@ export const AuthProvider = ({ children }) => {
       // const parseToken = token ? JSON.parse(token) : undefined; // Potential issue here if token is a plain string
       // console.log("Token: ", token);
 
-      // if (parseToken) {
       const { data } = await axios.get("/api/users/get-my-profile", {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${parsedToken.token}`
         },
       });
-      // console.log("fProfile: ", data);
+
       setProfile(data.user);
       setIsAuthenticated(true);
       localStorage.setItem("profile", JSON.stringify(data.user));
       localStorage.setItem("isAuthenticated", true);
-      // }
     } catch (error) {
       console.log("AuthBlogs error: ", error.message);
     }
@@ -75,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated,
         userInfo,
         setUserInfo,
-        fetchProfile
+        fetchProfile,
       }}
     >
       {children}
