@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Main/Header";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ErrorBoundary from "./utils/ErrorBoundary";
 
 function App() {
   useEffect(() => {
@@ -13,7 +14,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <>
         <Header />
         <main className="min-h-[calc(100vh-57px)] pt-16">
@@ -26,7 +27,7 @@ function App() {
         theme="colored"
         autoClose="2000"
       />
-    </>
+    </ErrorBoundary>
   );
 }
 

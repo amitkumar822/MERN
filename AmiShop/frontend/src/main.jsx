@@ -5,15 +5,12 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/Router.jsx";
 import UserContextProvider from "./context/UserContextProvider.jsx";
 import { Provider } from "react-redux";
-import { store } from "./stores/Store.js";
-import ErrorBoundary from "./utils/ErrorBoundary.jsx";
+import {store} from "./stores/Store.js"
 
 createRoot(document.getElementById("root")).render(
-  <ErrorBoundary>
-    <Provider store={store}>
-      <UserContextProvider>
-        <RouterProvider router={router} />
-      </UserContextProvider>
-    </Provider>
-  </ErrorBoundary>
+  <Provider store={store}>
+    <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider>
+  </Provider>
 );
